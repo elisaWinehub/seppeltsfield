@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Experiences",
+        "heading": "Taste, tour and dine at Seppeltsfield.",
+        "body": "Book guided cellar tastings, heritage tours and estate dining across the property.",
+        "button_label": "Book now",
+        "button_link": "/pages/plan-your-visit",
+        "button_style": "light",
+        "background_type": "image",
+        "overlay_opacity": 40,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 64,
+        "text_size": 17,
+        "padding_top": "xl",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
+      }
+    },
+    "features": { "type": "feature-grid", "settings": { "heading": "Estate experiences" } },
+    "newsletter": { "type": "newsletter-cta", "settings": {} }
+  },
+  "order": ["hero", "features", "newsletter"]
+}

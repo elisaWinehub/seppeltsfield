@@ -1,285 +1,103 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */{
+{
   "sections": {
-    "hero_jVaWmY": {
-      "type": "hero",
-      "blocks": {
-        "text_YLPk4p": {
-          "type": "text",
-          "name": "t:names.heading",
-          "settings": {
-            "text": "<p>Browse our latest products</p>",
-            "text_color": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "h2",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_H9gpTf": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Shop all",
-            "link": "shopify://collections/all",
-            "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "rgba(0,0,0,0)",
-            "custom_button_text": "{{ settings.color_palette.background }}",
-            "custom_button_border": "{{ settings.color_palette.background }}",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "text_YLPk4p",
-        "button_H9gpTf"
-      ],
-      "name": "t:names.hero",
+    "hero": {
+      "type": "hero-banner",
       "settings": {
-        "media_type_1": "image",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "media_type_2_mobile": "image",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "space-between",
-        "vertical_alignment": "flex-end",
-        "align_baseline": true,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "flex-end",
-        "gap": 24,
-        "section_width": "page-width",
-        "section_height": "medium",
-        "section_height_custom": 50,
-        "background_color": "rgba(0,0,0,0)",
-        "toggle_overlay": true,
-        "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 100,
-        "padding-block-end": 72
+        "eyebrow": "Seppeltsfield",
+        "heading": "175 years of winemaking in the Barossa Valley.",
+        "body": "Explore cellar experiences, heritage tastings, wine club membership and fortified releases from the Centennial Cellar.",
+        "button_label": "Plan your visit",
+        "button_link": "/pages/plan-your-visit",
+        "button_style": "light",
+        "background_type": "image",
+        "overlay_opacity": 40,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 68,
+        "text_size": 17,
+        "padding_top": "xl",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
       }
     },
-    "product_list_fa6P9H": {
-      "type": "product-list",
+    "marquee": {
+      "type": "marquee-ticker",
       "blocks": {
-        "static-header": {
-          "type": "_product-list-content",
-          "name": "t:names.header",
-          "static": true,
-          "settings": {
-            "content_direction": "row",
-            "vertical_on_mobile": false,
-            "horizontal_alignment": "space-between",
-            "vertical_alignment": "flex-end",
-            "align_baseline": true,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_list_text_YFtzcL": {
-              "type": "_product-list-text",
-              "name": "t:names.collection_title",
-              "settings": {
-                "text": "<h3>{{ closest.collection.title }}</h3>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h4",
-                "font": "var(--font-body--family)",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_list_button_MWeP9V": {
-              "type": "_product-list-button",
-              "name": "t:names.product_list_button",
-              "settings": {
-                "label": "View all",
-                "open_in_new_tab": false,
-                "style_class": "link",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_list_text_YFtzcL",
-            "product_list_button_MWeP9V"
-          ]
-        },
-        "static-product-card": {
-          "type": "_product-card",
-          "name": "t:names.product_card",
-          "static": true,
-          "settings": {
-            "product_card_gap": 4,
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "product_card_gallery_677WP3": {
-              "type": "_product-card-gallery",
-              "name": "t:names.product_card_media",
-              "settings": {
-                "image_ratio": "adapt",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "product_title_YXxMTj": {
-              "type": "product-title",
-              "name": "t:names.product_title",
-              "settings": {
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 4,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "price_JQzVV4": {
-              "type": "price",
-              "name": "t:names.product_price",
-              "settings": {
-                "show_sale_price_first": true,
-                "show_installments": false,
-                "show_tax_info": false,
-                "type_preset": "h6",
-                "width": "100%",
-                "alignment": "left",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "product_card_gallery_677WP3",
-            "product_title_YXxMTj",
-            "price_JQzVV4"
-          ]
-        }
+        "a": { "type": "item", "settings": { "text": "Complimentary tasting for Crown Society members" } },
+        "b": { "type": "item", "settings": { "text": "Open daily in the Barossa Valley" } },
+        "c": { "type": "item", "settings": { "text": "Home of the Centennial Cellar" } }
       },
-      "name": "Featured collection",
+      "block_order": ["a", "b", "c"],
       "settings": {
-        "collection": "all",
-        "layout_type": "grid",
-        "carousel_on_mobile": false,
-        "max_products": 8,
-        "columns": 4,
-        "mobile_columns": "2",
-        "mobile_card_size": "60cqw",
-        "columns_gap": 8,
-        "rows_gap": 24,
-        "icons_style": "arrow",
-        "icons_shape": "none",
-        "section_width": "page-width",
-        "horizontal_alignment": "flex-start",
-        "gap": 28,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "background_color": "#0e1012",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 21,
+        "text_size": 14,
+        "padding_top": "sm",
+        "padding_bottom": "sm"
+      }
+    },
+    "story": {
+      "type": "story-split",
+      "settings": {
+        "eyebrow": "Heritage and story",
+        "heading": "A living archive of fortified wine.",
+        "body": "<p>From 1851 to today, Seppeltsfield has shaped the fortified style of the Barossa and continues to age every vintage in the Centennial Cellar.</p>",
+        "button_label": "Read our story",
+        "button_link": "/pages/heritage-story",
+        "background_color": "#f1f2f1",
+        "heading_color": "#0e1012",
+        "text_color": "#53575b",
+        "heading_size": 44,
+        "text_size": 16,
+        "padding_top": "lg",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
+      }
+    },
+    "stats": {
+      "type": "stat-row",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "175+", "label": "Years of heritage" } },
+        "s2": { "type": "stat", "settings": { "value": "100", "label": "Year-old tawny release" } },
+        "s3": { "type": "stat", "settings": { "value": "1851", "label": "Founded" } },
+        "s4": { "type": "stat", "settings": { "value": "Daily", "label": "Estate open" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "background_color": "#f1f2f1",
+        "heading_color": "#0e1012",
+        "text_color": "#53575b",
+        "heading_size": 46,
+        "text_size": 12,
+        "padding_top": "sm",
+        "padding_bottom": "sm",
+        "section_width": "page-width"
+      }
+    },
+    "features": {
+      "type": "feature-grid",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "eyebrow": "Experiences", "title": "Cellar door and tastings", "text": "Book guided and self-guided estate tastings.", "link_label": "Explore", "link": "/pages/experiences" } },
+        "f2": { "type": "feature", "settings": { "eyebrow": "Functions", "title": "Weddings and events", "text": "Host private events in the bluestone cellars and gardens.", "link_label": "View options", "link": "/pages/functions-events" } },
+        "f3": { "type": "feature", "settings": { "eyebrow": "Shop", "title": "Fortified collection", "text": "Shop tawny, muscat and Centennial releases.", "link_label": "Shop now", "link": "/collections/all" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": {
+        "eyebrow": "Discover",
+        "heading": "Plan your estate day",
+        "background_color": "#f1f2f1",
+        "heading_color": "#0e1012",
+        "text_color": "#53575b",
+        "heading_size": 44,
+        "text_size": 16,
+        "padding_top": "lg",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
       }
     }
   },
-  "order": [
-    "hero_jVaWmY",
-    "product_list_fa6P9H"
-  ]
+  "order": ["hero", "marquee", "story", "stats", "features"]
 }

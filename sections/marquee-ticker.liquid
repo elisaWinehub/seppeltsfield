@@ -1,0 +1,61 @@
+<section class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--full-width" style="overflow:hidden;padding-top:0;padding-bottom:0;">
+    <div class="spp-marquee-track">
+      {% for block in section.blocks %}
+        <span>{{ block.settings.text }}</span>
+      {% endfor %}
+      {% for block in section.blocks %}
+        <span aria-hidden="true">{{ block.settings.text }}</span>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-marquee-track {
+    display: flex;
+    width: max-content;
+    animation: spp-marquee 32s linear infinite;
+    border-top: 1px solid var(--spp-line);
+    border-bottom: 1px solid var(--spp-line);
+  }
+  .spp-marquee-track span {
+    display: inline-flex;
+    align-items: center;
+    padding: 20px 0;
+    font-size: clamp(18px, 2vw, 24px);
+    white-space: nowrap;
+    font-family: var(--font-heading--family);
+    color: var(--spp-heading-color);
+  }
+  .spp-marquee-track span::after {
+    content: "—";
+    margin: 0 34px;
+    color: var(--spp-accent);
+    opacity: .45;
+  }
+  @keyframes spp-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Marquee ticker",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Item",
+      "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Complimentary tasting for Crown Society members" }]
+    }
+  ],
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#0e1012" },
+    { "type": "color", "id": "heading_color", "label": "Text", "default": "#f5f7f8" },
+    { "type": "color", "id": "text_color", "label": "Secondary text", "default": "#f5f7f8" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 18, "max": 32, "step": 1, "unit": "px", "default": 21 },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 },
+    { "type": "select", "id": "padding_top", "label": "Top spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "sm" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "sm" }
+  ],
+  "presets": [{ "name": "Marquee ticker", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] }]
+}
+{% endschema %}

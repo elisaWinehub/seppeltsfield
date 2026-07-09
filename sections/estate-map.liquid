@@ -1,0 +1,72 @@
+<section class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}" data-map-{{ section.id }}>
+    <div class="section-head" data-reveal>
+      {% if section.settings.eyebrow != blank %}{% render 'heading-eyebrow', text: section.settings.eyebrow %}{% endif %}
+      <h2 style="margin-top:14px;color:{{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="spp-map-wrap" data-reveal>
+      {% if section.settings.map_image != blank %}
+        {{ section.settings.map_image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+      {% else %}
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+      {% for block in section.blocks %}
+        <button type="button" class="spp-pin" style="left:{{ block.settings.left }}%;top:{{ block.settings.top }}%;" data-title="{{ block.settings.title }}" data-text="{{ block.settings.text }}"></button>
+      {% endfor %}
+      <div class="spp-pin-card" hidden>
+        <h4></h4>
+        <p></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.querySelector("[data-map-{{ section.id }}]");
+    if (!root) return;
+    const card = root.querySelector(".spp-pin-card");
+    root.querySelectorAll(".spp-pin").forEach((pin) => {
+      pin.addEventListener("click", () => {
+        card.querySelector("h4").textContent = pin.dataset.title;
+        card.querySelector("p").textContent = pin.dataset.text;
+        card.hidden = false;
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .spp-map-wrap { position: relative; }
+  .spp-map-wrap img { width:100%; height:auto; display:block; }
+  .spp-pin { position:absolute; width:30px; height:30px; border-radius:50%; border:1px solid var(--spp-ink); background:#fff; transform:translate(-50%,-50%); }
+  .spp-pin-card { position:absolute; left:24px; bottom:24px; max-width:360px; background:#fff; box-shadow:0 14px 32px rgb(0 0 0 / 20%); padding:20px 24px; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Estate map",
+  "blocks": [
+    { "type": "pin", "name": "Pin", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "Centennial Cellar" },
+      { "type": "textarea", "id": "text", "label": "Text", "default": "Taste from barrels in the historic cellar." },
+      { "type": "range", "id": "left", "label": "Left", "min": 5, "max": 95, "step": 1, "unit": "%", "default": 40 },
+      { "type": "range", "id": "top", "label": "Top", "min": 5, "max": 95, "step": 1, "unit": "%", "default": 50 }
+    ] }
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Estate map" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Explore the Seppeltsfield grounds" },
+    { "type": "image_picker", "id": "map_image", "label": "Map image" },
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f1f2f1" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#0e1012" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#53575b" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 22, "max": 56, "step": 2, "unit": "px", "default": 34 },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 20, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "padding_top", "label": "Top spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "lg" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "lg" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page-width", "label": "Page" }, { "value": "full-width", "label": "Full" }], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Estate map", "blocks": [{ "type": "pin" }, { "type": "pin" }, { "type": "pin" }] }]
+}
+{% endschema %}

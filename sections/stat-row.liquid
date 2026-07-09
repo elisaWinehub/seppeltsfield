@@ -1,0 +1,44 @@
+<section class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}">
+    <div class="spp-stat-row">
+      {% for block in section.blocks %}
+        <div class="spp-stat" data-reveal {{ block.shopify_attributes }}>
+          <b>{{ block.settings.value }}</b>
+          <span>{{ block.settings.label }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-stat-row { display:grid; grid-template-columns:repeat(4,1fr); border-top:1px solid var(--spp-line); border-bottom:1px solid var(--spp-line); }
+  .spp-stat { padding: 44px 32px; border-left:1px solid var(--spp-line); }
+  .spp-stat:first-child { border-left:0; }
+  .spp-stat b { display:block; font-family: var(--font-heading--family); font-size: clamp(30px,4vw,46px); color: var(--spp-heading-color); }
+  .spp-stat span { font-size:11px; text-transform: uppercase; letter-spacing:1.3px; color: var(--spp-text-color); }
+  @media screen and (max-width: 989px) { .spp-stat-row { grid-template-columns: 1fr 1fr; } .spp-stat:nth-child(odd) { border-left: 0; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Stat row",
+  "blocks": [
+    { "type": "stat", "name": "Stat", "settings": [
+      { "type": "text", "id": "value", "label": "Value", "default": "175+" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Years of heritage" }
+    ] }
+  ],
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f1f2f1" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#0e1012" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#53575b" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 26, "max": 64, "step": 2, "unit": "px", "default": 46 },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 11, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "select", "id": "padding_top", "label": "Top spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "sm" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "sm" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page-width", "label": "Page" }, { "value": "full-width", "label": "Full" }], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Stat row", "blocks": [{ "type": "stat" }, { "type": "stat" }, { "type": "stat" }, { "type": "stat" }] }]
+}
+{% endschema %}

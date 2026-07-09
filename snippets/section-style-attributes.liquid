@@ -1,0 +1,42 @@
+{%- liquid
+  assign bg_type = section.settings.background_type | default: 'color'
+  assign bg_color = section.settings.background_color | default: '#F1F2F1'
+  assign heading_color = section.settings.heading_color | default: '#0E1012'
+  assign text_color = section.settings.text_color | default: '#53575B'
+  assign heading_size = section.settings.heading_size | default: 44
+  assign text_size = section.settings.text_size | default: 16
+
+  assign padding_top = 110
+  assign padding_bottom = 110
+  case section.settings.padding_top
+    when 'sm'
+      assign padding_top = 48
+    when 'md'
+      assign padding_top = 80
+    when 'lg'
+      assign padding_top = 110
+    when 'xl'
+      assign padding_top = 140
+  endcase
+  case section.settings.padding_bottom
+    when 'sm'
+      assign padding_bottom = 48
+    when 'md'
+      assign padding_bottom = 80
+    when 'lg'
+      assign padding_bottom = 110
+    when 'xl'
+      assign padding_bottom = 140
+  endcase
+-%}
+style="
+  --spp-bg-color: {{ bg_color }};
+  --spp-heading-color: {{ heading_color }};
+  --spp-text-color: {{ text_color }};
+  --spp-heading-size: {{ heading_size }}px;
+  --spp-text-size: {{ text_size }}px;
+  --spp-padding-top: {{ padding_top }}px;
+  --spp-padding-bottom: {{ padding_bottom }}px;
+  --spp-overlay-opacity: {{ section.settings.overlay_opacity | default: 0 | divided_by: 100.0 }};
+  --spp-bg-image: {% if section.settings.background_image != blank and bg_type == 'image' %}url('{{ section.settings.background_image | image_url: width: 2200 }}'){% else %}none{% endif %};
+"

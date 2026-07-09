@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Plan your visit",
+        "heading": "Open daily in the Barossa Valley.",
+        "body": "Everything you need to get here, book a tasting and make the most of a day on the estate.",
+        "button_label": "Get directions",
+        "button_link": "/pages/contact",
+        "button_style": "light",
+        "background_type": "image",
+        "overlay_opacity": 40,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 58,
+        "text_size": 17,
+        "padding_top": "xl",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
+      }
+    },
+    "hours": { "type": "hours-and-contact", "settings": {} },
+    "faq": { "type": "faq-accordion", "settings": {} }
+  },
+  "order": ["hero", "hours", "faq"]
+}

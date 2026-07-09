@@ -1,0 +1,81 @@
+<section class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}" data-tabbed-root-{{ section.id }}>
+    <div class="spp-tabs-nav">
+      {% for block in section.blocks %}
+        <button type="button" class="spp-tab-btn{% if forloop.first %} is-active{% endif %}" data-target="{{ block.id }}">{{ block.settings.tab_label }}</button>
+      {% endfor %}
+    </div>
+    <div style="margin-top:36px;">
+      {% for block in section.blocks %}
+        <div class="spp-tab-panel{% if forloop.first %} is-active{% endif %}" data-panel="{{ block.id }}" {{ block.shopify_attributes }}>
+          <div class="spp-split">
+            <div>
+              {% if block.settings.eyebrow != blank %}{% render 'heading-eyebrow', text: block.settings.eyebrow %}{% endif %}
+              <h3 style="margin-top:12px;color:{{ section.settings.heading_color }};">{{ block.settings.heading }}</h3>
+              <p style="margin-top:12px;">{{ block.settings.body }}</p>
+            </div>
+            <div class="spp-tab-panel__media">
+              {% if block.settings.image != blank %}
+                {{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: block.settings.heading }}
+              {% else %}
+                {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const root = document.querySelector("[data-tabbed-root-{{ section.id }}]");
+    if (!root) return;
+    const buttons = root.querySelectorAll(".spp-tab-btn");
+    const panels = root.querySelectorAll(".spp-tab-panel");
+    buttons.forEach((button) => {
+      button.addEventListener("click", () => {
+        buttons.forEach((b) => b.classList.remove("is-active"));
+        panels.forEach((p) => p.classList.remove("is-active"));
+        button.classList.add("is-active");
+        root.querySelector(`[data-panel="${button.dataset.target}"]`)?.classList.add("is-active");
+      });
+    });
+  })();
+</script>
+
+{% stylesheet %}
+  .spp-tabs-nav { display:flex; gap:28px; border-bottom: 1px solid var(--spp-line); flex-wrap: wrap; }
+  .spp-tab-btn { border:0; background:none; padding:0 0 14px; text-transform:uppercase; font-size:12px; letter-spacing:1.2px; color:var(--spp-text-color); }
+  .spp-tab-btn.is-active { color:var(--spp-heading-color); border-bottom:2px solid var(--spp-accent); }
+  .spp-tab-panel { display:none; }
+  .spp-tab-panel.is-active { display:block; }
+  .spp-tab-panel__media img, .spp-tab-panel__media svg { width: 100%; height: auto; display: block; }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Tabbed content",
+  "blocks": [
+    { "type": "tab", "name": "Tab", "settings": [
+      { "type": "text", "id": "tab_label", "label": "Tab label", "default": "Weddings" },
+      { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Weddings" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Married among the vines" },
+      { "type": "textarea", "id": "body", "label": "Body", "default": "Ceremony on the lawns, reception in the Centennial Cellar or historic barrel hall." },
+      { "type": "image_picker", "id": "image", "label": "Image" }
+    ] }
+  ],
+  "settings": [
+    { "type": "color", "id": "background_color", "label": "Background", "default": "#f1f2f1" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#0e1012" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#53575b" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 22, "max": 56, "step": 2, "unit": "px", "default": 36 },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 20, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "padding_top", "label": "Top spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "lg" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom spacing", "options": [{ "value": "sm", "label": "Small" }, { "value": "md", "label": "Medium" }, { "value": "lg", "label": "Large" }, { "value": "xl", "label": "Extra large" }], "default": "lg" },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value": "page-width", "label": "Page" }, { "value": "full-width", "label": "Full" }], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Tabbed content", "blocks": [{ "type": "tab" }, { "type": "tab" }, { "type": "tab" }] }]
+}
+{% endschema %}

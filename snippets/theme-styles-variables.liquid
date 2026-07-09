@@ -682,6 +682,109 @@
   }
 {% endstyle %}
 
+{% style %}
+  @import url("https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,440;0,9..144,560;1,9..144,420&family=Work+Sans:wght@300;400;500;600&display=swap");
+
+  :root {
+    --spp-cream: #f1f2f1;
+    --spp-ink: #0e1012;
+    --spp-ink-soft: #53575b;
+    --spp-accent: #469cc0;
+    --spp-dark: #0b0c0d;
+    --spp-line: rgba(14, 16, 18, 0.13);
+    --font-heading--family: "Fraunces", serif;
+    --font-body--family: "Work Sans", sans-serif;
+  }
+
+  [data-reveal] {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .8s ease, transform .8s ease;
+  }
+
+  [data-reveal].in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .spp-section {
+    position: relative;
+    display: block;
+    clear: both;
+    isolation: isolate;
+    padding-top: var(--spp-padding-top);
+    padding-bottom: var(--spp-padding-bottom);
+    color: var(--spp-text-color);
+    background: var(--spp-bg-color);
+  }
+
+  .spp-section .section {
+    position: relative;
+    z-index: 1;
+  }
+
+  .spp-section.spp-bg-image {
+    background-image: linear-gradient(rgb(0 0 0 / var(--spp-overlay-opacity)), rgb(0 0 0 / var(--spp-overlay-opacity))), var(--spp-bg-image);
+    background-size: cover;
+    background-position: center;
+  }
+
+  .spp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--spp-accent);
+    font-weight: 600;
+  }
+
+  .spp-eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .spp-button,
+  .seppeltsfield-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 30px;
+    font-size: 12px;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    border: 1px solid var(--spp-ink);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all .3s ease;
+  }
+
+  .seppeltsfield-button--primary { background: var(--spp-ink); color: #fff; }
+  .seppeltsfield-button--primary:hover { background: #202428; border-color: #202428; }
+  .seppeltsfield-button--secondary { background: var(--spp-accent); color: #fff; border-color: var(--spp-accent); }
+  .seppeltsfield-button--secondary:hover { background: #2e7a9b; border-color: #2e7a9b; }
+  .seppeltsfield-button--outline { background: transparent; color: var(--spp-ink); }
+  .seppeltsfield-button--outline:hover { background: var(--spp-ink); color: #fff; }
+  .seppeltsfield-button--light { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
+  .seppeltsfield-button--light:hover { background: #fff; color: var(--spp-ink); border-color: #fff; }
+
+  .spp-feature-card { background: #fff; display: flex; flex-direction: column; min-height: 100%; }
+  .spp-feature-card__media { aspect-ratio: 5 / 4; overflow: hidden; background: #fff; }
+  .spp-feature-card__media img,
+  .spp-feature-card__media svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  .spp-feature-card__body { padding: 24px; }
+  .spp-feature-card__eyebrow { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--spp-accent); }
+  .spp-feature-card h3 { margin: 8px 0; color: var(--spp-heading-color); }
+{% endstyle %}
+
 {% render 'contrast-override',
   background_color: settings.popover_background_color,
   text_color: settings.popover_text_color,

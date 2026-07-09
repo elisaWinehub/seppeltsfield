@@ -1,0 +1,23 @@
+<article class="spp-feature-card" data-reveal>
+  <div class="spp-feature-card__media">
+    {% if image != blank %}
+      {{ image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: title }}
+    {% else %}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+    {% endif %}
+  </div>
+  <div class="spp-feature-card__body">
+    {% if eyebrow != blank %}
+      <span class="spp-feature-card__eyebrow">{{ eyebrow }}</span>
+    {% endif %}
+    {% if title != blank %}
+      <h3>{{ title }}</h3>
+    {% endif %}
+    {% if text != blank %}
+      <p>{{ text }}</p>
+    {% endif %}
+    {% if link_label != blank %}
+      {% render 'button', link: link, text: link_label, style: 'outline' %}
+    {% endif %}
+  </div>
+</article>

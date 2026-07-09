@@ -1,34 +1,62 @@
 {%- doc -%}
-  Intended for use in a block similar to the button block.
+  Renders either:
+  1) Horizon block-based button markup (backward compatible), or
+  2) Simple style-based CTA button markup.
 
-  @param {string} link - link to render
-  @param {object} [block] - The block
-
-  @example
-  {% render 'button', link: '/collections/all' %}
+  @param {string} [link] - Target URL.
+  @param {object} [block] - Block object from section/block context.
+  @param {string} [text] - Label text for simple mode.
+  @param {string} [style] - primary | secondary | outline | light
+  @param {boolean} [open_in_new_tab] - Open link in new tab in simple mode.
 {%- enddoc -%}
 
-{% assign block_settings = block.settings %}
-{% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
-
-<a
-  {% if link == blank %}
-    role="link"
-    aria-disabled="true"
-  {% else %}
-    href="{{ link }}"
+{% if block %}
+  {% assign block_settings = block.settings %}
+  {% render 'button-custom-styles', block_settings: block_settings, block_id: block.id %}
+  <a
+    {% if link == blank %}
+      role="link"
+      aria-disabled="true"
+    {% else %}
+      href="{{ link }}"
+    {% endif %}
+    class="
+      size-style
+      {{ block_settings.style_class }}
+      {{ block_settings.style_class }}--{{ block.id }}
+    "
+    style="{% render 'size-style', settings: block_settings %}"
+    {%- if block_settings.open_in_new_tab -%}
+      target="_blank"
+      rel="noopener noreferrer"
+    {%- endif -%}
+    {{ block.shopify_attributes }}
+  >
+    {{ block_settings.label }}
+  </a>
+{% else %}
+  {% assign simple_style = style | default: 'primary' %}
+  {% assign style_class = 'seppeltsfield-button--primary' %}
+  {% if simple_style == 'secondary' %}
+    {% assign style_class = 'seppeltsfield-button--secondary' %}
+  {% elsif simple_style == 'outline' %}
+    {% assign style_class = 'seppeltsfield-button--outline' %}
+  {% elsif simple_style == 'light' %}
+    {% assign style_class = 'seppeltsfield-button--light' %}
   {% endif %}
-  class="
-    size-style
-    {{ block_settings.style_class }}
-    {{ block_settings.style_class }}--{{ block.id }}
-  "
-  style="{% render 'size-style', settings: block_settings %}"
-  {%- if block_settings.open_in_new_tab -%}
-    target="_blank"
-    rel="noopener noreferrer"
-  {%- endif -%}
-  {{ block.shopify_attributes }}
->
-  {{ block_settings.label }}
-</a>
+  <a
+    {% if link == blank %}
+      role="link"
+      aria-disabled="true"
+    {% else %}
+      href="{{ link }}"
+    {% endif %}
+    class="seppeltsfield-button {{ style_class }}"
+    {%- if open_in_new_tab -%}
+      target="_blank"
+      rel="noopener noreferrer"
+    {%- endif -%}
+  >
+    {{ text | default: 'Learn more' }}
+  </a>
+{% endif %}

@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Shop",
+        "heading": "Fortified wine collection",
+        "body": "Tawny, muscat and single-vintage Centennial releases from the Barossa estate.",
+        "button_label": "Browse wines",
+        "button_link": "/collections/all",
+        "button_style": "light",
+        "background_type": "image",
+        "overlay_opacity": 45,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 58,
+        "text_size": 17,
+        "padding_top": "lg",
+        "padding_bottom": "md",
+        "section_width": "page-width"
+      }
+    },
+    "product_list": {
+      "type": "feature-grid",
+      "settings": {
+        "eyebrow": "Featured wines",
+        "heading": "Collection highlights"
+      }
+    }
+  },
+  "order": ["hero", "product_list"]
+}
