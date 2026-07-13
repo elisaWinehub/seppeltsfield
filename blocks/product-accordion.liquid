@@ -1,0 +1,10 @@
+<details class="spp-product-accordion" {{ block.shopify_attributes }}>
+  <summary>Tasting Notes</summary>
+  <div class="rte"><p>{{ product.description | strip_html | truncate: 240 }}</p></div>
+</details>
+{% schema %}
+{
+  "name": "Product accordion",
+  "settings": []
+}
+{% endschema %}

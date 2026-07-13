@@ -1,0 +1,14 @@
+{% assign fallback_rating = 4.8 %}
+{% assign fallback_count = 24 %}
+<div class="spp-product-reviews" {{ block.shopify_attributes }}>
+  <p><strong>{{ fallback_rating }}</strong> / 5 ({{ fallback_count }} reviews)</p>
+  <p>“Balanced and expressive with beautiful length.”</p>
+</div>
+{% schema %}
+{
+  "name": "Product reviews",
+  "settings": [
+    { "type": "paragraph", "content": "Use review app/metafields when installed; this block shows fallback copy by default." }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+<section class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}">
+    {% assign avg = section.settings.average_rating %}
+    {% assign count = section.settings.review_count %}
+    <div class="spp-reviews-head" data-reveal>
+      <h2>{{ avg }}</h2>
+      <p>{{ count }} reviews</p>
+      {% render 'button', link: section.settings.write_review_link, text: section.settings.write_review_label, style: 'primary' %}
+    </div>
+    <div class="spp-reviews-grid">
+      {% for block in section.blocks %}
+        <article class="spp-review-card" {{ block.shopify_attributes }} data-reveal>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.content }}</p>
+          <p><strong>{{ block.settings.author }}</strong></p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-reviews-head { display:flex; align-items:end; justify-content:space-between; gap:12px; flex-wrap: wrap; }
+  .spp-reviews-head h2 { margin: 0; font-size: clamp(34px,4vw,56px); }
+  .spp-reviews-grid { margin-top: 18px; display:grid; gap:16px; grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .spp-review-card { border: 1px solid var(--spp-line); padding: 18px; background: #fff; }
+  .spp-review-card h3 { margin: 0 0 8px; font-size: 17px; }
+  .spp-review-card p { margin: 0 0 8px; }
+  @media (max-width: 989px) { .spp-reviews-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 680px) { .spp-reviews-grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Reviews block",
+  "settings": [
+    { "type": "paragraph", "content": "Use manual values below unless a product reviews app/metafields are mapped." },
+    { "type": "text", "id": "average_rating", "label": "Average rating", "default": "4.8" },
+    { "type": "text", "id": "review_count", "label": "Review count", "default": "24" },
+    { "type": "text", "id": "write_review_label", "label": "Write review label", "default": "Write a Review" },
+    { "type": "url", "id": "write_review_link", "label": "Write review link" },
+    { "type": "select", "id": "padding_top", "label": "Top padding", "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"Extra large"}], "default": "lg" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom padding", "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"Extra large"}], "default": "lg" },
+    { "type": "select", "id": "background_type", "label": "Background type", "options": [{"value":"color","label":"Color"},{"value":"image","label":"Image"}], "default": "color" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F7F6F3" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay darkness", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 0 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#12141A" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 40 },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#565B63" },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 22, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{"value":"page-width","label":"Page"},{"value":"full-width","label":"Full"}], "default": "page-width" }
+  ],
+  "blocks": [
+    {
+      "type": "review_card",
+      "name": "Review card",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Beautifully balanced" },
+        { "type": "textarea", "id": "content", "label": "Content", "default": "A stunning release with precision, texture and length." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Sarah M." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Reviews block", "blocks": [{ "type": "review_card" }, { "type": "review_card" }, { "type": "review_card" }] }]
+}
+{% endschema %}

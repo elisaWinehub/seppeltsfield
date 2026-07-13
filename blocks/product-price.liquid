@@ -1,0 +1,9 @@
+<div {{ block.shopify_attributes }}>
+  <p class="spp-product-price">{{ product.price | money }}</p>
+</div>
+{% schema %}
+{
+  "name": "Product price",
+  "settings": []
+}
+{% endschema %}

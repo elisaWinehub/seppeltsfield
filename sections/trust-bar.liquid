@@ -1,0 +1,58 @@
+<section class="spp-section spp-band-dark" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}">
+    <div class="spp-trust-grid">
+      {% for block in section.blocks %}
+        <article class="spp-trust-item" {{ block.shopify_attributes }} data-reveal>
+          <div class="spp-trust-item__icon">{{ block.settings.icon }}</div>
+          <h3>{{ block.settings.title }}</h3>
+          <p>{{ block.settings.subtitle }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-band-dark { --spp-bg-color: #0c0d10; --spp-text-color: #f5f7f8; --spp-heading-color: #f5f7f8; }
+  .spp-trust-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 24px; }
+  .spp-trust-item__icon { font-size: 24px; line-height: 1; margin-bottom: 10px; }
+  .spp-trust-item h3 { margin: 0 0 8px; color: var(--spp-heading-color); font-size: 18px; }
+  .spp-trust-item p { margin: 0; opacity: .8; }
+  @media (max-width: 989px) { .spp-trust-grid { grid-template-columns: repeat(2, minmax(0,1fr)); } }
+  @media (max-width: 640px) { .spp-trust-grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Trust bar",
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "settings": [
+        { "type": "text", "id": "icon", "label": "Icon", "default": "◆" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Estate experiences" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Crafted for every season." }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    { "type": "select", "id": "padding_top", "label": "Top padding", "options": [{ "value":"sm","label":"Small" },{ "value":"md","label":"Medium" },{ "value":"lg","label":"Large" },{ "value":"xl","label":"Extra large" }], "default": "md" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom padding", "options": [{ "value":"sm","label":"Small" },{ "value":"md","label":"Medium" },{ "value":"lg","label":"Large" },{ "value":"xl","label":"Extra large" }], "default": "md" },
+    { "type": "header", "content": "Background" },
+    { "type": "select", "id": "background_type", "label": "Background type", "options": [{ "value":"color","label":"Color" },{ "value":"image","label":"Image" }], "default": "color" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#0C0D10" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay darkness", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 0 },
+    { "type": "header", "content": "Heading" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#F5F7F8" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 28 },
+    { "type": "header", "content": "Body text" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#F5F7F8" },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 22, "step": 1, "unit": "px", "default": 15 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value":"page-width","label":"Page" }, { "value":"full-width","label":"Full" }], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Trust bar", "blocks": [{ "type": "trust_item" }, { "type": "trust_item" }, { "type": "trust_item" }] }]
+}
+{% endschema %}

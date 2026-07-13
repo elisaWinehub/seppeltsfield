@@ -3,101 +3,138 @@
     "hero": {
       "type": "hero-banner",
       "settings": {
-        "eyebrow": "Seppeltsfield",
-        "heading": "175 years of winemaking in the Barossa Valley.",
-        "body": "Explore cellar experiences, heritage tastings, wine club membership and fortified releases from the Centennial Cellar.",
-        "button_label": "Plan your visit",
-        "button_link": "/pages/plan-your-visit",
+        "eyebrow": "Barossa Valley",
+        "heading": "175 Years of Winemaking Heritage.",
+        "body": "Discover tastings, tours, dining and century-old cellars in one estate destination.",
+        "button_label": "Discover Our Story",
+        "button_link": "/pages/discover",
         "button_style": "light",
         "background_type": "image",
-        "overlay_opacity": 40,
-        "background_color": "#0b0c0d",
-        "heading_color": "#f5f7f8",
-        "text_color": "#f5f7f8",
-        "heading_size": 68,
+        "background_image": "shopify://shop_images/Sppeltsfield-Aerial-View-Banner-Dark.jpg",
+        "overlay_opacity": 45,
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8",
+        "heading_size": 72,
         "text_size": 17,
         "padding_top": "xl",
         "padding_bottom": "lg",
         "section_width": "page-width"
       }
     },
-    "marquee": {
-      "type": "marquee-ticker",
+    "trust_top": {
+      "type": "trust-bar",
       "blocks": {
-        "a": { "type": "item", "settings": { "text": "Complimentary tasting for Crown Society members" } },
-        "b": { "type": "item", "settings": { "text": "Open daily in the Barossa Valley" } },
-        "c": { "type": "item", "settings": { "text": "Home of the Centennial Cellar" } }
+        "a": { "type": "trust_item", "settings": { "icon": "◆", "title": "Complimentary tasting", "subtitle": "For Crown Society members" } },
+        "b": { "type": "trust_item", "settings": { "icon": "◷", "title": "Open daily", "subtitle": "10:00am - 5:00pm" } },
+        "c": { "type": "trust_item", "settings": { "icon": "⌖", "title": "Located in the", "subtitle": "Barossa Valley" } }
       },
       "block_order": ["a", "b", "c"],
       "settings": {
-        "background_color": "#0e1012",
-        "heading_color": "#f5f7f8",
-        "text_color": "#f5f7f8",
-        "heading_size": 21,
-        "text_size": 14,
+        "padding_top": "sm",
+        "padding_bottom": "sm",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "legacy": {
+      "type": "collage-heritage",
+      "settings": {
+        "eyebrow": "Our Heritage",
+        "heading": "A Living Legacy Since 1851.",
+        "body": "<p>Generations of craftsmanship continue through every vintage in our Centennial Cellar.</p>",
+        "main_image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+        "inset_image": "shopify://shop_images/Para-Trademark-Document.jpg",
+        "padding_top": "lg",
+        "padding_bottom": "lg",
+        "background_color": "#F7F6F3"
+      }
+    },
+    "timeline": {
+      "type": "timeline-strip",
+      "blocks": {
+        "n1": { "type": "timeline_node", "settings": { "year": "1851", "image": "shopify://shop_images/1851-The-Seppelt-Homestead.png", "caption": "Joseph Seppelt plants the first vines." } },
+        "n2": { "type": "timeline_node", "settings": { "year": "1878", "image": "shopify://shop_images/1878-banner-1920-x-1080.jpg", "caption": "Centennial Cellar is established." } },
+        "n3": { "type": "timeline_node", "settings": { "year": "1895", "image": "shopify://shop_images/1900.jpg", "caption": "The Para Vintage brand is born." } },
+        "n4": { "type": "timeline_node", "settings": { "year": "1951", "image": "shopify://shop_images/1950.jpg", "caption": "Fourth generation takes the reins." } },
+        "n5": { "type": "timeline_node", "settings": { "year": "2000+", "image": "shopify://shop_images/1970-B-Seppel-and-Sons-Company.png", "caption": "Award-winning wines across the globe." } }
+      },
+      "block_order": ["n1", "n2", "n3", "n4", "n5"],
+      "settings": {
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8",
+        "padding_top": "md",
+        "padding_bottom": "md"
+      }
+    },
+    "estate_tiles": {
+      "type": "tile-row",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "image": "shopify://shop_images/centennialcellarHERO2.jpg", "title": "Centennial Cellar", "link": "/pages/visit" } },
+        "t2": { "type": "tile", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Dine Fino", "link": "/pages/visit" } },
+        "t3": { "type": "tile", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Stay The Lodge", "link": "/pages/visit" } },
+        "t4": { "type": "tile", "settings": { "image": "shopify://shop_images/wedding-ceremony-subhero.jpg", "title": "Experiences on the Estate", "link": "/pages/visit" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {
+        "eyebrow": "The Estate",
+        "heading": "More Than Wine. An Experience.",
+        "columns": "4",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "featured_wine": {
+      "type": "split-media-text",
+      "settings": {
+        "eyebrow": "Featured Wine",
+        "heading": "Para 21 Year Old Tawny",
+        "body": "<p>A complex and elegant tawny with nutty, spiced characters and a long, lingering finish.</p>",
+        "image": "shopify://shop_images/Para-Grand-Tawny-91-Points.jpg",
+        "image_side": "right",
+        "button_label": "Discover Para 21",
+        "button_link": "/products/2025-seppeltsfield-watervale-riesling",
+        "button_style": "outline",
+        "background_color": "#F7F6F3"
+      }
+    },
+    "quote_band": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "",
+        "heading": "A testament to time, patience and place.",
+        "body": "- Tyson Stelzer, Australian Wine Companion",
+        "button_label": "",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "crown_society": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "The Crown Society",
+        "heading": "Enjoy priority access to limited releases, exclusive events and special member benefits.",
+        "button_label": "Learn More",
+        "button_link": "/pages/wine-club",
+        "button_style": "light",
+        "background_color": "#469CC0",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8",
         "padding_top": "sm",
         "padding_bottom": "sm"
       }
     },
-    "story": {
-      "type": "story-split",
+    "newsletter": {
+      "type": "newsletter-bar",
       "settings": {
-        "eyebrow": "Heritage and story",
-        "heading": "A living archive of fortified wine.",
-        "body": "<p>From 1851 to today, Seppeltsfield has shaped the fortified style of the Barossa and continues to age every vintage in the Centennial Cellar.</p>",
-        "button_label": "Read our story",
-        "button_link": "/pages/heritage-story",
-        "background_color": "#f1f2f1",
-        "heading_color": "#0e1012",
-        "text_color": "#53575b",
-        "heading_size": 44,
-        "text_size": 16,
-        "padding_top": "lg",
-        "padding_bottom": "lg",
-        "section_width": "page-width"
-      }
-    },
-    "stats": {
-      "type": "stat-row",
-      "blocks": {
-        "s1": { "type": "stat", "settings": { "value": "175+", "label": "Years of heritage" } },
-        "s2": { "type": "stat", "settings": { "value": "100", "label": "Year-old tawny release" } },
-        "s3": { "type": "stat", "settings": { "value": "1851", "label": "Founded" } },
-        "s4": { "type": "stat", "settings": { "value": "Daily", "label": "Estate open" } }
-      },
-      "block_order": ["s1", "s2", "s3", "s4"],
-      "settings": {
-        "background_color": "#f1f2f1",
-        "heading_color": "#0e1012",
-        "text_color": "#53575b",
-        "heading_size": 46,
-        "text_size": 12,
-        "padding_top": "sm",
-        "padding_bottom": "sm",
-        "section_width": "page-width"
-      }
-    },
-    "features": {
-      "type": "feature-grid",
-      "blocks": {
-        "f1": { "type": "feature", "settings": { "eyebrow": "Experiences", "title": "Cellar door and tastings", "text": "Book guided and self-guided estate tastings.", "link_label": "Explore", "link": "/pages/experiences" } },
-        "f2": { "type": "feature", "settings": { "eyebrow": "Functions", "title": "Weddings and events", "text": "Host private events in the bluestone cellars and gardens.", "link_label": "View options", "link": "/pages/functions-events" } },
-        "f3": { "type": "feature", "settings": { "eyebrow": "Shop", "title": "Fortified collection", "text": "Shop tawny, muscat and Centennial releases.", "link_label": "Shop now", "link": "/collections/all" } }
-      },
-      "block_order": ["f1", "f2", "f3"],
-      "settings": {
-        "eyebrow": "Discover",
-        "heading": "Plan your estate day",
-        "background_color": "#f1f2f1",
-        "heading_color": "#0e1012",
-        "text_color": "#53575b",
-        "heading_size": 44,
-        "text_size": 16,
-        "padding_top": "lg",
-        "padding_bottom": "lg",
-        "section_width": "page-width"
+        "eyebrow": "Stay in touch",
+        "heading": "Join our estate mailing list."
       }
     }
   },
-  "order": ["hero", "marquee", "story", "stats", "features"]
+  "order": ["hero", "trust_top", "legacy", "timeline", "estate_tiles", "featured_wine", "quote_band", "crown_society", "newsletter"]
 }

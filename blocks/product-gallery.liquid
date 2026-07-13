@@ -1,0 +1,16 @@
+{% liquid
+  assign media = product.featured_media
+%}
+<div class="spp-product-gallery" {{ block.shopify_attributes }}>
+  {% if media != blank %}
+    {{ media | image_url: width: 1800 | image_tag: loading: 'lazy', alt: product.title }}
+  {% else %}
+    {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+  {% endif %}
+</div>
+{% schema %}
+{
+  "name": "Product gallery",
+  "settings": []
+}
+{% endschema %}

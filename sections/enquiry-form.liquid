@@ -1,0 +1,53 @@
+<section id="enquire" class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}">
+    <div class="spp-enquiry-grid" data-reveal>
+      <div>
+        {% if section.settings.eyebrow != blank %}{% render 'heading-eyebrow', text: section.settings.eyebrow %}{% endif %}
+        <h2 style="margin-top:14px;">{{ section.settings.heading }}</h2>
+        <div style="margin-top:12px;">{{ section.settings.body }}</div>
+      </div>
+      <div>
+        {% form 'contact', class: 'spp-enquiry-form' %}
+          <input type="hidden" name="contact[topic]" value="{{ section.settings.topic | default: 'Functions enquiry' }}">
+          <input type="text" name="contact[name]" placeholder="Your name" required>
+          <input type="email" name="contact[email]" placeholder="Email address" required>
+          <input type="tel" name="contact[phone]" placeholder="Phone number">
+          <textarea name="contact[body]" rows="5" placeholder="Tell us about your event"></textarea>
+          <button type="submit" class="seppeltsfield-button seppeltsfield-button--primary">{{ section.settings.submit_label }}</button>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-enquiry-grid { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap:28px; }
+  .spp-enquiry-form { display:grid; gap:10px; }
+  .spp-enquiry-form input, .spp-enquiry-form textarea { width:100%; padding:12px; border:1px solid var(--spp-line); font: inherit; }
+  @media (max-width: 860px) { .spp-enquiry-grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Enquiry form",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Enquire now" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Start planning your event" },
+    { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Share your date, guest count and event type. Our team will reply with options.</p>" },
+    { "type": "text", "id": "topic", "label": "Hidden topic", "default": "Functions enquiry" },
+    { "type": "text", "id": "submit_label", "label": "Submit label", "default": "Send Enquiry" },
+    { "type": "select", "id": "padding_top", "label": "Top padding", "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"Extra large"}], "default": "lg" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom padding", "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"Extra large"}], "default": "lg" },
+    { "type": "select", "id": "background_type", "label": "Background type", "options": [{"value":"color","label":"Color"},{"value":"image","label":"Image"}], "default": "color" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F7F6F3" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay darkness", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 0 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#12141A" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 40 },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#565B63" },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 22, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{"value":"page-width","label":"Page"},{"value":"full-width","label":"Full"}], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Enquiry form" }]
+}
+{% endschema %}

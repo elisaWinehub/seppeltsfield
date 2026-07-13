@@ -1,0 +1,58 @@
+<section class="spp-section spp-band-dark" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}">
+    <div class="spp-timeline">
+      {% for block in section.blocks %}
+        <article class="spp-timeline__node" {{ block.shopify_attributes }} data-reveal>
+          <p class="spp-timeline__year">{{ block.settings.year }}</p>
+          <div class="spp-timeline__media">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', alt: block.settings.caption }}
+            {% else %}
+              {{ 'collection-3' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <p class="spp-timeline__caption">{{ block.settings.caption }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-timeline { display: grid; grid-template-columns: repeat(auto-fit,minmax(180px,1fr)); gap: 18px; position: relative; }
+  .spp-timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 18px; border-top: 1px solid rgba(255,255,255,.25); }
+  .spp-timeline__year { position: relative; z-index: 1; margin: 0 0 10px; color: #f5f7f8; font-weight: 600; }
+  .spp-timeline__media img, .spp-timeline__media svg { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+  .spp-timeline__caption { margin: 10px 0 0; color: rgba(245,247,248,.78); }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Timeline strip",
+  "blocks": [
+    {
+      "type": "timeline_node",
+      "name": "Timeline node",
+      "settings": [
+        { "type": "text", "id": "year", "label": "Year", "default": "1851" },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "The estate is founded in the Barossa Valley." }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "select", "id": "padding_top", "label": "Top padding", "options": [{ "value":"sm","label":"Small" },{ "value":"md","label":"Medium" },{ "value":"lg","label":"Large" },{ "value":"xl","label":"Extra large" }], "default": "lg" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom padding", "options": [{ "value":"sm","label":"Small" },{ "value":"md","label":"Medium" },{ "value":"lg","label":"Large" },{ "value":"xl","label":"Extra large" }], "default": "lg" },
+    { "type": "select", "id": "background_type", "label": "Background type", "options": [{ "value":"color","label":"Color" },{ "value":"image","label":"Image" }], "default": "color" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#0C0D10" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay darkness", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 0 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#F5F7F8" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 34 },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#F5F7F8" },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 22, "step": 1, "unit": "px", "default": 15 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{ "value":"page-width","label":"Page" }, { "value":"full-width","label":"Full" }], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Timeline strip", "blocks": [{ "type": "timeline_node" }, { "type": "timeline_node" }, { "type": "timeline_node" }] }]
+}
+{% endschema %}

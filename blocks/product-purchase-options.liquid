@@ -1,0 +1,20 @@
+<div class="spp-purchase-options" {{ block.shopify_attributes }}>
+  <label><input type="radio" name="purchase_type_{{ block.id }}" checked> One-time purchase</label>
+  <label><input type="radio" name="purchase_type_{{ block.id }}"> Wine club subscription (10% off)</label>
+  <label>
+    Delivery frequency
+    <select>
+      <option>Monthly</option>
+      <option>Quarterly</option>
+      <option>Bi-annually</option>
+    </select>
+  </label>
+</div>
+{% schema %}
+{
+  "name": "Product purchase options",
+  "settings": [
+    { "type": "paragraph", "content": "Visual pattern. Requires a subscriptions app/selling plans for functional subscription checkout." }
+  ]
+}
+{% endschema %}

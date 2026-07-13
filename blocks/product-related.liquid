@@ -1,0 +1,23 @@
+<div class="spp-product-related" {{ block.shopify_attributes }}>
+  <p class="spp-eyebrow">You may also enjoy</p>
+  <div class="spp-product-related__grid">
+    {% for related in recommendations.products limit: 3 %}
+      <a href="{{ related.url }}">
+        {% if related.featured_image %}
+          {{ related.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: related.title }}
+        {% else %}
+          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+        <p>{{ related.title }}</p>
+      </a>
+    {% else %}
+      <p>Related products will appear automatically.</p>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Product related",
+  "settings": []
+}
+{% endschema %}

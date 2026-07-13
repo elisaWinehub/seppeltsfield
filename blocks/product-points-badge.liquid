@@ -1,0 +1,18 @@
+{% liquid
+  assign score = block.settings.score
+  if product.metafields.custom.critic_score != blank
+    assign score = product.metafields.custom.critic_score.value
+  endif
+%}
+{% if score != blank %}
+  <p class="spp-points-badge" {{ block.shopify_attributes }}>{{ score }} Points</p>
+{% endif %}
+{% schema %}
+{
+  "name": "Product points badge",
+  "settings": [
+    { "type": "paragraph", "content": "Reads product.metafields.custom.critic_score when present." },
+    { "type": "text", "id": "score", "label": "Manual score fallback", "default": "95" }
+  ]
+}
+{% endschema %}

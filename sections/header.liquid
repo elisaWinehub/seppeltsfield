@@ -98,6 +98,9 @@
 
   capture actions
     render 'header-actions', customer_account_menu: section.settings.customer_account_menu, display_style: section.settings.actions_display_style, section: section
+    if section.settings.show_cta and section.settings.cta_label != blank
+      render 'button', link: section.settings.cta_link, text: section.settings.cta_label, style: section.settings.cta_style
+    endif
   endcapture
 
   if shop.customer_accounts_enabled
@@ -1611,6 +1614,41 @@
       ],
       "default": "none",
       "visible_if": "{{ section.settings.actions_display_style == 'text' }}"
+    },
+    {
+      "type": "header",
+      "content": "Header CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_cta",
+      "label": "Show header CTA",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "CTA label",
+      "default": "Book Experience",
+      "visible_if": "{{ section.settings.show_cta }}"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA link",
+      "visible_if": "{{ section.settings.show_cta }}"
+    },
+    {
+      "type": "select",
+      "id": "cta_style",
+      "label": "CTA style",
+      "options": [
+        { "value": "primary", "label": "Solid" },
+        { "value": "outline", "label": "Outline" },
+        { "value": "light", "label": "Light" }
+      ],
+      "default": "outline",
+      "visible_if": "{{ section.settings.show_cta }}"
     },
     {
       "type": "header",

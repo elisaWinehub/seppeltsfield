@@ -1,0 +1,10 @@
+<div {{ block.shopify_attributes }}>
+  <label for="Quantity-{{ block.id }}">Quantity</label>
+  <input id="Quantity-{{ block.id }}" type="number" name="quantity" min="1" value="1">
+</div>
+{% schema %}
+{
+  "name": "Product quantity",
+  "settings": []
+}
+{% endschema %}

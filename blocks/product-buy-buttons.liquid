@@ -1,0 +1,12 @@
+{% form 'product', product, class: 'product-form', id: 'ProductForm-' | append: block.id %}
+  <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+  <button type="submit" class="seppeltsfield-button seppeltsfield-button--primary" {{ block.shopify_attributes }}>
+    Add to Cart
+  </button>
+{% endform %}
+{% schema %}
+{
+  "name": "Product buy buttons",
+  "settings": []
+}
+{% endschema %}

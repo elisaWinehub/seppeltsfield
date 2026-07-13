@@ -1,0 +1,62 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Visit Seppeltsfield",
+        "heading": "A place to experience, stay and savour.",
+        "body": "Plan your day in the Barossa with wine tastings, dining and accommodation at the estate.",
+        "button_label": "Plan Your Visit",
+        "button_link": "/pages/plan-your-visit",
+        "button_style": "light",
+        "background_type": "image",
+        "background_image": "shopify://shop_images/The-Avenue-of-Hopes-and-Dreams-scaled.jpg",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "facts": {
+      "type": "trust-bar",
+      "blocks": {
+        "f1": { "type": "trust_item", "settings": { "icon": "1", "title": "Wine Tastings", "subtitle": "Daily cellar-door flights" } },
+        "f2": { "type": "trust_item", "settings": { "icon": "2", "title": "Estate Experiences", "subtitle": "Tours and curated tastings" } },
+        "f3": { "type": "trust_item", "settings": { "icon": "3", "title": "Dining & Stay", "subtitle": "Restaurant and lodge options" } }
+      },
+      "block_order": ["f1", "f2", "f3"]
+    },
+    "estate": {
+      "type": "split-media-text",
+      "settings": {
+        "eyebrow": "Our Estate",
+        "heading": "175 years of Barossa heritage",
+        "body": "<p>Explore heritage architecture, palm-lined avenues and cellars built for generations.</p>",
+        "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg",
+        "image_side": "right",
+        "show_seal": true
+      }
+    },
+    "experiences": {
+      "type": "tile-row",
+      "blocks": {
+        "x1": { "type": "tile", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "title": "Wine Tasting", "link": "/pages/book-experience" } },
+        "x2": { "type": "tile", "settings": { "image": "shopify://shop_images/dailytoursandtastingsHERO.jpg", "title": "Estate Tour", "link": "/pages/book-experience" } },
+        "x3": { "type": "tile", "settings": { "image": "shopify://shop_images/Gravity-cellar-hero.jpg", "title": "Restaurant Booking", "link": "/pages/book-experience" } }
+      },
+      "block_order": ["x1", "x2", "x3"],
+      "settings": {
+        "eyebrow": "Experiences",
+        "heading": "Immerse yourself in the Barossa.",
+        "columns": "3",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter-bar",
+      "settings": { "eyebrow": "Stay in touch", "heading": "Stories from the Estate" }
+    }
+  },
+  "order": ["hero", "facts", "estate", "experiences", "newsletter"]
+}

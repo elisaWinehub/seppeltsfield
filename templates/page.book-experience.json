@@ -1,0 +1,49 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Book Experience",
+        "heading": "Book your day on the estate.",
+        "body": "Choose from immersive tastings, tours and dining moments curated by our team.",
+        "button_label": "Start a Booking",
+        "button_link": "#booking-form",
+        "button_style": "light",
+        "background_type": "image",
+        "background_image": "shopify://shop_images/dailytoursandtastingsHERO.jpg",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "tiles": {
+      "type": "tile-row",
+      "blocks": {
+        "b1": { "type": "tile", "settings": { "image": "shopify://shop_images/dailytoursandtastingsHERO.jpg", "title": "Centennial Cellar", "link": "/pages/book-experience" } },
+        "b2": { "type": "tile", "settings": { "image": "shopify://shop_images/Gravity-cellar-hero.jpg", "title": "Taste Your Birth Year", "link": "/pages/book-experience" } },
+        "b3": { "type": "tile", "settings": { "image": "shopify://shop_images/wedding-ceremony-subhero.jpg", "title": "Estate Tour", "link": "/pages/book-experience" } },
+        "b4": { "type": "tile", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Fino Dining", "link": "/pages/book-experience" } },
+        "b5": { "type": "tile", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Lodge Stay", "link": "/pages/book-experience" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5"],
+      "settings": {
+        "eyebrow": "Choose an experience",
+        "heading": "Five ways to spend a day here",
+        "columns": "5",
+        "background_color": "#F7F6F3",
+        "heading_color": "#12141A",
+        "text_color": "#565B63"
+      }
+    },
+    "enquiry": {
+      "type": "enquiry-form",
+      "settings": {
+        "eyebrow": "Booking Details",
+        "heading": "Request your booking",
+        "topic": "Book experience enquiry",
+        "submit_label": "Request Booking"
+      }
+    }
+  },
+  "order": ["hero", "tiles", "enquiry"]
+}

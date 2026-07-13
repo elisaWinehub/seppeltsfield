@@ -1,0 +1,64 @@
+<section class="spp-section" {% render 'section-style-attributes' %}>
+  <div class="section section--{{ section.settings.section_width }}">
+    {% if section.settings.eyebrow != blank %}{% render 'heading-eyebrow', text: section.settings.eyebrow %}{% endif %}
+    <h2 style="margin-top:14px;" data-reveal>{{ section.settings.heading }}</h2>
+    <div class="spp-venue-grid">
+      {% for block in section.blocks %}
+        <article class="spp-venue-card" {{ block.shopify_attributes }} data-reveal>
+          <div class="spp-venue-card__media">
+            {% if block.settings.image != blank %}
+              {{ block.settings.image | image_url: width: 1100 | image_tag: loading: 'lazy', alt: block.settings.name }}
+            {% else %}
+              {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+          <h3>{{ block.settings.name }}</h3>
+          <p>{{ block.settings.description }}</p>
+          <p class="spp-venue-card__capacity">{{ block.settings.capacity }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .spp-venue-grid { margin-top: 20px; display: grid; gap: 16px; grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .spp-venue-card__media img, .spp-venue-card__media svg { width: 100%; display: block; aspect-ratio: 4/3; object-fit: cover; }
+  .spp-venue-card__capacity { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--spp-accent); margin-top: 10px; }
+  @media (max-width: 989px) { .spp-venue-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 680px) { .spp-venue-grid { grid-template-columns: 1fr; } }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Venue cards",
+  "blocks": [
+    {
+      "type": "venue",
+      "name": "Venue",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "name", "label": "Name", "default": "The Great Cellar" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "A dramatic venue for long-table dinners and private events." },
+        { "type": "text", "id": "capacity", "label": "Capacity", "default": "Capacity: up to 220 guests" }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Venues" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Spaces to suit every occasion" },
+    { "type": "select", "id": "padding_top", "label": "Top padding", "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"Extra large"}], "default": "lg" },
+    { "type": "select", "id": "padding_bottom", "label": "Bottom padding", "options": [{"value":"sm","label":"Small"},{"value":"md","label":"Medium"},{"value":"lg","label":"Large"},{"value":"xl","label":"Extra large"}], "default": "lg" },
+    { "type": "select", "id": "background_type", "label": "Background type", "options": [{"value":"color","label":"Color"},{"value":"image","label":"Image"}], "default": "color" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F7F6F3" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay darkness", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 0 },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#12141A" },
+    { "type": "range", "id": "heading_size", "label": "Heading size", "min": 24, "max": 96, "step": 2, "unit": "px", "default": 38 },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#565B63" },
+    { "type": "range", "id": "text_size", "label": "Text size", "min": 13, "max": 22, "step": 1, "unit": "px", "default": 16 },
+    { "type": "select", "id": "section_width", "label": "Section width", "options": [{"value":"page-width","label":"Page"},{"value":"full-width","label":"Full"}], "default": "page-width" }
+  ],
+  "presets": [{ "name": "Venue cards", "blocks": [{ "type": "venue" }, { "type": "venue" }, { "type": "venue" }] }]
+}
+{% endschema %}
