@@ -1,0 +1,28 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Heritage and story",
+        "heading": "From 1851 to today, one estate and a century of barrels.",
+        "body": "A living archive of fortified wine, still maturing every vintage in the Centennial Cellar.",
+        "button_label": "Plan your visit",
+        "button_link": "/pages/plan-your-visit",
+        "button_style": "light",
+        "background_type": "image",
+        "overlay_opacity": 40,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 68,
+        "text_size": 17,
+        "padding_top": "xl",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
+      }
+    },
+    "timeline": { "type": "timeline-scrubber", "settings": { "section_width": "page-width" } },
+    "map": { "type": "estate-map", "settings": { "section_width": "page-width" } }
+  },
+  "order": ["hero", "timeline", "map"]
+}

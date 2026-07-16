@@ -1,0 +1,39 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image | default: desktop_image
+-%}
+<section id="SfEventsEstateIntro-{{ section.id }}" class="sf-events-estate-intro" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-panel:{{ section.settings.panel_background }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-muted:{{ section.settings.muted_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-container">
+    <div class="sf-events-estate-intro__layout{% if section.settings.reverse_desktop %} is-reverse-desktop{% endif %}{% if section.settings.reverse_mobile %} is-reverse-mobile{% endif %}">
+      <div class="sf-events-estate-intro__media">
+        {% if desktop_image != blank %}
+          {{ desktop_image | image_url: width: 1600 | image_tag: class: 'sf-events-estate-intro__img sf-events-estate-intro__img--desktop', loading: 'lazy', widths: '550,750,990,1200,1440,1600', sizes: '(min-width:990px) 58vw, 100vw', alt: desktop_image.alt }}
+          {{ mobile_image | image_url: width: 1000 | image_tag: class: 'sf-events-estate-intro__img sf-events-estate-intro__img--mobile', loading: 'lazy', widths: '375,550,750,900,1000', sizes: '(max-width:989px) 100vw, 1px', alt: mobile_image.alt }}
+        {% endif %}
+      </div>
+      <div class="sf-events-estate-intro__content">
+        {% if section.settings.eyebrow != blank %}<p class="sf-events-estate-intro__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-events-estate-intro__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+        {% if section.settings.copy != blank %}<p class="sf-events-estate-intro__copy">{{ section.settings.copy }}</p>{% endif %}
+        {% if section.settings.link_label != blank and section.settings.link_url != blank %}<a class="sf-events-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>{% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-estate-intro{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-events-estate-intro__layout{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,5fr)}.sf-events-estate-intro__layout.is-reverse-desktop .sf-events-estate-intro__media{order:2}.sf-events-estate-intro__layout.is-reverse-desktop .sf-events-estate-intro__content{order:1}.sf-events-estate-intro__media{min-height:360px}.sf-events-estate-intro__img{width:100%;height:100%;object-fit:cover}.sf-events-estate-intro__img--mobile{display:none}.sf-events-estate-intro__content{background:var(--sf-panel);padding:1.2rem;display:grid;align-content:center}.sf-events-estate-intro__eyebrow{margin:0;color:var(--sf-muted);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-events-estate-intro__heading{margin:.5rem 0 0;color:var(--sf-head);font-size:clamp(1.8rem,2.8vw,3.1rem);line-height:1.04}.sf-events-estate-intro__copy{margin:.9rem 0 1rem;color:var(--sf-text)}@media(max-width:989px){.sf-events-estate-intro{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-estate-intro__layout{grid-template-columns:1fr}.sf-events-estate-intro__img--desktop{display:none}.sf-events-estate-intro__img--mobile{display:block}.sf-events-estate-intro__layout.is-reverse-mobile .sf-events-estate-intro__media{order:2}.sf-events-estate-intro__layout.is-reverse-mobile .sf-events-estate-intro__content{order:1}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Estate","tag":"section","class":"sf-events-section","settings":[{"type":"paragraph","content":"Search files: Seppeltsfield Estate Aerial, Estate landscape"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"standard"},{"type":"image_picker","id":"desktop_image","label":"Desktop image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"checkbox","id":"reverse_desktop","label":"Reverse desktop","default":false},{"type":"checkbox","id":"reverse_mobile","label":"Reverse mobile","default":false},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"OUR ESTATE"},{"type":"textarea","id":"heading","label":"Heading","default":"A setting like\nno other"},{"type":"textarea","id":"copy","label":"Copy","default":"From our historic cellars and timeless gardens to our modern function spaces, Seppeltsfield offers an extraordinary backdrop for weddings, corporate functions and private celebrations."},{"type":"text","id":"link_label","label":"Link label","default":"DISCOVER THE ESTATE"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"color","id":"background_color","label":"Section background","default":"#F4F1EA"},{"type":"color","id":"panel_background","label":"Panel background","default":"#F4F1EA"},{"type":"color","id":"heading_color","label":"Heading color","default":"#111315"},{"type":"color","id":"text_color","label":"Text color","default":"#424242"},{"type":"color","id":"muted_color","label":"Muted color","default":"#6D4B35"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":32},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":32}],"presets":[{"name":"SF Events Estate","category":"Seppeltsfield"}]}
+{% endschema %}

@@ -1,0 +1,327 @@
+{{ 'sf-wine-club.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfWineClubMemberships-{{ section.id }}"
+  class="sf-wine-club-memberships"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-head: {{ section.settings.heading_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-muted: {{ section.settings.muted_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-gap: {{ section.settings.card_gap }}px;
+    --sf-cols-d: {{ section.settings.columns_desktop }};
+    --sf-cols-t: {{ section.settings.columns_tablet }};
+    --sf-card-min-h: {{ section.settings.card_min_height }}px;
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-wine-club-container">
+    <div class="sf-wine-club-memberships__intro">
+      {% if section.settings.eyebrow != blank %}
+        <p class="sf-wine-club-memberships__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="sf-wine-club-memberships__heading">{{ section.settings.heading | newline_to_br }}</h2>
+      {% endif %}
+      {% if section.settings.intro_copy != blank %}
+        <p class="sf-wine-club-memberships__copy">{{ section.settings.intro_copy }}</p>
+      {% endif %}
+    </div>
+
+    <div class="sf-wine-club-memberships__grid sf-wine-club-memberships__grid--mobile-{{ section.settings.mobile_layout }}">
+      {% for block in section.blocks %}
+        <article
+          class="sf-wine-club-memberships__card{% if block.settings.featured %} is-featured{% endif %}"
+          style="
+            --sf-card-bg: {{ block.settings.card_background }};
+            --sf-card-text: {{ block.settings.card_text_color }};
+            --sf-card-border: {{ block.settings.border_color }};
+            --sf-card-accent: {{ block.settings.accent_color }};
+            --sf-card-featured: {{ block.settings.featured_border_color }};
+          "
+          {{ block.shopify_attributes }}
+        >
+          {% if block.settings.image != blank and section.settings.show_images %}
+            <div class="sf-wine-club-memberships__card-image">
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag: loading: 'lazy', widths: '375,550,750,990,1200', sizes: '(min-width: 990px) 30vw, 86vw', alt: block.settings.tier_name
+              }}
+            </div>
+          {% endif %}
+          <div class="sf-wine-club-memberships__card-body">
+            {% if block.settings.badge_text != blank %}
+              <p class="sf-wine-club-memberships__badge">{{ block.settings.badge_text }}</p>
+            {% endif %}
+            {% if block.settings.tier_name != blank %}
+              <h3 class="sf-wine-club-memberships__tier">{{ block.settings.tier_name }}</h3>
+            {% endif %}
+            {% if section.settings.show_price and block.settings.price != blank %}
+              <p class="sf-wine-club-memberships__price">{{ block.settings.price }}{% if block.settings.billing_suffix != blank %}<span>{{ block.settings.billing_suffix }}</span>{% endif %}</p>
+            {% endif %}
+            {% if section.settings.show_descriptions and block.settings.description != blank %}
+              <p class="sf-wine-club-memberships__description">{{ block.settings.description }}</p>
+            {% endif %}
+            {% if block.settings.benefits_list != blank %}
+              <ul class="sf-wine-club-memberships__benefits">
+                {% assign lines = block.settings.benefits_list | newline_to_br | split: '<br />' %}
+                {% for line in lines limit: 8 %}
+                  {% assign trimmed = line | strip %}
+                  {% if trimmed != blank %}
+                    <li>{{ trimmed }}</li>
+                  {% endif %}
+                {% endfor %}
+              </ul>
+            {% endif %}
+            {% if block.settings.button_label != blank and block.settings.button_url != blank %}
+              <a
+                href="{{ block.settings.button_url }}"
+                class="sf-wine-button sf-wine-button--{{ block.settings.button_style }}"
+                style="
+                  --sf-btn-text: {{ block.settings.button_text_color }};
+                  --sf-btn-bg: {{ block.settings.button_bg_color }};
+                  --sf-btn-border: {{ block.settings.button_border_color }};
+                  --sf-btn-hover-text: {{ block.settings.button_hover_text_color }};
+                  --sf-btn-hover-bg: {{ block.settings.button_hover_bg_color }};
+                  --sf-btn-hover-border: {{ block.settings.button_hover_bg_color }};
+                "
+              >
+                {{ block.settings.button_label }}
+              </a>
+            {% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+
+    {% if section.settings.show_compare_link and section.settings.compare_label != blank and section.settings.compare_url != blank %}
+      <div class="sf-wine-club-memberships__compare sf-wine-club-memberships__compare--{{ section.settings.compare_alignment }}">
+        <a class="sf-wine-link" href="{{ section.settings.compare_url }}">{{ section.settings.compare_label }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-wine-club-memberships {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-wine-club-memberships__intro {
+    margin-bottom: 1.25rem;
+    max-width: 70ch;
+  }
+  .sf-wine-club-memberships__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--sf-muted);
+    font-size: 0.75rem;
+  }
+  .sf-wine-club-memberships__heading {
+    margin: 0.5rem 0 0;
+    color: var(--sf-head);
+    font-size: clamp(1.8rem, 3.2vw, 3.7rem);
+    line-height: 1.03;
+  }
+  .sf-wine-club-memberships__copy {
+    margin: 0.75rem 0 0;
+    color: var(--sf-muted);
+  }
+  .sf-wine-club-memberships__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--sf-cols-d), minmax(0, 1fr));
+    gap: var(--sf-gap);
+  }
+  .sf-wine-club-memberships__card {
+    background: var(--sf-card-bg);
+    color: var(--sf-card-text);
+    border: 1px solid var(--sf-card-border);
+    min-height: var(--sf-card-min-h);
+    display: grid;
+    align-content: start;
+  }
+  .sf-wine-club-memberships__card.is-featured {
+    border-width: 2px;
+    border-color: var(--sf-card-featured);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--sf-card-featured) 35%, transparent);
+  }
+  .sf-wine-club-memberships__card-image {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+  }
+  .sf-wine-club-memberships__card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-wine-club-memberships__card-body {
+    padding: 1rem;
+  }
+  .sf-wine-club-memberships__badge {
+    margin: 0;
+    display: inline-block;
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: color-mix(in srgb, var(--sf-card-accent) 28%, transparent);
+    color: var(--sf-card-accent);
+    padding: 0.3rem 0.5rem;
+  }
+  .sf-wine-club-memberships__tier {
+    margin: 0.6rem 0 0;
+    font-size: 1.4rem;
+  }
+  .sf-wine-club-memberships__price {
+    margin: 0.45rem 0 0;
+    font-size: 1.35rem;
+    color: var(--sf-card-accent);
+    font-weight: 600;
+  }
+  .sf-wine-club-memberships__price span {
+    font-size: 0.84rem;
+    margin-left: 0.25rem;
+    color: inherit;
+    opacity: 0.85;
+  }
+  .sf-wine-club-memberships__description {
+    margin: 0.6rem 0 0;
+    color: color-mix(in srgb, var(--sf-card-text) 84%, transparent);
+  }
+  .sf-wine-club-memberships__benefits {
+    margin: 0.8rem 0 1rem;
+    padding-left: 1.15rem;
+    display: grid;
+    gap: 0.28rem;
+  }
+  .sf-wine-club-memberships__compare {
+    margin-top: 1rem;
+  }
+  .sf-wine-club-memberships__compare--center {
+    text-align: center;
+  }
+  .sf-wine-club-memberships__compare--right {
+    text-align: right;
+  }
+  @media (max-width: 989px) {
+    .sf-wine-club-memberships {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-wine-club-memberships__grid {
+      grid-template-columns: repeat(var(--sf-cols-t), minmax(0, 1fr));
+    }
+    .sf-wine-club-memberships__grid--mobile-scroll {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(86vw, 1fr);
+      grid-template-columns: unset;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.35rem;
+    }
+    .sf-wine-club-memberships__grid--mobile-scroll .sf-wine-club-memberships__card {
+      scroll-snap-align: start;
+    }
+    .sf-wine-club-memberships__grid--mobile-stack {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Wine Club Memberships",
+  "tag": "section",
+  "class": "sf-wine-club-section",
+  "max_blocks": 6,
+  "settings": [
+    { "type": "paragraph", "content": "Recommended searches: GIF WP 3, Wine Pack, Member selection, Crown Society" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "CHOOSE YOUR MEMBERSHIP" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Find the perfect\nmembership\nfor you." },
+    { "type": "textarea", "id": "intro_copy", "label": "Intro copy" },
+    { "type": "checkbox", "id": "show_images", "label": "Show tier images", "default": true },
+    { "type": "checkbox", "id": "show_price", "label": "Show price", "default": true },
+    { "type": "checkbox", "id": "show_descriptions", "label": "Show descriptions", "default": true },
+    { "type": "checkbox", "id": "show_compare_link", "label": "Show compare link", "default": true },
+    { "type": "text", "id": "compare_label", "label": "Compare label", "default": "COMPARE MEMBERSHIPS" },
+    { "type": "url", "id": "compare_url", "label": "Compare URL" },
+    { "type": "select", "id": "compare_alignment", "label": "Compare alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#111315" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_color", "label": "Muted color", "default": "#D6CEC1" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "range", "id": "columns_desktop", "label": "Cards per row desktop", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns_tablet", "label": "Cards per row tablet", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "select", "id": "mobile_layout", "label": "Mobile layout", "options": [{ "value": "scroll", "label": "Horizontal carousel" }, { "value": "stack", "label": "Stacked" }], "default": "scroll" },
+    { "type": "range", "id": "card_gap", "label": "Card gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 14 },
+    { "type": "range", "id": "card_min_height", "label": "Card minimum height", "min": 260, "max": 760, "step": 10, "unit": "px", "default": 500 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 60 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "membership_tier",
+      "name": "Membership tier",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Tier image" },
+        { "type": "text", "id": "badge_text", "label": "Badge text" },
+        { "type": "checkbox", "id": "featured", "label": "Featured", "default": false },
+        { "type": "text", "id": "tier_name", "label": "Tier name", "default": "Explorer" },
+        { "type": "text", "id": "price", "label": "Price", "default": "$65" },
+        { "type": "text", "id": "billing_suffix", "label": "Billing suffix", "default": "/ YEAR" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "Ideal for those beginning their Seppeltsfield journey." },
+        { "type": "textarea", "id": "benefits_list", "label": "Benefits list (one per line)", "default": "2 curated wine selections per year\n10% discount on wine purchases\nMember newsletter\nCrown Society membership" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "JOIN EXPLORER" },
+        { "type": "url", "id": "button_url", "label": "Button URL" },
+        { "type": "select", "id": "button_style", "label": "Button style", "options": [{ "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "text", "label": "Text link" }], "default": "solid" },
+        { "type": "color", "id": "card_background", "label": "Card background", "default": "#0F1113" },
+        { "type": "color", "id": "card_text_color", "label": "Card text color", "default": "#FFFFFF" },
+        { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+        { "type": "color", "id": "border_color", "label": "Border color", "default": "#2B2F36" },
+        { "type": "color", "id": "featured_border_color", "label": "Featured border", "default": "#47A8DF" },
+        { "type": "color", "id": "button_text_color", "label": "Button text", "default": "#FFFFFF" },
+        { "type": "color", "id": "button_bg_color", "label": "Button background", "default": "#47A8DF" },
+        { "type": "color", "id": "button_border_color", "label": "Button border", "default": "#47A8DF" },
+        { "type": "color", "id": "button_hover_text_color", "label": "Button hover text", "default": "#FFFFFF" },
+        { "type": "color", "id": "button_hover_bg_color", "label": "Button hover background", "default": "#0B8BB9" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Wine Club Memberships",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "membership_tier", "settings": { "tier_name": "Explorer", "price": "$65", "billing_suffix": "/ YEAR", "button_label": "JOIN EXPLORER" } },
+        { "type": "membership_tier", "settings": { "tier_name": "Connoisseur", "price": "$135", "billing_suffix": "/ YEAR", "badge_text": "MOST POPULAR", "featured": true, "description": "For those who appreciate the finer things.", "benefits_list": "3 curated wine selections per year\n15% discount on wine purchases\nExclusive member offers\nInvitations to member events\nCrown Society membership", "button_label": "JOIN CONNOISSEUR" } },
+        { "type": "membership_tier", "settings": { "tier_name": "Collector", "price": "$250", "billing_suffix": "/ YEAR", "description": "For dedicated collectors and lovers of rare wines.", "benefits_list": "4 curated wine selections per year\n20% discount on wine purchases\nAccess to museum and library wines\nExclusive experiences and events\nCrown Society membership", "button_label": "JOIN COLLECTOR" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

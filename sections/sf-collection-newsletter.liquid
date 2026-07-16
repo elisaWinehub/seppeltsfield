@@ -1,0 +1,122 @@
+{{ 'sf-collection.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign desktop_image = section.settings.background_image
+  assign mobile_image = section.settings.mobile_background_image | default: desktop_image
+  assign overlay_rgb = section.settings.overlay_color.red | append: ' ' | append: section.settings.overlay_color.green | append: ' ' | append: section.settings.overlay_color.blue
+%}
+
+<section
+  class="sf-collection-newsletter"
+  style="
+    --sf-newsletter-overlay-rgb: {{ overlay_rgb }};
+    --sf-newsletter-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --sf-newsletter-text-color: {{ section.settings.text_color }};
+    --sf-newsletter-button-bg: {{ section.settings.button_background }};
+    --sf-newsletter-button-color: {{ section.settings.button_text_color }};
+    --sf-newsletter-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --sf-newsletter-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-newsletter-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --sf-newsletter-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-collection-newsletter__media" aria-hidden="true">
+    {% if desktop_image != blank %}
+      <picture>
+        {% if mobile_image != blank %}
+          <source
+            media="(max-width: 749px)"
+            srcset="
+              {{ mobile_image | image_url: width: 550 }} 550w,
+              {{ mobile_image | image_url: width: 750 }} 750w,
+              {{ mobile_image | image_url: width: 990 }} 990w,
+              {{ mobile_image | image_url: width: 1200 }} 1200w
+            "
+          >
+        {% endif %}
+        {{
+          desktop_image
+          | image_url: width: 2200
+          | image_tag:
+            widths: '550, 750, 990, 1200, 1440, 1800, 2200',
+            sizes: '(max-width: 749px) 100vw, 100vw',
+            loading: 'lazy',
+            alt: ''
+        }}
+      </picture>
+    {% endif %}
+    <div class="sf-collection-newsletter__overlay"></div>
+  </div>
+
+  <div class="sf-collection-newsletter__inner">
+    <div>
+      {% if section.settings.eyebrow != blank %}
+        <p class="sf-collection-newsletter__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="sf-collection-newsletter__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.copy != blank %}
+        <p class="sf-collection-newsletter__copy">{{ section.settings.copy }}</p>
+      {% endif %}
+    </div>
+
+    <div>
+      {% form 'customer' %}
+        <div class="sf-collection-newsletter__form">
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <input
+          type="email"
+          name="contact[email]"
+          value="{{ form.email }}"
+          placeholder="{{ section.settings.placeholder }}"
+          aria-label="{{ section.settings.placeholder }}"
+          required
+        >
+        <button type="submit">{{ section.settings.button_label }}</button>
+        </div>
+        {% if form.posted_successfully? %}
+          <p class="sf-newsletter-message">{{ section.settings.success_message }}</p>
+        {% elsif form.errors %}
+          <p class="sf-newsletter-message">{{ section.settings.error_message }}</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF Collection Newsletter",
+  "class": "sf-collection-section",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "settings": [
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile image" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay colour", "default": "#000000" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 55 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Stay in touch" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Join our mailing list" },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "Be the first to know about new releases, events and exclusive offers." },
+    { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "Enter your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Subscribe" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thanks for subscribing." },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "Please enter a valid email address." },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_background", "label": "Button background", "default": "#47A8DF" },
+    { "type": "color", "id": "button_text_color", "label": "Button text colour", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "presets": [
+    {
+      "name": "SF Collection Newsletter",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

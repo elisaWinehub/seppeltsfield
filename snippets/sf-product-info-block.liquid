@@ -1,0 +1,613 @@
+{%- doc -%}
+  Renders a single sf-main-product info block.
+
+  @param {product} product
+  @param {block} block
+  @param {section} section
+  @param {variant} selected_variant
+  @param {string} variant_map_id
+{%- enddoc -%}
+
+{% liquid
+  assign b = block.settings
+  assign spacing = b.spacing_bottom | default: 14
+  assign block_style = '--sf-block-spacing: ' | append: spacing | append: 'px;'
+  assign subtitle_metafield = product.metafields.custom.sub_title | default: product.metafields.custom.subtitle
+  assign teaser_metafield = product.metafields.custom.teaser
+  if breadcrumb_collection == blank or breadcrumb_collection.handle == 'all'
+    for coll in product.collections
+      if coll.handle != 'all'
+        assign breadcrumb_collection = coll
+        break
+      endif
+    endfor
+  endif
+%}
+
+{% if block.type == 'breadcrumbs' and render_context == 'breadcrumbs_row' %}
+  <nav class="sf-product-main__breadcrumbs sf-product-main__breadcrumbs--row" aria-label="Breadcrumb" {{ block.shopify_attributes }}>
+    <a href="{{ routes.root_url }}">{{ b.home_label | default: 'Home' }}</a>
+    <span>{{ b.separator | default: '/' }}</span>
+    <a href="{{ routes.all_products_collection_url }}">{{ b.shop_label | default: 'Shop' }}</a>
+    {% if b.show_collection and breadcrumb_collection and breadcrumb_collection.url != blank %}
+      <span>{{ b.separator | default: '/' }}</span>
+      <a href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title }}</a>
+    {% endif %}
+    {% if b.show_current_product %}
+      <span>{{ b.separator | default: '/' }}</span>
+      <span>{{ product.title }}</span>
+    {% endif %}
+  </nav>
+{% else %}
+<div class="sf-product-main__block" style="{{ block_style }}" {{ block.shopify_attributes }}>
+  {% case block.type %}
+    {% when 'breadcrumbs' %}
+      {% liquid
+        assign eyebrow_text = b.manual_text
+        if eyebrow_text == blank
+          case b.dynamic_source
+            when 'subtitle'
+              assign eyebrow_text = subtitle_metafield
+            when 'vendor'
+              assign eyebrow_text = product.vendor
+            when 'product_type'
+              assign eyebrow_text = product.type
+          endcase
+        endif
+      %}
+      {% if eyebrow_text != blank %}
+        <p
+          class="sf-product-main__eyebrow"
+          style="
+            font-size: {{ b.font_size_mobile | default: 0.75 }}rem;
+            color: {{ b.color | default: section.settings.accent_color }};
+            font-weight: {{ b.weight | default: 600 }};
+            letter-spacing: {{ b.letter_spacing | default: 0.08 }}em;
+            {% if b.uppercase %}text-transform: uppercase;{% endif %}
+          "
+        >
+          {{ eyebrow_text }}
+        </p>
+      {% endif %}
+
+    {% when 'title' %}
+      {% if breadcrumb_collection and breadcrumb_collection.title != blank %}
+        <p class="sf-product-main__collection-name">
+          {% if breadcrumb_collection.url != blank %}
+            <a href="{{ breadcrumb_collection.url }}">{{ breadcrumb_collection.title }}</a>
+          {% else %}
+            {{ breadcrumb_collection.title }}
+          {% endif %}
+        </p>
+      {% endif %}
+      <h1
+        class="sf-product-main__title"
+        style="
+          font-size: {{ b.font_size_mobile | default: 2.0 }}rem;
+          color: {{ b.color | default: section.settings.main_text_color }};
+          font-weight: {{ b.weight | default: 500 }};
+          line-height: {{ b.line_height | default: 1.1 }};
+          letter-spacing: {{ b.letter_spacing | default: 0 }}em;
+          max-width: {{ b.max_width | default: 680 }}px;
+        "
+      >
+        {{ product.title }}
+      </h1>
+      {% if section.settings.score_badge_position == 'beside_title' %}
+        {% assign score_value = product.metafields[section.settings.score_namespace][section.settings.score_key] %}
+        {% if score_value != blank %}
+          <div
+            class="sf-product-score sf-product-score--title"
+            style="
+              --sf-score-size: {{ section.settings.score_badge_size_mobile }}px;
+              --sf-score-bg: {{ section.settings.score_badge_bg }};
+              --sf-score-text: {{ section.settings.score_badge_text }};
+              --sf-score-border: {{ section.settings.score_badge_border }};
+            "
+          >
+            <span><strong>{{ score_value }}</strong>{{ section.settings.score_suffix }}</span>
+          </div>
+        {% endif %}
+      {% endif %}
+
+    {% when 'vendor' %}
+      {% if product.vendor != blank %}
+        <p class="sf-product-main__teaser" style="font-size: {{ b.font_size | default: 0.88 }}rem; color: {{ b.color | default: section.settings.muted_text_color }};">
+          {% if b.show_label %}{{ b.prefix | default: 'By' }} {% endif %}
+          {% if b.link_vendor and product.vendor != blank %}
+            <a href="{{ routes.collections_url }}/vendors?q={{ product.vendor | url_encode }}">{{ product.vendor }}</a>
+          {% else %}
+            {{ product.vendor }}
+          {% endif %}
+        </p>
+      {% endif %}
+
+    {% when 'teaser' %}
+      {% liquid
+        assign teaser_value = b.manual_override
+        if teaser_value == blank and teaser_metafield != blank
+          if teaser_metafield.value != blank
+            assign teaser_value = teaser_metafield.value
+          else
+            assign teaser_value = teaser_metafield
+          endif
+        endif
+        if teaser_value == blank and subtitle_metafield != blank
+          if subtitle_metafield.value != blank
+            assign teaser_value = subtitle_metafield.value
+          else
+            assign teaser_value = subtitle_metafield
+          endif
+        endif
+        if teaser_value == blank and b.use_description_fallback
+          assign teaser_value = product.description
+        endif
+        assign teaser_plain = teaser_value | strip_html | strip
+        assign teaser_max = b.max_characters | default: 180
+        if teaser_plain.size > teaser_max
+          assign teaser_plain = teaser_plain | truncate: teaser_max, '…'
+        endif
+      %}
+      {% if teaser_plain != blank %}
+        <div class="sf-product-main__teaser" style="font-size: {{ b.font_size_mobile | default: 1.0 }}rem; color: {{ b.color | default: section.settings.muted_text_color }}; line-height: {{ b.line_height | default: 1.5 }}; max-width: {{ b.max_width | default: 56 }}ch;">
+          {{ teaser_plain }}
+        </div>
+      {% endif %}
+
+    {% when 'rating_summary' %}
+      {% liquid
+        assign rating_value = product.metafields[b.rating_namespace][b.rating_key]
+        assign rating_count = product.metafields[b.count_namespace][b.count_key]
+      %}
+      {% if rating_value != blank or b.show_empty_state %}
+        <p style="margin:0; color: {{ b.text_color | default: section.settings.muted_text_color }};">
+          {% if rating_value != blank %}
+            {{ rating_value }} ★
+            {% if rating_count != blank %}({{ rating_count }}){% endif %}
+          {% else %}
+            {{ b.empty_label | default: 'No reviews yet' }}
+          {% endif %}
+        </p>
+      {% endif %}
+
+    {% when 'price' %}
+      <p class="sf-product-main__price" style="font-size: {{ b.font_size_mobile | default: 1.3 }}rem; color: {{ b.price_color | default: section.settings.main_text_color }};">
+        <span data-sf-price>{{ selected_variant.price | money }}</span>
+        <span data-sf-compare-at {% unless selected_variant.compare_at_price > selected_variant.price %}hidden{% endunless %}>
+          <s>{{ selected_variant.compare_at_price | money }}</s>
+        </span>
+        {% assign volume_statement = product.metafields.custom.volume_statement | default: product.metafields.custom.volume_ml %}
+        {% if b.show_volume_suffix and volume_statement != blank %}
+          <small>/ {{ volume_statement }}</small>
+        {% endif %}
+      </p>
+
+    {% when 'product_description' %}
+      {% if product.description != blank %}
+        {% liquid
+          assign product_description_html = product.description
+          assign product_description_html = product_description_html | replace: '<h2 class="p1"><strong>OVERVIEW</strong></h2>', ''
+          assign product_description_html = product_description_html | replace: '<h2 class="p1"><strong>Overview</strong></h2>', ''
+          assign product_description_html = product_description_html | replace: '<h2 class="p1">OVERVIEW</h2>', ''
+          assign product_description_html = product_description_html | replace: '<h2 class="p1">Overview</h2>', ''
+          assign product_description_html = product_description_html | replace: '<h2><strong>OVERVIEW</strong></h2>', ''
+          assign product_description_html = product_description_html | replace: '<h2><strong>Overview</strong></h2>', ''
+        %}
+        <div
+          class="sf-product-description"
+          data-sf-readmore
+          data-visible-paragraphs="{{ b.visible_paragraphs | default: 1 }}"
+        >
+          <div class="sf-product-description__content rte">
+            {{ product_description_html }}
+          </div>
+          <button
+            type="button"
+            class="sf-product-description__toggle"
+            data-sf-readmore-toggle
+            data-read-more="{{ b.read_more_label | default: 'Read more' }}"
+            data-read-less="{{ b.read_less_label | default: 'Read less' }}"
+            hidden
+          >
+            {{ b.read_more_label | default: 'Read more' }}
+          </button>
+        </div>
+      {% endif %}
+
+    {% when 'variant_picker' %}
+      {% if product.variants.size > 1 %}
+        <label for="SfVariant-{{ section.id }}-{{ block.id }}" class="visually-hidden">Variant</label>
+        <select
+          id="SfVariant-{{ section.id }}-{{ block.id }}"
+          class="sf-product-main__variant-select"
+          data-sf-variant-picker
+          data-map-id="{{ variant_map_id }}"
+        >
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}" {% if variant.id == selected_variant.id %}selected{% endif %} {% if b.hide_sold_out and variant.available == false %}disabled{% endif %}>
+              {{ variant.title }}
+            </option>
+          {% endfor %}
+        </select>
+      {% endif %}
+
+    {% when 'selling_plan' %}
+      {% render 'sf-product-selling-plan',
+        product: product,
+        selected_variant: selected_variant,
+        block: block,
+        section: section
+      %}
+
+    {% when 'quantity_selector' %}
+      <div class="sf-product-main__qty" data-sf-qty>
+        <button type="button" aria-label="Decrease quantity" data-sf-qty-change="-1">-</button>
+        <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+        <button type="button" aria-label="Increase quantity" data-sf-qty-change="1">+</button>
+      </div>
+
+    {% when 'buy_buttons' %}
+      <product-form-component
+        data-section-id="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-product-url="{{ product.url }}"
+        on:submit="/handleSubmit"
+        data-quantity-default="{% if selected_variant.quantity_rule.min %}{{ selected_variant.quantity_rule.min }}{% else %}1{% endif %}"
+        data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+      >
+        <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+        {%- form 'product', product, data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-product-variant-id ref="variantId">
+          <input type="hidden" name="selling_plan" value="" data-sf-selling-plan-input>
+          {% if b.show_dynamic_checkout %}
+            {{ form | payment_button }}
+          {% endif %}
+          {% liquid
+            assign buy_button_label = b.add_to_cart_label | default: 'Add to cart'
+            unless selected_variant.available
+              assign buy_button_label = b.sold_out_label | default: 'Sold out'
+            endunless
+          %}
+          {% render 'add-to-cart-button',
+            can_add_to_cart: selected_variant.available,
+            add_to_cart_text: buy_button_label,
+            product: product,
+            class: 'sf-product-main__buy add-to-cart-button'
+          %}
+        {%- endform -%}
+      </product-form-component>
+
+    {% when 'quantity_and_buy_buttons' %}
+      {% comment %}
+        Use either quantity_and_buy_buttons OR quantity_selector + buy_buttons to avoid duplicate product forms.
+      {% endcomment %}
+      <product-form-component
+        data-section-id="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-product-url="{{ product.url }}"
+        on:submit="/handleSubmit"
+        data-quantity-default="{% if selected_variant.quantity_rule.min %}{{ selected_variant.quantity_rule.min }}{% else %}1{% endif %}"
+        data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+      >
+        <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+        {%- form 'product', product, data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-product-variant-id ref="variantId">
+          <input type="hidden" name="selling_plan" value="" data-sf-selling-plan-input>
+          <div class="sf-product-main__purchase-row" data-stack-mobile="{{ b.stack_on_mobile }}">
+            {% if b.show_quantity %}
+              <div class="sf-product-main__qty" data-sf-qty>
+                <button type="button" aria-label="Decrease quantity" data-sf-qty-change="-1">-</button>
+                <input type="number" name="quantity" value="1" min="1" inputmode="numeric" aria-label="Quantity">
+                <button type="button" aria-label="Increase quantity" data-sf-qty-change="1">+</button>
+              </div>
+            {% else %}
+              <input type="hidden" name="quantity" value="1">
+            {% endif %}
+            {% liquid
+              assign buy_button_label = b.button_label | default: 'Add to cart'
+              unless selected_variant.available
+                assign buy_button_label = b.sold_out_label | default: 'Sold out'
+              endunless
+            %}
+            {% render 'add-to-cart-button',
+              can_add_to_cart: selected_variant.available,
+              add_to_cart_text: buy_button_label,
+              product: product,
+              class: 'sf-product-main__buy add-to-cart-button'
+            %}
+          </div>
+        {%- endform -%}
+      </product-form-component>
+
+    {% when 'trust_icons' %}
+      <div
+        class="sf-product-main__trust-grid"
+        style="
+          --sf-trust-columns: {{ b.columns_desktop | default: 4 }};
+          --sf-trust-columns-mobile: {{ b.columns_mobile | default: 2 }};
+          --sf-trust-gap: {{ b.gap | default: 10 }}px;
+          --sf-trust-icon-size: {{ b.icon_size | default: 36 }}px;
+        "
+      >
+        {% assign trust_rows = b.items | newline_to_br | split: '<br />' %}
+        {% for item in trust_rows %}
+          {% assign trimmed = item | strip %}
+          {% if trimmed != blank %}
+            {% liquid
+              assign trust_icon = 'delivery'
+              assign trust_label = trimmed
+              assign trust_parts = trimmed | split: '|'
+              if trust_parts.size > 1
+                assign trust_icon = trust_parts[0] | strip
+                assign trust_label = trust_parts[1] | strip
+              endif
+            %}
+            <div class="sf-product-main__trust-item">
+              <span class="sf-product-main__trust-icon" aria-hidden="true">
+                {% render 'sf-trust-icon', icon: trust_icon %}
+              </span>
+              <p>{{ trust_label }}</p>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+    {% when 'divider' %}
+      <hr style="border:0; border-top: {{ b.thickness | default: 1 }}px solid {{ b.color | default: section.settings.border_color }}; margin: {{ b.margin_top | default: 8 }}px 0 {{ b.margin_bottom | default: 8 }}px;">
+
+    {% when 'text' %}
+      <div style="color: {{ b.color | default: section.settings.main_text_color }}; max-width: {{ b.max_width | default: 100 }}%;">
+        {{ b.text }}
+      </div>
+
+    {% when 'custom_liquid' %}
+      {{ b.custom_liquid }}
+
+    {% when 'accordion_tasting_notes' %}
+      {% liquid
+        assign hide_value = product.metafields.custom.hide_tasting_notes_section | default: '' | downcase | strip
+        assign hide_section = false
+        if hide_value == 'yes' or hide_value == 'true' or hide_value == '1' or hide_value == 'y'
+          assign hide_section = true
+        endif
+        assign aroma = product.metafields.custom.aroma
+        assign palate = product.metafields.custom.palate
+        assign style_val = product.metafields.custom.style
+        assign colour = product.metafields.custom.tasting_colour
+        assign has_tasting_content = false
+        if aroma != blank or palate != blank or style_val != blank or colour != blank
+          assign has_tasting_content = true
+        endif
+      %}
+      {% if hide_section == false and has_tasting_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if aroma != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Aroma</span><span>{% render 'sf-product-metafield-value', metafield: aroma, preserve_lines: true %}</span></div>{% endif %}
+            {% if palate != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Palate</span><span>{% render 'sf-product-metafield-value', metafield: palate, preserve_lines: true %}</span></div>{% endif %}
+            {% if style_val != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Style</span><span>{% render 'sf-product-metafield-value', metafield: style_val, preserve_lines: true %}</span></div>{% endif %}
+            {% if colour != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Colour</span><span>{% render 'sf-product-metafield-value', metafield: colour, preserve_lines: true %}</span></div>{% endif %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'TASTING NOTES', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_winemaker_notes' %}
+      {% liquid
+        assign wm_comments = product.metafields.custom.winemakers_comments
+        assign wm = product.metafields.custom.winemaker
+        assign history = product.metafields.custom.history
+        assign winemaking = product.metafields.custom.winemaking
+        assign maturation = product.metafields.custom.maturation
+        assign cooper_detail = product.metafields.custom.cooper_detail
+        assign crafting = product.metafields.custom.crafting
+        assign has_winemaker_content = false
+        if wm_comments != blank or wm != blank or history != blank or winemaking != blank or maturation != blank or cooper_detail != blank or crafting != blank
+          assign has_winemaker_content = true
+        endif
+      %}
+      {% if has_winemaker_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if wm_comments != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Winemaker's Comments</span><span>{% render 'sf-product-metafield-value', metafield: wm_comments, preserve_lines: true %}</span></div>{% endif %}
+            {% if wm != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Winemaker</span><span>{% render 'sf-product-metafield-value', metafield: wm, preserve_lines: true %}</span></div>{% endif %}
+            {% if history != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">History</span><span>{% render 'sf-product-metafield-value', metafield: history, preserve_lines: true %}</span></div>{% endif %}
+            {% if winemaking != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Winemaking</span><span>{% render 'sf-product-metafield-value', metafield: winemaking, preserve_lines: true %}</span></div>{% endif %}
+            {% if maturation != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Maturation</span><span>{% render 'sf-product-metafield-value', metafield: maturation, preserve_lines: true %}</span></div>{% endif %}
+            {% if cooper_detail != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Cooperage</span><span>{% render 'sf-product-metafield-value', metafield: cooper_detail, preserve_lines: true %}</span></div>{% endif %}
+            {% if crafting != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Crafting</span><span>{% render 'sf-product-metafield-value', metafield: crafting, preserve_lines: true %}</span></div>{% endif %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'WINEMAKER NOTES', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_vineyard' %}
+      {% liquid
+        assign region = product.metafields.custom.region
+        assign vineyard = product.metafields.custom.vineyard
+        assign variety = product.metafields.custom.variety
+        assign blend = product.metafields.custom.blend
+        assign vintage = product.metafields.custom.vintage
+        assign has_vineyard_content = false
+        if region != blank or vineyard != blank or variety != blank or blend != blank or vintage != blank
+          assign has_vineyard_content = true
+        endif
+      %}
+      {% if has_vineyard_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if region != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Region</span><span>{% render 'sf-product-metafield-value', metafield: region %}</span></div>{% endif %}
+            {% if vineyard != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Vineyard</span><span>{% render 'sf-product-metafield-value', metafield: vineyard %}</span></div>{% endif %}
+            {% if variety != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Variety</span><span>{% render 'sf-product-metafield-value', metafield: variety %}</span></div>{% endif %}
+            {% if blend != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Blend</span><span>{% render 'sf-product-metafield-value', metafield: blend, preserve_lines: true %}</span></div>{% endif %}
+            {% if vintage != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Vintage</span><span>{% render 'sf-product-metafield-value', metafield: vintage %}</span></div>{% endif %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'VINEYARD', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_vintage' %}
+      {% liquid
+        assign vintage = product.metafields.custom.vintage
+        assign peak = product.metafields.custom.peak_drinking
+        assign release_quantity = product.metafields.custom.release_quantity
+        assign history = product.metafields.custom.history
+        assign has_vintage_content = false
+        if vintage != blank or peak != blank or release_quantity != blank
+          assign has_vintage_content = true
+        endif
+        if b.include_history and history != blank
+          assign has_vintage_content = true
+        endif
+      %}
+      {% if has_vintage_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if vintage != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Vintage</span><span>{% render 'sf-product-metafield-value', metafield: vintage %}</span></div>{% endif %}
+            {% if peak != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Peak Drinking</span><span>{% render 'sf-product-metafield-value', metafield: peak %}</span></div>{% endif %}
+            {% if release_quantity != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Release Quantity</span><span>{% render 'sf-product-metafield-value', metafield: release_quantity %}</span></div>{% endif %}
+            {% if b.include_history and history != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">History</span><span>{% render 'sf-product-metafield-value', metafield: history, preserve_lines: true %}</span></div>{% endif %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'VINTAGE CONDITIONS', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_food_pairing' %}
+      {% liquid
+        assign hide_value = product.metafields.custom.hide_food_pairing_section | default: '' | downcase | strip
+        assign hide_section = false
+        if hide_value == 'yes' or hide_value == 'true' or hide_value == '1' or hide_value == 'y'
+          assign hide_section = true
+        endif
+        assign food = product.metafields.custom.food_pairings
+        assign mixing = product.metafields.custom.mixing_recommendations
+        assign care = product.metafields.custom.care_instructions
+        assign has_food_content = false
+        if food != blank or mixing != blank or care != blank
+          assign has_food_content = true
+        endif
+      %}
+      {% if hide_section == false and has_food_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if food != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Food Pairings</span><span>{% render 'sf-product-metafield-value', metafield: food, preserve_lines: true %}</span></div>{% endif %}
+            {% if mixing != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Mixing Recommendations</span><span>{% render 'sf-product-metafield-value', metafield: mixing, preserve_lines: true %}</span></div>{% endif %}
+            {% if care != blank %}<div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Care Instructions</span><span>{% render 'sf-product-metafield-value', metafield: care, preserve_lines: true %}</span></div>{% endif %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'FOOD PAIRING', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_technical' %}
+      {% liquid
+        assign hide_value = product.metafields.custom.hide_technical_information_section | default: '' | downcase | strip
+        assign hide_section = false
+        if hide_value == 'yes' or hide_value == 'true' or hide_value == '1' or hide_value == 'y'
+          assign hide_section = true
+        endif
+        assign alcohol_statement = product.metafields.custom.alcohol_statement
+        assign alcohol_percentage = product.metafields.custom.alcohol_percentage
+        assign volume_statement = product.metafields.custom.volume_statement
+        assign volume_ml = product.metafields.custom.volume_ml
+        assign technical_keys = 'style,tasting_colour,blend,age,vintage,variety,region,vineyard,peak_drinking,cooper,timber,release_quantity,delivery_details' | split: ','
+        assign has_technical_content = false
+        if alcohol_statement != blank or alcohol_percentage != blank or volume_statement != blank or volume_ml != blank
+          assign has_technical_content = true
+        endif
+        for key in technical_keys
+          assign value = product.metafields.custom[key]
+          if value != blank
+            assign has_technical_content = true
+            break
+          endif
+        endfor
+      %}
+      {% if hide_section == false and has_technical_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if b.alcohol_preference == 'statement' and alcohol_statement != blank %}
+              <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Alcohol</span><span>{% render 'sf-product-metafield-value', metafield: alcohol_statement %}</span></div>
+            {% elsif alcohol_percentage != blank %}
+              <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Alcohol</span><span>{% render 'sf-product-metafield-value', metafield: alcohol_percentage, append_unit: '%' %}</span></div>
+            {% endif %}
+            {% if b.volume_preference == 'statement' and volume_statement != blank %}
+              <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Volume</span><span>{% render 'sf-product-metafield-value', metafield: volume_statement %}</span></div>
+            {% elsif volume_ml != blank %}
+              <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Volume</span><span>{% render 'sf-product-metafield-value', metafield: volume_ml, append_unit: 'ml' %}</span></div>
+            {% endif %}
+            {% for key in technical_keys %}
+              {% assign value = product.metafields.custom[key] %}
+              {% if value != blank %}
+                <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">{{ key | replace: '_', ' ' | capitalize }}</span><span>{% render 'sf-product-metafield-value', metafield: value, preserve_lines: true %}</span></div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'TECHNICAL DETAILS', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_awards_reviews' %}
+      {% liquid
+        assign awards = product.metafields.custom.awards
+        assign reviews = product.metafields.custom.critic_reviews
+        assign has_awards_content = false
+        if b.show_awards and awards != blank
+          assign has_awards_content = true
+        endif
+        if b.show_critic_reviews and reviews != blank
+          assign has_awards_content = true
+        endif
+      %}
+      {% if has_awards_content %}
+        {% capture content %}
+          <div class="sf-product-meta-list">
+            {% if b.show_awards and awards != blank %}
+              <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Awards</span><span>{% render 'sf-product-metafield-value', metafield: awards, preserve_lines: true %}</span></div>
+            {% endif %}
+            {% if b.show_critic_reviews and reviews != blank %}
+              <div class="sf-product-meta-row"><span class="sf-product-meta-row__label">Critic Reviews</span><span>{% render 'sf-product-metafield-value', metafield: reviews, preserve_lines: true %}</span></div>
+            {% endif %}
+          </div>
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'AWARDS & CRITIC REVIEWS', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'accordion_pdf' %}
+      {% liquid
+        assign pdf_metafield = product.metafields.custom.pdf
+        assign pdf_url = blank
+        if pdf_metafield != blank
+          if pdf_metafield.value.url
+            assign pdf_url = pdf_metafield.value.url
+          elsif pdf_metafield.value != blank
+            assign pdf_url = pdf_metafield.value
+          else
+            assign pdf_url = pdf_metafield
+          endif
+        endif
+      %}
+      {% if b.hide_if_empty == false or pdf_url != blank %}
+        {% capture content %}
+          {% if b.copy != blank %}<p>{{ b.copy }}</p>{% endif %}
+          {% if pdf_url != blank %}
+            <a href="{{ pdf_url }}" class="sf-product-main__buy" {% if b.open_new_tab %}target="_blank" rel="noopener"{% endif %}{% if b.force_download %} download{% endif %}>
+              {{ b.download_label | default: 'Download PDF' }}
+            </a>
+          {% endif %}
+        {% endcapture %}
+        {% render 'sf-product-accordion', heading: b.heading | default: 'DOWNLOADS', content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when 'custom_accordion' %}
+      {% capture content %}
+        {% if b.rich_text != blank %}{{ b.rich_text }}{% endif %}
+        {% if b.custom_liquid != blank %}{{ b.custom_liquid }}{% endif %}
+      {% endcapture %}
+      {% if b.hide_when_blank == false or content != blank %}
+        {% render 'sf-product-accordion', heading: b.heading, content: content, open: b.open_by_default, block: block %}
+      {% endif %}
+
+    {% when '@app' %}
+      {% render block %}
+  {% endcase %}
+</div>
+{% endif %}

@@ -1,0 +1,75 @@
+.sf-events-container {
+  width: min(100% - 3rem, var(--sf-content-max, 1200px));
+  margin-inline: auto;
+}
+
+.shopify-section.sf-events-section {
+  display: block !important;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.shopify-section.sf-events-section > section {
+  display: block;
+}
+
+.sf-events-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.8rem 1.15rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.sf-events-button--solid {
+  color: var(--sf-btn-text, #fff);
+  background: var(--sf-btn-bg, #0ca7e0);
+  border-color: var(--sf-btn-border, #0ca7e0);
+}
+
+.sf-events-button--outline {
+  color: var(--sf-btn-text, currentColor);
+  background: transparent;
+  border-color: var(--sf-btn-border, currentColor);
+}
+
+.sf-events-button--text {
+  color: var(--sf-btn-text, currentColor);
+  background: transparent;
+  border-color: transparent;
+  padding-inline: 0;
+}
+
+.sf-events-button:hover {
+  color: var(--sf-btn-hover-text, var(--sf-btn-text, #fff));
+  background: var(--sf-btn-hover-bg, var(--sf-btn-bg, #0ca7e0));
+  border-color: var(--sf-btn-hover-border, var(--sf-btn-border, #0ca7e0));
+}
+
+.sf-events-button:focus-visible,
+.sf-events-link:focus-visible,
+.sf-events-input:focus-visible,
+.sf-events-select:focus-visible,
+.sf-events-textarea:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.sf-events-link {
+  color: inherit;
+  text-underline-offset: 0.18em;
+}
+
+@media (max-width: 989px) {
+  .sf-events-container {
+    width: min(100% - 2rem, var(--sf-content-max, 1200px));
+  }
+}

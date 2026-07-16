@@ -1,0 +1,41 @@
+{{ 'sf-about.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign mobile_image = section.settings.mobile_image | default: section.settings.desktop_image
+-%}
+<section id="SfAboutHero-{{ section.id }}" class="sf-about-hero" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-overlay:{{ section.settings.overlay_color }};--sf-overlay-opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};--sf-head:{{ section.settings.heading_color }};--sf-copy:{{ section.settings.copy_color }};--sf-eye:{{ section.settings.eyebrow_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;--sf-min-d:{{ section.settings.min_height_desktop }}vh;--sf-min-m:{{ section.settings.min_height_mobile }}vh;">
+  <div class="sf-about-hero__media">
+    {% if section.settings.desktop_image != blank %}
+      {{ section.settings.desktop_image | image_url: width: 2200 | image_tag: class: 'sf-about-hero__img sf-about-hero__img--desktop', loading: 'eager', fetchpriority: 'high', widths: '750,990,1200,1440,1800,2200', sizes: '100vw', alt: section.settings.desktop_image.alt }}
+      {{ mobile_image | image_url: width: 1200 | image_tag: class: 'sf-about-hero__img sf-about-hero__img--mobile', loading: 'eager', fetchpriority: 'high', widths: '375,550,750,990,1200', sizes: '100vw', alt: mobile_image.alt }}
+    {% endif %}
+  </div>
+  <div class="sf-about-hero__overlay"></div>
+  <div class="sf-about-container sf-about-hero__inner">
+    <div class="sf-about-hero__content">
+      {% if section.settings.eyebrow != blank %}<p class="sf-about-hero__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h1 class="sf-about-hero__heading">{{ section.settings.heading | newline_to_br }}</h1>{% endif %}
+      {% if section.settings.copy != blank %}<p class="sf-about-hero__copy">{{ section.settings.copy }}</p>{% endif %}
+      <div class="sf-about-hero__actions">
+        {% if section.settings.button_primary_label != blank and section.settings.button_primary_url != blank %}<a class="sf-about-button sf-about-button--solid" href="{{ section.settings.button_primary_url }}">{{ section.settings.button_primary_label }}</a>{% endif %}
+        {% if section.settings.button_secondary_label != blank and section.settings.button_secondary_url != blank %}<a class="sf-about-button sf-about-button--outline" href="{{ section.settings.button_secondary_url }}">{{ section.settings.button_secondary_label }}</a>{% endif %}
+      </div>
+      {% if section.settings.scroll_label != blank %}<p class="sf-about-hero__scroll">{{ section.settings.scroll_label }}</p>{% endif %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-about-hero{position:relative;width:100%;max-width:100%;margin-left:0;margin-right:0;background:var(--sf-bg);min-height:var(--sf-min-d);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d);overflow:clip}.sf-about-hero__media,.sf-about-hero__overlay{position:absolute;inset:0}.sf-about-hero__img{width:100%;height:100%;object-fit:cover}.sf-about-hero__img--mobile{display:none}.sf-about-hero__overlay{background:var(--sf-overlay);opacity:var(--sf-overlay-opacity)}.sf-about-hero__inner{position:relative;display:grid;align-content:end;min-height:calc(var(--sf-min-d) - var(--sf-pad-top-d) - var(--sf-pad-bottom-d))}.sf-about-hero__content{max-width:620px}.sf-about-hero__eyebrow{margin:0;color:var(--sf-eye);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-about-hero__heading{margin:.55rem 0 0;color:var(--sf-head);font-size:clamp(2.5rem,6vw,6rem);line-height:1.02}.sf-about-hero__copy{margin:.9rem 0 1.2rem;color:var(--sf-copy);max-width:52ch}.sf-about-hero__actions{display:flex;flex-wrap:wrap;gap:.6rem}.sf-about-hero__scroll{margin:1.2rem 0 0;color:var(--sf-eye);text-transform:uppercase;letter-spacing:.14em;font-size:.68rem}@media(max-width:989px){.sf-about-hero{min-height:var(--sf-min-m);padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-about-hero__img--desktop{display:none}.sf-about-hero__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF About Hero","tag":"section","class":"sf-about-section","settings":[{"type":"paragraph","content":"Search files: Seppeltsfield Estate Aerial, historyHERO, Estate vineyard"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"standard"},{"type":"image_picker","id":"desktop_image","label":"Desktop image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"color","id":"background_color","label":"Background","default":"#050505"},{"type":"color","id":"overlay_color","label":"Overlay color","default":"#050505"},{"type":"range","id":"overlay_opacity","label":"Overlay opacity","min":0,"max":90,"step":5,"unit":"%","default":40},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"OUR STORY"},{"type":"textarea","id":"heading","label":"Heading","default":"Seven Generations.\nOne Cellar."},{"type":"textarea","id":"copy","label":"Copy","default":"From 1851 to today, seven generations of the Seppeltsfield family have shaped one of Australia's great wine estates.","info":"Needs verification — brand guide confirms Warren Randall / Randall Wine Group has owned the estate since 2009. Confirm 'seven generations of the Seppeltsfield family' is accurate before this copy is finalized for launch."},{"type":"text","id":"button_primary_label","label":"Primary button label","default":"DISCOVER OUR STORY"},{"type":"url","id":"button_primary_url","label":"Primary button URL"},{"type":"text","id":"button_secondary_label","label":"Secondary button label","default":"PLAN YOUR VISIT"},{"type":"url","id":"button_secondary_url","label":"Secondary button URL"},{"type":"text","id":"scroll_label","label":"Scroll label","default":"SCROLL TO EXPLORE"},{"type":"color","id":"eyebrow_color","label":"Eyebrow color","default":"#D6CEC1"},{"type":"color","id":"heading_color","label":"Heading color","default":"#FFFFFF"},{"type":"color","id":"copy_color","label":"Copy color","default":"#F4F1EA"},{"type":"range","id":"min_height_desktop","label":"Min height desktop","min":60,"max":100,"step":2,"unit":"vh","default":82},{"type":"range","id":"min_height_mobile","label":"Min height mobile","min":50,"max":100,"step":2,"unit":"vh","default":66},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":24},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":24},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":20},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":20}],"presets":[{"name":"SF About Hero","category":"Seppeltsfield"}]}
+{% endschema %}

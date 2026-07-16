@@ -1,0 +1,247 @@
+{{ 'sf-wine-club.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf-wine-club.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfWineClubStories-{{ section.id }}"
+  class="sf-wine-club-stories"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-muted: {{ section.settings.muted_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-gap: {{ section.settings.gallery_gap }}px;
+    --sf-cols: {{ section.settings.gallery_columns }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-wine-club-container">
+    <div class="sf-wine-club-stories__layout sf-wine-club-stories__layout--{{ section.settings.layout }}">
+      <div
+        class="sf-wine-club-stories__quote-wrap"
+        data-sf-stories-slider
+        data-autoplay="{{ section.settings.autoplay }}"
+        data-delay="{{ section.settings.autoplay_delay }}"
+      >
+        {% assign testimonial_count = 0 %}
+        {% for block in section.blocks %}
+          {% if block.type == 'testimonial' %}
+            {% assign testimonial_count = testimonial_count | plus: 1 %}
+            <article data-sf-story-slide {{ block.shopify_attributes }}>
+              {% if section.settings.eyebrow != blank %}
+                <p class="sf-wine-club-stories__eyebrow">{{ section.settings.eyebrow }}</p>
+              {% endif %}
+              <blockquote class="sf-wine-club-stories__quote">"{{ block.settings.quote }}"</blockquote>
+              <p class="sf-wine-club-stories__attr">{{ block.settings.member_name }}{% if block.settings.subtitle != blank %}, {{ block.settings.subtitle }}{% endif %}</p>
+              {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+                <a class="sf-wine-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+              {% endif %}
+            </article>
+          {% endif %}
+        {% endfor %}
+        {% if testimonial_count > 1 %}
+          <div class="sf-wine-club-stories__controls">
+            <button class="sf-wine-icon-button" type="button" data-sf-stories-prev aria-label="Previous story">←</button>
+            <button class="sf-wine-icon-button" type="button" data-sf-stories-next aria-label="Next story">→</button>
+            <span data-sf-stories-counter></span>
+          </div>
+        {% endif %}
+      </div>
+
+      <div class="sf-wine-club-stories__gallery">
+        {% for block in section.blocks %}
+          {% if block.type == 'gallery_image' and block.settings.image != blank %}
+            <article class="sf-wine-club-stories__tile{% if block.settings.featured_size %} is-featured{% endif %}" {{ block.shopify_attributes }}>
+              {% if block.settings.link_url != blank %}
+                <a href="{{ block.settings.link_url }}">
+              {% endif %}
+              {{
+                block.settings.image
+                | image_url: width: 1200
+                | image_tag: loading: 'lazy', widths: '375,550,750,990,1200', sizes: '(min-width: 990px) 26vw, 72vw', alt: block.settings.alt_override | default: block.settings.image.alt
+              }}
+              {% if block.settings.link_url != blank %}
+                </a>
+              {% endif %}
+              {% if block.settings.caption != blank %}
+                <p class="sf-wine-club-stories__caption">{{ block.settings.caption }}</p>
+              {% endif %}
+            </article>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-wine-club-stories {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-wine-club-stories__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 1rem;
+    align-items: start;
+  }
+  .sf-wine-club-stories__layout--gallery_left {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+  .sf-wine-club-stories__layout--gallery_left .sf-wine-club-stories__quote-wrap {
+    order: 2;
+  }
+  .sf-wine-club-stories__layout--gallery_left .sf-wine-club-stories__gallery {
+    order: 1;
+  }
+  .sf-wine-club-stories__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--sf-muted);
+    font-size: 0.75rem;
+  }
+  .sf-wine-club-stories__quote {
+    margin: 0.7rem 0 0;
+    font-size: clamp(1.35rem, 2.7vw, 2.35rem);
+    line-height: 1.24;
+  }
+  .sf-wine-club-stories__attr {
+    margin: 0.75rem 0;
+    color: var(--sf-muted);
+    font-size: 0.9rem;
+  }
+  .sf-wine-club-stories__controls {
+    margin-top: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sf-wine-icon-button {
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    width: 2rem;
+    height: 2rem;
+  }
+  .sf-wine-club-stories__gallery {
+    display: grid;
+    grid-template-columns: repeat(var(--sf-cols), minmax(0, 1fr));
+    gap: var(--sf-gap);
+  }
+  .sf-wine-club-stories__tile.is-featured {
+    grid-column: span 2;
+  }
+  .sf-wine-club-stories__tile img {
+    width: 100%;
+    display: block;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+  }
+  .sf-wine-club-stories__caption {
+    margin: 0.42rem 0 0;
+    color: var(--sf-muted);
+    font-size: 0.82rem;
+  }
+  @media (max-width: 989px) {
+    .sf-wine-club-stories {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-wine-club-stories__layout,
+    .sf-wine-club-stories__layout--gallery_left {
+      grid-template-columns: 1fr;
+    }
+    .sf-wine-club-stories__quote-wrap,
+    .sf-wine-club-stories__gallery {
+      order: initial;
+    }
+    .sf-wine-club-stories__gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sf-wine-club-stories__tile.is-featured {
+      grid-column: span 2;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Wine Club Stories",
+  "tag": "section",
+  "class": "sf-wine-club-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "paragraph", "content": "Recommended searches: Seppeltsfield Crown Society, Group Tasting, Member event" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "MEMBER STORIES" },
+    { "type": "select", "id": "layout", "label": "Layout", "options": [{ "value": "quote_left", "label": "Quote left, gallery right" }, { "value": "gallery_left", "label": "Gallery left, quote right" }, { "value": "stacked", "label": "Stacked" }], "default": "quote_left" },
+    { "type": "checkbox", "id": "autoplay", "label": "Autoplay testimonials", "default": false },
+    { "type": "range", "id": "autoplay_delay", "label": "Autoplay delay", "min": 3000, "max": 9500, "step": 500, "unit": "ms", "default": 6000 },
+    { "type": "range", "id": "gallery_columns", "label": "Gallery columns desktop", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "gallery_gap", "label": "Gallery gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 12 },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#111315" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_color", "label": "Muted color", "default": "#D6CEC1" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "The Wine Club connects us to the Barossa, the people and the stories behind every bottle." },
+        { "type": "text", "id": "member_name", "label": "Member name", "default": "JANE WILLIAMS" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "MEMBER SINCE 2018" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "READ MORE MEMBER STORIES" },
+        { "type": "url", "id": "link_url", "label": "Link URL" }
+      ]
+    },
+    {
+      "type": "gallery_image",
+      "name": "Gallery image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "alt_override", "label": "Alt text override" },
+        { "type": "text", "id": "caption", "label": "Caption" },
+        { "type": "url", "id": "link_url", "label": "Link URL" },
+        { "type": "checkbox", "id": "featured_size", "label": "Featured size", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Wine Club Stories",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" },
+        { "type": "gallery_image" }
+      ]
+    }
+  ]
+}
+{% endschema %}

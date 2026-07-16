@@ -27,6 +27,9 @@
   elsif section.settings.enable_transparent_header_collection and template.name == 'collection'
     assign transparent = 'always'
     assign transparent_text_color_setting = section.settings.text_color_transparent_collection
+  elsif section.settings.enable_transparent_header_other_templates and template.name != 'index' and template.name != 'product' and template.name != 'collection'
+  assign transparent = 'always'
+  assign transparent_text_color_setting = section.settings.text_color_transparent_other_templates
   endif
 
   if section.settings.enable_sticky_header == 'always'
@@ -88,6 +91,25 @@
     content_for 'block', type: '_header-menu', id: 'header-menu'
   endcapture
 
+  assign header_menu_block = section.blocks | where: 'type', '_header-menu' | first
+  assign header_cta_enabled = true
+  assign header_cta_label = 'Book Experience'
+  assign header_cta_url = '/pages/experiences'
+  assign header_cta_bg = '#050505'
+  assign header_cta_text = '#FFFFFF'
+  assign header_cta_hover_bg = '#47A8DF'
+  assign header_cta_hover_text = '#FFFFFF'
+
+  if header_menu_block != blank
+    assign header_cta_enabled = header_menu_block.settings.show_header_cta
+    assign header_cta_label = header_menu_block.settings.header_cta_label | default: header_cta_label
+    assign header_cta_url = header_menu_block.settings.header_cta_url | default: header_cta_url
+    assign header_cta_bg = header_menu_block.settings.header_cta_bg_color | default: header_cta_bg
+    assign header_cta_text = header_menu_block.settings.header_cta_text_color | default: header_cta_text
+    assign header_cta_hover_bg = header_menu_block.settings.header_cta_hover_bg_color | default: header_cta_hover_bg
+    assign header_cta_hover_text = header_menu_block.settings.header_cta_hover_text_color | default: header_cta_hover_text
+  endif
+
   capture drawer_menu
     content_for 'block', type: '_header-menu', id: 'header-menu', variant: 'mobile'
   endcapture
@@ -132,6 +154,21 @@
     endif
   endif
   capture search
+    if header_cta_enabled and header_cta_label != blank and header_cta_url != blank
+      echo '<a href="'
+      echo header_cta_url
+      echo '" class="header-search-cta header-actions__action mobile:hidden" style="--menu-cta-bg: '
+      echo header_cta_bg
+      echo '; --menu-cta-text: '
+      echo header_cta_text
+      echo '; --menu-cta-hover-bg: '
+      echo header_cta_hover_bg
+      echo '; --menu-cta-hover-text: '
+      echo header_cta_hover_text
+      echo ';">'
+      echo header_cta_label
+      echo '</a>'
+    endif
     render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
   endcapture
 
@@ -586,6 +623,44 @@
     }
   }
 
+  .header[transparent]:not([data-sticky-state='active']) {
+    --menu-top-level-font-color: #ffffff;
+    --menu-top-level-font-color-rgb: 255 255 255;
+  }
+
+  .header[transparent][data-sticky-state='active'],
+  .header:not([transparent]) {
+    --menu-top-level-font-color: #050505;
+    --menu-top-level-font-color-rgb: 5 5 5;
+  }
+
+  /* Custom: keep transparent header clear on link hover (home),
+     only show solid underlay once sticky/active on scroll. */
+  .header[transparent]:not([data-sticky-state='active']):has(.menu-list__link:is(:hover, [aria-expanded='true'])) {
+    --closed-underlay-height: 0px !important;
+  }
+
+  .header[transparent]:not([data-sticky-state='active']) .header__underlay-closed,
+  .header[transparent]:not([data-sticky-state='active']) .header__underlay-open {
+    background: transparent !important;
+  }
+
+  /* Custom: menu links use brand blue on hover, no hover background. */
+  .header .menu-list__link:not(.menu-list__link--cta):hover,
+  .header .menu-list__list-item:focus-within .menu-list__link:not(.menu-list__link--cta),
+  .header .menu-list .menu-list__link:not(.menu-list__link--cta)[aria-expanded='true'] {
+    color: #47a8df !important;
+    background-color: transparent !important;
+  }
+
+  /* Keep non-hovered menu links white while transparent (home, pre-scroll). */
+  .header[transparent]:not([data-sticky-state='active'])
+    .menu-list
+    .menu-list__link:not(.menu-list__link--cta):not(:hover):not([aria-expanded='true']) {
+    color: #ffffff !important;
+    background-color: transparent !important;
+  }
+
   /* When top row has transparent background, make it inherit colors from header component */
   [data-transparent-background='top']:hover .header__row--top,
   [data-transparent-background='top']:focus-within .header__row--top,
@@ -961,6 +1036,27 @@
     }
   }
 
+  .header-search-cta {
+    align-items: center;
+    justify-content: center;
+    padding: 0.62rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--menu-cta-bg);
+    background: var(--menu-cta-bg);
+    color: var(--menu-cta-text) !important;
+    text-decoration: none;
+    line-height: 1;
+    margin-inline-end: var(--gap-2xs);
+    white-space: nowrap;
+  }
+
+  .header-search-cta:hover,
+  .header-search-cta:focus-visible {
+    background: var(--menu-cta-hover-bg);
+    border-color: var(--menu-cta-hover-bg);
+    color: var(--menu-cta-hover-text) !important;
+  }
+
   .header-actions__action:not(.account-button) .svg-wrapper {
     height: var(--button-size);
     width: var(--button-size);
@@ -998,9 +1094,9 @@
     }
   }
 
-  /* When the header is transparent, add a margin to a potential header-section below it */
+  /* Keep transparent header overlaid on hero media (home page use-case). */
   .header-section:has(.header[transparent]) + .shopify-section {
-    margin-top: var(--header-height);
+    margin-top: 0;
   }
 
   /* Optimize layout performance for hidden menus */
@@ -1785,6 +1881,30 @@
       "label": "t:settings.text_color_transparent",
       "placeholder": "t:settings.default",
       "visible_if": "{{ section.settings.enable_transparent_header_collection }}"
+    },
+    {
+      "type": "header",
+      "content": "Other templates/pages"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_transparent_header_other_templates",
+      "label": "t:settings.transparent_background",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "other_templates_inverse_logo",
+      "label": "t:settings.inverse_logo",
+      "default": false,
+      "visible_if": "{{ section.settings.enable_transparent_header_other_templates }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color_transparent_other_templates",
+      "label": "t:settings.text_color_transparent",
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.enable_transparent_header_other_templates }}"
     }
   ],
   "presets": []

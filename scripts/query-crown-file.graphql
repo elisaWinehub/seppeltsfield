@@ -1,0 +1,18 @@
+query {
+  files(first: 10, query: "crown-icon") {
+    nodes {
+      __typename
+      ... on GenericFile {
+        id
+        url
+        alt
+      }
+      ... on MediaImage {
+        id
+        image {
+          url
+        }
+      }
+    }
+  }
+}

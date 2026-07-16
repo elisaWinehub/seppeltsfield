@@ -1,0 +1,130 @@
+{{ 'sf-product.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+%}
+
+<section
+  class="sf-product-services"
+  style="
+    --sf-service-columns-desktop: {{ section.settings.columns_desktop }};
+    --sf-service-columns-tablet: {{ section.settings.columns_tablet }};
+    --sf-service-columns-mobile: {{ section.settings.columns_mobile }};
+    background: {{ section.settings.background }};
+    border-top: 1px solid {{ section.settings.divider_color }};
+  "
+>
+  <div class="sf-section-container" style="--sf-content-max: {{ content_max }};">
+    <div class="sf-product-services__grid">
+    {% for block in section.blocks %}
+      <article {{ block.shopify_attributes }} style="padding: 0.4rem 0;">
+        <div style="width: {{ section.settings.icon_size }}px; height: {{ section.settings.icon_size }}px; margin-bottom: 0.5rem;">
+          {% if block.settings.custom_icon %}
+            {{
+              block.settings.custom_icon
+              | image_url: width: 80
+              | image_tag: loading: 'lazy', alt: '', widths: '40,60,80'
+            }}
+          {% else %}
+            {% case block.settings.builtin_icon %}
+              {% when 'delivery' %}
+                {{ 'icon-orders.svg' | inline_asset_content }}
+              {% when 'gift' %}
+                {{ 'icon-discount.svg' | inline_asset_content }}
+              {% when 'secure' %}
+                {{ 'icon-shopify.svg' | inline_asset_content }}
+              {% when 'quality' %}
+                {{ 'icon-checkmark-burst.svg' | inline_asset_content }}
+              {% else %}
+                {{ 'icon-checkmark.svg' | inline_asset_content }}
+            {% endcase %}
+          {% endif %}
+        </div>
+        {% if block.settings.heading != blank %}
+          <h3 style="margin:0 0 0.35rem; font-size:1rem; color: {{ block.settings.heading_color }};">{{ block.settings.heading }}</h3>
+        {% endif %}
+        {% if block.settings.copy != blank %}
+          <p style="margin:0; color: {{ block.settings.copy_color }};">{{ block.settings.copy }}</p>
+        {% endif %}
+      </article>
+    {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF Product Service Strip",
+  "class": "sf-product-section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "standard"
+    },
+    { "type": "color", "id": "background", "label": "Background", "default": "#FFFFFF" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 2, "max": 5, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_tablet", "label": "Columns tablet", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_mobile", "label": "Columns mobile", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 20, "max": 48, "step": 2, "unit": "px", "default": 28 },
+    { "type": "color", "id": "divider_color", "label": "Divider colour", "default": "#DDE2E8" }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Service item",
+      "settings": [
+        {
+          "type": "select",
+          "id": "builtin_icon",
+          "label": "Built-in icon",
+          "options": [
+            { "value": "delivery", "label": "Delivery" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "secure", "label": "Secure" },
+            { "value": "quality", "label": "Quality" }
+          ],
+          "default": "delivery"
+        },
+        { "type": "image_picker", "id": "custom_icon", "label": "Custom image icon" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "NATIONWIDE DELIVERY" },
+        { "type": "textarea", "id": "copy", "label": "Copy", "default": "Fast and reliable delivery across Australia" },
+        { "type": "url", "id": "link", "label": "Link" },
+        { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#111111" },
+        { "type": "color", "id": "copy_color", "label": "Copy colour", "default": "#595D63" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Product Service Strip",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "item", "settings": { "heading": "NATIONWIDE DELIVERY", "copy": "Fast and reliable delivery across Australia" } },
+        { "type": "item", "settings": { "heading": "GIFT PACKAGING", "copy": "Beautifully packaged for any occasion" } },
+        { "type": "item", "settings": { "heading": "SECURE PAYMENTS", "copy": "Safe and secure checkout guaranteed" } },
+        { "type": "item", "settings": { "heading": "ESTATE QUALITY", "copy": "Award-winning wines from our historic estate" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

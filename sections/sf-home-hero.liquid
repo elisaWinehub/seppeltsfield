@@ -1,0 +1,427 @@
+{{ 'sf-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf-home.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+
+  assign hero_image = section.settings.desktop_image
+  if section.settings.mobile_image != blank
+    assign hero_mobile = section.settings.mobile_image
+  else
+    assign hero_mobile = hero_image
+  endif
+-%}
+
+<section
+  id="SfHomeHero-{{ section.id }}"
+  class="sf-home-hero"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-overlay: {{ section.settings.overlay_color }};
+    --sf-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-heading: {{ section.settings.heading_color }};
+    --sf-eyebrow: {{ section.settings.eyebrow_color }};
+    --sf-eyebrow-size-d: {{ section.settings.eyebrow_size_desktop }}px;
+    --sf-eyebrow-size-m: {{ section.settings.eyebrow_size_mobile }}px;
+    --sf-heading-size-d: {{ section.settings.heading_size_desktop }}px;
+    --sf-heading-size-m: {{ section.settings.heading_size_mobile }}px;
+    --sf-body-size-d: {{ section.settings.body_size_desktop }}px;
+    --sf-body-size-m: {{ section.settings.body_size_mobile }}px;
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-min-h-d: {{ section.settings.min_height_desktop }}vh;
+    --sf-min-h-m: {{ section.settings.min_height_mobile }}vh;
+    --sf-content-max-text: {{ section.settings.content_max_width }}px;
+  "
+>
+  <div class="sf-home-hero__media">
+    {% if section.settings.enable_background_video and section.settings.desktop_video_url != blank %}
+      <video
+        class="sf-home-hero__video sf-home-hero__video--desktop"
+        {% if section.settings.autoplay_video and section.settings.mute_video %}
+          autoplay
+        {% endif %}
+        {% if section.settings.loop_video %}
+          loop
+        {% endif %}
+        {% if section.settings.mute_video %}
+          muted
+        {% endif %}
+        playsinline
+        preload="metadata"
+      >
+        <source src="{{ section.settings.desktop_video_url }}">
+      </video>
+      {% if section.settings.mobile_video_url != blank %}
+        <video
+          class="sf-home-hero__video sf-home-hero__video--mobile"
+          {% if section.settings.autoplay_video and section.settings.mute_video %}
+            autoplay
+          {% endif %}
+          {% if section.settings.loop_video %}
+            loop
+          {% endif %}
+          {% if section.settings.mute_video %}
+            muted
+          {% endif %}
+          playsinline
+          preload="metadata"
+        >
+          <source src="{{ section.settings.mobile_video_url }}">
+        </video>
+      {% endif %}
+    {% endif %}
+
+    {% if hero_image != blank %}
+      {{
+        hero_image
+        | image_url: width: 2200
+        | image_tag:
+          class: 'sf-home-hero__image sf-home-hero__image--desktop',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '750, 990, 1200, 1440, 1800, 2200',
+          sizes: '100vw',
+          alt: hero_image.alt
+      }}
+      {% if hero_mobile != blank %}
+        {{
+          hero_mobile
+          | image_url: width: 1200
+          | image_tag:
+            class: 'sf-home-hero__image sf-home-hero__image--mobile',
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '375, 550, 750, 990, 1200',
+            sizes: '100vw',
+            alt: hero_mobile.alt
+        }}
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <div class="sf-home-hero__overlay"></div>
+  <div class="sf-section-container sf-home-hero__inner sf-home-hero__inner--{{ section.settings.vertical_align }}">
+    <div class="sf-home-hero__content sf-home-hero__content--{{ section.settings.content_align }}">
+      {% if section.settings.eyebrow != blank %}
+        <p class="sf-home-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h1 class="sf-home-hero__heading">{{ section.settings.heading | newline_to_br }}</h1>
+      {% endif %}
+      {% if section.settings.copy != blank %}
+        <div class="sf-home-hero__copy rte">{{ section.settings.copy }}</div>
+      {% endif %}
+      <div class="sf-home-hero__cta-row">
+        {% if section.settings.primary_label != blank and section.settings.primary_url != blank %}
+          <a
+            href="{{ section.settings.primary_url }}"
+            class="sf-button sf-button--{{ section.settings.primary_style }}"
+            style="
+              --sf-button-text: {{ section.settings.primary_text_color }};
+              --sf-button-bg: {{ section.settings.primary_bg_color }};
+              --sf-button-border: {{ section.settings.primary_border_color }};
+              --sf-button-hover-text: {{ section.settings.primary_hover_text_color }};
+              --sf-button-hover-bg: {{ section.settings.primary_hover_bg_color }};
+              --sf-button-hover-border: {{ section.settings.primary_hover_bg_color }};
+            "
+            {% if section.settings.primary_new_tab %}
+              target="_blank" rel="noopener noreferrer"
+            {% endif %}
+          >
+            {{ section.settings.primary_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank and section.settings.secondary_url != blank %}
+          <a
+            href="{{ section.settings.secondary_url }}"
+            class="sf-button sf-button--{{ section.settings.secondary_style }}"
+            style="
+              --sf-button-text: {{ section.settings.secondary_text_color }};
+              --sf-button-bg: {{ section.settings.secondary_bg_color }};
+              --sf-button-border: {{ section.settings.secondary_border_color }};
+              --sf-button-hover-text: {{ section.settings.secondary_hover_text_color }};
+              --sf-button-hover-bg: {{ section.settings.secondary_hover_bg_color }};
+              --sf-button-hover-border: {{ section.settings.secondary_hover_bg_color }};
+            "
+            {% if section.settings.secondary_new_tab %}
+              target="_blank" rel="noopener noreferrer"
+            {% endif %}
+          >
+            {{ section.settings.secondary_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if section.settings.watch_label != blank and section.settings.film_embed_url != blank %}
+      <button
+        type="button"
+        class="sf-home-hero__watch"
+        data-sf-open-modal="SfHomeFilm-{{ section.id }}"
+      >
+        <span class="sf-home-hero__watch-icon" aria-hidden="true">Ã¢â€“Â¶</span>
+        <span>{{ section.settings.watch_label }}</span>
+      </button>
+    {% endif %}
+
+    {% if section.settings.show_scroll_indicator and section.settings.scroll_label != blank %}
+      <a
+        href="{{ section.settings.scroll_target | default: '#SfHomeUtility-' | append: section.id }}"
+        class="sf-home-hero__scroll"
+      >
+        <span>{{ section.settings.scroll_label }}</span>
+      </a>
+    {% endif %}
+  </div>
+
+  {% if section.settings.watch_label != blank and section.settings.film_embed_url != blank %}
+    <dialog id="SfHomeFilm-{{ section.id }}" class="sf-home-modal">
+      <div class="sf-home-modal__inner">
+        <button type="button" class="sf-home-modal__close" data-sf-modal-close>
+          Close
+        </button>
+        <div class="sf-home-modal__media">
+          <iframe
+            title="{{ section.settings.watch_label | escape }}"
+            data-src="{{ section.settings.film_embed_url }}"
+            allow="autoplay; fullscreen; picture-in-picture"
+          ></iframe>
+        </div>
+      </div>
+    </dialog>
+  {% endif %}
+</section>
+
+{% stylesheet %}
+  .sf-home-hero {
+    position: relative;
+    color: var(--sf-text);
+    background: var(--sf-bg);
+    min-height: var(--sf-min-h-d);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+    overflow: clip;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  .sf-home-hero__media {
+    position: absolute;
+    inset: 0;
+  }
+  .sf-home-hero__image,
+  .sf-home-hero__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-home-hero__image--mobile,
+  .sf-home-hero__video--mobile {
+    display: none;
+  }
+  .sf-home-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.65)),
+      var(--sf-overlay);
+    opacity: var(--sf-overlay-opacity);
+  }
+  .sf-home-hero__inner {
+    position: relative;
+    min-height: calc(var(--sf-min-h-d) - var(--sf-pad-top-d) - var(--sf-pad-bottom-d));
+    display: grid;
+    gap: 1.25rem;
+  }
+  .sf-home-hero__inner--start {
+    align-content: flex-start;
+  }
+  .sf-home-hero__inner--center {
+    align-content: center;
+  }
+  .sf-home-hero__inner--end {
+    align-content: end;
+  }
+  .sf-home-hero__content {
+    max-width: var(--sf-content-max-text);
+  }
+  .sf-home-hero__content--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+  .sf-home-hero__content--right {
+    text-align: right;
+    margin-left: auto;
+  }
+  .sf-home-hero__eyebrow {
+    color: var(--sf-eyebrow);
+    font-size: var(--sf-eyebrow-size-d);
+    font-weight: var(--sf-eyebrow-weight, 500);
+    letter-spacing: var(--sf-eyebrow-letter, 0.22em);
+    text-transform: uppercase;
+    margin: 0;
+  }
+  .sf-home-hero__heading {
+    color: var(--sf-heading);
+    font-size: var(--sf-heading-size-d);
+    margin: 0.5rem 0 0;
+    line-height: 1.02;
+    max-width: 20ch;
+  }
+  .sf-home-hero__copy {
+    margin-top: 1rem;
+    font-size: var(--sf-body-size-d);
+    max-width: 52ch;
+  }
+  .sf-home-hero__cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+  }
+  .sf-home-hero__watch {
+    justify-self: end;
+    align-self: end;
+    color: var(--sf-text);
+    background: transparent;
+    border: 0;
+    display: inline-flex;
+    gap: 0.65rem;
+    align-items: center;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.74rem;
+    padding: 0;
+  }
+  .sf-home-hero__watch-icon {
+    width: 2.3rem;
+    height: 2.3rem;
+    border: 1px solid currentColor;
+    border-radius: 100px;
+    display: grid;
+    place-items: center;
+    font-size: 0.8rem;
+  }
+  .sf-home-hero__scroll {
+    color: var(--sf-text);
+    text-decoration: none;
+    letter-spacing: 0.2em;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+  }
+  @media (max-width: 989px) {
+    .sf-home-hero {
+      min-height: var(--sf-min-h-m);
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-home-hero__image--desktop,
+    .sf-home-hero__video--desktop {
+      display: none;
+    }
+    .sf-home-hero__image--mobile,
+    .sf-home-hero__video--mobile {
+      display: block;
+    }
+    .sf-home-hero__heading {
+      font-size: var(--sf-heading-size-m);
+    }
+    .sf-home-hero__eyebrow {
+      font-size: var(--sf-eyebrow-size-m);
+    }
+    .sf-home-hero__copy {
+      font-size: var(--sf-body-size-m);
+    }
+    .sf-home-hero__watch {
+      justify-self: start;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF - Home Hero",
+  "tag": "section",
+  "class": "sf-home-section",
+  "settings": [
+    { "type": "paragraph", "content": "Recommended hero file: Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop hero image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile hero image" },
+    { "type": "checkbox", "id": "enable_background_video", "label": "Enable background video", "default": false },
+    { "type": "text", "id": "desktop_video_url", "label": "Desktop MP4 video URL" },
+    { "type": "text", "id": "mobile_video_url", "label": "Mobile MP4 video URL" },
+    { "type": "checkbox", "id": "autoplay_video", "label": "Autoplay video", "default": true },
+    { "type": "checkbox", "id": "loop_video", "label": "Loop video", "default": true },
+    { "type": "checkbox", "id": "mute_video", "label": "Mute video", "default": true },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#050505" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#111315" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 45 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "BAROSSA VALLEY" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "175 Years of\nWinemaking\nHeritage." },
+    { "type": "richtext", "id": "copy", "label": "Copy", "default": "<p>From 1851 to today, seven generations have shaped the Seppeltsfield estate and its renowned wines.</p>", "info": "Needs verification — brand guide confirms Warren Randall / Randall Wine Group has owned the estate since 2009. Confirm 'seven generations of the Seppeltsfield family' is accurate before this copy is finalized for launch." },
+    { "type": "select", "id": "content_align", "label": "Content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "select", "id": "vertical_align", "label": "Content vertical alignment", "options": [{ "value": "start", "label": "Top" }, { "value": "center", "label": "Center" }, { "value": "end", "label": "Bottom" }], "default": "end" },
+    { "type": "range", "id": "content_max_width", "label": "Content max width", "min": 420, "max": 900, "step": 20, "unit": "px", "default": 680 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#F4F1EA" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Body text color", "default": "#F4F1EA" },
+    { "type": "range", "id": "eyebrow_size_desktop", "label": "Eyebrow size desktop", "min": 9, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_size_mobile", "label": "Eyebrow size mobile", "min": 9, "max": 16, "step": 1, "unit": "px", "default": 11 },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 28, "max": 110, "step": 2, "unit": "px", "default": 80 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 26, "max": 64, "step": 2, "unit": "px", "default": 44 },
+    { "type": "range", "id": "body_size_desktop", "label": "Body size desktop", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 17 },
+    { "type": "range", "id": "body_size_mobile", "label": "Body size mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "text", "id": "primary_label", "label": "Primary button label", "default": "DISCOVER OUR STORY" },
+    { "type": "url", "id": "primary_url", "label": "Primary button link" },
+    { "type": "checkbox", "id": "primary_new_tab", "label": "Primary opens in new tab", "default": false },
+    { "type": "select", "id": "primary_style", "label": "Primary style", "options": [{ "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "text", "label": "Text link" }], "default": "solid" },
+    { "type": "color", "id": "primary_text_color", "label": "Primary text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "primary_bg_color", "label": "Primary background color", "default": "#47A8DF" },
+    { "type": "color", "id": "primary_border_color", "label": "Primary border color", "default": "#47A8DF" },
+    { "type": "color", "id": "primary_hover_text_color", "label": "Primary hover text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "primary_hover_bg_color", "label": "Primary hover background color", "default": "#087CA7" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "PLAN YOUR VISIT" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary button link" },
+    { "type": "checkbox", "id": "secondary_new_tab", "label": "Secondary opens in new tab", "default": false },
+    { "type": "select", "id": "secondary_style", "label": "Secondary style", "options": [{ "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "text", "label": "Text link" }], "default": "outline" },
+    { "type": "color", "id": "secondary_text_color", "label": "Secondary text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_bg_color", "label": "Secondary background color", "default": "rgba(0,0,0,0)" },
+    { "type": "color", "id": "secondary_border_color", "label": "Secondary border color", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_hover_text_color", "label": "Secondary hover text color", "default": "#111315" },
+    { "type": "color", "id": "secondary_hover_bg_color", "label": "Secondary hover background color", "default": "#F4F1EA" },
+    { "type": "text", "id": "watch_label", "label": "Watch film label", "default": "WATCH THE FILM" },
+    { "type": "url", "id": "film_embed_url", "label": "Film embed URL (YouTube/Vimeo embed)" },
+    { "type": "checkbox", "id": "show_scroll_indicator", "label": "Show scroll indicator", "default": true },
+    { "type": "text", "id": "scroll_label", "label": "Scroll label", "default": "SCROLL" },
+    { "type": "text", "id": "scroll_target", "label": "Scroll target anchor", "default": "#sf-home-utility-strip" },
+    { "type": "range", "id": "min_height_desktop", "label": "Minimum height desktop", "min": 60, "max": 100, "step": 2, "unit": "vh", "default": 92 },
+    { "type": "range", "id": "min_height_mobile", "label": "Minimum height mobile", "min": 50, "max": 100, "step": 2, "unit": "vh", "default": 74 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 }
+  ],
+  "presets": [
+    {
+      "name": "SF - Home Hero",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

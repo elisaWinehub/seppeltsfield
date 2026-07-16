@@ -1,0 +1,48 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Celebrate at the Estate",
+        "heading": "Events at Seppeltsfield",
+        "body": "Host weddings, private dinners and gatherings across our heritage spaces.",
+        "button_label": "Enquire Now",
+        "button_link": "#enquire",
+        "button_style": "secondary",
+        "background_type": "image",
+        "background_image": "shopify://shop_images/Gravity-cellar-hero.jpg",
+        "overlay_opacity": 45,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 64,
+        "text_size": 17,
+        "padding_top": "xl",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
+      }
+    },
+    "estate_split": {
+      "type": "split-media-text",
+      "settings": {
+        "eyebrow": "Our Estate",
+        "heading": "A setting like no other",
+        "body": "<p>Bluestone architecture, palm avenues and vineyard views create a memorable event setting.</p>",
+        "image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg"
+      }
+    },
+    "venues": {
+      "type": "venue-cards",
+      "blocks": {
+        "v1": { "type": "venue", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "name": "1878 Centennial Cellar", "description": "Dramatic barrel hall ideal for memorable dinners and celebrations.", "capacity": "Capacity: up to 220 guests" } },
+        "v2": { "type": "venue", "settings": { "image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "name": "1888 Gravity Cellar", "description": "Historic underground cellar suited to premium private events.", "capacity": "Capacity: up to 120 guests" } },
+        "v3": { "type": "venue", "settings": { "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg", "name": "The Vineyard", "description": "Open-air estate setting framed by vines and iconic palms.", "capacity": "Capacity: up to 300 guests" } }
+      },
+      "block_order": ["v1", "v2", "v3"],
+      "settings": {}
+    },
+    "form": { "type": "enquiry-form", "settings": { "topic": "Functions and events enquiry", "submit_label": "Send Enquiry" } },
+    "newsletter": { "type": "newsletter-bar", "settings": {} }
+  },
+  "order": ["hero", "estate_split", "venues", "form", "newsletter"]
+}

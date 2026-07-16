@@ -1,0 +1,545 @@
+{{ 'sf-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf-product.js' | asset_url }}" type="module"></script>
+
+<script type="application/ld+json">
+  {{ product | structured_data }}
+</script>
+
+{% liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign variant_map_id = 'SfVariantMap-' | append: section.id
+  assign score_value = product.metafields[section.settings.score_namespace][section.settings.score_key]
+  assign breadcrumb_collection = collection
+  if breadcrumb_collection == blank or breadcrumb_collection.handle == 'all'
+    for coll in product.collections
+      if coll.handle != 'all'
+        assign breadcrumb_collection = coll
+        break
+      endif
+    endfor
+  endif
+  assign breadcrumb_block = blank
+  for block in section.blocks
+    if block.type == 'breadcrumbs'
+      assign breadcrumb_block = block
+      break
+    endif
+  endfor
+%}
+
+<section
+  class="sf-product-main"
+  style="
+    --sf-product-content-max:
+      {% case section.settings.content_width %}
+        {% when 'narrow' %}1040px
+        {% when 'standard' %}1240px
+        {% when 'wide' %}1400px
+        {% else %}100vw
+      {% endcase %};
+    --sf-media-width: {{ section.settings.media_column_width }}%;
+    --sf-info-width: {{ section.settings.info_column_width }}%;
+    --sf-product-column-gap: {{ section.settings.column_gap }}px;
+    --sf-product-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --sf-product-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-product-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --sf-product-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-main-text-color: {{ section.settings.main_text_color }};
+    --sf-muted-color: {{ section.settings.muted_text_color }};
+    --sf-accent-color: {{ section.settings.accent_color }};
+    --sf-border-color: {{ section.settings.border_color }};
+    --sf-card-bg: {{ section.settings.card_background }};
+    --sf-button-bg: {{ section.settings.button_background }};
+    --sf-button-text: {{ section.settings.button_text }};
+    --sf-button-border: {{ section.settings.button_border }};
+    --sf-button-bg-hover: {{ section.settings.button_hover_background }};
+    --sf-button-text-hover: {{ section.settings.button_hover_text }};
+    --sf-button-border-hover: {{ section.settings.button_hover_background }};
+    color: {{ section.settings.main_text_color }};
+    background: {{ section.settings.section_background }};
+  "
+>
+  <script id="{{ variant_map_id }}" type="application/json">
+    {
+      {% for variant in product.variants %}
+        "{{ variant.id }}": {
+          "price_text": {{ variant.price | money | json }},
+          "compare_at_text": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},
+          "featured_media_id": {% if variant.featured_media %}{{ variant.featured_media.id }}{% else %}null{% endif %},
+          "selling_plans": {
+            {% for allocation in variant.selling_plan_allocations %}
+              "{{ allocation.selling_plan.id }}": {
+                "price_text": {{ allocation.price | money | json }},
+                "compare_at_text": {% if allocation.compare_at_price > allocation.price %}{{ allocation.compare_at_price | money | json }}{% else %}null{% endif %}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          },
+          "fallback_subscription_text": {{ variant.price | times: 90 | divided_by: 100 | money | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    }
+  </script>
+
+  <div class="sf-product-main__grid{% if section.settings.reverse_columns_desktop %} sf-product-main__grid--reverse{% endif %}">
+    {% if breadcrumb_block %}
+      {% render 'sf-product-info-block',
+        product: product,
+        block: breadcrumb_block,
+        section: section,
+        selected_variant: selected_variant,
+        variant_map_id: variant_map_id,
+        breadcrumb_collection: breadcrumb_collection,
+        render_context: 'breadcrumbs_row'
+      %}
+    {% endif %}
+
+    <div class="sf-product-main__media{% if section.settings.sticky_media %} sf-product-main__media--sticky{% endif %}">
+      {% if section.settings.show_score_badge and score_value != blank and section.settings.score_badge_position == 'over_media' %}
+        <div
+          class="sf-product-score sf-product-score--media"
+          style="
+            --sf-score-size: {{ section.settings.score_badge_size_desktop }}px;
+            --sf-score-bg: {{ section.settings.score_badge_bg }};
+            --sf-score-text: {{ section.settings.score_badge_text }};
+            --sf-score-border: {{ section.settings.score_badge_border }};
+          "
+        >
+          <span><strong>{{ score_value }}</strong>{{ section.settings.score_suffix }}</span>
+        </div>
+      {% endif %}
+      {% render 'sf-product-media-gallery', product: product, section: section %}
+    </div>
+
+    <div class="sf-product-main__info{% if section.settings.sticky_product_info %} sf-product-main__info--sticky{% endif %}">
+      {% for block in section.blocks %}
+        {% if block.type == 'breadcrumbs' %}
+          {% continue %}
+        {% endif %}
+        {% render 'sf-product-info-block',
+          product: product,
+          block: block,
+          section: section,
+          selected_variant: selected_variant,
+          variant_map_id: variant_map_id,
+          breadcrumb_collection: breadcrumb_collection
+        %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF Main Product",
+  "class": "sf-product-section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    { "type": "header", "content": "Layout" },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "standard"
+    },
+    { "type": "range", "id": "media_column_width", "label": "Media column width", "min": 40, "max": 65, "step": 1, "unit": "%", "default": 56 },
+    { "type": "range", "id": "info_column_width", "label": "Product information column width", "min": 35, "max": 60, "step": 1, "unit": "%", "default": 44 },
+    { "type": "range", "id": "column_gap", "label": "Column gap", "min": 0, "max": 64, "step": 2, "unit": "px", "default": 24 },
+    { "type": "checkbox", "id": "reverse_columns_desktop", "label": "Reverse columns desktop", "default": false },
+    { "type": "checkbox", "id": "sticky_product_info", "label": "Sticky product information", "default": true },
+    { "type": "checkbox", "id": "sticky_media", "label": "Sticky media", "default": false },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 140, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 16 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+
+    { "type": "header", "content": "Colours" },
+    { "type": "color", "id": "section_background", "label": "Section background", "default": "#FFFFFF" },
+    { "type": "color", "id": "main_text_color", "label": "Main text colour", "default": "#111111" },
+    { "type": "color", "id": "muted_text_color", "label": "Muted text colour", "default": "#5D6167" },
+    { "type": "color", "id": "accent_color", "label": "Accent colour", "default": "#0CA7E0" },
+    { "type": "color", "id": "border_color", "label": "Border colour", "default": "#DDE2E8" },
+    { "type": "color", "id": "card_background", "label": "Card/panel background", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_background", "label": "Button background", "default": "#0F0F0F" },
+    { "type": "color", "id": "button_text", "label": "Button text", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_border", "label": "Button border", "default": "#0F0F0F" },
+    { "type": "color", "id": "button_hover_background", "label": "Button hover background", "default": "#0CA7E0" },
+    { "type": "color", "id": "button_hover_text", "label": "Button hover text", "default": "#FFFFFF" },
+
+    { "type": "header", "content": "Product media" },
+    { "type": "range", "id": "thumbnail_width", "label": "Thumbnail width", "min": 56, "max": 120, "step": 2, "unit": "px", "default": 76 },
+    { "type": "range", "id": "thumbnail_gap", "label": "Thumbnail gap", "min": 2, "max": 20, "step": 1, "unit": "px", "default": 8 },
+    { "type": "range", "id": "main_image_max_height", "label": "Main image max height", "min": 420, "max": 980, "step": 10, "unit": "px", "default": 680 },
+    { "type": "color", "id": "image_background_color", "label": "Image background colour", "default": "#FFFFFF" },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "contain", "label": "Contain" },
+        { "value": "cover", "label": "Cover" }
+      ],
+      "default": "contain"
+    },
+    { "type": "checkbox", "id": "enable_video_autoplay", "label": "Enable product video autoplay", "default": false },
+    { "type": "checkbox", "id": "mute_videos", "label": "Mute videos", "default": true },
+    { "type": "checkbox", "id": "enable_image_zoom", "label": "Enable image zoom", "default": true },
+
+    { "type": "header", "content": "Score badge" },
+    { "type": "checkbox", "id": "show_score_badge", "label": "Show score badge", "default": true },
+    { "type": "text", "id": "score_namespace", "label": "Score metafield namespace", "default": "custom" },
+    { "type": "text", "id": "score_key", "label": "Score metafield key", "default": "wine_score" },
+    { "type": "text", "id": "score_suffix", "label": "Score suffix", "default": "POINTS" },
+    {
+      "type": "select",
+      "id": "score_badge_position",
+      "label": "Badge position",
+      "options": [
+        { "value": "over_media", "label": "Over main media" },
+        { "value": "beside_title", "label": "Beside title" },
+        { "value": "hidden", "label": "Hidden" }
+      ],
+      "default": "over_media"
+    },
+    { "type": "range", "id": "score_badge_size_desktop", "label": "Badge size desktop", "min": 40, "max": 80, "step": 1, "unit": "px", "default": 54 },
+    { "type": "range", "id": "score_badge_size_mobile", "label": "Badge size mobile", "min": 34, "max": 72, "step": 1, "unit": "px", "default": 48 },
+    { "type": "color", "id": "score_badge_bg", "label": "Badge background", "default": "#FFFFFF" },
+    { "type": "color", "id": "score_badge_text", "label": "Badge text colour", "default": "#111111" },
+    { "type": "color", "id": "score_badge_border", "label": "Badge border colour", "default": "#D9DFE5" }
+  ],
+  "blocks": [
+    {
+      "type": "breadcrumbs",
+      "name": "Breadcrumbs",
+      "settings": [
+        { "type": "text", "id": "home_label", "label": "Home label", "default": "Home" },
+        { "type": "text", "id": "shop_label", "label": "Shop label", "default": "Shop" },
+        { "type": "checkbox", "id": "show_collection", "label": "Show collection", "default": true },
+        { "type": "checkbox", "id": "show_current_product", "label": "Show current product", "default": false },
+        { "type": "text", "id": "separator", "label": "Separator", "default": "/" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "eyebrow",
+      "name": "Eyebrow",
+      "settings": [
+        { "type": "text", "id": "manual_text", "label": "Manual text" },
+        {
+          "type": "select",
+          "id": "dynamic_source",
+          "label": "Dynamic source",
+          "options": [
+            { "value": "subtitle", "label": "Product subtitle metafield" },
+            { "value": "vendor", "label": "Vendor" },
+            { "value": "product_type", "label": "Product type" },
+            { "value": "none", "label": "None" }
+          ],
+          "default": "subtitle"
+        },
+        { "type": "range", "id": "font_size_mobile", "label": "Font size mobile", "min": 0.6, "max": 1.2, "step": 0.1, "default": 0.8 },
+        { "type": "color", "id": "color", "label": "Font colour" },
+        { "type": "range", "id": "weight", "label": "Font weight", "min": 400, "max": 700, "step": 100, "default": 600 },
+        { "type": "checkbox", "id": "uppercase", "label": "Uppercase", "default": true },
+        { "type": "range", "id": "letter_spacing", "label": "Letter spacing", "min": 0, "max": 0.3, "step": 0.1, "default": 0.1 },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 12 }
+      ]
+    },
+    {
+      "type": "title",
+      "name": "Title",
+      "settings": [
+        { "type": "range", "id": "font_size_mobile", "label": "Mobile font size", "min": 1.4, "max": 3.2, "step": 0.1, "default": 2.0 },
+        { "type": "color", "id": "color", "label": "Colour" },
+        { "type": "range", "id": "weight", "label": "Weight", "min": 300, "max": 700, "step": 100, "default": 500 },
+        { "type": "range", "id": "line_height", "label": "Line height", "min": 0.9, "max": 1.4, "step": 0.1, "default": 1.1 },
+        { "type": "range", "id": "letter_spacing", "label": "Letter spacing", "min": -0.1, "max": 0.1, "step": 0.1, "default": 0 },
+        { "type": "range", "id": "max_width", "label": "Max width", "min": 320, "max": 960, "step": 20, "unit": "px", "default": 680 },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "vendor",
+      "name": "Vendor",
+      "settings": [
+        { "type": "checkbox", "id": "show_label", "label": "Show label", "default": true },
+        { "type": "text", "id": "prefix", "label": "Vendor prefix", "default": "By" },
+        { "type": "checkbox", "id": "link_vendor", "label": "Link vendor to collection", "default": false },
+        { "type": "range", "id": "font_size", "label": "Font size", "min": 0.7, "max": 1.2, "step": 0.1, "default": 0.9 },
+        { "type": "color", "id": "color", "label": "Colour" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 10 }
+      ]
+    },
+    {
+      "type": "teaser",
+      "name": "Teaser",
+      "settings": [
+        { "type": "richtext", "id": "manual_override", "label": "Manual override" },
+        { "type": "checkbox", "id": "use_description_fallback", "label": "Use description fallback", "default": false },
+        { "type": "range", "id": "max_characters", "label": "Max characters", "min": 60, "max": 600, "step": 10, "default": 180 },
+        { "type": "range", "id": "font_size_mobile", "label": "Font size mobile", "min": 0.8, "max": 1.3, "step": 0.1, "default": 1.0 },
+        { "type": "color", "id": "color", "label": "Colour" },
+        { "type": "range", "id": "line_height", "label": "Line height", "min": 1.2, "max": 1.8, "step": 0.1, "default": 1.5 },
+        { "type": "range", "id": "max_width", "label": "Max width (ch)", "min": 30, "max": 90, "step": 1, "default": 56 },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "rating_summary",
+      "name": "Rating summary",
+      "settings": [
+        { "type": "text", "id": "rating_namespace", "label": "Rating metafield namespace", "default": "custom" },
+        { "type": "text", "id": "rating_key", "label": "Rating metafield key", "default": "rating" },
+        { "type": "text", "id": "count_namespace", "label": "Review count namespace", "default": "custom" },
+        { "type": "text", "id": "count_key", "label": "Review count key", "default": "review_count" },
+        { "type": "checkbox", "id": "show_empty_state", "label": "Show empty state", "default": false },
+        { "type": "text", "id": "empty_label", "label": "Empty-state label", "default": "No reviews yet" },
+        { "type": "color", "id": "text_color", "label": "Text colour" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 10 }
+      ]
+    },
+    {
+      "type": "price",
+      "name": "Price",
+      "settings": [
+        { "type": "checkbox", "id": "show_volume_suffix", "label": "Show volume suffix metafield", "default": true },
+        { "type": "range", "id": "font_size_mobile", "label": "Price size mobile", "min": 1.0, "max": 2.0, "step": 0.1, "default": 1.3 },
+        { "type": "color", "id": "price_color", "label": "Price colour" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "variant_picker",
+      "name": "Variant picker",
+      "settings": [
+        { "type": "checkbox", "id": "hide_sold_out", "label": "Hide sold-out values", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 12 }
+      ]
+    },
+    {
+      "type": "selling_plan",
+      "name": "Selling plan",
+      "settings": [
+        { "type": "text", "id": "one_time_label", "label": "One-time label", "default": "One-time purchase" },
+        { "type": "text", "id": "subscription_label", "label": "Subscription label", "default": "Wine club subscription" },
+        { "type": "checkbox", "id": "show_popular_badge", "label": "Show popular badge on subscription", "default": true },
+        { "type": "text", "id": "popular_badge_label", "label": "Popular badge label", "default": "Most popular" },
+        { "type": "text", "id": "deliver_label", "label": "Delivery frequency label", "default": "Deliver every" },
+        { "type": "checkbox", "id": "show_without_native_plans", "label": "Show fallback panel when no native selling plans", "default": true },
+        { "type": "range", "id": "fallback_discount_percent", "label": "Fallback subscription discount", "min": 0, "max": 30, "step": 1, "unit": "%", "default": 10 },
+        { "type": "text", "id": "fallback_frequency_label", "label": "Fallback frequency option", "default": "1 Month" },
+        { "type": "color", "id": "panel_background", "label": "Panel background" },
+        { "type": "color", "id": "border_color", "label": "Border colour" },
+        { "type": "color", "id": "accent_color", "label": "Accent colour" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 12 }
+      ]
+    },
+    {
+      "type": "product_description",
+      "name": "Product description",
+      "settings": [
+        { "type": "range", "id": "visible_paragraphs", "label": "Visible paragraphs before read more", "min": 1, "max": 4, "step": 1, "default": 1 },
+        { "type": "text", "id": "read_more_label", "label": "Read more label", "default": "Read more" },
+        { "type": "text", "id": "read_less_label", "label": "Read less label", "default": "Read less" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "quantity_selector",
+      "name": "Quantity selector",
+      "settings": [
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 10 }
+      ]
+    },
+    {
+      "type": "buy_buttons",
+      "name": "Buy buttons",
+      "settings": [
+        { "type": "text", "id": "add_to_cart_label", "label": "Add-to-cart label", "default": "Add to cart" },
+        { "type": "text", "id": "sold_out_label", "label": "Sold-out label", "default": "Sold out" },
+        { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "quantity_and_buy_buttons",
+      "name": "Quantity and buy buttons",
+      "settings": [
+        { "type": "checkbox", "id": "show_quantity", "label": "Show quantity", "default": true },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+        { "type": "text", "id": "sold_out_label", "label": "Sold-out label", "default": "Sold out" },
+        { "type": "checkbox", "id": "stack_on_mobile", "label": "Stack on mobile", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 14 }
+      ]
+    },
+    {
+      "type": "trust_icons",
+      "name": "Trust icons",
+      "settings": [
+        { "type": "textarea", "id": "items", "label": "Items (icon|label per line)", "default": "delivery|Free delivery on orders over $150\nlock|Secure payment\nuser|Member pricing available\ngift|Gift packaging available" },
+        { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 1, "max": 4, "step": 1, "default": 4 },
+        { "type": "range", "id": "columns_mobile", "label": "Columns mobile", "min": 1, "max": 3, "step": 1, "default": 2 },
+        { "type": "range", "id": "icon_size", "label": "Icon size", "min": 20, "max": 48, "step": 2, "unit": "px", "default": 36 },
+        { "type": "range", "id": "gap", "label": "Gap", "min": 4, "max": 24, "step": 1, "unit": "px", "default": 10 },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 16 }
+      ]
+    },
+    {
+      "type": "divider",
+      "name": "Divider",
+      "settings": [
+        { "type": "color", "id": "color", "label": "Colour" },
+        { "type": "range", "id": "thickness", "label": "Thickness", "min": 1, "max": 4, "step": 1, "unit": "px", "default": 1 },
+        { "type": "range", "id": "margin_top", "label": "Margin top", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 8 },
+        { "type": "range", "id": "margin_bottom", "label": "Margin bottom", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 8 }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        { "type": "richtext", "id": "text", "label": "Rich text", "default": "<p>Use this text block for additional product messaging.</p>" },
+        { "type": "color", "id": "color", "label": "Colour" },
+        { "type": "range", "id": "max_width", "label": "Max width (%)", "min": 40, "max": 100, "step": 5, "unit": "%", "default": 100 },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 12 }
+      ]
+    },
+    {
+      "type": "custom_liquid",
+      "name": "Custom Liquid",
+      "settings": [
+        { "type": "liquid", "id": "custom_liquid", "label": "Custom Liquid" },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 48, "step": 2, "unit": "px", "default": 10 }
+      ]
+    },
+    {
+      "type": "accordion_tasting_notes",
+      "name": "Accordion: Tasting Notes",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "TASTING NOTES" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_winemaker_notes",
+      "name": "Acc: Winemaker",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "WINEMAKER NOTES" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_vineyard",
+      "name": "Accordion: Vineyard",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "VINEYARD" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_vintage",
+      "name": "Accordion: Vintage",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "VINTAGE CONDITIONS" },
+        { "type": "checkbox", "id": "include_history", "label": "Include history", "default": false },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_food_pairing",
+      "name": "Accordion: Food Pairing",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "FOOD PAIRING" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_technical",
+      "name": "Accordion: Technical",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "TECHNICAL DETAILS" },
+        {
+          "type": "select",
+          "id": "alcohol_preference",
+          "label": "Alcohol display",
+          "options": [
+            { "value": "statement", "label": "Statement first" },
+            { "value": "percentage", "label": "Percentage first" }
+          ],
+          "default": "statement"
+        },
+        {
+          "type": "select",
+          "id": "volume_preference",
+          "label": "Volume display",
+          "options": [
+            { "value": "statement", "label": "Statement first" },
+            { "value": "numeric", "label": "Numeric first" }
+          ],
+          "default": "statement"
+        },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_awards_reviews",
+      "name": "Accordion: Awards",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "AWARDS & CRITIC REVIEWS" },
+        { "type": "checkbox", "id": "show_awards", "label": "Show awards", "default": true },
+        { "type": "checkbox", "id": "show_critic_reviews", "label": "Show critic reviews", "default": true },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "accordion_pdf",
+      "name": "Accordion: Downloads",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "DOWNLOADS" },
+        { "type": "text", "id": "download_label", "label": "Download label", "default": "Download PDF" },
+        { "type": "textarea", "id": "copy", "label": "Explanatory copy" },
+        { "type": "checkbox", "id": "open_new_tab", "label": "Open in new tab", "default": true },
+        { "type": "checkbox", "id": "force_download", "label": "Force download", "default": false },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "checkbox", "id": "hide_if_empty", "label": "Hide if no PDF", "default": true },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "custom_accordion",
+      "name": "Custom accordion",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "MORE INFORMATION" },
+        { "type": "richtext", "id": "rich_text", "label": "Rich text" },
+        { "type": "liquid", "id": "custom_liquid", "label": "Custom Liquid" },
+        { "type": "checkbox", "id": "open_by_default", "label": "Open by default", "default": false },
+        { "type": "checkbox", "id": "hide_when_blank", "label": "Hide when blank", "default": true },
+        { "type": "range", "id": "spacing_bottom", "label": "Bottom spacing", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 0 }
+      ]
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Main Product",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

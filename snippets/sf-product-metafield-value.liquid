@@ -1,0 +1,36 @@
+{%- doc -%}
+  Safely renders product metafield values with simple formatting.
+
+  @param {object} metafield
+  @param {string} [append_unit]
+  @param {boolean} [preserve_lines]
+{%- enddoc -%}
+
+{% liquid
+  assign rendered = blank
+  assign value = metafield
+  if metafield != blank and metafield.value != blank
+    assign value = metafield.value
+  endif
+
+  if value != blank
+    assign raw = value | strip
+    assign raw = raw | replace: '<p>', '' | replace: '</p>', '' | replace: '<P>', '' | replace: '</P>', ''
+
+    if append_unit != blank
+      assign normalized = raw | downcase
+      assign unit = append_unit | downcase
+      unless normalized contains unit
+        assign raw = raw | append: append_unit
+      endunless
+    endif
+
+    if preserve_lines
+      assign rendered = raw | strip_html | escape | newline_to_br
+    else
+      assign rendered = raw | strip_html | escape
+    endif
+  endif
+%}
+
+{{ rendered }}

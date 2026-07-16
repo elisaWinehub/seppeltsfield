@@ -1,0 +1,1075 @@
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+
+  assign main_image = section.settings.main_image
+  assign mobile_main_image = section.settings.mobile_main_image | default: main_image
+  assign secondary_image = section.settings.secondary_image
+  assign watermark_image = section.settings.watermark_image
+
+  assign load_mode = 'lazy'
+  assign fetch_priority = 'auto'
+  if section.settings.load_images_eagerly
+    assign load_mode = 'eager'
+    assign fetch_priority = 'high'
+  endif
+
+  assign main_alt = section.settings.main_image_alt | strip
+  if main_alt == blank and main_image != blank
+    assign main_alt = main_image.alt
+  endif
+  if main_alt == blank
+    assign main_alt = section.settings.heading
+  endif
+
+  assign secondary_alt = section.settings.secondary_image_alt | strip
+  if secondary_alt == blank and secondary_image != blank
+    assign secondary_alt = secondary_image.alt
+  endif
+  if secondary_alt == blank
+    assign secondary_alt = section.settings.heading
+  endif
+
+  assign should_render_secondary = false
+  if section.settings.show_secondary_image and secondary_image != blank and section.settings.mobile_collage_mode != 'main_only'
+    assign should_render_secondary = true
+  endif
+
+  assign should_render_quote = false
+  if section.settings.show_quote_card and section.settings.quote_text != blank and section.settings.mobile_collage_mode != 'main_only'
+    assign should_render_quote = true
+  endif
+
+  assign watermark_letter = section.settings.watermark_letter | strip | slice: 0, 1
+  assign should_render_watermark = false
+  if section.settings.watermark_style == 'letter' and watermark_letter != blank
+    assign should_render_watermark = true
+  elsif section.settings.watermark_style == 'image' and watermark_image != blank
+    assign should_render_watermark = true
+  endif
+-%}
+
+<section
+  id="SfHeritageLegacy-{{ section.id }}"
+  class="sf-heritage-legacy{% if section.settings.reverse_columns_desktop %} is-reverse-desktop{% endif %}{% if section.settings.reverse_columns_mobile %} is-reverse-mobile{% endif %}"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text-color: {{ section.settings.text_color }};
+    --sf-muted-color: {{ section.settings.muted_text_color }};
+    --sf-heading-color: {{ section.settings.heading_color }};
+    --sf-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --sf-link-color: {{ section.settings.link_color }};
+    --sf-link-hover-color: {{ section.settings.link_hover_color }};
+    --sf-accent-color: {{ section.settings.accent_color }};
+    --sf-text-col: {{ section.settings.text_column_width }}%;
+    --sf-image-col: {{ section.settings.image_column_width }}%;
+    --sf-gap-desktop: {{ section.settings.column_gap_desktop }}px;
+    --sf-padding-top-desktop: {{ section.settings.padding_top_desktop }}px;
+    --sf-padding-bottom-desktop: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-padding-top-mobile: {{ section.settings.padding_top_mobile }}px;
+    --sf-padding-bottom-mobile: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-eyebrow-size-desktop: {{ section.settings.eyebrow_size_desktop }}px;
+    --sf-eyebrow-size-mobile: {{ section.settings.eyebrow_size_mobile }}px;
+    --sf-eyebrow-weight: {{ section.settings.eyebrow_weight }};
+    --sf-eyebrow-letter-spacing: {{ section.settings.eyebrow_letter_spacing }}px;
+    --sf-heading-size-desktop: {{ section.settings.heading_size_desktop }}px;
+    --sf-heading-size-mobile: {{ section.settings.heading_size_mobile }}px;
+    --sf-heading-weight: {{ section.settings.heading_weight }};
+    --sf-heading-line-height: {{ section.settings.heading_line_height | divided_by: 100.0 }};
+    --sf-body-size-desktop: {{ section.settings.body_size_desktop }}px;
+    --sf-body-size-mobile: {{ section.settings.body_size_mobile }}px;
+    --sf-body-line-height: {{ section.settings.body_line_height | divided_by: 100.0 }};
+    --sf-body-max-width: {{ section.settings.body_max_width }}px;
+    --sf-link-size: {{ section.settings.link_size }}px;
+    --sf-main-radius: {{ section.settings.main_image_border_radius }}px;
+    --sf-main-min-height: {{ section.settings.main_image_min_height_desktop }}px;
+    --sf-secondary-width: {{ section.settings.secondary_width }}%;
+    --sf-secondary-border-width: {{ section.settings.secondary_border_width }}px;
+    --sf-secondary-border-color: {{ section.settings.secondary_border_color }};
+    --sf-quote-color: {{ section.settings.quote_text_color }};
+    --sf-quote-bg: {{ section.settings.quote_background_color }};
+    --sf-quote-top: {{ section.settings.quote_top_offset }}%;
+    --sf-quote-side: {{ section.settings.quote_side_offset }}%;
+    --sf-watermark-size: {{ section.settings.watermark_size }}px;
+    --sf-watermark-opacity: {{ section.settings.watermark_opacity | divided_by: 100.0 }};
+  "
+>
+  {% if should_render_watermark %}
+    <div class="sf-heritage-legacy__watermark sf-heritage-legacy__watermark--{{ section.settings.watermark_position }}" aria-hidden="true">
+      {% if section.settings.watermark_style == 'letter' %}
+        <span>{{ watermark_letter }}</span>
+      {% elsif section.settings.watermark_style == 'image' %}
+        {{
+          watermark_image
+          | image_url: width: 1200
+          | image_tag:
+            loading: 'lazy',
+            widths: '220, 375, 550, 750, 990, 1200',
+            sizes: '30vw',
+            alt: '',
+            class: 'sf-heritage-legacy__watermark-image'
+        }}
+      {% endif %}
+    </div>
+  {% endif %}
+
+  <div class="sf-heritage-legacy__container">
+    <div class="sf-heritage-legacy__layout sf-heritage-legacy__layout--{{ section.settings.content_vertical_alignment }}" data-mobile-mode="{{ section.settings.mobile_collage_mode }}">
+      <div class="sf-heritage-legacy__text">
+        {% if section.settings.eyebrow != blank %}
+          <p class="sf-heritage-legacy__eyebrow{% if section.settings.eyebrow_uppercase %} is-uppercase{% endif %}">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="sf-heritage-legacy__heading">{{ section.settings.heading | newline_to_br }}</h2>
+        {% endif %}
+        {% if section.settings.body_copy != blank %}
+          <div class="sf-heritage-legacy__body">{{ section.settings.body_copy | newline_to_br }}</div>
+        {% endif %}
+        {% if section.settings.link_label != blank and section.settings.link_url != blank %}
+          <a class="sf-heritage-legacy__link" href="{{ section.settings.link_url }}">
+            <span>{{ section.settings.link_label }}</span>
+            <span class="sf-heritage-legacy__link-arrow" aria-hidden="true">&rarr;</span>
+          </a>
+        {% endif %}
+      </div>
+
+      <div class="sf-heritage-legacy__collage">
+        {% if main_image != blank %}
+          <figure class="sf-heritage-legacy__collage-main sf-heritage-legacy__treatment--{{ section.settings.main_image_treatment }}">
+            {{
+              main_image
+              | image_url: width: 1800
+              | image_tag:
+                loading: load_mode,
+                fetchpriority: fetch_priority,
+                widths: '375, 550, 750, 990, 1200, 1440, 1800',
+                sizes: '(min-width: 990px) 50vw, 100vw',
+                alt: main_alt
+            }}
+            {% if mobile_main_image != main_image %}
+              {{
+                mobile_main_image
+                | image_url: width: 1200
+                | image_tag:
+                  class: 'sf-heritage-legacy__main-mobile',
+                  loading: load_mode,
+                  fetchpriority: fetch_priority,
+                  widths: '375, 550, 750, 990, 1200',
+                  sizes: '(max-width: 989px) 100vw, 1px',
+                  alt: main_alt
+              }}
+            {% endif %}
+          </figure>
+        {% endif %}
+
+        {% if should_render_secondary %}
+          <figure class="sf-heritage-legacy__collage-secondary sf-heritage-legacy__collage-secondary--{{ section.settings.secondary_position }} sf-heritage-legacy__treatment--{{ section.settings.main_image_treatment }}">
+            {{
+              secondary_image
+              | image_url: width: 1200
+              | image_tag:
+                loading: load_mode,
+                fetchpriority: fetch_priority,
+                widths: '220, 375, 550, 750, 990, 1200',
+                sizes: '(min-width: 990px) 26vw, 72vw',
+                alt: secondary_alt
+            }}
+          </figure>
+        {% endif %}
+
+        {% if should_render_quote %}
+          <aside class="sf-heritage-legacy__quote-card">
+            <p>{{ section.settings.quote_text }}</p>
+          </aside>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-heritage-legacy {
+    position: relative;
+    overflow: clip;
+    background: var(--sf-bg);
+    color: var(--sf-text-color);
+    padding-top: var(--sf-padding-top-desktop);
+    padding-bottom: var(--sf-padding-bottom-desktop);
+    isolation: isolate;
+  }
+
+  .sf-heritage-legacy__container {
+    width: min(100% - 3rem, var(--sf-content-max));
+    margin-inline: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .sf-heritage-legacy__layout {
+    display: grid;
+    grid-template-columns: minmax(0, var(--sf-text-col)) minmax(0, var(--sf-image-col));
+    align-items: center;
+    gap: var(--sf-gap-desktop);
+  }
+
+  .sf-heritage-legacy__layout--top {
+    align-items: start;
+  }
+
+  .sf-heritage-legacy.is-reverse-desktop .sf-heritage-legacy__text {
+    order: 2;
+  }
+
+  .sf-heritage-legacy.is-reverse-desktop .sf-heritage-legacy__collage {
+    order: 1;
+  }
+
+  .sf-heritage-legacy__eyebrow {
+    margin: 0;
+    color: var(--sf-eyebrow-color);
+    font-size: var(--sf-eyebrow-size-desktop);
+    font-weight: var(--sf-eyebrow-weight);
+    letter-spacing: var(--sf-eyebrow-letter-spacing);
+  }
+
+  .sf-heritage-legacy__eyebrow.is-uppercase {
+    text-transform: uppercase;
+  }
+
+  .sf-heritage-legacy__heading {
+    margin: 0.6rem 0 0;
+    color: var(--sf-heading-color);
+    font-size: var(--sf-heading-size-desktop);
+    line-height: var(--sf-heading-line-height);
+    font-weight: var(--sf-heading-weight);
+    max-width: 18ch;
+  }
+
+  .sf-heritage-legacy__body {
+    margin-top: 1rem;
+    color: var(--sf-text-color);
+    font-size: var(--sf-body-size-desktop);
+    line-height: var(--sf-body-line-height);
+    max-width: var(--sf-body-max-width);
+  }
+
+  .sf-heritage-legacy__link {
+    margin-top: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: var(--sf-link-size);
+    color: var(--sf-link-color);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .sf-heritage-legacy__link:hover {
+    color: var(--sf-link-hover-color);
+  }
+
+  .sf-heritage-legacy__link:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+  }
+
+  .sf-heritage-legacy__collage {
+    position: relative;
+    min-height: var(--sf-main-min-height);
+  }
+
+  .sf-heritage-legacy__collage-main {
+    margin: 0;
+    border-radius: var(--sf-main-radius);
+    overflow: hidden;
+    min-height: var(--sf-main-min-height);
+  }
+
+  .sf-heritage-legacy__collage-main img {
+    width: 100%;
+    height: 100%;
+    min-height: var(--sf-main-min-height);
+    object-fit: cover;
+    display: block;
+  }
+
+  .sf-heritage-legacy__main-mobile {
+    display: none;
+  }
+
+  .sf-heritage-legacy__collage-secondary {
+    margin: 0;
+    position: absolute;
+    bottom: -8%;
+    width: var(--sf-secondary-width);
+    border: var(--sf-secondary-border-width) solid var(--sf-secondary-border-color);
+    border-radius: max(0px, calc(var(--sf-main-radius) - 2px));
+    overflow: hidden;
+    box-shadow: 0 12px 26px rgba(5, 5, 5, 0.14);
+  }
+
+  .sf-heritage-legacy__collage-secondary--bottom-right {
+    right: -2%;
+  }
+
+  .sf-heritage-legacy__collage-secondary--bottom-left {
+    left: -2%;
+  }
+
+  .sf-heritage-legacy__collage-secondary img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .sf-heritage-legacy__quote-card {
+    position: absolute;
+    top: var(--sf-quote-top);
+    right: var(--sf-quote-side);
+    max-width: 280px;
+    background: var(--sf-quote-bg);
+    color: var(--sf-quote-color);
+    padding: 0.9rem 1rem;
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(5, 5, 5, 0.12);
+  }
+
+  .sf-heritage-legacy__quote-card p {
+    margin: 0;
+    font-style: italic;
+    line-height: 1.45;
+  }
+
+  .sf-heritage-legacy__watermark {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 0;
+    opacity: var(--sf-watermark-opacity);
+    color: var(--sf-accent-color);
+  }
+
+  .sf-heritage-legacy__watermark span {
+    display: block;
+    font-size: var(--sf-watermark-size);
+    font-weight: 700;
+    line-height: 1;
+    user-select: none;
+  }
+
+  .sf-heritage-legacy__watermark--right {
+    right: max(1rem, calc((100vw - var(--sf-content-max)) / 2));
+  }
+
+  .sf-heritage-legacy__watermark--left {
+    left: max(1rem, calc((100vw - var(--sf-content-max)) / 2));
+  }
+
+  .sf-heritage-legacy__watermark-image {
+    width: var(--sf-watermark-size);
+    height: auto;
+    display: block;
+  }
+
+  .sf-heritage-legacy__treatment--grayscale img {
+    filter: grayscale(1);
+  }
+
+  .sf-heritage-legacy__treatment--sepia img {
+    filter: sepia(0.25) saturate(0.92);
+  }
+
+  @media (max-width: 989px) {
+    .sf-heritage-legacy {
+      padding-top: var(--sf-padding-top-mobile);
+      padding-bottom: var(--sf-padding-bottom-mobile);
+    }
+
+    .sf-heritage-legacy__container {
+      width: min(100% - 2rem, var(--sf-content-max));
+    }
+
+    .sf-heritage-legacy__layout {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+
+    .sf-heritage-legacy.is-reverse-mobile .sf-heritage-legacy__text {
+      order: 2;
+    }
+
+    .sf-heritage-legacy.is-reverse-mobile .sf-heritage-legacy__collage {
+      order: 1;
+    }
+
+    .sf-heritage-legacy__eyebrow {
+      font-size: var(--sf-eyebrow-size-mobile);
+    }
+
+    .sf-heritage-legacy__heading {
+      font-size: var(--sf-heading-size-mobile);
+    }
+
+    .sf-heritage-legacy__body {
+      font-size: var(--sf-body-size-mobile);
+    }
+
+    .sf-heritage-legacy__collage {
+      min-height: unset;
+      display: grid;
+      gap: 0.9rem;
+    }
+
+    .sf-heritage-legacy__collage-main {
+      min-height: 320px;
+    }
+
+    .sf-heritage-legacy__collage-main img {
+      min-height: 320px;
+    }
+
+    .sf-heritage-legacy__main-mobile {
+      display: block;
+    }
+
+    .sf-heritage-legacy__layout[data-mobile-mode='stacked'] .sf-heritage-legacy__collage-secondary,
+    .sf-heritage-legacy__layout[data-mobile-mode='stacked'] .sf-heritage-legacy__quote-card {
+      position: static;
+      width: 100%;
+      max-width: none;
+      right: auto;
+      left: auto;
+      top: auto;
+      bottom: auto;
+      transform: none;
+    }
+
+    .sf-heritage-legacy__layout[data-mobile-mode='full'] .sf-heritage-legacy__collage-secondary {
+      bottom: -6%;
+      width: min(58%, var(--sf-secondary-width));
+    }
+
+    .sf-heritage-legacy__layout[data-mobile-mode='full'] .sf-heritage-legacy__quote-card {
+      max-width: min(80%, 280px);
+      right: 4%;
+      top: 8%;
+    }
+
+    .sf-heritage-legacy__watermark {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF - Heritage Legacy",
+  "class": "section",
+  "settings": [
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "standard"
+    },
+    {
+      "type": "header",
+      "content": "Text column"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow text",
+      "default": "Our Heritage"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading text",
+      "default": "A Living Legacy\nSince 1851."
+    },
+    {
+      "type": "textarea",
+      "id": "body_copy",
+      "label": "Body copy",
+      "default": "Seppeltsfield is one of the world's great wine estates. Established by Joseph and Johanna Seppelt, the estate's Centennial Cellar has held an unbroken lineage of single vintage Tawny since 1878 - the only winery on earth to release a 100 Year Old wine every year since 1978."
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "Link label",
+      "default": "Read Our Full Story"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    },
+    {
+      "type": "range",
+      "id": "text_column_width",
+      "label": "Text column width",
+      "min": 35,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 45
+    },
+    {
+      "type": "select",
+      "id": "content_vertical_alignment",
+      "label": "Content vertical alignment",
+      "options": [
+        { "value": "top", "label": "Top" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "Typography - Eyebrow"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_desktop",
+      "label": "Eyebrow size desktop",
+      "min": 9,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size_mobile",
+      "label": "Eyebrow size mobile",
+      "min": 9,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 11
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#6D4B35"
+    },
+    {
+      "type": "select",
+      "id": "eyebrow_weight",
+      "label": "Eyebrow font weight",
+      "options": [
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ],
+      "default": "500"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_letter_spacing",
+      "label": "Eyebrow letter spacing",
+      "min": 0,
+      "max": 8,
+      "step": 1,
+      "unit": "px",
+      "default": 2
+    },
+    {
+      "type": "checkbox",
+      "id": "eyebrow_uppercase",
+      "label": "Uppercase eyebrow",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Typography - Heading"
+    },
+    {
+      "type": "range",
+      "id": "heading_size_desktop",
+      "label": "Heading size desktop",
+      "min": 28,
+      "max": 72,
+      "step": 1,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "heading_size_mobile",
+      "label": "Heading size mobile",
+      "min": 24,
+      "max": 48,
+      "step": 1,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading color",
+      "default": "#111315"
+    },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading font weight",
+      "options": [
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ],
+      "default": "400"
+    },
+    {
+      "type": "range",
+      "id": "heading_line_height",
+      "label": "Heading line height",
+      "min": 90,
+      "max": 160,
+      "step": 1,
+      "unit": "%",
+      "default": 108
+    },
+    {
+      "type": "header",
+      "content": "Typography - Body"
+    },
+    {
+      "type": "range",
+      "id": "body_size_desktop",
+      "label": "Body size desktop",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "range",
+      "id": "body_size_mobile",
+      "label": "Body size mobile",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Body text color",
+      "default": "#333333"
+    },
+    {
+      "type": "range",
+      "id": "body_line_height",
+      "label": "Body line height",
+      "min": 120,
+      "max": 200,
+      "step": 1,
+      "unit": "%",
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "body_max_width",
+      "label": "Body max width",
+      "min": 320,
+      "max": 820,
+      "step": 10,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "header",
+      "content": "Typography - Link"
+    },
+    {
+      "type": "range",
+      "id": "link_size",
+      "label": "Link size",
+      "min": 10,
+      "max": 14,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "link_color",
+      "label": "Link color",
+      "default": "#2E5F88"
+    },
+    {
+      "type": "color",
+      "id": "link_hover_color",
+      "label": "Link hover color",
+      "default": "#111315"
+    },
+    {
+      "type": "header",
+      "content": "Collage - Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "main_image",
+      "label": "Main image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_main_image",
+      "label": "Mobile main image"
+    },
+    {
+      "type": "text",
+      "id": "main_image_alt",
+      "label": "Main image alt text override"
+    },
+    {
+      "type": "select",
+      "id": "main_image_treatment",
+      "label": "Image treatment",
+      "options": [
+        { "value": "color", "label": "Colour" },
+        { "value": "grayscale", "label": "Grayscale" },
+        { "value": "sepia", "label": "Sepia" }
+      ],
+      "default": "color"
+    },
+    {
+      "type": "range",
+      "id": "main_image_border_radius",
+      "label": "Main image border radius",
+      "min": 0,
+      "max": 16,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "image_column_width",
+      "label": "Image column width",
+      "min": 40,
+      "max": 60,
+      "step": 1,
+      "unit": "%",
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "main_image_min_height_desktop",
+      "label": "Main image min height desktop",
+      "min": 320,
+      "max": 860,
+      "step": 10,
+      "unit": "px",
+      "default": 540
+    },
+    {
+      "type": "header",
+      "content": "Collage - Secondary image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_secondary_image",
+      "label": "Show secondary image",
+      "default": true
+    },
+    {
+      "type": "image_picker",
+      "id": "secondary_image",
+      "label": "Secondary image"
+    },
+    {
+      "type": "text",
+      "id": "secondary_image_alt",
+      "label": "Secondary image alt text override"
+    },
+    {
+      "type": "range",
+      "id": "secondary_width",
+      "label": "Secondary width relative to main image",
+      "min": 35,
+      "max": 55,
+      "step": 1,
+      "unit": "%",
+      "default": 46
+    },
+    {
+      "type": "range",
+      "id": "secondary_border_width",
+      "label": "Secondary border width",
+      "min": 0,
+      "max": 12,
+      "step": 1,
+      "unit": "px",
+      "default": 6
+    },
+    {
+      "type": "color",
+      "id": "secondary_border_color",
+      "label": "Secondary border color",
+      "default": "#F4F1EA"
+    },
+    {
+      "type": "select",
+      "id": "secondary_position",
+      "label": "Secondary image position",
+      "options": [
+        { "value": "bottom-right", "label": "Bottom-right" },
+        { "value": "bottom-left", "label": "Bottom-left" }
+      ],
+      "default": "bottom-right"
+    },
+    {
+      "type": "header",
+      "content": "Collage - Quote card"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quote_card",
+      "label": "Show quote card",
+      "default": true
+    },
+    {
+      "type": "textarea",
+      "id": "quote_text",
+      "label": "Quote text",
+      "default": "\"A treasure trove of fortifieds, unmatched anywhere in the world.\""
+    },
+    {
+      "type": "color",
+      "id": "quote_text_color",
+      "label": "Quote text color",
+      "default": "#111315"
+    },
+    {
+      "type": "color",
+      "id": "quote_background_color",
+      "label": "Quote card background color",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "range",
+      "id": "quote_top_offset",
+      "label": "Quote offset from top",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "%",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "quote_side_offset",
+      "label": "Quote offset from side",
+      "min": 0,
+      "max": 30,
+      "step": 1,
+      "unit": "%",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Decorative watermark"
+    },
+    {
+      "type": "select",
+      "id": "watermark_style",
+      "label": "Watermark style",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "letter", "label": "Single letter" },
+        { "value": "image", "label": "Custom image" }
+      ],
+      "default": "letter"
+    },
+    {
+      "type": "text",
+      "id": "watermark_letter",
+      "label": "Watermark letter",
+      "default": "S"
+    },
+    {
+      "type": "image_picker",
+      "id": "watermark_image",
+      "label": "Watermark image"
+    },
+    {
+      "type": "range",
+      "id": "watermark_size",
+      "label": "Watermark size",
+      "min": 120,
+      "max": 520,
+      "step": 10,
+      "unit": "px",
+      "default": 320
+    },
+    {
+      "type": "range",
+      "id": "watermark_opacity",
+      "label": "Watermark opacity",
+      "min": 0,
+      "max": 15,
+      "step": 1,
+      "unit": "%",
+      "default": 4
+    },
+    {
+      "type": "select",
+      "id": "watermark_position",
+      "label": "Watermark position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_columns_desktop",
+      "label": "Reverse columns desktop",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "reverse_columns_mobile",
+      "label": "Reverse columns mobile",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "mobile_collage_mode",
+      "label": "Mobile collage mode",
+      "options": [
+        { "value": "full", "label": "Full collage" },
+        { "value": "main_only", "label": "Main image only" },
+        { "value": "stacked", "label": "Stacked images" }
+      ],
+      "default": "stacked"
+    },
+    {
+      "type": "header",
+      "content": "Colour"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#F4F1EA"
+    },
+    {
+      "type": "color",
+      "id": "muted_text_color",
+      "label": "Muted text color",
+      "default": "#6D4B35"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent color",
+      "default": "#47A8DF"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top_desktop",
+      "label": "Desktop padding top",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_desktop",
+      "label": "Desktop padding bottom",
+      "min": 0,
+      "max": 200,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mobile",
+      "label": "Mobile padding top",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mobile",
+      "label": "Mobile padding bottom",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "column_gap_desktop",
+      "label": "Column gap desktop",
+      "min": 12,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "Performance"
+    },
+    {
+      "type": "checkbox",
+      "id": "load_images_eagerly",
+      "label": "Load images eagerly",
+      "default": false
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF - Heritage Legacy",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

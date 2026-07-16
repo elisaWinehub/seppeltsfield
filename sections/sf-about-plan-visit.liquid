@@ -1,0 +1,26 @@
+{{ 'sf-about.css' | asset_url | stylesheet_tag }}
+{%- assign mobile_image = section.settings.mobile_image | default: section.settings.desktop_image -%}
+<section id="SfAboutPlanVisit-{{ section.id }}" class="sf-about-plan-visit" style="--sf-bg:{{ section.settings.background_color }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-muted:{{ section.settings.muted_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-about-container">
+    <div class="sf-about-plan-visit__layout{% if section.settings.reverse_columns %} is-reverse{% endif %}">
+      <div class="sf-about-plan-visit__content">
+        {% if section.settings.eyebrow != blank %}<p class="sf-about-plan-visit__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-about-plan-visit__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+        {% if section.settings.copy != blank %}<p class="sf-about-plan-visit__copy">{{ section.settings.copy }}</p>{% endif %}
+        {% if section.settings.button_label != blank and section.settings.button_url != blank %}<a class="sf-about-button sf-about-button--solid" href="{{ section.settings.button_url }}">{{ section.settings.button_label }}</a>{% endif %}
+      </div>
+      <div class="sf-about-plan-visit__media">
+        {% if section.settings.desktop_image != blank %}
+          {{ section.settings.desktop_image | image_url: width: 1600 | image_tag: class: 'sf-about-plan-visit__img sf-about-plan-visit__img--desktop', loading: 'lazy', widths: '550,750,990,1200,1440,1600', sizes: '(min-width:990px) 52vw, 100vw', alt: section.settings.desktop_image.alt }}
+          {{ mobile_image | image_url: width: 1000 | image_tag: class: 'sf-about-plan-visit__img sf-about-plan-visit__img--mobile', loading: 'lazy', widths: '375,550,750,900,1000', sizes: '(max-width:989px) 100vw, 1px', alt: mobile_image.alt }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-about-plan-visit{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-about-plan-visit__layout{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:1rem}.sf-about-plan-visit__layout.is-reverse .sf-about-plan-visit__content{order:2}.sf-about-plan-visit__layout.is-reverse .sf-about-plan-visit__media{order:1}.sf-about-plan-visit__content{display:grid;align-content:center}.sf-about-plan-visit__eyebrow{margin:0;color:var(--sf-muted);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-about-plan-visit__heading{margin:.55rem 0 0;color:var(--sf-head);font-size:clamp(1.8rem,2.7vw,2.9rem);line-height:1.04}.sf-about-plan-visit__copy{margin:.8rem 0 1rem;color:var(--sf-text)}.sf-about-plan-visit__media{min-height:320px}.sf-about-plan-visit__img{width:100%;height:100%;object-fit:cover}.sf-about-plan-visit__img--mobile{display:none}@media(max-width:989px){.sf-about-plan-visit{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-about-plan-visit__layout{grid-template-columns:1fr}.sf-about-plan-visit__img--desktop{display:none}.sf-about-plan-visit__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF About Visit","tag":"section","class":"sf-about-section","settings":[{"type":"paragraph","content":"Search files: Seppeltsfield Road, Avenue of Hopes and Dreams, Estate archway"},{"type":"image_picker","id":"desktop_image","label":"Desktop image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"checkbox","id":"reverse_columns","label":"Reverse columns","default":false},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"PLAN YOUR VISIT"},{"type":"textarea","id":"heading","label":"Heading","default":"We welcome\nyou to our estate"},{"type":"textarea","id":"copy","label":"Copy","default":"Book a tasting, enjoy a long lunch, stay a while or celebrate something special."},{"type":"text","id":"button_label","label":"Button label","default":"BOOK YOUR EXPERIENCE"},{"type":"url","id":"button_url","label":"Button URL"},{"type":"color","id":"background_color","label":"Background","default":"#111315"},{"type":"color","id":"heading_color","label":"Heading color","default":"#FFFFFF"},{"type":"color","id":"text_color","label":"Text color","default":"#F4F1EA"},{"type":"color","id":"muted_color","label":"Muted color","default":"#47A8DF"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":28},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":28},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":20},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":20}],"presets":[{"name":"SF About Visit","category":"Seppeltsfield"}]}
+{% endschema %}

@@ -1,0 +1,211 @@
+{{ 'sf-discovery.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign desktop_bg = section.settings.background_image
+  assign mobile_bg = section.settings.mobile_background_image | default: desktop_bg
+-%}
+
+<section
+  id="SfDiscoveryNewsletter-{{ section.id }}"
+  class="sf-discovery-newsletter"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-overlay: {{ section.settings.overlay_color }};
+    --sf-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --sf-head: {{ section.settings.heading_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-eye: {{ section.settings.eyebrow_color }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-discovery-newsletter__media">
+    {% if desktop_bg != blank %}
+      {{
+        desktop_bg
+        | image_url: width: 2200
+        | image_tag:
+          class: 'sf-discovery-newsletter__image sf-discovery-newsletter__image--desktop',
+          loading: 'lazy',
+          widths: '750,990,1200,1440,1800,2200',
+          sizes: '100vw',
+          alt: desktop_bg.alt
+      }}
+      {{
+        mobile_bg
+        | image_url: width: 1200
+        | image_tag:
+          class: 'sf-discovery-newsletter__image sf-discovery-newsletter__image--mobile',
+          loading: 'lazy',
+          widths: '375,550,750,990,1200',
+          sizes: '100vw',
+          alt: mobile_bg.alt
+      }}
+    {% endif %}
+  </div>
+  <div class="sf-discovery-newsletter__overlay"></div>
+  <div class="sf-discovery-container sf-discovery-newsletter__inner sf-discovery-newsletter__inner--{{ section.settings.content_alignment }}">
+    <div class="sf-discovery-newsletter__content">
+      {% if section.settings.eyebrow != blank %}<p class="sf-discovery-newsletter__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="sf-discovery-newsletter__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+      {% if section.settings.copy != blank %}<p class="sf-discovery-newsletter__copy">{{ section.settings.copy }}</p>{% endif %}
+      {% form 'customer', class: 'sf-discovery-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="SfDiscoverEmail-{{ section.id }}">Email</label>
+        <div class="sf-discovery-newsletter__form-row">
+          <input
+            id="SfDiscoverEmail-{{ section.id }}"
+            type="email"
+            name="contact[email]"
+            class="sf-discovery-newsletter__input"
+            value="{{ form.email }}"
+            placeholder="{{ section.settings.form_placeholder }}"
+            autocomplete="email"
+            required
+          >
+          <button type="submit" class="sf-discovery-button sf-discovery-button--solid">{{ section.settings.button_label }}</button>
+        </div>
+        {% if form.errors %}
+          <p class="sf-discovery-newsletter__feedback">{{ section.settings.error_message }}</p>
+        {% endif %}
+        {% if form.posted_successfully? %}
+          <p class="sf-discovery-newsletter__feedback">{{ section.settings.success_message }}</p>
+        {% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-discovery-newsletter {
+    position: relative;
+    background: var(--sf-bg);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+    min-height: 420px;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    overflow: clip;
+  }
+  .sf-discovery-newsletter__media,
+  .sf-discovery-newsletter__overlay {
+    position: absolute;
+    inset: 0;
+  }
+  .sf-discovery-newsletter__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-discovery-newsletter__image--mobile {
+    display: none;
+  }
+  .sf-discovery-newsletter__overlay {
+    background: var(--sf-overlay);
+    opacity: var(--sf-overlay-opacity);
+  }
+  .sf-discovery-newsletter__inner {
+    position: relative;
+    min-height: 100%;
+    display: grid;
+  }
+  .sf-discovery-newsletter__inner--left { justify-items: start; }
+  .sf-discovery-newsletter__inner--center { justify-items: center; }
+  .sf-discovery-newsletter__inner--right { justify-items: end; }
+  .sf-discovery-newsletter__content {
+    max-width: 560px;
+    color: var(--sf-text);
+  }
+  .sf-discovery-newsletter__eyebrow {
+    margin: 0;
+    color: var(--sf-eye);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.75rem;
+  }
+  .sf-discovery-newsletter__heading {
+    margin: 0.6rem 0 0;
+    color: var(--sf-head);
+    font-size: clamp(2rem, 3.2vw, 3.4rem);
+    line-height: 1.04;
+  }
+  .sf-discovery-newsletter__copy {
+    margin: 0.8rem 0 1rem;
+  }
+  .sf-discovery-newsletter__form-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.45rem;
+  }
+  .sf-discovery-newsletter__input {
+    min-height: 44px;
+    border: 1px solid color-mix(in srgb, #fff 55%, transparent);
+    background: rgba(0, 0, 0, 0.24);
+    color: #fff;
+    padding: 0.7rem 0.8rem;
+  }
+  .sf-discovery-newsletter__feedback {
+    margin: 0.7rem 0 0;
+    font-size: 0.9rem;
+  }
+  @media (max-width: 989px) {
+    .sf-discovery-newsletter {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+      min-height: 360px;
+    }
+    .sf-discovery-newsletter__image--desktop { display: none; }
+    .sf-discovery-newsletter__image--mobile { display: block; }
+    .sf-discovery-newsletter__form-row {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Discover News",
+  "tag": "section",
+  "class": "sf-discovery-section",
+  "settings": [
+    { "type": "paragraph", "content": "Recommended search: Seppeltsfield wine glass, Crown Society glass, Cellar texture" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "image_picker", "id": "mobile_background_image", "label": "Mobile background image" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#111315" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#050505" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 45 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "STAY IN TOUCH" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Stories from\nthe Estate" },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "Be the first to hear about new releases, events and experiences." },
+    { "type": "text", "id": "form_placeholder", "label": "Form placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "SUBSCRIBE" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thanks for subscribing." },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "Please enter a valid email." },
+    { "type": "select", "id": "content_alignment", "label": "Content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#D6CEC1" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#F4F1EA" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 44 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 44 }
+  ],
+  "presets": [{ "name": "SF Discover News", "category": "Seppeltsfield" }]
+}
+{% endschema %}

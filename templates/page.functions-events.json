@@ -1,48 +1,104 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {
-      "type": "hero-banner",
+    "sf_events_hero": {
+      "type": "sf-events-hero",
       "settings": {
-        "eyebrow": "Celebrate at the Estate",
-        "heading": "Events at Seppeltsfield",
-        "body": "Host weddings, private dinners and gatherings across our heritage spaces.",
-        "button_label": "Enquire Now",
-        "button_link": "#enquire",
-        "button_style": "secondary",
-        "background_type": "image",
-        "background_image": "shopify://shop_images/Gravity-cellar-hero.jpg",
-        "overlay_opacity": 45,
-        "background_color": "#0b0c0d",
-        "heading_color": "#f5f7f8",
-        "text_color": "#f5f7f8",
-        "heading_size": 64,
-        "text_size": 17,
-        "padding_top": "xl",
-        "padding_bottom": "lg",
-        "section_width": "page-width"
+        "desktop_image": "shopify://shop_images/Gravity-cellar-hero.jpg",
+        "mobile_image": "shopify://shop_images/Gravity-cellar-hero.jpg",
+        "button_primary_url": "#SfEventsEnquiry",
+        "button_secondary_url": "#SfEventsVenues"
       }
     },
-    "estate_split": {
-      "type": "split-media-text",
-      "settings": {
-        "eyebrow": "Our Estate",
-        "heading": "A setting like no other",
-        "body": "<p>Bluestone architecture, palm avenues and vineyard views create a memorable event setting.</p>",
-        "image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpeg"
-      }
-    },
-    "venues": {
-      "type": "venue-cards",
+    "sf_events_benefits": {
+      "type": "sf-events-benefits",
       "blocks": {
-        "v1": { "type": "venue", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "name": "1878 Centennial Cellar", "description": "Dramatic barrel hall ideal for memorable dinners and celebrations.", "capacity": "Capacity: up to 220 guests" } },
-        "v2": { "type": "venue", "settings": { "image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "name": "1888 Gravity Cellar", "description": "Historic underground cellar suited to premium private events.", "capacity": "Capacity: up to 120 guests" } },
-        "v3": { "type": "venue", "settings": { "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg", "name": "The Vineyard", "description": "Open-air estate setting framed by vines and iconic palms.", "capacity": "Capacity: up to 300 guests" } }
+        "benefit_1": { "type": "benefit", "settings": { "icon": "heritage", "heading": "HERITAGE VENUES", "copy": "Unique spaces across the estate steeped in history." } },
+        "benefit_2": { "type": "benefit", "settings": { "icon": "dining", "heading": "TAILORED EXPERIENCES", "copy": "Custom menus and wine pairings curated for your event." } },
+        "benefit_3": { "type": "benefit", "settings": { "icon": "wine", "heading": "AWARD-WINNING WINES", "copy": "Exceptional wines from our family estate." } },
+        "benefit_4": { "type": "benefit", "settings": { "icon": "people", "heading": "SEAMLESS SERVICE", "copy": "Our experienced team ensures every detail is perfect." } }
       },
-      "block_order": ["v1", "v2", "v3"],
+      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
       "settings": {}
     },
-    "form": { "type": "enquiry-form", "settings": { "topic": "Functions and events enquiry", "submit_label": "Send Enquiry" } },
-    "newsletter": { "type": "newsletter-bar", "settings": {} }
+    "sf_events_estate_intro": {
+      "type": "sf-events-estate-intro",
+      "settings": {
+        "desktop_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "mobile_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "link_url": "/pages/discover"
+      }
+    },
+    "sf_events_types": {
+      "type": "sf-events-types",
+      "blocks": {
+        "event_1": { "type": "event_type", "settings": { "image": "shopify://shop_images/Weddings-And-Functions.jpg", "mobile_image": "shopify://shop_images/Weddings-And-Functions.jpg", "eyebrow": "WEDDINGS", "heading": "Weddings", "copy": "Say \"I do\" in a place rich with history and natural beauty.", "link_label": "LEARN MORE", "link_url": "/pages/functions-events" } },
+        "event_2": { "type": "event_type", "settings": { "image": "shopify://shop_images/Corporate-Functions.jpg", "mobile_image": "shopify://shop_images/Corporate-Functions.jpg", "eyebrow": "CORPORATE", "heading": "Corporate Functions", "copy": "Inspire, connect and celebrate with your team or clients.", "link_label": "LEARN MORE", "link_url": "/pages/functions-events" } },
+        "event_3": { "type": "event_type", "settings": { "image": "shopify://shop_images/Private-Functions.jpg", "mobile_image": "shopify://shop_images/Private-Functions.jpg", "eyebrow": "PRIVATE", "heading": "Private Functions", "copy": "Birthdays, anniversaries and milestone celebrations.", "link_label": "LEARN MORE", "link_url": "/pages/functions-events" } }
+      },
+      "block_order": ["event_1", "event_2", "event_3"],
+      "settings": {}
+    },
+    "sf_events_chef": {
+      "type": "sf-events-chef",
+      "settings": {
+        "desktop_image": "shopify://shop_images/owenandrewshero.jpg",
+        "mobile_image": "shopify://shop_images/owenandrewshero.jpg",
+        "link_url": "/pages/functions-events"
+      }
+    },
+    "sf_events_venues": {
+      "type": "sf-events-venues",
+      "blocks": {
+        "venue_1": { "type": "venue", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "mobile_image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "name": "1878 Centennial Cellar", "description": "Celebrate in Australia's longest continually operating wine cellar.", "capacity": "CAPACITY: 10-120 GUESTS", "link_label": "Learn more", "link_url": "/pages/functions-events" } },
+        "venue_2": { "type": "venue", "settings": { "image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "mobile_image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "name": "1888 Gravity Cellar", "description": "A unique industrial space with heritage character and modern flexibility.", "capacity": "CAPACITY: 20-200 GUESTS", "link_label": "Learn more", "link_url": "/pages/functions-events" } },
+        "venue_3": { "type": "venue", "settings": { "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg", "mobile_image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg", "name": "The Vineyard", "description": "Breathtaking outdoor settings for unforgettable gatherings under the Barossa sky.", "capacity": "CAPACITY: 20-500 GUESTS", "link_label": "Learn more", "link_url": "/pages/functions-events" } }
+      },
+      "block_order": ["venue_1", "venue_2", "venue_3"],
+      "settings": {}
+    },
+    "sf_events_gallery": {
+      "type": "sf-events-gallery",
+      "blocks": {
+        "gallery_1": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Corporate-Functions.jpg", "mobile_image": "shopify://shop_images/Corporate-Functions.jpg", "alt_text": "Corporate events setup" } },
+        "gallery_2": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Weddings-And-Functions.jpg", "mobile_image": "shopify://shop_images/Weddings-And-Functions.jpg", "alt_text": "Wedding ceremony avenue" } },
+        "gallery_3": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Private-Functions.jpg", "mobile_image": "shopify://shop_images/Private-Functions.jpg", "alt_text": "Private function dining" } },
+        "gallery_4": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/owenandrewshero.jpg", "mobile_image": "shopify://shop_images/owenandrewshero.jpg", "alt_text": "Chef plating" } },
+        "gallery_5": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Gravity-cellar-hero.jpg", "mobile_image": "shopify://shop_images/Gravity-cellar-hero.jpg", "alt_text": "Centennial cellar dinner setup" } }
+      },
+      "block_order": ["gallery_1", "gallery_2", "gallery_3", "gallery_4", "gallery_5"],
+      "settings": {}
+    },
+    "sf_events_enquiry": {
+      "type": "sf-events-enquiry",
+      "settings": {}
+    },
+    "sf_events_crown_society": {
+      "type": "sf-events-crown-society",
+      "settings": {
+        "desktop_image": "shopify://shop_images/centennialcellarHERO2.jpg",
+        "mobile_image": "shopify://shop_images/centennialcellarHERO2.jpg",
+        "link_url": "/pages/wine-club"
+      }
+    }
   },
-  "order": ["hero", "estate_split", "venues", "form", "newsletter"]
+  "order": [
+    "sf_events_hero",
+    "sf_events_benefits",
+    "sf_events_estate_intro",
+    "sf_events_types",
+    "sf_events_chef",
+    "sf_events_venues",
+    "sf_events_gallery",
+    "sf_events_enquiry",
+    "sf_events_crown_society"
+  ]
 }

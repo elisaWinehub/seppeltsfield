@@ -1,0 +1,34 @@
+{{ 'sf-about.css' | asset_url | stylesheet_tag }}
+{%- assign mobile_bg = section.settings.mobile_background_image | default: section.settings.background_image -%}
+<section id="SfAboutNewsletter-{{ section.id }}" class="sf-about-newsletter" style="--sf-bg:{{ section.settings.background_color }};--sf-overlay:{{ section.settings.overlay_color }};--sf-overlay-opacity:{{ section.settings.overlay_opacity | divided_by: 100.0 }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-eye:{{ section.settings.eyebrow_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-about-newsletter__media">
+    {% if section.settings.background_image != blank %}
+      {{ section.settings.background_image | image_url: width: 2200 | image_tag: class: 'sf-about-newsletter__img sf-about-newsletter__img--desktop', loading: 'lazy', widths: '750,990,1200,1440,1800,2200', sizes: '100vw', alt: section.settings.background_image.alt }}
+      {{ mobile_bg | image_url: width: 1200 | image_tag: class: 'sf-about-newsletter__img sf-about-newsletter__img--mobile', loading: 'lazy', widths: '375,550,750,990,1200', sizes: '100vw', alt: mobile_bg.alt }}
+    {% endif %}
+  </div>
+  <div class="sf-about-newsletter__overlay"></div>
+  <div class="sf-about-container sf-about-newsletter__inner">
+    <div class="sf-about-newsletter__content">
+      {% if section.settings.eyebrow != blank %}<p class="sf-about-newsletter__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="sf-about-newsletter__heading">{{ section.settings.heading }}</h2>{% endif %}
+      {% if section.settings.copy != blank %}<p class="sf-about-newsletter__copy">{{ section.settings.copy }}</p>{% endif %}
+      {% form 'customer', class: 'sf-about-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="SfAboutNewsletterEmail-{{ section.id }}">Email</label>
+        <div class="sf-about-newsletter__row">
+          <input id="SfAboutNewsletterEmail-{{ section.id }}" class="sf-about-input" type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ section.settings.placeholder }}" required>
+          <button class="sf-about-button sf-about-button--solid" type="submit">{{ section.settings.button_label }}</button>
+        </div>
+        {% if form.posted_successfully? %}<p class="sf-about-newsletter__feedback">{{ section.settings.success_message }}</p>{% endif %}
+        {% if form.errors %}<p class="sf-about-newsletter__feedback">{{ section.settings.error_message }}</p>{% endif %}
+      {% endform %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-about-newsletter{position:relative;background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d);width:100%;max-width:100%;margin-left:0;margin-right:0;overflow:clip}.sf-about-newsletter__media,.sf-about-newsletter__overlay{position:absolute;inset:0}.sf-about-newsletter__img{width:100%;height:100%;object-fit:cover}.sf-about-newsletter__img--mobile{display:none}.sf-about-newsletter__overlay{background:var(--sf-overlay);opacity:var(--sf-overlay-opacity)}.sf-about-newsletter__inner{position:relative}.sf-about-newsletter__content{max-width:620px;color:var(--sf-text)}.sf-about-newsletter__eyebrow{margin:0;color:var(--sf-eye);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-about-newsletter__heading{margin:.55rem 0 0;color:var(--sf-head);font-size:clamp(1.8rem,2.8vw,2.9rem)}.sf-about-newsletter__copy{margin:.8rem 0 1rem}.sf-about-newsletter__row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:.5rem}.sf-about-input{min-height:44px;padding:.68rem .72rem;border:1px solid rgba(255,255,255,.45);background:rgba(0,0,0,.3);color:#fff}.sf-about-newsletter__feedback{margin:.7rem 0 0}@media(max-width:989px){.sf-about-newsletter{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-about-newsletter__img--desktop{display:none}.sf-about-newsletter__img--mobile{display:block}.sf-about-newsletter__row{grid-template-columns:1fr}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF About News","tag":"section","class":"sf-about-section","settings":[{"type":"paragraph","content":"Search files: Wine glass, Barrel texture, Seppeltsfield glass"},{"type":"image_picker","id":"background_image","label":"Background image"},{"type":"image_picker","id":"mobile_background_image","label":"Mobile background image"},{"type":"color","id":"background_color","label":"Background","default":"#050505"},{"type":"color","id":"overlay_color","label":"Overlay color","default":"#050505"},{"type":"range","id":"overlay_opacity","label":"Overlay opacity","min":0,"max":90,"step":5,"unit":"%","default":45},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"JOIN OUR ESTATE"},{"type":"text","id":"heading","label":"Heading","default":"Stories from Seppeltsfield"},{"type":"textarea","id":"copy","label":"Copy","default":"Be the first to hear about new releases, exclusive events and stories from Seppeltsfield."},{"type":"text","id":"placeholder","label":"Placeholder","default":"Enter your email"},{"type":"text","id":"button_label","label":"Button label","default":"SUBSCRIBE"},{"type":"text","id":"success_message","label":"Success message","default":"Thanks for subscribing."},{"type":"text","id":"error_message","label":"Error message","default":"Please enter a valid email."},{"type":"color","id":"eyebrow_color","label":"Eyebrow color","default":"#47A8DF"},{"type":"color","id":"heading_color","label":"Heading color","default":"#FFFFFF"},{"type":"color","id":"text_color","label":"Text color","default":"#F4F1EA"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":36},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":36},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":24},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":24}],"presets":[{"name":"SF About News","category":"Seppeltsfield"}]}
+{% endschema %}

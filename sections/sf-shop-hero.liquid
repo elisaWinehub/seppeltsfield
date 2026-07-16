@@ -1,0 +1,310 @@
+{{ 'sf-shop-collections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_alignment
+    when 'left'
+      assign align_items = 'flex-start'
+      assign text_align = 'left'
+    when 'right'
+      assign align_items = 'flex-end'
+      assign text_align = 'right'
+    else
+      assign align_items = 'center'
+      assign text_align = 'center'
+  endcase
+
+  assign eyebrow_case = 'none'
+  if section.settings.eyebrow_uppercase
+    assign eyebrow_case = 'uppercase'
+  endif
+
+  assign bg_image = section.settings.background_image
+  assign bg_image_mobile = section.settings.background_image_mobile | default: bg_image
+
+  assign hero_bg = section.settings.background_color
+  if section.settings.background_type == 'gradient'
+    assign hero_bg = 'linear-gradient(' | append: section.settings.gradient_direction | append: ', ' | append: section.settings.gradient_color_start | append: ', ' | append: section.settings.gradient_color_end | append: ')'
+  endif
+-%}
+
+<section
+  id="SfShopHero-{{ section.id }}"
+  class="sf-shop-hero"
+  style="
+    --sf-shop-hero-bg: {{ hero_bg }};
+    --sf-shop-hero-overlay: {{ section.settings.overlay_color }};
+    --sf-shop-hero-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --sf-shop-hero-bg-fit: {{ section.settings.background_image_fit }};
+    --sf-shop-hero-bg-position: {{ section.settings.background_image_position }};
+    --sf-shop-hero-content-max: {{ section.settings.content_max_width }}px;
+    --sf-shop-hero-align-items: {{ align_items }};
+    --sf-shop-hero-text-align: {{ text_align }};
+    --sf-shop-hero-content-gap: {{ section.settings.content_gap }}px;
+    --sf-shop-hero-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-shop-hero-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-shop-hero-pad-inline-d: {{ section.settings.padding_horizontal_desktop }}px;
+    --sf-shop-hero-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-shop-hero-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-shop-hero-pad-inline-m: {{ section.settings.padding_horizontal_mobile }}px;
+    --sf-shop-hero-eyebrow-size-d: {{ section.settings.eyebrow_size_desktop }}px;
+    --sf-shop-hero-eyebrow-size-m: {{ section.settings.eyebrow_size_mobile }}px;
+    --sf-shop-hero-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --sf-shop-hero-eyebrow-weight: {{ section.settings.eyebrow_weight }};
+    --sf-shop-hero-eyebrow-spacing: {{ section.settings.eyebrow_letter_spacing }}em;
+    --sf-shop-hero-eyebrow-case: {{ eyebrow_case }};
+    --sf-shop-hero-heading-size-d: {{ section.settings.heading_size_desktop }}px;
+    --sf-shop-hero-heading-size-m: {{ section.settings.heading_size_mobile }}px;
+    --sf-shop-hero-heading-color: {{ section.settings.heading_color }};
+    --sf-shop-hero-heading-weight: {{ section.settings.heading_weight }};
+    --sf-shop-hero-heading-line-height: {{ section.settings.heading_line_height }};
+    --sf-shop-hero-heading-spacing: {{ section.settings.heading_letter_spacing }}em;
+    --sf-shop-hero-intro-size-d: {{ section.settings.intro_size_desktop }}px;
+    --sf-shop-hero-intro-size-m: {{ section.settings.intro_size_mobile }}px;
+    --sf-shop-hero-intro-color: {{ section.settings.intro_color }};
+    --sf-shop-hero-intro-weight: {{ section.settings.intro_weight }};
+    --sf-shop-hero-intro-line-height: {{ section.settings.intro_line_height }};
+    --sf-shop-hero-intro-max: {{ section.settings.intro_max_width }}px;
+    --sf-shop-hero-crest-size: {{ section.settings.crest_size }}px;
+    --sf-shop-hero-crest-color: {{ section.settings.crest_color }};
+  "
+>
+  {% if section.settings.background_type == 'image' and bg_image != blank %}
+    <div class="sf-shop-hero__media" aria-hidden="true">
+      {{
+        bg_image
+        | image_url: width: 1800
+        | image_tag:
+          class: 'sf-shop-hero__bg-image sf-shop-hero__bg-image--desktop',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '375, 550, 750, 990, 1200, 1440, 1800',
+          sizes: '100vw',
+          alt: ''
+      }}
+      {% if bg_image_mobile != blank %}
+        {{
+          bg_image_mobile
+          | image_url: width: 1200
+          | image_tag:
+            class: 'sf-shop-hero__bg-image sf-shop-hero__bg-image--mobile',
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '375, 550, 750, 990, 1200',
+            sizes: '100vw',
+            alt: ''
+        }}
+      {% endif %}
+      <div class="sf-shop-hero__overlay"></div>
+    </div>
+  {% endif %}
+
+  <div class="sf-shop-hero__inner">
+    {% if section.settings.show_eyebrow and section.settings.eyebrow != blank %}
+      <p class="sf-shop-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+    {% endif %}
+
+    {% if section.settings.heading != blank %}
+      <h1 class="sf-shop-hero__heading">{{ section.settings.heading }}</h1>
+    {% endif %}
+
+    {% if section.settings.show_intro and section.settings.intro != blank %}
+      <p class="sf-shop-hero__intro">{{ section.settings.intro }}</p>
+    {% endif %}
+
+    {% if section.settings.show_crest %}
+      <div class="sf-shop-hero__crest" aria-hidden="true">
+        {% if section.settings.crest_type == 'custom' and section.settings.crest_image != blank %}
+          {{
+            section.settings.crest_image
+            | image_url: width: 120
+            | image_tag: widths: '60, 80, 120', sizes: '120px', alt: ''
+          }}
+        {% elsif section.settings.crest_type == 'star' %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 2.5l2.47 5.01 5.53.8-4 3.9.94 5.5L12 15.9l-4.94 2.81.94-5.5-4-3.9 5.53-.8L12 2.5z"/>
+          </svg>
+        {% else %}
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M4 18h16v2H4v-2zm2-4h2l1-6 3 4 3-4 1 6h2l-2-10H6l-2 10zm4-12h4l1 4h-6l1-4z"/>
+          </svg>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF Shop Hero",
+  "tag": "section",
+  "class": "sf-shop-section",
+  "settings": [
+    { "type": "header", "content": "Content" },
+    { "type": "checkbox", "id": "show_eyebrow", "label": "Show eyebrow", "default": true },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Collections" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wines Crafted To Be Timeless" },
+    { "type": "checkbox", "id": "show_intro", "label": "Show intro copy", "default": true },
+    {
+      "type": "textarea",
+      "id": "intro",
+      "label": "Intro copy",
+      "default": "Five collections shaped by 175 years of Barossa heritage — from contemporary still wines to the world's only unbroken lineage of single vintage Tawny."
+    },
+    { "type": "checkbox", "id": "show_crest", "label": "Show decorative crest", "default": true },
+    {
+      "type": "select",
+      "id": "crest_type",
+      "label": "Crest icon",
+      "options": [
+        { "value": "crown", "label": "Crown" },
+        { "value": "star", "label": "Star" },
+        { "value": "custom", "label": "Custom image" }
+      ],
+      "default": "crown"
+    },
+    { "type": "image_picker", "id": "crest_image", "label": "Custom crest image" },
+    { "type": "range", "id": "crest_size", "label": "Crest size", "min": 16, "max": 64, "step": 2, "unit": "px", "default": 26 },
+    { "type": "color", "id": "crest_color", "label": "Crest colour", "default": "#47A8DF" },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
+    },
+    { "type": "range", "id": "content_max_width", "label": "Content max width", "min": 320, "max": 900, "step": 10, "unit": "px", "default": 720 },
+    { "type": "range", "id": "content_gap", "label": "Gap between elements", "min": 4, "max": 40, "step": 2, "unit": "px", "default": 14 },
+
+    { "type": "header", "content": "Background" },
+    {
+      "type": "select",
+      "id": "background_type",
+      "label": "Background type",
+      "options": [
+        { "value": "solid", "label": "Solid colour" },
+        { "value": "image", "label": "Image" },
+        { "value": "gradient", "label": "Gradient" }
+      ],
+      "default": "solid"
+    },
+    { "type": "color", "id": "background_color", "label": "Background colour", "default": "#F4F1EA" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "image_picker", "id": "background_image_mobile", "label": "Mobile background image" },
+    { "type": "color", "id": "overlay_color", "label": "Image overlay colour", "default": "#111315" },
+    { "type": "range", "id": "overlay_opacity", "label": "Image overlay opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 0 },
+    {
+      "type": "select",
+      "id": "background_image_position",
+      "label": "Background image position",
+      "options": [
+        { "value": "center center", "label": "Centre" },
+        { "value": "top center", "label": "Top" },
+        { "value": "bottom center", "label": "Bottom" }
+      ],
+      "default": "center center"
+    },
+    {
+      "type": "select",
+      "id": "background_image_fit",
+      "label": "Background image fit",
+      "options": [
+        { "value": "cover", "label": "Cover" },
+        { "value": "contain", "label": "Contain" }
+      ],
+      "default": "cover"
+    },
+    { "type": "color", "id": "gradient_color_start", "label": "Gradient start", "default": "#F4F1EA" },
+    { "type": "color", "id": "gradient_color_end", "label": "Gradient end", "default": "#FFFFFF" },
+    {
+      "type": "select",
+      "id": "gradient_direction",
+      "label": "Gradient direction",
+      "options": [
+        { "value": "to bottom", "label": "Top to bottom" },
+        { "value": "to top", "label": "Bottom to top" },
+        { "value": "to right", "label": "Left to right" },
+        { "value": "to left", "label": "Right to left" }
+      ],
+      "default": "to bottom"
+    },
+
+    { "type": "header", "content": "Typography — eyebrow" },
+    { "type": "range", "id": "eyebrow_size_desktop", "label": "Eyebrow size desktop", "min": 9, "max": 18, "step": 1, "unit": "px", "default": 12 },
+    { "type": "range", "id": "eyebrow_size_mobile", "label": "Eyebrow size mobile", "min": 9, "max": 16, "step": 1, "unit": "px", "default": 12 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow colour", "default": "#2F86BA" },
+    {
+      "type": "select",
+      "id": "eyebrow_weight",
+      "label": "Eyebrow font weight",
+      "options": [
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ],
+      "default": "600"
+    },
+    { "type": "range", "id": "eyebrow_letter_spacing", "label": "Eyebrow letter spacing", "min": 0, "max": 0.3, "step": 0.1, "unit": "em", "default": 0.2 },
+    { "type": "checkbox", "id": "eyebrow_uppercase", "label": "Eyebrow uppercase", "default": true },
+
+    { "type": "header", "content": "Typography — heading" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 28, "max": 72, "step": 2, "unit": "px", "default": 44 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 24, "max": 48, "step": 2, "unit": "px", "default": 32 },
+    { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#111315" },
+    {
+      "type": "select",
+      "id": "heading_weight",
+      "label": "Heading font weight",
+      "options": [
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ],
+      "default": "500"
+    },
+    { "type": "range", "id": "heading_line_height", "label": "Heading line height", "min": 1, "max": 1.6, "step": 0.1, "default": 1.2 },
+    { "type": "range", "id": "heading_letter_spacing", "label": "Heading letter spacing", "min": 0, "max": 0.2, "step": 0.1, "unit": "em", "default": 0 },
+
+    { "type": "header", "content": "Typography — intro" },
+    { "type": "range", "id": "intro_size_desktop", "label": "Intro size desktop", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 14 },
+    { "type": "range", "id": "intro_size_mobile", "label": "Intro size mobile", "min": 12, "max": 18, "step": 1, "unit": "px", "default": 14 },
+    { "type": "color", "id": "intro_color", "label": "Intro colour", "default": "#5A5A54" },
+    {
+      "type": "select",
+      "id": "intro_weight",
+      "label": "Intro font weight",
+      "options": [
+        { "value": "300", "label": "300" },
+        { "value": "400", "label": "400" },
+        { "value": "500", "label": "500" },
+        { "value": "600", "label": "600" },
+        { "value": "700", "label": "700" }
+      ],
+      "default": "400"
+    },
+    { "type": "range", "id": "intro_line_height", "label": "Intro line height", "min": 1.2, "max": 2, "step": 0.1, "default": 1.6 },
+    { "type": "range", "id": "intro_max_width", "label": "Intro max width", "min": 280, "max": 720, "step": 10, "unit": "px", "default": 520 },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_horizontal_desktop", "label": "Horizontal padding desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_horizontal_mobile", "label": "Horizontal padding mobile", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 20 }
+  ],
+  "presets": [
+    {
+      "name": "SF Shop Hero",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

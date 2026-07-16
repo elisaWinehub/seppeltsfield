@@ -1,0 +1,177 @@
+{{ 'sf-discovery.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfDiscoveryVisitorInfo-{{ section.id }}"
+  class="sf-discovery-visitor-info"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-head: {{ section.settings.heading_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-divider: {{ section.settings.divider_color }};
+    --sf-cols-d: {{ section.settings.columns_desktop }};
+    --sf-cols-t: {{ section.settings.columns_tablet }};
+    --sf-gap: {{ section.settings.grid_gap }}px;
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-discovery-container">
+    <div class="sf-discovery-visitor-info__grid sf-discovery-visitor-info__grid--mobile-{{ section.settings.mobile_layout }}">
+      {% for block in section.blocks %}
+        {%- liquid
+          case block.settings.icon
+            when 'clock'
+              assign icon_label = 'CL'
+            when 'location'
+              assign icon_label = 'LC'
+            when 'phone'
+              assign icon_label = 'PH'
+            when 'email'
+              assign icon_label = 'EM'
+            when 'car'
+              assign icon_label = 'CR'
+            when 'map'
+              assign icon_label = 'MP'
+            else
+              assign icon_label = 'SF'
+          endcase
+        -%}
+        <article class="sf-discovery-visitor-info__item" {{ block.shopify_attributes }}>
+          <div class="sf-discovery-visitor-info__icon">{{ icon_label }}</div>
+          {% if block.settings.heading != blank %}<h3>{{ block.settings.heading }}</h3>{% endif %}
+          {% if block.settings.primary_text != blank %}<p>{{ block.settings.primary_text }}</p>{% endif %}
+          {% if block.settings.secondary_text != blank %}<p class="is-muted">{{ block.settings.secondary_text }}</p>{% endif %}
+          {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+            <a class="sf-discovery-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-discovery-visitor-info {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-discovery-visitor-info__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--sf-cols-d), minmax(0, 1fr));
+    gap: var(--sf-gap);
+  }
+  .sf-discovery-visitor-info__item {
+    border: 1px solid color-mix(in srgb, var(--sf-divider) 60%, transparent);
+    padding: 1rem;
+  }
+  .sf-discovery-visitor-info__icon {
+    color: var(--sf-accent);
+    font-size: 1.1rem;
+  }
+  .sf-discovery-visitor-info__item h3 {
+    margin: 0.4rem 0 0;
+    color: var(--sf-head);
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+  .sf-discovery-visitor-info__item p {
+    margin: 0.4rem 0 0;
+    font-size: 0.94rem;
+  }
+  .sf-discovery-visitor-info__item .is-muted {
+    color: color-mix(in srgb, var(--sf-text) 75%, transparent);
+  }
+  @media (max-width: 989px) {
+    .sf-discovery-visitor-info {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-discovery-visitor-info__grid {
+      grid-template-columns: repeat(var(--sf-cols-t), minmax(0, 1fr));
+    }
+    .sf-discovery-visitor-info__grid--mobile-scroll {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(82vw, 1fr);
+      grid-template-columns: unset;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+    }
+    .sf-discovery-visitor-info__grid--mobile-scroll .sf-discovery-visitor-info__item {
+      scroll-snap-align: start;
+    }
+    .sf-discovery-visitor-info__grid--mobile-stack {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Discover Info",
+  "tag": "section",
+  "class": "sf-discovery-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#111315" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#D6CEC1" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "color", "id": "divider_color", "label": "Divider color", "default": "#363A40" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "range", "id": "columns_tablet", "label": "Columns tablet", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "select", "id": "mobile_layout", "label": "Mobile layout", "options": [{ "value": "scroll", "label": "Horizontal scroll" }, { "value": "stack", "label": "Stacked" }], "default": "stack" },
+    { "type": "range", "id": "grid_gap", "label": "Grid gap", "min": 8, "max": 36, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 }
+  ],
+  "blocks": [
+    {
+      "type": "visitor_info",
+      "name": "Visitor info",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "clock", "label": "Clock" }, { "value": "location", "label": "Location" }, { "value": "phone", "label": "Phone" }, { "value": "email", "label": "Email" }, { "value": "car", "label": "Car" }, { "value": "map", "label": "Map" }], "default": "clock" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "OPENING HOURS" },
+        { "type": "text", "id": "primary_text", "label": "Primary text", "default": "10:00am-5:00pm Daily", "info": "This section's default contact number, (08) 8562 4377, does not match the brand guide's listed Customer Service number, +61 8 8568 6200. Confirm whether these are intentionally different lines (e.g. cellar door vs. head office) before launch." },
+        { "type": "text", "id": "secondary_text", "label": "Secondary text", "default": "Good Friday closed" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link_url", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Discover Info",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "visitor_info", "settings": { "icon": "clock", "heading": "OPENING HOURS", "primary_text": "10:00am-5:00pm Daily", "secondary_text": "Good Friday closed" } },
+        { "type": "visitor_info", "settings": { "icon": "location", "heading": "ADDRESS", "primary_text": "730 Seppeltsfield Road", "secondary_text": "Seppeltsfield SA 5355" } },
+        { "type": "visitor_info", "settings": { "icon": "phone", "heading": "CONTACT", "primary_text": "(08) 8562 4377", "secondary_text": "info@seppeltsfield.com.au" } },
+        { "type": "visitor_info", "settings": { "icon": "car", "heading": "GETTING HERE", "primary_text": "90 mins from Adelaide", "secondary_text": "Free parking on site" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

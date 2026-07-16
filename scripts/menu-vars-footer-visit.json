@@ -1,0 +1,10 @@
+{
+  "title": "Footer — Visit",
+  "handle": "footer-visit",
+  "items": [
+    { "title": "Plan Your Visit", "type": "HTTP", "url": "/pages/plan-your-visit" },
+    { "title": "Cellar Door", "type": "HTTP", "url": "/pages/visit" },
+    { "title": "FINO Restaurant", "type": "HTTP", "url": "/pages/visit" },
+    { "title": "Accommodation", "type": "HTTP", "url": "/pages/visit" }
+  ]
+}

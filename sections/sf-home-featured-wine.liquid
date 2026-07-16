@@ -1,0 +1,308 @@
+{{ 'sf-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf-home.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign featured_product = section.settings.featured_product
+-%}
+
+<section
+  id="SfHomeFeaturedWine-{{ section.id }}"
+  class="sf-home-featured-wine"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-left-bg: {{ section.settings.left_background }};
+    --sf-mid-bg: {{ section.settings.middle_background }};
+    --sf-right-bg: {{ section.settings.right_background }};
+    --sf-left-text: {{ section.settings.left_text_color }};
+    --sf-right-text: {{ section.settings.right_text_color }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-section-container">
+    <div class="sf-home-featured-wine__layout">
+      <article class="sf-home-featured-wine__panel sf-home-featured-wine__panel--left">
+        {% if section.settings.eyebrow != blank %}
+          <p class="sf-home-featured-wine__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        <h2 class="sf-home-featured-wine__heading">
+          {% if section.settings.manual_heading != blank %}
+            {{ section.settings.manual_heading }}
+          {% elsif featured_product != blank %}
+            {{ featured_product.title }}
+          {% endif %}
+        </h2>
+        <p class="sf-home-featured-wine__copy">
+          {% if section.settings.manual_description != blank %}
+            {{ section.settings.manual_description }}
+          {% elsif featured_product != blank %}
+            {{ featured_product.description | strip_html | truncate: 180 }}
+          {% endif %}
+        </p>
+        {% if section.settings.show_product_price and featured_product != blank %}
+          <p class="sf-home-featured-wine__price">{{ featured_product.price | money }}</p>
+        {% endif %}
+        {% assign cta_url = section.settings.button_url_override %}
+        {% if section.settings.link_to_product and featured_product != blank %}
+          {% assign cta_url = featured_product.url %}
+        {% endif %}
+        {% if section.settings.button_label != blank and cta_url != blank %}
+          <a
+            href="{{ cta_url }}"
+            class="sf-button sf-button--solid"
+            style="
+              --sf-button-text: {{ section.settings.button_text_color }};
+              --sf-button-bg: {{ section.settings.button_bg_color }};
+              --sf-button-border: {{ section.settings.button_border_color }};
+              --sf-button-hover-text: {{ section.settings.button_hover_text_color }};
+              --sf-button-hover-bg: {{ section.settings.button_hover_bg_color }};
+              --sf-button-hover-border: {{ section.settings.button_hover_bg_color }};
+            "
+          >
+            {{ section.settings.button_label }}
+          </a>
+        {% endif %}
+      </article>
+
+      <article class="sf-home-featured-wine__panel sf-home-featured-wine__panel--middle">
+        {% if section.settings.image_override != blank %}
+          {{
+            section.settings.image_override
+            | image_url: width: 1400
+            | image_tag: loading: 'lazy', widths: '550, 750, 990, 1200, 1400', sizes: '(min-width: 990px) 34vw, 100vw', alt: section.settings.image_override.alt
+          }}
+        {% elsif featured_product != blank and featured_product.featured_image != blank %}
+          {{
+            featured_product.featured_image
+            | image_url: width: 1400
+            | image_tag: loading: 'lazy', widths: '550, 750, 990, 1200, 1400', sizes: '(min-width: 990px) 34vw, 100vw', alt: featured_product.title
+          }}
+        {% endif %}
+      </article>
+
+      <article
+        class="sf-home-featured-wine__panel sf-home-featured-wine__panel--right"
+        data-sf-testimonials
+        data-autoplay="{{ section.settings.autoplay_slider }}"
+        data-delay="{{ section.settings.autoplay_delay }}"
+      >
+        {% for block in section.blocks %}
+          <div data-sf-testimonial-item {{ block.shopify_attributes }}>
+            <blockquote class="sf-home-featured-wine__quote">
+              <svg class="sf-home-featured-wine__quote-mark" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M4.5 10.5c0-3.3 2.7-6 6-6h1.5v3H10.5c-1.7 0-3 1.3-3 3v.8h3.2l-.7 5.7H4.5v-6.5zm9 0c0-3.3 2.7-6 6-6H21v3h-1.5c-1.7 0-3 1.3-3 3v.8h3.2l-.7 5.7h-5.5v-6.5z"/>
+              </svg>
+              <span class="sf-home-featured-wine__quote-text">{{ block.settings.quote | strip | remove: '"' | remove: '“' | remove: '”' }}</span>
+            </blockquote>
+            <p class="sf-home-featured-wine__author">{{ block.settings.author }}</p>
+            {% if block.settings.publication != blank %}
+              <p class="sf-home-featured-wine__publication">{{ block.settings.publication }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+        {% if section.settings.show_arrows %}
+          <div class="sf-home-featured-wine__controls">
+            <button type="button" data-sf-prev aria-label="Previous testimonial">
+              <span class="sf-home-featured-wine__control-icon" aria-hidden="true">{{ 'icon-chevron-left.svg' | inline_asset_content }}</span>
+            </button>
+            <button type="button" data-sf-next aria-label="Next testimonial">
+              <span class="sf-home-featured-wine__control-icon" aria-hidden="true">{{ 'icon-chevron-right.svg' | inline_asset_content }}</span>
+            </button>
+            {% if section.settings.show_counter %}
+              <span data-sf-counter class="sf-home-featured-wine__counter"></span>
+            {% endif %}
+          </div>
+        {% endif %}
+      </article>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-home-featured-wine {
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-home-featured-wine__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 4fr) minmax(0, 4fr) minmax(0, 4fr);
+    gap: 0.9rem;
+  }
+  .sf-home-featured-wine__panel {
+    padding: 1.3rem;
+  }
+  .sf-home-featured-wine__panel--left {
+    background: var(--sf-left-bg);
+    color: var(--sf-left-text);
+  }
+  .sf-home-featured-wine__panel--middle {
+    background: var(--sf-mid-bg);
+    padding: 0;
+    min-height: 420px;
+  }
+  .sf-home-featured-wine__panel--middle img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-home-featured-wine__panel--right {
+    background: var(--sf-right-bg);
+    color: var(--sf-right-text);
+    display: grid;
+    align-content: space-between;
+    gap: 1rem;
+  }
+  .sf-home-featured-wine__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.75rem;
+  }
+  .sf-home-featured-wine__heading {
+    margin: 0.55rem 0 0;
+    line-height: 1.07;
+    font-size: clamp(1.7rem, 2.8vw, 3rem);
+  }
+  .sf-home-featured-wine__copy {
+    margin: 0.9rem 0 0;
+  }
+  .sf-home-featured-wine__price {
+    margin: 0.9rem 0;
+    font-weight: 600;
+  }
+  .sf-home-featured-wine__quote {
+    margin: 0;
+    display: grid;
+    gap: 0.65rem;
+    font-size: clamp(1.1rem, 2.1vw, 1.8rem);
+    line-height: 1.25;
+  }
+  .sf-home-featured-wine__quote-mark {
+    width: 2rem;
+    height: 2rem;
+    color: color-mix(in srgb, var(--sf-right-text) 72%, transparent);
+  }
+  .sf-home-featured-wine__quote-text {
+    display: block;
+    border-left: 2px solid color-mix(in srgb, var(--sf-right-text) 44%, transparent);
+    padding-left: 0.8rem;
+  }
+  .sf-home-featured-wine__author {
+    margin: 0.8rem 0 0;
+    font-weight: 600;
+  }
+  .sf-home-featured-wine__publication {
+    margin: 0.15rem 0 0;
+    opacity: 0.8;
+  }
+  .sf-home-featured-wine__controls {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .sf-home-featured-wine__controls button {
+    border: 1px solid currentColor;
+    background: transparent;
+    color: inherit;
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .sf-home-featured-wine__control-icon {
+    width: 0.9rem;
+    height: 0.9rem;
+    display: block;
+  }
+  .sf-home-featured-wine__control-icon svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  @media (max-width: 989px) {
+    .sf-home-featured-wine {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-home-featured-wine__layout {
+      grid-template-columns: 1fr;
+    }
+    .sf-home-featured-wine__panel--middle {
+      min-height: 320px;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF - Home Featured",
+  "tag": "section",
+  "class": "sf-home-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "paragraph", "content": "Recommended file: provenance-of-para-HERO" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "product", "id": "featured_product", "label": "Featured product" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "FEATURED WINE" },
+    { "type": "text", "id": "manual_heading", "label": "Manual heading", "default": "Para 21 Year Old Tawny" },
+    { "type": "textarea", "id": "manual_description", "label": "Manual description", "default": "A complex and elegant tawny with nutty, spiced characters and a long, lingering finish." },
+    { "type": "image_picker", "id": "image_override", "label": "Product image override" },
+    { "type": "checkbox", "id": "show_product_price", "label": "Show product price", "default": true },
+    { "type": "checkbox", "id": "link_to_product", "label": "Link button to selected product", "default": true },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "DISCOVER PARA 21" },
+    { "type": "url", "id": "button_url_override", "label": "Button URL override" },
+    { "type": "checkbox", "id": "autoplay_slider", "label": "Autoplay testimonial slider", "default": false },
+    { "type": "range", "id": "autoplay_delay", "label": "Autoplay delay", "min": 3000, "max": 9000, "step": 500, "unit": "ms", "default": 6000 },
+    { "type": "checkbox", "id": "show_arrows", "label": "Show arrows", "default": true },
+    { "type": "checkbox", "id": "show_counter", "label": "Show counter", "default": true },
+    { "type": "color", "id": "left_background", "label": "Left panel background", "default": "#F4F1EA" },
+    { "type": "color", "id": "middle_background", "label": "Middle panel background", "default": "#F4F1EA" },
+    { "type": "color", "id": "right_background", "label": "Right panel background", "default": "#111315" },
+    { "type": "color", "id": "left_text_color", "label": "Left panel text", "default": "#111315" },
+    { "type": "color", "id": "right_text_color", "label": "Right panel text", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_bg_color", "label": "Button background color", "default": "#47A8DF" },
+    { "type": "color", "id": "button_border_color", "label": "Button border color", "default": "#47A8DF" },
+    { "type": "color", "id": "button_hover_text_color", "label": "Button hover text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_hover_bg_color", "label": "Button hover background color", "default": "#087CA7" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 52 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 52 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "A testament to time, patience and place." },
+        { "type": "text", "id": "author", "label": "Author", "default": "Tyson Stelzer" },
+        { "type": "text", "id": "publication", "label": "Publication", "default": "Australian Wine Companion" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF - Home Featured",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
+{% endschema %}

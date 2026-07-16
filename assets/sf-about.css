@@ -1,0 +1,11 @@
+.sf-about-container { width: min(100% - 3rem, var(--sf-content-max, 1200px)); margin-inline: auto; }
+.shopify-section.sf-about-section { display: block !important; width: 100%; max-width: 100%; margin: 0; padding: 0; }
+.shopify-section.sf-about-section > section { display: block; }
+.sf-about-button { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; border: 1px solid transparent; text-decoration: none; text-transform: uppercase; letter-spacing: .08em; font-size: .82rem; padding: .8rem 1.15rem; transition: .2s ease; }
+.sf-about-button--solid { color: var(--sf-btn-text,#fff); background: var(--sf-btn-bg,#0ca7e0); border-color: var(--sf-btn-border,#0ca7e0); }
+.sf-about-button--outline { color: var(--sf-btn-text,currentColor); background: transparent; border-color: var(--sf-btn-border,currentColor); }
+.sf-about-button--text { color: var(--sf-btn-text,currentColor); background: transparent; border-color: transparent; padding-inline: 0; }
+.sf-about-button:hover { color: var(--sf-btn-hover-text,var(--sf-btn-text,#fff)); background: var(--sf-btn-hover-bg,var(--sf-btn-bg,#0ca7e0)); border-color: var(--sf-btn-hover-border,var(--sf-btn-border,#0ca7e0)); }
+.sf-about-link { color: inherit; text-underline-offset: .18em; }
+.sf-about-button:focus-visible, .sf-about-link:focus-visible, .sf-about-input:focus-visible { outline: 2px solid currentColor; outline-offset: 2px; }
+@media (max-width: 989px) { .sf-about-container { width: min(100% - 2rem, var(--sf-content-max, 1200px)); } }

@@ -1,0 +1,9 @@
+{
+  "title": "Footer — Discover",
+  "handle": "footer-discover",
+  "items": [
+    { "title": "History", "type": "HTTP", "url": "/pages/heritage-story" },
+    { "title": "Sustainability", "type": "HTTP", "url": "/pages/discover" },
+    { "title": "Awards & Recognition", "type": "HTTP", "url": "/pages/discover" }
+  ]
+}

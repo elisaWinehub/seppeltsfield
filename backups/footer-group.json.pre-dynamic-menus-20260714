@@ -1,0 +1,168 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "footer_seppeltsfield": {
+      "type": "footer",
+      "blocks": {
+        "brand_group": {
+          "type": "group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "gap": 10,
+            "width": "fill"
+          },
+          "blocks": {
+            "brand_logo": {
+              "type": "logo",
+              "settings": {
+                "unit": "pixel",
+                "pixel_height": 48
+              }
+            },
+            "brand_blurb": {
+              "type": "text",
+              "settings": {
+                "text": "<p>175 years of winemaking heritage in the heart of the Barossa Valley.</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
+            }
+          },
+          "block_order": ["brand_logo", "brand_blurb"]
+        },
+        "discover_links": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-discover",
+            "heading": "Discover",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "visit_links": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-visit",
+            "heading": "Visit",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "shop_links": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-wine",
+            "heading": "Wine",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        },
+        "contact_links": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-contact",
+            "heading": "Contact",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "heading_preset": "h6",
+            "link_preset": "paragraph"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "brand_group",
+        "discover_links",
+        "visit_links",
+        "shop_links",
+        "contact_links"
+      ],
+      "name": "t:names.footer",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 28,
+        "column_count": "5",
+        "background_color": "#0C0D10",
+        "padding-block-start": 56,
+        "padding-block-end": 40
+      }
+    },
+    "footer_utilities_seppeltsfield": {
+      "type": "footer-utilities",
+      "blocks": {
+        "copyright": {
+          "type": "footer-copyright",
+          "settings": {
+            "show_powered_by": false,
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        },
+        "policy_list": {
+          "type": "footer-policy-list",
+          "settings": {
+            "font_size": "0.75rem",
+            "case": "none"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "copyright",
+        "policy_list"
+      ],
+      "name": "t:names.utilities",
+      "settings": {
+        "section_width": "page-width",
+        "gap": 24,
+        "divider_thickness": 1,
+        "divider_color": "rgba(245,247,248,0.16)",
+        "background_color": "#0C0D10",
+        "padding-block-start": 20,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "footer_seppeltsfield",
+    "footer_utilities_seppeltsfield"
+  ]
+}

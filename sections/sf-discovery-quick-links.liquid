@@ -1,0 +1,206 @@
+{{ 'sf-discovery.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfDiscoveryQuickLinks-{{ section.id }}"
+  class="sf-discovery-quick-links"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-divider: {{ section.settings.divider_color }};
+    --sf-cols-d: {{ section.settings.columns_desktop }};
+    --sf-cols-t: {{ section.settings.columns_tablet }};
+    --sf-gap: {{ section.settings.grid_gap }}px;
+    --sf-icon-size: {{ section.settings.icon_size }}px;
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-discovery-container">
+    <div class="sf-discovery-quick-links__grid sf-discovery-quick-links__grid--mobile-{{ section.settings.mobile_layout }}">
+      {% for block in section.blocks %}
+        {%- liquid
+          case block.settings.icon
+            when 'wine_glass'
+              assign icon_label = 'WG'
+            when 'dining'
+              assign icon_label = 'DN'
+            when 'bed'
+              assign icon_label = 'BD'
+            when 'location'
+              assign icon_label = 'LC'
+            when 'calendar'
+              assign icon_label = 'CL'
+            when 'map'
+              assign icon_label = 'MP'
+            when 'bottle'
+              assign icon_label = 'BT'
+            when 'event'
+              assign icon_label = 'EV'
+            else
+              assign icon_label = 'SF'
+          endcase
+        -%}
+        <article class="sf-discovery-quick-links__item{% if block.settings.featured %} is-featured{% endif %}" {{ block.shopify_attributes }}>
+          <div class="sf-discovery-quick-links__icon-wrap">
+            {% if block.settings.custom_icon != blank %}
+              {{
+                block.settings.custom_icon
+                | image_url: width: 120
+                | image_tag: loading: 'lazy', widths: '40,60,80,120', sizes: '40px', alt: block.settings.title
+              }}
+            {% else %}
+              <span class="sf-discovery-quick-links__icon">{{ icon_label }}</span>
+            {% endif %}
+          </div>
+          {% if block.settings.title != blank %}<h3 class="sf-discovery-quick-links__title">{{ block.settings.title }}</h3>{% endif %}
+          {% if block.settings.copy != blank %}<p class="sf-discovery-quick-links__copy">{{ block.settings.copy }}</p>{% endif %}
+          {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+            <a class="sf-discovery-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-discovery-quick-links {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-discovery-quick-links__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--sf-cols-d), minmax(0, 1fr));
+    gap: var(--sf-gap);
+  }
+  .sf-discovery-quick-links__item {
+    border: 1px solid color-mix(in srgb, var(--sf-divider) 55%, transparent);
+    padding: 0.95rem;
+    min-height: 142px;
+  }
+  .sf-discovery-quick-links__item.is-featured {
+    border-color: var(--sf-accent);
+  }
+  .sf-discovery-quick-links__icon-wrap {
+    color: var(--sf-accent);
+    min-height: 1.8rem;
+  }
+  .sf-discovery-quick-links__icon-wrap img {
+    width: var(--sf-icon-size);
+    height: var(--sf-icon-size);
+    object-fit: contain;
+  }
+  .sf-discovery-quick-links__icon {
+    font-size: var(--sf-icon-size);
+    line-height: 1;
+  }
+  .sf-discovery-quick-links__title {
+    margin: 0.45rem 0 0;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .sf-discovery-quick-links__copy {
+    margin: 0.45rem 0 0.55rem;
+    color: color-mix(in srgb, var(--sf-text) 80%, transparent);
+    font-size: 0.9rem;
+  }
+  @media (max-width: 989px) {
+    .sf-discovery-quick-links {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-discovery-quick-links__grid {
+      grid-template-columns: repeat(var(--sf-cols-t), minmax(0, 1fr));
+    }
+    .sf-discovery-quick-links__grid--mobile-scroll {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(80%, 1fr);
+      grid-template-columns: unset;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.35rem;
+    }
+    .sf-discovery-quick-links__grid--mobile-scroll .sf-discovery-quick-links__item {
+      scroll-snap-align: start;
+    }
+    .sf-discovery-quick-links__grid--mobile-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sf-discovery-quick-links__grid--mobile-stack {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Discover Links",
+  "tag": "section",
+  "class": "sf-discovery-section",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#111315" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "color", "id": "divider_color", "label": "Divider color", "default": "#3B3F46" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "columns_tablet", "label": "Columns tablet", "min": 1, "max": 4, "step": 1, "default": 3 },
+    { "type": "select", "id": "mobile_layout", "label": "Mobile layout", "options": [{ "value": "scroll", "label": "Horizontal scroll" }, { "value": "two", "label": "Two-column" }, { "value": "stack", "label": "Stacked" }], "default": "scroll" },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 18, "max": 48, "step": 2, "unit": "px", "default": 24 },
+    { "type": "range", "id": "grid_gap", "label": "Grid gap", "min": 8, "max": 36, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 20 }
+  ],
+  "blocks": [
+    {
+      "type": "quick_link",
+      "name": "Quick link",
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "options": [{ "value": "wine_glass", "label": "Wine glass" }, { "value": "dining", "label": "Dining" }, { "value": "bed", "label": "Bed" }, { "value": "location", "label": "Location" }, { "value": "calendar", "label": "Calendar" }, { "value": "map", "label": "Map" }, { "value": "bottle", "label": "Bottle" }, { "value": "event", "label": "Event" }], "default": "wine_glass" },
+        { "type": "image_picker", "id": "custom_icon", "label": "Custom icon image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "TASTINGS" },
+        { "type": "textarea", "id": "copy", "label": "Copy" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Explore" },
+        { "type": "url", "id": "link_url", "label": "Link URL" },
+        { "type": "checkbox", "id": "featured", "label": "Featured", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Discover Links",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "quick_link", "settings": { "icon": "wine_glass", "title": "TASTINGS" } },
+        { "type": "quick_link", "settings": { "icon": "dining", "title": "DINE AT FINO" } },
+        { "type": "quick_link", "settings": { "icon": "bed", "title": "THE LODGE" } },
+        { "type": "quick_link", "settings": { "icon": "map", "title": "ESTATE MAP" } },
+        { "type": "quick_link", "settings": { "icon": "event", "title": "WHAT'S ON" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

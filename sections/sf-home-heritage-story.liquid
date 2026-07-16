@@ -1,0 +1,227 @@
+{{ 'sf-home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfHomeHeritage-{{ section.id }}"
+  class="sf-home-heritage-story"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-heading: {{ section.settings.heading_color }};
+    --sf-muted: {{ section.settings.muted_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-heading-size-d: {{ section.settings.heading_size_desktop }}px;
+    --sf-heading-size-m: {{ section.settings.heading_size_mobile }}px;
+    --sf-body-size-d: {{ section.settings.body_size_desktop }}px;
+    --sf-body-size-m: {{ section.settings.body_size_mobile }}px;
+  "
+>
+  <div class="sf-section-container">
+    <div class="sf-home-heritage-story__layout">
+      <div class="sf-home-heritage-story__content">
+        {% if section.settings.eyebrow != blank %}
+          <p class="sf-home-heritage-story__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.heading != blank %}
+          <h2 class="sf-home-heritage-story__heading">{{ section.settings.heading | newline_to_br }}</h2>
+        {% endif %}
+        {% if section.settings.copy != blank %}
+          <div class="sf-home-heritage-story__copy rte">{{ section.settings.copy }}</div>
+        {% endif %}
+        {% if section.settings.link_label != blank and section.settings.link_url != blank %}
+          <a class="sf-home-link sf-home-heritage-story__link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
+        {% endif %}
+      </div>
+      <div class="sf-home-heritage-story__media sf-home-heritage-story__media--{{ section.settings.mobile_media_layout }}">
+        {% if section.settings.main_image != blank %}
+          <div class="sf-home-heritage-story__layer sf-home-heritage-story__layer--main">
+            {{
+              section.settings.main_image
+              | image_url: width: 1600
+              | image_tag:
+                loading: 'lazy',
+                widths: '375, 550, 750, 990, 1200, 1440, 1600',
+                sizes: '(min-width: 990px) 52vw, 100vw',
+                alt: section.settings.main_image.alt
+            }}
+          </div>
+        {% endif %}
+        {% if section.settings.secondary_image != blank %}
+          <div class="sf-home-heritage-story__layer sf-home-heritage-story__layer--secondary">
+            {{
+              section.settings.secondary_image
+              | image_url: width: 1200
+              | image_tag: loading: 'lazy', widths: '250, 350, 550, 750, 1000, 1200', sizes: '(min-width: 990px) 24vw, 56vw', alt: section.settings.secondary_image.alt
+            }}
+          </div>
+        {% endif %}
+        {% if section.settings.document_image != blank %}
+          <div class="sf-home-heritage-story__layer sf-home-heritage-story__layer--document">
+            {{
+              section.settings.document_image
+              | image_url: width: 900
+              | image_tag: loading: 'lazy', widths: '220, 320, 480, 700, 900', sizes: '(min-width: 990px) 18vw, 45vw', alt: section.settings.document_image.alt
+            }}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-home-heritage-story {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-home-heritage-story__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 2rem;
+    align-items: center;
+  }
+  .sf-home-heritage-story__content {
+    max-width: 62ch;
+  }
+  .sf-home-heritage-story__eyebrow {
+    margin: 0;
+    font-size: 0.76rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--sf-muted);
+  }
+  .sf-home-heritage-story__heading {
+    margin: 0.7rem 0 0;
+    color: var(--sf-heading);
+    font-size: var(--sf-heading-size-d);
+    line-height: 1.06;
+  }
+  .sf-home-heritage-story__copy {
+    margin-top: 1rem;
+    font-size: var(--sf-body-size-d);
+  }
+  .sf-home-heritage-story__link {
+    margin-top: 0.9rem;
+    display: inline-block;
+    color: var(--sf-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+  }
+  .sf-home-heritage-story__media {
+    position: relative;
+    min-height: 520px;
+  }
+  .sf-home-heritage-story__layer {
+    position: absolute;
+  }
+  .sf-home-heritage-story__layer img {
+    width: 100%;
+    display: block;
+    height: auto;
+    object-fit: cover;
+  }
+  .sf-home-heritage-story__layer--main {
+    width: 76%;
+    left: 0;
+    top: 0;
+  }
+  .sf-home-heritage-story__layer--secondary {
+    width: 42%;
+    right: 0;
+    bottom: 8%;
+  }
+  .sf-home-heritage-story__layer--document {
+    width: 36%;
+    left: 8%;
+    bottom: -6%;
+  }
+  @media (max-width: 989px) {
+    .sf-home-heritage-story {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-home-heritage-story__layout {
+      grid-template-columns: 1fr;
+    }
+    .sf-home-heritage-story__heading {
+      font-size: var(--sf-heading-size-m);
+    }
+    .sf-home-heritage-story__copy {
+      font-size: var(--sf-body-size-m);
+    }
+    .sf-home-heritage-story__media {
+      min-height: auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    .sf-home-heritage-story__layer {
+      position: static;
+      width: 100%;
+    }
+    .sf-home-heritage-story__media--main_only .sf-home-heritage-story__layer--secondary,
+    .sf-home-heritage-story__media--main_only .sf-home-heritage-story__layer--document {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Home Heritage",
+  "tag": "section",
+  "class": "sf-home-section",
+  "settings": [
+    { "type": "paragraph", "content": "Recommended files: historyHERO, Old-Bottling-Hall-c1900-now-Seppeltsfields-Cellar-Door, provenance-of-para-HERO" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR HERITAGE" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "A Living Legacy\nSince 1851." },
+    { "type": "richtext", "id": "copy", "label": "Copy", "default": "<p>Seppeltsfield is one of the world's great wine estates. Our Centennial Cellar, established in 1878, holds the world's only unbroken lineage of single vintage Tawny - 149 consecutive vintages and counting. We are the only winery on earth to release a 100 Year Old wine every single year since 1978.</p>" },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "EXPLORE OUR HISTORY" },
+    { "type": "url", "id": "link_url", "label": "Link URL" },
+    { "type": "image_picker", "id": "main_image", "label": "Main historical image" },
+    { "type": "image_picker", "id": "secondary_image", "label": "Secondary image" },
+    { "type": "image_picker", "id": "document_image", "label": "Document image" },
+    { "type": "select", "id": "mobile_media_layout", "label": "Mobile media layout", "options": [{ "value": "stack", "label": "Stack images" }, { "value": "main_only", "label": "Main image only" }], "default": "stack" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F4F1EA" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111315" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#2A2A2A" },
+    { "type": "color", "id": "muted_color", "label": "Muted color", "default": "#6D4B35" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 28, "max": 110, "step": 2, "unit": "px", "default": 62 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 26, "max": 64, "step": 2, "unit": "px", "default": 38 },
+    { "type": "range", "id": "body_size_desktop", "label": "Body size desktop", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 17 },
+    { "type": "range", "id": "body_size_mobile", "label": "Body size mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 72 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 44 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 44 }
+  ],
+  "presets": [
+    {
+      "name": "SF Home Heritage",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

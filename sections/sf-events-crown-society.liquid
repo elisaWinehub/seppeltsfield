@@ -1,0 +1,37 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign mobile_image = section.settings.mobile_image | default: section.settings.desktop_image
+-%}
+<section id="SfEventsCrownSociety-{{ section.id }}" class="sf-events-crown-society" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-accent:{{ section.settings.accent_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-crown-society__media">
+    {% if section.settings.desktop_image != blank %}
+      {{ section.settings.desktop_image | image_url: width: 2200 | image_tag: class: 'sf-events-crown-society__img sf-events-crown-society__img--desktop', loading: 'lazy', widths: '750,990,1200,1440,1800,2200', sizes: '100vw', alt: section.settings.desktop_image.alt }}
+      {{ mobile_image | image_url: width: 1200 | image_tag: class: 'sf-events-crown-society__img sf-events-crown-society__img--mobile', loading: 'lazy', widths: '375,550,750,990,1200', sizes: '100vw', alt: mobile_image.alt }}
+    {% endif %}
+  </div>
+  <div class="sf-events-crown-society__overlay"></div>
+  <div class="sf-events-container sf-events-crown-society__inner">
+    <div class="sf-events-crown-society__content">
+      {% if section.settings.eyebrow != blank %}<p>{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2>{{ section.settings.heading }}</h2>{% endif %}
+      {% if section.settings.copy != blank %}<p class="sf-events-crown-society__copy">{{ section.settings.copy }}</p>{% endif %}
+      {% if section.settings.link_label != blank and section.settings.link_url != blank %}<a class="sf-events-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>{% endif %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-crown-society{position:relative;background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d);width:100%;max-width:100%;margin-left:0;margin-right:0;overflow:clip}.sf-events-crown-society__media,.sf-events-crown-society__overlay{position:absolute;inset:0}.sf-events-crown-society__img{width:100%;height:100%;object-fit:cover}.sf-events-crown-society__img--mobile{display:none}.sf-events-crown-society__overlay{background:linear-gradient(90deg,rgba(5,5,5,.82),rgba(5,5,5,.48))}.sf-events-crown-society__inner{position:relative}.sf-events-crown-society__content{max-width:560px;color:var(--sf-text)}.sf-events-crown-society__content p:first-child{margin:0;color:var(--sf-accent);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-events-crown-society__content h2{margin:.55rem 0 0;color:var(--sf-head);font-size:clamp(1.7rem,2.5vw,2.7rem)}.sf-events-crown-society__copy{margin:.8rem 0 1rem}@media(max-width:989px){.sf-events-crown-society{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-crown-society__img--desktop{display:none}.sf-events-crown-society__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Crown","tag":"section","class":"sf-events-section","settings":[{"type":"paragraph","content":"Search files: Crown Society, Member event, Wine glass"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"standard"},{"type":"image_picker","id":"desktop_image","label":"Desktop image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"THE CROWN SOCIETY"},{"type":"text","id":"heading","label":"Heading","default":"The Crown Society"},{"type":"textarea","id":"copy","label":"Copy","default":"Enjoy priority access to limited releases, exclusive events and special member benefits."},{"type":"text","id":"link_label","label":"Link label","default":"LEARN MORE"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"color","id":"background_color","label":"Background","default":"#050505"},{"type":"color","id":"heading_color","label":"Heading color","default":"#FFFFFF"},{"type":"color","id":"text_color","label":"Text color","default":"#F4F1EA"},{"type":"color","id":"accent_color","label":"Accent color","default":"#47A8DF"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":36},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":36},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":24},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":24}],"presets":[{"name":"SF Events Crown","category":"Seppeltsfield"}]}
+{% endschema %}

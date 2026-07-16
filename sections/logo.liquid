@@ -2,10 +2,14 @@
 
 {% liquid
   assign section_settings = section.settings
+  assign default_logo_url = 'https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221'
+  assign default_logo_aspect_ratio = 2.04
   assign image = settings.logo
+  assign logo_aspect_ratio = image.aspect_ratio | default: default_logo_aspect_ratio
 
   if section_settings.inverse and settings.logo_inverse
     assign image = settings.logo_inverse
+    assign logo_aspect_ratio = image.aspect_ratio | default: default_logo_aspect_ratio
   endif
 
   if section_settings.background_color != blank
@@ -27,6 +31,17 @@
         sizes: '(min-width: 750px) calc(var(--logo-width)), 100vw'
     -}}
   {% endcapture %}
+{%- else -%}
+  {% capture logo_image %}
+    <img
+      class="logo-section__image"
+      src="{{ default_logo_url }}"
+      alt="{{ shop.name | escape }}"
+      width="1200"
+      height="588"
+      loading="lazy"
+    >
+  {% endcapture %}
 {%- endif -%}
 
 <div
@@ -45,12 +60,8 @@
       {% if section_settings.unit == 'percent' %}
         --logo-width: {{ section_settings.percent_width }}%;
       {% else %}
-        {% if image %}
-          --logo-width: {{ image.width | times: 1.00 | divided_by: image.height | times: section_settings.pixel_height }}px;
-        {% else %}
-          --logo-width: {{ shop.name.size | times: 0.65 }}em;
-          --logo-height: {{ section_settings.pixel_height }}px;
-        {% endif %}
+        --logo-width: {{ section_settings.pixel_height | times: logo_aspect_ratio }}px;
+        --logo-height: {{ section_settings.pixel_height }}px;
       {% endif %}
 
       {% if section_settings.custom_mobile_size %}
@@ -58,12 +69,8 @@
           --logo-width-mobile: {{ section_settings.percent_width_mobile }}%;
           --logo-height-mobile: auto;
         {% else %}
-          {% if image %}
-            --logo-width-mobile: {{ image.width | times: 1.00 | divided_by: image.height | times: section_settings.pixel_height_mobile }}px;
-            {% else %}
-              --logo-width-mobile: {{ shop.name.size | times: 0.65 }}em;
-              --logo-height-mobile: {{ section_settings.pixel_height_mobile }}px;
-          {% endif %}
+          --logo-width-mobile: {{ section_settings.pixel_height_mobile | times: logo_aspect_ratio }}px;
+          --logo-height-mobile: {{ section_settings.pixel_height_mobile }}px;
         {% endif %}
       {% endif %}
       {% render 'spacing-style', settings: section_settings %}

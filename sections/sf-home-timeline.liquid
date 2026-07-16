@@ -1,0 +1,246 @@
+{{ 'sf-home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfHomeTimeline-{{ section.id }}"
+  class="sf-home-timeline"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-muted: {{ section.settings.muted_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-line: {{ section.settings.line_color }};
+    --sf-cols-d: {{ section.settings.columns_desktop }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-gap: {{ section.settings.timeline_gap }}px;
+  "
+>
+  <div class="sf-section-container">
+    {% if section.settings.eyebrow != blank or section.settings.intro_heading != blank %}
+      <div class="sf-home-timeline__intro">
+        {% if section.settings.eyebrow != blank %}
+          <p class="sf-home-timeline__eyebrow">{{ section.settings.eyebrow }}</p>
+        {% endif %}
+        {% if section.settings.intro_heading != blank %}
+          <h2 class="sf-home-timeline__heading">{{ section.settings.intro_heading }}</h2>
+        {% endif %}
+        {% if section.settings.intro_copy != blank %}
+          <p class="sf-home-timeline__copy">{{ section.settings.intro_copy }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="sf-home-timeline__items sf-home-timeline__items--mobile-{{ section.settings.mobile_layout }}">
+      {% for block in section.blocks %}
+        <article
+          class="sf-home-timeline__item {% if block.settings.highlighted %}is-highlighted{% endif %}"
+          {{ block.shopify_attributes }}
+        >
+          <p class="sf-home-timeline__year">{{ block.settings.year }}</p>
+          {% if section.settings.show_timeline_images and block.settings.image != blank %}
+            <div class="sf-home-timeline__media">
+              {{
+                block.settings.image
+                | image_url: width: 1000
+                | image_tag:
+                  loading: 'lazy',
+                  widths: '220, 350, 550, 750, 900, 1000',
+                  sizes: '(min-width: 990px) 20vw, 72vw',
+                  alt: block.settings.heading
+              }}
+            </div>
+          {% endif %}
+          {% if block.settings.heading != blank %}
+            <h3 class="sf-home-timeline__item-title">{{ block.settings.heading }}</h3>
+          {% endif %}
+          {% if block.settings.description != blank %}
+            <p class="sf-home-timeline__item-copy">{{ block.settings.description }}</p>
+          {% endif %}
+          {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+            <a class="sf-home-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-home-timeline {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-home-timeline__intro {
+    max-width: 60ch;
+    margin-bottom: 1.4rem;
+  }
+  .sf-home-timeline__eyebrow {
+    margin: 0;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--sf-muted);
+  }
+  .sf-home-timeline__heading {
+    margin: 0.35rem 0 0;
+    font-size: clamp(1.65rem, 2.8vw, 2.5rem);
+  }
+  .sf-home-timeline__copy {
+    color: color-mix(in srgb, var(--sf-text) 84%, transparent);
+  }
+  .sf-home-timeline__items {
+    display: grid;
+    gap: var(--sf-gap);
+    grid-template-columns: repeat(var(--sf-cols-d, 5), minmax(0, 1fr));
+    position: relative;
+  }
+  .sf-home-timeline__items::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0.85rem;
+    border-top: 1px solid var(--sf-line);
+  }
+  .sf-home-timeline__item {
+    position: relative;
+    padding-top: 1.4rem;
+  }
+  .sf-home-timeline__item::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.56rem;
+    width: 9px;
+    height: 9px;
+    border-radius: 100px;
+    background: var(--sf-accent);
+  }
+  .sf-home-timeline__year {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sf-accent);
+  }
+  .sf-home-timeline__media {
+    margin-top: 0.6rem;
+    aspect-ratio: 5 / 4;
+    overflow: hidden;
+    background: #111315;
+  }
+  .sf-home-timeline__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-home-timeline__item-title {
+    margin: 0.65rem 0 0;
+    font-size: 1rem;
+  }
+  .sf-home-timeline__item-copy {
+    margin: 0.35rem 0 0;
+    color: color-mix(in srgb, var(--sf-text) 84%, transparent);
+    font-size: 0.95rem;
+  }
+  .sf-home-timeline__item.is-highlighted {
+    outline: 1px solid color-mix(in srgb, var(--sf-accent) 40%, transparent);
+    padding: 1.4rem 0.8rem 0.8rem;
+  }
+  @media (max-width: 989px) {
+    .sf-home-timeline {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-home-timeline__items {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .sf-home-timeline__items--mobile-scroll {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(78%, 1fr);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      grid-template-columns: unset;
+      padding-bottom: 0.35rem;
+    }
+    .sf-home-timeline__items--mobile-scroll .sf-home-timeline__item {
+      scroll-snap-align: start;
+    }
+    .sf-home-timeline__items--mobile-vertical {
+      grid-template-columns: 1fr;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF - Home Timeline",
+  "tag": "section",
+  "class": "sf-home-section",
+  "max_blocks": 10,
+  "settings": [
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "OUR TIMELINE" },
+    { "type": "text", "id": "intro_heading", "label": "Intro heading", "default": "Milestones in Seppeltsfield history" },
+    { "type": "textarea", "id": "intro_copy", "label": "Intro copy", "default": "A story of heritage, innovation and craftsmanship." },
+    { "type": "checkbox", "id": "show_timeline_images", "label": "Show timeline images", "default": true },
+    { "type": "select", "id": "mobile_layout", "label": "Mobile layout", "options": [{ "value": "scroll", "label": "Horizontal scroll" }, { "value": "vertical", "label": "Vertical timeline" }], "default": "scroll" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#111315" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_color", "label": "Muted color", "default": "#D6CEC1" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "color", "id": "line_color", "label": "Line color", "default": "#555555" },
+    { "type": "range", "id": "columns_desktop", "label": "Desktop milestones per row", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "timeline_gap", "label": "Timeline gap", "min": 8, "max": 60, "step": 2, "unit": "px", "default": 18 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "timeline_item",
+      "name": "Timeline item",
+      "settings": [
+        { "type": "text", "id": "year", "label": "Year", "default": "1851" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Joseph Seppelt plants the first vines" },
+        { "type": "textarea", "id": "description", "label": "Description", "default": "The estate story begins in the Barossa Valley." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link_url", "label": "Link URL" },
+        { "type": "checkbox", "id": "highlighted", "label": "Highlighted milestone", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF - Home Timeline",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "timeline_item", "settings": { "year": "1851", "heading": "Joseph Seppelt plants the first vines", "description": "The Seppeltsfield story begins in the Barossa Valley." } },
+        { "type": "timeline_item", "settings": { "year": "1878", "heading": "Centennial Cellar is built, beginning 149 unbroken vintages of single vintage Tawny", "description": "A puncheon is set aside for a tradition that continues every year." } },
+        { "type": "timeline_item", "settings": { "year": "1888", "heading": "The Gravity Cellar is completed", "description": "Built into the hillside to move fruit through the winery by gravity." } },
+        { "type": "timeline_item", "settings": { "year": "1900", "heading": "The Bottling Hall opens - today's Cellar Door and FINO Restaurant", "description": "A working hall that later became one of the estate's key visitor destinations." } },
+        { "type": "timeline_item", "settings": { "year": "2009", "heading": "Warren Randall brings the estate into a new era", "description": "Seppeltsfield enters the Randall Wine Group era." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

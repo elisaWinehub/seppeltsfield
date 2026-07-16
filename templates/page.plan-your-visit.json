@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -31,14 +40,54 @@
     "team": {
       "type": "trust-bar",
       "blocks": {
-        "t1": { "type": "trust_item", "settings": { "icon": "•", "title": "Cellar Door", "subtitle": "Open daily" } },
-        "t2": { "type": "trust_item", "settings": { "icon": "•", "title": "Fino Restaurant", "subtitle": "Bookings recommended" } },
-        "t3": { "type": "trust_item", "settings": { "icon": "•", "title": "Estate Team", "subtitle": "Here to help" } }
+        "t1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "•",
+            "title": "Cellar Door",
+            "subtitle": "Open daily"
+          }
+        },
+        "t2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "•",
+            "title": "Fino Restaurant",
+            "subtitle": "Bookings recommended"
+          }
+        },
+        "t3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "•",
+            "title": "Estate Team",
+            "subtitle": "Here to help"
+          }
+        }
       },
-      "block_order": ["t1", "t2", "t3"]
+      "block_order": [
+        "t1",
+        "t2",
+        "t3"
+      ],
+      "settings": {}
     },
-    "faq": { "type": "faq-accordion", "settings": {} },
-    "newsletter": { "type": "newsletter-bar", "settings": { "heading": "Join our estate mailing list." } }
+    "faq": {
+      "type": "faq-accordion",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter-bar",
+      "settings": {
+        "heading": "Join our estate mailing list."
+      }
+    }
   },
-  "order": ["hero", "hours", "team", "faq", "newsletter"]
+  "order": [
+    "hero",
+    "hours",
+    "team",
+    "faq",
+    "newsletter"
+  ]
 }

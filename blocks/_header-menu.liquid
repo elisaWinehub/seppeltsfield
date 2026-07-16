@@ -9,6 +9,11 @@
 {% liquid
   assign block_settings = block.settings
   assign effective_submenu_color = block_settings.background_color | default: settings.page_background_color
+  assign cta_enabled = block_settings.show_header_cta
+  assign cta_label = block_settings.header_cta_label | default: 'Book Experience'
+  assign cta_url = block_settings.header_cta_url | default: '/pages/experiences'
+  assign cta_url_downcase = cta_url | downcase
+  assign cta_label_downcase = cta_label | downcase
 %}
 
 {% case variant %}
@@ -45,6 +50,21 @@
             role="list"
           >
             {% for link in block_settings.menu.links %}
+              {% liquid
+                assign link_url_downcase = link.url | downcase
+                assign link_title_downcase = link.title | downcase
+                assign hide_link_for_cta = false
+                if cta_enabled and cta_url_downcase != blank and link_url_downcase == cta_url_downcase
+                  assign hide_link_for_cta = true
+                elsif cta_enabled and link.handle == 'book-experience'
+                  assign hide_link_for_cta = true
+                elsif cta_enabled and cta_label_downcase != blank and link_title_downcase == cta_label_downcase
+                  assign hide_link_for_cta = true
+                endif
+              %}
+              {% if hide_link_for_cta %}
+                {% continue %}
+              {% endif %}
               <li>
                 <a
                   href="{{ link.url }}"
@@ -93,6 +113,21 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
+        {% liquid
+          assign link_url_downcase = link.url | downcase
+          assign link_title_downcase = link.title | downcase
+          assign hide_link_for_cta = false
+          if cta_enabled and cta_url_downcase != blank and link_url_downcase == cta_url_downcase
+            assign hide_link_for_cta = true
+          elsif cta_enabled and link.handle == 'book-experience'
+            assign hide_link_for_cta = true
+          elsif cta_enabled and cta_label_downcase != blank and link_title_downcase == cta_label_downcase
+            assign hide_link_for_cta = true
+          endif
+        %}
+        {% if hide_link_for_cta %}
+          {% continue %}
+        {% endif %}
         <li
           role="presentation"
           class="menu-list__list-item"
@@ -283,6 +318,33 @@
 
   .menu-list__list-item[aria-hidden='true'] {
     visibility: hidden;
+  }
+
+  .menu-list__item--cta,
+  .menu-list__link--cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.62rem 1rem;
+    border-radius: 999px;
+    border: 1px solid var(--menu-cta-bg);
+    background: var(--menu-cta-bg);
+    color: var(--menu-cta-text) !important;
+    text-decoration: none;
+    line-height: 1;
+  }
+
+  .menu-list__item--cta:hover,
+  .menu-list__item--cta:focus-visible,
+  .menu-list__link--cta:hover,
+  .menu-list__link--cta:focus-visible {
+    background: var(--menu-cta-hover-bg);
+    border-color: var(--menu-cta-hover-bg);
+    color: var(--menu-cta-hover-text) !important;
+  }
+
+  .menu-list__list-item--cta::after {
+    content: none;
   }
 
   .menu-list__link {
@@ -948,6 +1010,57 @@
       "id": "drawer_dividers",
       "label": "t:settings.dividers",
       "default": false
+    },
+    {
+      "type": "header",
+      "content": "Header CTA"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_header_cta",
+      "label": "Show header CTA button",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "header_cta_label",
+      "label": "CTA label",
+      "default": "Book Experience",
+      "visible_if": "{{ block.settings.show_header_cta }}"
+    },
+    {
+      "type": "url",
+      "id": "header_cta_url",
+      "label": "CTA link",
+      "visible_if": "{{ block.settings.show_header_cta }}"
+    },
+    {
+      "type": "color",
+      "id": "header_cta_bg_color",
+      "label": "CTA background",
+      "default": "#050505",
+      "visible_if": "{{ block.settings.show_header_cta }}"
+    },
+    {
+      "type": "color",
+      "id": "header_cta_text_color",
+      "label": "CTA text color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.show_header_cta }}"
+    },
+    {
+      "type": "color",
+      "id": "header_cta_hover_bg_color",
+      "label": "CTA hover background",
+      "default": "#47A8DF",
+      "visible_if": "{{ block.settings.show_header_cta }}"
+    },
+    {
+      "type": "color",
+      "id": "header_cta_hover_text_color",
+      "label": "CTA hover text color",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.show_header_cta }}"
     }
   ]
 }

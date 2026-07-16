@@ -1,0 +1,110 @@
+{%- doc -%}
+  Product media gallery for Seppeltsfield product template.
+
+  @param {product} product
+  @param {section} section
+{%- enddoc -%}
+
+{% if product.media.size > 0 %}
+  <div
+    class="sf-product-media"
+    data-sf-media-gallery
+    data-enable-zoom="{{ section.settings.enable_image_zoom | default: true }}"
+    style="
+      --sf-thumb-width: {{ section.settings.thumbnail_width }}px;
+      --sf-thumb-gap: {{ section.settings.thumbnail_gap }}px;
+      --sf-product-main-image-max-height: {{ section.settings.main_image_max_height }}px;
+      --sf-product-image-fit: {{ section.settings.image_fit }};
+      --sf-product-image-bg: {{ section.settings.image_background_color }};
+    "
+  >
+    {% if product.media.size > 1 %}
+      <div class="sf-product-media__thumbs" role="tablist" aria-label="Product media thumbnails">
+        {% for media in product.media %}
+          <button
+            type="button"
+            class="sf-product-media__thumb{% if forloop.first %} is-active{% endif %}"
+            data-sf-media-thumb
+            data-media-id="{{ media.id }}"
+            role="tab"
+            aria-selected="{% if forloop.first %}true{% else %}false{% endif %}"
+            aria-label="Show media {{ forloop.index }}"
+          >
+            {% if media.preview_image %}
+              {{
+                media.preview_image
+                | image_url: width: 240
+                | image_tag:
+                  widths: '90, 120, 180, 240',
+                  sizes: '72px',
+                  loading: 'lazy',
+                  alt: media.alt | default: product.title
+              }}
+            {% else %}
+              {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </button>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    <div class="sf-product-media__viewport">
+      {% for media in product.media %}
+        <div
+          class="sf-product-media__main{% if forloop.first %} is-active{% endif %}"
+          data-sf-media-main
+          data-media-id="{{ media.id }}"
+          data-media-type="{{ media.media_type }}"
+        >
+          {% case media.media_type %}
+            {% when 'image' %}
+              {% liquid
+                assign image_loading = 'lazy'
+                assign image_fetchpriority = 'auto'
+                if forloop.first
+                  assign image_loading = 'eager'
+                  assign image_fetchpriority = 'high'
+                endif
+                assign image_alt = media.alt | default: product.title
+              %}
+              <button
+                type="button"
+                class="sf-product-media__zoom-trigger"
+                data-sf-media-zoom
+                aria-label="Enlarge {{ image_alt }}"
+              >
+                {{
+                  media
+                  | image_url: width: 1800
+                  | image_tag:
+                    widths: '550, 750, 990, 1200, 1440, 1800',
+                    sizes: '(max-width: 749px) 100vw, 55vw',
+                    loading: image_loading,
+                    fetchpriority: image_fetchpriority,
+                    alt: image_alt,
+                    class: 'sf-product-media__image'
+                }}
+              </button>
+            {% when 'video' %}
+              {{ media | media_tag: controls: true, autoplay: section.settings.enable_video_autoplay, loop: section.settings.loop_media, muted: section.settings.mute_videos }}
+            {% when 'external_video' %}
+              {{ media | media_tag: controls: true }}
+            {% when 'model' %}
+              {{ media | media_tag: toggleable: true }}
+            {% else %}
+              {{ media | media_tag }}
+          {% endcase %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="sf-product-media__lightbox" data-sf-media-lightbox hidden>
+    <button type="button" class="sf-product-media__lightbox-close" data-sf-media-lightbox-close aria-label="Close enlarged image">
+      {{ 'icon-close.svg' | inline_asset_content }}
+    </button>
+    <div class="sf-product-media__lightbox-content" data-sf-media-lightbox-content></div>
+  </div>
+{% else %}
+  {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+{% endif %}

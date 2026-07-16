@@ -14,55 +14,113 @@
     "footer_seppeltsfield": {
       "type": "footer",
       "blocks": {
-        "logo_1": {
-          "type": "logo",
+        "brand_group": {
+          "type": "group",
           "settings": {
-            "unit": "pixel",
-            "pixel_height": 48
-          },
-          "blocks": {}
-        },
-        "brand_blurb": {
-          "type": "text",
-          "settings": {
-            "text": "<p>175 years of winemaking in the Barossa Valley. Home of the Centennial Cellar.</p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 10,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {}
+          "blocks": {
+            "image_FytQk4": {
+              "type": "image",
+              "name": "t:names.image",
+              "settings": {
+                "image": "shopify://shop_images/Seppeltsfield-logo_Est1851_HERO_no_Background.png",
+                "link": "",
+                "image_ratio": "adapt",
+                "width": "fill",
+                "custom_width": 100,
+                "width_mobile": "fill",
+                "custom_width_mobile": 100,
+                "height": "fit",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "brand_blurb": {
+              "type": "text",
+              "settings": {
+                "text": "<p>175 years of winemaking heritage in the heart of the Barossa Valley.</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "image_FytQk4",
+            "brand_blurb"
+          ]
         },
         "discover_links": {
-          "type": "text",
+          "type": "menu",
           "settings": {
-            "text": "<h6>Discover</h6><p><a href=\"/pages/discover\">History</a><br><a href=\"/pages/discover\">Sustainability</a><br><a href=\"/pages/discover\">Awards &amp; Recognition</a></p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
+            "menu": "footer-discover",
+            "heading": "Discover",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -71,22 +129,18 @@
           "blocks": {}
         },
         "visit_links": {
-          "type": "text",
+          "type": "menu",
           "settings": {
-            "text": "<h6>Visit</h6><p><a href=\"/pages/plan-your-visit\">Plan Your Visit</a><br><a href=\"/pages/visit\">Wine Tastings</a><br><a href=\"/pages/visit\">Fino Restaurant</a><br><a href=\"/pages/visit\">Accommodation</a></p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
+            "menu": "footer-visit",
+            "heading": "Visit",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -94,23 +148,39 @@
           },
           "blocks": {}
         },
-        "shop_contact_links": {
-          "type": "text",
+        "shop_links": {
+          "type": "menu",
           "settings": {
-            "text": "<h6>Shop &amp; Contact</h6><p><a href=\"/collections/all\">Centennial Collection</a><br><a href=\"/collections/all\">Limited Releases</a><br><a href=\"/collections/all\">Gift Vouchers</a><br><a href=\"tel:+61885624377\">(08) 8562 4377</a><br><a href=\"mailto:info@seppeltsfield.com.au\">info@seppeltsfield.com.au</a></p>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "left",
-            "type_preset": "rte",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
+            "menu": "footer-wine",
+            "heading": "Wine",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "contact_links": {
+          "type": "menu",
+          "settings": {
+            "menu": "footer-contact",
+            "heading": "Contact",
+            "menu_spacing": 10,
+            "show_as_accordion": false,
+            "accordion_icon": "caret",
+            "accordion_dividers": false,
+            "background_color": "",
+            "text_color": "",
+            "heading_preset": "h6",
+            "link_preset": "paragraph",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -120,18 +190,18 @@
         }
       },
       "block_order": [
-        "logo_1",
-        "brand_blurb",
+        "brand_group",
         "discover_links",
         "visit_links",
-        "shop_contact_links"
+        "shop_links",
+        "contact_links"
       ],
       "name": "t:names.footer",
       "settings": {
         "section_width": "page-width",
         "gap": 28,
         "column_count": "5",
-        "background_color": "#0C0D10",
+        "background_color": "#0c0d10",
         "padding-block-start": 56,
         "padding-block-end": 40
       }
@@ -143,6 +213,7 @@
           "type": "footer-copyright",
           "settings": {
             "show_powered_by": false,
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
           },
@@ -151,33 +222,24 @@
         "policy_list": {
           "type": "footer-policy-list",
           "settings": {
+            "text_color": "",
             "font_size": "0.75rem",
             "case": "none"
-          },
-          "blocks": {}
-        },
-        "social_links": {
-          "type": "social-links",
-          "settings": {
-            "facebook_url": "https://www.facebook.com/seppeltsfield",
-            "instagram_url": "https://www.instagram.com/seppeltsfield",
-            "twitter_url": "https://x.com/seppeltsfield"
           },
           "blocks": {}
         }
       },
       "block_order": [
         "copyright",
-        "policy_list",
-        "social_links"
+        "policy_list"
       ],
       "name": "t:names.utilities",
       "settings": {
         "section_width": "page-width",
         "gap": 24,
+        "background_color": "#0c0d10",
         "divider_thickness": 1,
-        "divider_color": "rgba(245,247,248,0.16)",
-        "background_color": "#0C0D10",
+        "divider_color": "#f5f7f829",
         "padding-block-start": 20,
         "padding-block-end": 48
       }

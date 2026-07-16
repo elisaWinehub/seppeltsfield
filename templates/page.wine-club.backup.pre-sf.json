@@ -1,0 +1,138 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "Wine Club",
+        "heading": "More than wine.\nA connection for life.",
+        "body": "Exclusive member pricing, invitations and access to limited cellar releases.",
+        "button_label": "Join the Club",
+        "button_link": "#tiers",
+        "button_style": "secondary",
+        "background_type": "image",
+        "background_image": "shopify://shop_images/centennialcellarHERO2.jpg",
+        "overlay_opacity": 40,
+        "background_color": "#0b0c0d",
+        "heading_color": "#f5f7f8",
+        "text_color": "#f5f7f8",
+        "heading_size": 64,
+        "text_size": 17,
+        "padding_top": "xl",
+        "padding_bottom": "lg",
+        "section_width": "page-width"
+      }
+    },
+    "why_join": {
+      "type": "trust-bar",
+      "blocks": {
+        "j1": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "◆",
+            "title": "Member pricing",
+            "subtitle": "Preferred rates and seasonal offers"
+          }
+        },
+        "j2": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "✦",
+            "title": "Priority access",
+            "subtitle": "Centennial and limited drops"
+          }
+        },
+        "j3": {
+          "type": "trust_item",
+          "settings": {
+            "icon": "●",
+            "title": "Events",
+            "subtitle": "Invitations to member moments"
+          }
+        }
+      },
+      "block_order": [
+        "j1",
+        "j2",
+        "j3"
+      ],
+      "settings": {}
+    },
+    "tiers": {
+      "type": "tier-comparison",
+      "blocks": {
+        "tier1": {
+          "type": "tier",
+          "settings": {
+            "label": "Explorer",
+            "price": "$120 / year",
+            "description": "Core access to member pricing and selected estate invitations.",
+            "cta": "Join Explorer",
+            "link": "/account/register",
+            "button_style": "light",
+            "featured": false
+          }
+        },
+        "tier2": {
+          "type": "tier",
+          "settings": {
+            "label": "Connoisseur",
+            "price": "$220 / year",
+            "description": "Most popular tier with expanded benefits and premium release access.",
+            "cta": "Join Connoisseur",
+            "link": "/account/register",
+            "button_style": "primary",
+            "featured": true
+          }
+        },
+        "tier3": {
+          "type": "tier",
+          "settings": {
+            "label": "Collector",
+            "price": "$360 / year",
+            "description": "Highest tier for collectors wanting private allocations and events.",
+            "cta": "Join Collector",
+            "link": "/account/register",
+            "button_style": "light",
+            "featured": false
+          }
+        }
+      },
+      "block_order": [
+        "tier1",
+        "tier2",
+        "tier3"
+      ],
+      "settings": {
+        "heading": "Find the perfect membership for you."
+      }
+    },
+    "crown": {
+      "type": "cta-banner",
+      "settings": {
+        "eyebrow": "Crown Society",
+        "heading": "Every bottle you enjoy brings you closer.",
+        "button_label": "Explore Crown Society"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter-bar",
+      "settings": {}
+    }
+  },
+  "order": [
+    "hero",
+    "why_join",
+    "tiers",
+    "crown",
+    "newsletter"
+  ]
+}

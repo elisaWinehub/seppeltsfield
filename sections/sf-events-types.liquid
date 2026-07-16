@@ -1,0 +1,41 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+<section id="SfEventsTypes-{{ section.id }}" class="sf-events-types" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-gap:{{ section.settings.card_gap }}px;--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-container">
+    <div class="sf-events-types__cards sf-events-types__cards--mobile-{{ section.settings.mobile_layout }}">
+      {% for block in section.blocks %}
+        {%- assign mobile_image = block.settings.mobile_image | default: block.settings.image -%}
+        <article class="sf-events-types__card{% if block.settings.featured %} is-featured{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 1400 | image_tag: class: 'sf-events-types__img sf-events-types__img--desktop', loading: 'lazy', widths: '550,750,990,1200,1400', sizes: '(min-width:990px) 33vw, 86vw', alt: block.settings.image.alt }}
+            {{ mobile_image | image_url: width: 1000 | image_tag: class: 'sf-events-types__img sf-events-types__img--mobile', loading: 'lazy', widths: '375,550,750,900,1000', sizes: '(max-width:989px) 86vw, 1px', alt: mobile_image.alt }}
+          {% endif %}
+          <div class="sf-events-types__overlay"></div>
+          <div class="sf-events-types__content">
+            {% if block.settings.eyebrow != blank %}<p>{{ block.settings.eyebrow }}</p>{% endif %}
+            {% if block.settings.heading != blank %}<h3>{{ block.settings.heading }}</h3>{% endif %}
+            {% if block.settings.copy != blank %}<p class="sf-events-types__copy">{{ block.settings.copy }}</p>{% endif %}
+            {% if block.settings.link_label != blank and block.settings.link_url != blank %}<a class="sf-events-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>{% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-types{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-events-types__cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sf-gap)}.sf-events-types__card{position:relative;min-height:300px;overflow:hidden}.sf-events-types__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}.sf-events-types__img--mobile{display:none}.sf-events-types__overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,5,5,.15),rgba(5,5,5,.7))}.sf-events-types__content{position:relative;z-index:2;color:#fff;padding:1rem;display:grid;align-content:end;min-height:100%}.sf-events-types__content p{margin:0;text-transform:uppercase;letter-spacing:.12em;font-size:.7rem}.sf-events-types__content h3{margin:.45rem 0 0;font-size:1.3rem}.sf-events-types__copy{margin:.5rem 0 .7rem !important;text-transform:none !important;letter-spacing:0 !important;font-size:.92rem !important}@media(max-width:989px){.sf-events-types{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-types__cards--mobile-scroll{display:grid;grid-template-columns:unset;grid-auto-flow:column;grid-auto-columns:minmax(86vw,1fr);overflow-x:auto;scroll-snap-type:x mandatory}.sf-events-types__cards--mobile-scroll .sf-events-types__card{scroll-snap-align:start}.sf-events-types__cards--mobile-stack{grid-template-columns:1fr}.sf-events-types__img--desktop{display:none}.sf-events-types__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Types","tag":"section","class":"sf-events-section","max_blocks":6,"settings":[{"type":"paragraph","content":"Search files: Wedding, Corporate Event, Private Event"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"wide"},{"type":"color","id":"background_color","label":"Background","default":"#111315"},{"type":"range","id":"card_gap","label":"Card gap","min":8,"max":36,"step":2,"unit":"px","default":12},{"type":"select","id":"mobile_layout","label":"Mobile layout","options":[{"value":"scroll","label":"Horizontal scroll"},{"value":"stack","label":"Stacked"}],"default":"scroll"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":28},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":28},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":20},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":20}],"blocks":[{"type":"event_type","name":"Event type","settings":[{"type":"image_picker","id":"image","label":"Desktop image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"WEDDINGS"},{"type":"text","id":"heading","label":"Heading","default":"Weddings"},{"type":"textarea","id":"copy","label":"Copy","default":"Say \"I do\" in a place rich with history and natural beauty."},{"type":"text","id":"link_label","label":"Link label","default":"Learn more"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"checkbox","id":"featured","label":"Featured","default":false}]}],"presets":[{"name":"SF Events Types","category":"Seppeltsfield","blocks":[{"type":"event_type","settings":{"eyebrow":"WEDDINGS","heading":"Weddings","copy":"Say \"I do\" in a place rich with history and natural beauty."}},{"type":"event_type","settings":{"eyebrow":"CORPORATE","heading":"Corporate Functions","copy":"Inspire, connect and celebrate with your team or clients."}},{"type":"event_type","settings":{"eyebrow":"PRIVATE","heading":"Private Functions","copy":"Birthdays, anniversaries and milestone celebrations."}}]}]}
+{% endschema %}

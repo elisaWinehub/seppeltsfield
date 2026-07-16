@@ -1,0 +1,190 @@
+{{ 'sf-home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfHomeCrownSociety-{{ section.id }}"
+  class="sf-home-crown-society{% if section.settings.dark_style %} is-dark{% endif %}"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-divider: {{ section.settings.divider_color }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-home-crown-society__bg">
+    {% if section.settings.background_image != blank %}
+      {{
+        section.settings.background_image
+        | image_url: width: 2200
+        | image_tag:
+          loading: 'lazy',
+          widths: '750, 990, 1200, 1440, 1800, 2200',
+          sizes: '100vw',
+          alt: section.settings.background_image.alt
+      }}
+    {% endif %}
+  </div>
+  <div class="sf-home-crown-society__overlay"></div>
+  <div class="sf-section-container sf-home-crown-society__inner">
+    {% if section.settings.logo_image != blank %}
+      <div class="sf-home-crown-society__logo">
+        {{
+          section.settings.logo_image
+          | image_url: width: 420
+          | image_tag: loading: 'lazy', widths: '120, 180, 240, 320, 420', sizes: '160px', alt: section.settings.logo_image.alt
+        }}
+      </div>
+    {% endif %}
+    <div class="sf-home-crown-society__content sf-home-crown-society__content--{{ section.settings.content_alignment }}">
+      {% if section.settings.eyebrow != blank %}
+        <p class="sf-home-crown-society__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h2 class="sf-home-crown-society__heading">{{ section.settings.heading }}</h2>
+      {% endif %}
+      {% if section.settings.copy != blank %}
+        <p class="sf-home-crown-society__copy">{{ section.settings.copy }}</p>
+      {% endif %}
+      {% if section.settings.button_label != blank and section.settings.button_url != blank %}
+        <a
+          href="{{ section.settings.button_url }}"
+          class="sf-button sf-button--outline"
+          style="
+            --sf-button-text: {{ section.settings.button_text_color }};
+            --sf-button-bg: transparent;
+            --sf-button-border: {{ section.settings.button_border_color }};
+            --sf-button-hover-text: {{ section.settings.button_hover_text_color }};
+            --sf-button-hover-bg: {{ section.settings.button_hover_bg_color }};
+            --sf-button-hover-border: {{ section.settings.button_hover_bg_color }};
+          "
+        >
+          {{ section.settings.button_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-home-crown-society {
+    position: relative;
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+    overflow: clip;
+  }
+  .sf-home-crown-society__bg,
+  .sf-home-crown-society__overlay {
+    position: absolute;
+    inset: 0;
+  }
+  .sf-home-crown-society__bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-home-crown-society__overlay {
+    background: color-mix(in srgb, var(--sf-bg) 84%, transparent);
+  }
+  .sf-home-crown-society__inner {
+    position: relative;
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+  }
+  .sf-home-crown-society__logo img {
+    width: auto;
+    max-width: 180px;
+  }
+  .sf-home-crown-society__content--center {
+    text-align: center;
+  }
+  .sf-home-crown-society__content--right {
+    text-align: right;
+  }
+  .sf-home-crown-society__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.76rem;
+  }
+  .sf-home-crown-society__heading {
+    margin: 0.4rem 0 0;
+    font-size: clamp(1.4rem, 2.3vw, 2.2rem);
+  }
+  .sf-home-crown-society__copy {
+    margin: 0.45rem 0 0.85rem;
+  }
+  @media (max-width: 989px) {
+    .sf-home-crown-society {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-home-crown-society__inner {
+      grid-template-columns: 1fr;
+    }
+    .sf-home-crown-society__logo {
+      text-align: center;
+    }
+    .sf-home-crown-society__content {
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF - Home Crown",
+  "tag": "section",
+  "class": "sf-home-section",
+  "settings": [
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "checkbox", "id": "dark_style", "label": "Use dark style", "default": false },
+    { "type": "image_picker", "id": "logo_image", "label": "Logo image" },
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "THE CROWN SOCIETY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "OUR WINE CLUB" },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "Enjoy priority access to limited releases, exclusive events and special member benefits." },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "LEARN MORE" },
+    { "type": "url", "id": "button_url", "label": "Button URL" },
+    { "type": "select", "id": "content_alignment", "label": "Content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#47A8DF" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#FFFFFF" },
+    { "type": "color", "id": "divider_color", "label": "Divider color", "default": "rgba(255,255,255,0.28)" },
+    { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_border_color", "label": "Button border color", "default": "#FFFFFF" },
+    { "type": "color", "id": "button_hover_text_color", "label": "Button hover text color", "default": "#111315" },
+    { "type": "color", "id": "button_hover_bg_color", "label": "Button hover background color", "default": "#FFFFFF" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "presets": [
+    {
+      "name": "SF - Home Crown",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

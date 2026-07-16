@@ -1,0 +1,186 @@
+{%- doc -%}
+  Seppeltsfield collection product card.
+
+  @param {object} product
+  @param {object} section
+{%- enddoc -%}
+
+{% liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_media = product.featured_media | default: product.media.first
+  assign secondary_media = blank
+  if product.media.size > 1
+    assign secondary_media = product.media[1]
+  endif
+
+  assign score_value = blank
+  if section.settings.show_score_badge and section.settings.score_namespace != blank and section.settings.score_key != blank
+    assign score_value = product.metafields[section.settings.score_namespace][section.settings.score_key]
+  endif
+
+  assign vintage_value = blank
+  if section.settings.show_vintage
+    assign vintage_value = product.metafields.custom.vintage | default: product.metafields.details.vintage
+  endif
+
+  assign subtitle_value = blank
+  if section.settings.show_subtitle and section.settings.subtitle_namespace != blank and section.settings.subtitle_key != blank
+    assign subtitle_value = product.metafields[section.settings.subtitle_namespace][section.settings.subtitle_key]
+  endif
+
+  assign can_direct_add = false
+  if product.variants.size == 1 and current_variant.available
+    assign can_direct_add = true
+  endif
+
+  assign primary_image_class = 'sf-product-card__image--primary'
+  if secondary_media != blank and section.settings.show_second_image_hover
+    assign primary_image_class = primary_image_class | append: ' has-secondary'
+  endif
+
+  assign purchase_label = section.settings.add_to_cart_label | default: 'Add to cart'
+  if section.settings.mobile_purchase_layout == 'stacked'
+    assign mobile_layout = 'stacked'
+  else
+    assign mobile_layout = 'same-line'
+  endif
+%}
+
+<article
+  class="sf-product-card"
+  style="
+    --sf-card-bg: {{ section.settings.card_background }};
+    --sf-card-border-color: {{ section.settings.card_border_color }};
+    --sf-card-border-width: {{ section.settings.card_border_width }}px;
+    --sf-card-radius: {{ section.settings.card_border_radius }}px;
+    --sf-card-padding: {{ section.settings.card_padding }}px;
+    --sf-card-title-size: {{ section.settings.title_size }};
+    --sf-card-price-size: {{ section.settings.price_size }};
+    --sf-card-button-size: {{ section.settings.button_size }};
+    --sf-card-image-ratio: {{ section.settings.image_ratio }};
+    --sf-card-image-fit: {{ section.settings.image_fit }};
+    --sf-card-image-bg: {{ section.settings.image_background }};
+    --sf-score-bg: {{ section.settings.score_badge_bg }};
+    --sf-score-text: {{ section.settings.score_badge_text }};
+    --sf-score-border: {{ section.settings.score_badge_border }};
+    --sf-score-size: {{ section.settings.score_badge_size }}px;
+  "
+>
+  {% if score_value != blank %}
+    <div class="sf-product-card__score" aria-label="Wine score {{ score_value }} points">
+      <span><strong>{{ score_value }}</strong>PTS</span>
+    </div>
+  {% endif %}
+
+  <a class="sf-product-card__image-link" href="{{ product.url }}">
+    <div class="sf-product-card__image-wrap">
+      <div class="sf-product-card__image-ratio">
+        {% if featured_media != blank %}
+          {{
+            featured_media
+            | image_url: width: 800
+            | image_tag:
+              class: primary_image_class,
+              widths: '240, 360, 480, 640, 800',
+              loading: 'lazy',
+              sizes: '(min-width: 1200px) 24vw, (min-width: 750px) 33vw, 48vw',
+              alt: featured_media.alt | default: product.title
+          }}
+        {% else %}
+          {{ 'product-apparel-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+
+        {% if secondary_media != blank and section.settings.show_second_image_hover %}
+          {{
+            secondary_media
+            | image_url: width: 800
+            | image_tag:
+              class: 'sf-product-card__image--secondary',
+              widths: '240, 360, 480, 640, 800',
+              loading: 'lazy',
+              sizes: '(min-width: 1200px) 24vw, (min-width: 750px) 33vw, 48vw',
+              alt: secondary_media.alt | default: product.title
+          }}
+        {% endif %}
+      </div>
+    </div>
+  </a>
+
+  <h3 class="sf-product-card__title">
+    <a href="{{ product.url }}">{{ product.title }}</a>
+  </h3>
+
+  {% if section.settings.show_vintage and vintage_value != blank %}
+    <p class="sf-product-card__meta">{{ vintage_value }}</p>
+  {% elsif section.settings.show_product_type and product.type != blank %}
+    <p class="sf-product-card__meta">{{ product.type }}</p>
+  {% else %}
+    <p class="sf-product-card__meta">
+      {% if section.settings.show_vendor and product.vendor != blank %}
+        {{ product.vendor }}
+      {% elsif subtitle_value != blank %}
+        {{ subtitle_value }}
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if section.settings.show_price %}
+    <p class="sf-product-card__price">
+      {{ current_variant.price | money }}
+      {% if section.settings.show_compare_at_price and current_variant.compare_at_price > current_variant.price %}
+        <span class="sf-product-card__compare">{{ current_variant.compare_at_price | money }}</span>
+      {% endif %}
+    </p>
+  {% endif %}
+
+  {% if current_variant.available == false %}
+    <button class="sf-product-card__button sf-product-card__button--secondary" type="button" disabled>
+      {{ 'products.product.sold_out' | t }}
+    </button>
+  {% elsif can_direct_add and section.settings.show_quick_add %}
+    <product-form-component
+      data-section-id="{{ section.id }}"
+      data-product-id="{{ product.id }}"
+      data-product-url="{{ product.url }}"
+      on:submit="/handleSubmit"
+      data-quantity-default="1"
+      data-quantity-error-max="{{ 'products.product.quantity_error_max' | t }}"
+      class="quick-add__product-form-component"
+    >
+      <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+      {%- form 'product', product, data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ current_variant.id }}" ref="variantId">
+        <div class="sf-product-card__purchase-row" data-mobile-layout="{{ mobile_layout }}">
+          {% if section.settings.show_quantity_selector %}
+            {% render 'sf-product-card-quantity', id_suffix: product.id %}
+          {% else %}
+            <input type="hidden" name="quantity" value="1">
+          {% endif %}
+          <add-to-cart-component
+            ref="addToCartButtonContainer"
+            data-add-to-cart-animation="false"
+          >
+            <button
+              type="submit"
+              name="add"
+              class="sf-product-card__button add-to-cart-button"
+              ref="addToCartButton"
+              on:click="/handleClick"
+              data-sf-cart-open="true"
+            >
+              {{ purchase_label }}
+            </button>
+          </add-to-cart-component>
+        </div>
+      {%- endform -%}
+    </product-form-component>
+  {% else %}
+    <a href="{{ product.url }}" class="sf-product-card__button sf-product-card__button--secondary button">
+      {% if product.variants.size > 1 %}
+        {{ section.settings.choose_options_label | default: 'Choose options' }}
+      {% else %}
+        {{ purchase_label }}
+      {% endif %}
+    </a>
+  {% endif %}
+</article>

@@ -1,0 +1,350 @@
+{{ 'sf-wine-club.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+
+  assign desktop_image = section.settings.desktop_image
+  assign mobile_image = section.settings.mobile_image | default: desktop_image
+
+  assign foreground_desktop = section.settings.foreground_image
+  assign foreground_mobile = section.settings.foreground_mobile_image | default: foreground_desktop
+-%}
+
+<section
+  id="SfWineClubHero-{{ section.id }}"
+  class="sf-wine-club-hero"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-overlay: {{ section.settings.overlay_color }};
+    --sf-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --sf-eyebrow-color: {{ section.settings.eyebrow_color }};
+    --sf-heading-color: {{ section.settings.heading_color }};
+    --sf-copy-color: {{ section.settings.copy_color }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-heading-size-d: {{ section.settings.heading_size_desktop }}px;
+    --sf-heading-size-m: {{ section.settings.heading_size_mobile }}px;
+    --sf-copy-size-d: {{ section.settings.copy_size_desktop }}px;
+    --sf-copy-size-m: {{ section.settings.copy_size_mobile }}px;
+    --sf-min-h-d: {{ section.settings.min_height_desktop }}vh;
+    --sf-min-h-m: {{ section.settings.min_height_mobile }}vh;
+    --sf-content-max-text: {{ section.settings.content_max_width }}px;
+  "
+>
+  <div class="sf-wine-club-hero__media">
+    {% if desktop_image != blank %}
+      {{
+        desktop_image
+        | image_url: width: 2200
+        | image_tag:
+          class: 'sf-wine-club-hero__image sf-wine-club-hero__image--desktop',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '750, 990, 1200, 1440, 1800, 2200',
+          sizes: '100vw',
+          alt: desktop_image.alt
+      }}
+      {{
+        mobile_image
+        | image_url: width: 1200
+        | image_tag:
+          class: 'sf-wine-club-hero__image sf-wine-club-hero__image--mobile',
+          loading: 'eager',
+          fetchpriority: 'high',
+          widths: '375, 550, 750, 990, 1200',
+          sizes: '100vw',
+          alt: mobile_image.alt
+      }}
+    {% endif %}
+  </div>
+  <div class="sf-wine-club-hero__overlay"></div>
+
+  <div class="sf-wine-club-container sf-wine-club-hero__inner">
+    <div class="sf-wine-club-hero__content sf-wine-club-hero__content--{{ section.settings.content_alignment }}">
+      {% if section.settings.eyebrow != blank %}
+        <p class="sf-wine-club-hero__eyebrow">{{ section.settings.eyebrow }}</p>
+      {% endif %}
+      {% if section.settings.heading != blank %}
+        <h1 class="sf-wine-club-hero__heading">{{ section.settings.heading | newline_to_br }}</h1>
+      {% endif %}
+      {% if section.settings.copy != blank %}
+        <p class="sf-wine-club-hero__copy">{{ section.settings.copy }}</p>
+      {% endif %}
+      <div class="sf-wine-club-hero__cta-row">
+        {% if section.settings.primary_label != blank and section.settings.primary_url != blank %}
+          <a
+            href="{{ section.settings.primary_url }}"
+            class="sf-wine-button sf-wine-button--{{ section.settings.primary_style }}"
+            style="
+              --sf-btn-text: {{ section.settings.primary_text_color }};
+              --sf-btn-bg: {{ section.settings.primary_bg_color }};
+              --sf-btn-border: {{ section.settings.primary_border_color }};
+              --sf-btn-hover-text: {{ section.settings.primary_hover_text_color }};
+              --sf-btn-hover-bg: {{ section.settings.primary_hover_bg_color }};
+              --sf-btn-hover-border: {{ section.settings.primary_hover_bg_color }};
+            "
+            {% if section.settings.primary_new_tab %}
+              target="_blank" rel="noopener noreferrer"
+            {% endif %}
+          >
+            {{ section.settings.primary_label }}
+          </a>
+        {% endif %}
+        {% if section.settings.secondary_label != blank and section.settings.secondary_url != blank %}
+          <a
+            href="{{ section.settings.secondary_url }}"
+            class="sf-wine-button sf-wine-button--{{ section.settings.secondary_style }}"
+            style="
+              --sf-btn-text: {{ section.settings.secondary_text_color }};
+              --sf-btn-bg: {{ section.settings.secondary_bg_color }};
+              --sf-btn-border: {{ section.settings.secondary_border_color }};
+              --sf-btn-hover-text: {{ section.settings.secondary_hover_text_color }};
+              --sf-btn-hover-bg: {{ section.settings.secondary_hover_bg_color }};
+              --sf-btn-hover-border: {{ section.settings.secondary_hover_bg_color }};
+            "
+            {% if section.settings.secondary_new_tab %}
+              target="_blank" rel="noopener noreferrer"
+            {% endif %}
+          >
+            {{ section.settings.secondary_label }}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+
+    {% if section.settings.show_foreground_image and foreground_desktop != blank %}
+      <div class="sf-wine-club-hero__foreground {% if section.settings.hide_foreground_mobile %}is-hidden-mobile{% endif %}">
+        {{
+          foreground_desktop
+          | image_url: width: 1400
+          | image_tag:
+            class: 'sf-wine-club-hero__foreground-image sf-wine-club-hero__foreground-image--desktop',
+            loading: 'eager',
+            fetchpriority: 'high',
+            widths: '550, 750, 990, 1200, 1400',
+            sizes: '(min-width: 990px) 34vw, 1px',
+            alt: foreground_desktop.alt
+        }}
+        {{
+          foreground_mobile
+          | image_url: width: 900
+          | image_tag:
+            class: 'sf-wine-club-hero__foreground-image sf-wine-club-hero__foreground-image--mobile',
+            loading: 'lazy',
+            widths: '375, 550, 750, 900',
+            sizes: '(max-width: 989px) 62vw, 1px',
+            alt: foreground_mobile.alt
+        }}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-wine-club-hero {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    background: var(--sf-bg);
+    min-height: var(--sf-min-h-d);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+    overflow: clip;
+  }
+  .sf-wine-club-hero__media,
+  .sf-wine-club-hero__overlay {
+    position: absolute;
+    inset: 0;
+  }
+  .sf-wine-club-hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: var(--sf-image-pos, center center);
+  }
+  .sf-wine-club-hero__image--mobile {
+    display: none;
+  }
+  .sf-wine-club-hero__overlay {
+    background:
+      linear-gradient(180deg, rgba(5, 5, 5, 0.16), rgba(5, 5, 5, 0.72)),
+      var(--sf-overlay);
+    opacity: var(--sf-overlay-opacity);
+  }
+  .sf-wine-club-hero__inner {
+    position: relative;
+    min-height: calc(var(--sf-min-h-d) - var(--sf-pad-top-d) - var(--sf-pad-bottom-d));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+  }
+  .sf-wine-club-hero__content {
+    max-width: var(--sf-content-max-text);
+  }
+  .sf-wine-club-hero__content--center {
+    text-align: center;
+    margin-inline: auto;
+  }
+  .sf-wine-club-hero__content--right {
+    text-align: right;
+    margin-left: auto;
+  }
+  .sf-wine-club-hero__eyebrow {
+    margin: 0;
+    font-size: clamp(0.6rem, 0.9vw, 0.78rem);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--sf-eyebrow-color);
+  }
+  .sf-wine-club-hero__heading {
+    margin: 0.55rem 0 0;
+    color: var(--sf-heading-color);
+    font-size: var(--sf-heading-size-d);
+    line-height: 1.01;
+    max-width: 16ch;
+  }
+  .sf-wine-club-hero__copy {
+    margin: 1rem 0 0;
+    color: var(--sf-copy-color);
+    font-size: var(--sf-copy-size-d);
+    line-height: 1.55;
+    max-width: 50ch;
+  }
+  .sf-wine-club-hero__cta-row {
+    margin-top: 1.35rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+  }
+  .sf-wine-club-hero__foreground {
+    width: min(38vw, 520px);
+    justify-self: end;
+  }
+  .sf-wine-club-hero__foreground-image {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .sf-wine-club-hero__foreground-image--mobile {
+    display: none;
+  }
+  @media (max-width: 989px) {
+    .sf-wine-club-hero {
+      min-height: var(--sf-min-h-m);
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-wine-club-hero__image--desktop {
+      display: none;
+    }
+    .sf-wine-club-hero__image--mobile {
+      display: block;
+    }
+    .sf-wine-club-hero__inner {
+      grid-template-columns: 1fr;
+      align-items: end;
+    }
+    .sf-wine-club-hero__heading {
+      font-size: var(--sf-heading-size-m);
+      max-width: 13ch;
+    }
+    .sf-wine-club-hero__copy {
+      font-size: var(--sf-copy-size-m);
+    }
+    .sf-wine-club-hero__cta-row {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .sf-wine-club-hero__foreground {
+      width: min(72vw, 420px);
+      justify-self: center;
+    }
+    .sf-wine-club-hero__foreground-image--desktop {
+      display: none;
+    }
+    .sf-wine-club-hero__foreground-image--mobile {
+      display: block;
+    }
+    .sf-wine-club-hero__foreground.is-hidden-mobile {
+      display: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Wine Club Hero",
+  "tag": "section",
+  "class": "sf-wine-club-section",
+  "settings": [
+    { "type": "paragraph", "content": "Recommended searches: Crown Society banner, 1926 Para Vintage Tawny, 1908 Para Vintage Tawny" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "image_picker", "id": "desktop_image", "label": "Desktop background image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile background image" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#050505" },
+    { "type": "color", "id": "overlay_color", "label": "Overlay color", "default": "#111315" },
+    { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 90, "step": 5, "unit": "%", "default": 40 },
+    { "type": "checkbox", "id": "show_foreground_image", "label": "Show foreground image", "default": true },
+    { "type": "image_picker", "id": "foreground_image", "label": "Foreground bottle image" },
+    { "type": "image_picker", "id": "foreground_mobile_image", "label": "Foreground mobile image" },
+    { "type": "checkbox", "id": "hide_foreground_mobile", "label": "Hide foreground on mobile", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "WINE CLUB" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "More than wine.\nA connection\nfor life." },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "The Seppeltsfield Wine Club is an invitation to be part of our story. Enjoy exclusive wines, member benefits and experiences that celebrate the Barossa in every glass." },
+    { "type": "select", "id": "content_alignment", "label": "Content alignment", "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Center" }, { "value": "right", "label": "Right" }], "default": "left" },
+    { "type": "range", "id": "content_max_width", "label": "Content max width", "min": 360, "max": 880, "step": 20, "unit": "px", "default": 620 },
+    { "type": "color", "id": "eyebrow_color", "label": "Eyebrow color", "default": "#F4F1EA" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#FFFFFF" },
+    { "type": "color", "id": "copy_color", "label": "Copy color", "default": "#F4F1EA" },
+    { "type": "range", "id": "heading_size_desktop", "label": "Heading size desktop", "min": 32, "max": 110, "step": 2, "unit": "px", "default": 74 },
+    { "type": "range", "id": "heading_size_mobile", "label": "Heading size mobile", "min": 28, "max": 64, "step": 2, "unit": "px", "default": 42 },
+    { "type": "range", "id": "copy_size_desktop", "label": "Copy size desktop", "min": 12, "max": 24, "step": 1, "unit": "px", "default": 17 },
+    { "type": "range", "id": "copy_size_mobile", "label": "Copy size mobile", "min": 12, "max": 20, "step": 1, "unit": "px", "default": 15 },
+    { "type": "text", "id": "primary_label", "label": "Primary CTA label", "default": "JOIN THE CLUB" },
+    { "type": "url", "id": "primary_url", "label": "Primary CTA URL" },
+    { "type": "select", "id": "primary_style", "label": "Primary style", "options": [{ "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "text", "label": "Text link" }], "default": "solid" },
+    { "type": "checkbox", "id": "primary_new_tab", "label": "Primary open in new tab", "default": false },
+    { "type": "color", "id": "primary_text_color", "label": "Primary text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "primary_bg_color", "label": "Primary background color", "default": "#47A8DF" },
+    { "type": "color", "id": "primary_border_color", "label": "Primary border color", "default": "#47A8DF" },
+    { "type": "color", "id": "primary_hover_text_color", "label": "Primary hover text", "default": "#FFFFFF" },
+    { "type": "color", "id": "primary_hover_bg_color", "label": "Primary hover background", "default": "#0B8BB9" },
+    { "type": "text", "id": "secondary_label", "label": "Secondary CTA label", "default": "GIFT MEMBERSHIP" },
+    { "type": "url", "id": "secondary_url", "label": "Secondary CTA URL" },
+    { "type": "select", "id": "secondary_style", "label": "Secondary style", "options": [{ "value": "solid", "label": "Solid" }, { "value": "outline", "label": "Outline" }, { "value": "text", "label": "Text link" }], "default": "text" },
+    { "type": "checkbox", "id": "secondary_new_tab", "label": "Secondary open in new tab", "default": false },
+    { "type": "color", "id": "secondary_text_color", "label": "Secondary text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_bg_color", "label": "Secondary background", "default": "#050505" },
+    { "type": "color", "id": "secondary_border_color", "label": "Secondary border", "default": "#FFFFFF" },
+    { "type": "color", "id": "secondary_hover_text_color", "label": "Secondary hover text", "default": "#111315" },
+    { "type": "color", "id": "secondary_hover_bg_color", "label": "Secondary hover background", "default": "#FFFFFF" },
+    { "type": "range", "id": "min_height_desktop", "label": "Minimum height desktop", "min": 60, "max": 100, "step": 2, "unit": "vh", "default": 88 },
+    { "type": "range", "id": "min_height_mobile", "label": "Minimum height mobile", "min": 50, "max": 100, "step": 2, "unit": "vh", "default": 72 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 28 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 36 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 28 }
+  ],
+  "presets": [
+    {
+      "name": "SF Wine Club Hero",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

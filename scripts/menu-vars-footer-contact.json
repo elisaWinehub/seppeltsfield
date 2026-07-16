@@ -1,0 +1,13 @@
+{
+  "title": "Footer — Contact",
+  "handle": "footer-contact",
+  "items": [
+    { "title": "(08) 8562 4377", "type": "HTTP", "url": "tel:+61885624377" },
+    { "title": "info@seppeltsfield.com.au", "type": "HTTP", "url": "mailto:info@seppeltsfield.com.au" },
+    {
+      "title": "730 Seppeltsfield Road, SA 5355",
+      "type": "HTTP",
+      "url": "https://maps.google.com/?q=730+Seppeltsfield+Road,+Seppeltsfield+SA+5355"
+    }
+  ]
+}

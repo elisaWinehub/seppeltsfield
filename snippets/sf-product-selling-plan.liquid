@@ -1,0 +1,135 @@
+{%- doc -%}
+  Native Shopify selling plan purchase options panel.
+
+  @param {product} product
+  @param {variant} selected_variant
+  @param {object} block
+  @param {object} section
+{%- enddoc -%}
+
+{% liquid
+  assign b = block.settings
+  assign has_native_plans = false
+  if product.selling_plan_groups.size > 0
+    assign has_native_plans = true
+  endif
+  assign show_panel = has_native_plans
+  if show_panel == false and b.show_without_native_plans
+    assign show_panel = true
+  endif
+%}
+
+{% if show_panel %}
+  {% liquid
+    assign one_time_price = selected_variant.price | money
+    assign primary_group = product.selling_plan_groups.first
+    assign primary_plan = blank
+    if primary_group != blank
+      assign primary_plan = primary_group.selling_plans.first
+    endif
+
+    assign subscription_price = blank
+    assign subscription_compare = blank
+    assign subscription_label = b.subscription_label | default: 'Wine club subscription'
+    assign use_fallback = false
+
+    if has_native_plans and primary_plan != blank
+      if subscription_label == blank
+        assign subscription_label = primary_group.name
+      endif
+      for allocation in selected_variant.selling_plan_allocations
+        if allocation.selling_plan.id == primary_plan.id
+          assign subscription_price = allocation.price | money
+          if allocation.compare_at_price > allocation.price
+            assign subscription_compare = allocation.compare_at_price | money
+          endif
+          break
+        endif
+      endfor
+    endif
+
+    if subscription_price == blank
+      assign use_fallback = true
+      assign discount_multiplier = 100 | minus: b.fallback_discount_percent | default: 10
+      assign fallback_cents = selected_variant.price | times: discount_multiplier | divided_by: 100
+      assign subscription_price = fallback_cents | money
+      assign subscription_compare = one_time_price
+    endif
+  %}
+
+  <div
+    class="sf-product-selling-plan"
+    data-sf-selling-plan-panel
+    data-block-id="{{ block.id }}"
+    data-fallback-mode="{% if use_fallback %}true{% else %}false{% endif %}"
+    style="
+      --sf-selling-plan-border: {{ b.border_color | default: section.settings.border_color }};
+      --sf-selling-plan-bg: {{ b.panel_background | default: section.settings.card_background }};
+      --sf-selling-plan-accent: {{ b.accent_color | default: section.settings.accent_color }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    <fieldset class="sf-product-selling-plan__fieldset">
+      <legend class="visually-hidden">{{ b.heading | default: 'Purchase options' }}</legend>
+
+      <label class="sf-product-selling-plan__option is-selected" data-sf-selling-plan-option>
+        <input
+          type="radio"
+          name="sf-purchase-type-{{ block.id }}"
+          value="one-time"
+          checked
+          data-sf-purchase-type="one-time"
+        >
+        <span class="sf-product-selling-plan__option-body">
+          <span class="sf-product-selling-plan__option-title">{{ b.one_time_label | default: 'One-time purchase' }}</span>
+          <span class="sf-product-selling-plan__option-price" data-sf-one-time-price>{{ one_time_price }}</span>
+        </span>
+      </label>
+
+      <label class="sf-product-selling-plan__option" data-sf-selling-plan-option>
+        <input
+          type="radio"
+          name="sf-purchase-type-{{ block.id }}"
+          value="subscription"
+          data-sf-purchase-type="subscription"
+          {% if primary_plan != blank %}data-sf-default-plan="{{ primary_plan.id }}"{% endif %}
+        >
+        <span class="sf-product-selling-plan__option-body">
+          <span class="sf-product-selling-plan__option-title">
+            {{ subscription_label }}
+            {% if b.show_popular_badge %}
+              <span class="sf-product-selling-plan__badge">{{ b.popular_badge_label | default: 'Most popular' }}</span>
+            {% endif %}
+          </span>
+          <span class="sf-product-selling-plan__option-price">
+            <span data-sf-subscription-price>{{ subscription_price }}</span>
+            {% if subscription_compare != blank and subscription_compare != subscription_price %}
+              <s data-sf-subscription-compare>{{ subscription_compare }}</s>
+            {% endif %}
+          </span>
+        </span>
+      </label>
+
+      <div class="sf-product-selling-plan__frequency" data-sf-selling-plan-frequency hidden>
+        <label for="SfSellingPlan-{{ section.id }}-{{ block.id }}" class="sf-product-selling-plan__frequency-label">
+          {{ b.deliver_label | default: 'Deliver every' }}
+        </label>
+        <select
+          id="SfSellingPlan-{{ section.id }}-{{ block.id }}"
+          class="sf-product-selling-plan__frequency-select"
+          data-sf-selling-plan-select
+        >
+          {% if use_fallback %}
+            <option value="">{{ b.fallback_frequency_label | default: '1 Month' }}</option>
+          {% else %}
+            {% for group in product.selling_plan_groups %}
+              {% for plan in group.selling_plans %}
+                <option value="{{ plan.id }}" data-group-id="{{ group.id }}">{{ plan.name }}</option>
+              {% endfor %}
+            {% endfor %}
+          {% endif %}
+        </select>
+      </div>
+    </fieldset>
+  </div>
+{% endif %}

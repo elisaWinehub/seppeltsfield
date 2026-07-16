@@ -1,0 +1,248 @@
+{{ 'sf-discovery.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="SfDiscoveryExperiences-{{ section.id }}"
+  class="sf-discovery-experiences"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-intro-bg: {{ section.settings.intro_background }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-muted: {{ section.settings.muted_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-gap: {{ section.settings.card_gap }}px;
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-discovery-container">
+    <div class="sf-discovery-experiences__layout">
+      <article class="sf-discovery-experiences__intro">
+        {% if section.settings.eyebrow != blank %}<p class="sf-discovery-experiences__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-discovery-experiences__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+        {% if section.settings.intro_link_label != blank and section.settings.intro_link_url != blank %}
+          <a class="sf-discovery-link" href="{{ section.settings.intro_link_url }}">{{ section.settings.intro_link_label }}</a>
+        {% endif %}
+      </article>
+      <div class="sf-discovery-experiences__cards">
+        {% for block in section.blocks %}
+          {%- liquid
+            assign card_image = block.settings.image
+            assign card_mobile = block.settings.mobile_image | default: card_image
+          -%}
+          <article class="sf-discovery-experiences__card{% if block.settings.featured %} is-featured{% endif %}" {{ block.shopify_attributes }}>
+            {% if card_image != blank %}
+              {{
+                card_image
+                | image_url: width: 1400
+                | image_tag:
+                  class: 'sf-discovery-experiences__img sf-discovery-experiences__img--desktop',
+                  loading: 'lazy',
+                  widths: '375,550,750,990,1200,1400',
+                  sizes: '(min-width:990px) 22vw, 82vw',
+                  alt: card_image.alt
+              }}
+              {{
+                card_mobile
+                | image_url: width: 1000
+                | image_tag:
+                  class: 'sf-discovery-experiences__img sf-discovery-experiences__img--mobile',
+                  loading: 'lazy',
+                  widths: '375,550,750,900,1000',
+                  sizes: '(max-width:989px) 84vw, 1px',
+                  alt: card_mobile.alt
+              }}
+            {% endif %}
+            <div class="sf-discovery-experiences__overlay"></div>
+            <div class="sf-discovery-experiences__content">
+              {% if block.settings.eyebrow != blank %}<p class="sf-discovery-experiences__card-eyebrow">{{ block.settings.eyebrow }}</p>{% endif %}
+              {% if block.settings.heading != blank %}<h3 class="sf-discovery-experiences__card-heading">{{ block.settings.heading }}</h3>{% endif %}
+              {% if block.settings.copy != blank %}<p class="sf-discovery-experiences__card-copy">{{ block.settings.copy }}</p>{% endif %}
+              {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+                <a class="sf-discovery-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+              {% endif %}
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-discovery-experiences {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-discovery-experiences__layout {
+    display: flex;
+    align-items: stretch;
+    gap: var(--sf-gap);
+  }
+  .sf-discovery-experiences__intro {
+    background: var(--sf-intro-bg);
+    padding: 1.2rem;
+    flex: 0 0 clamp(220px, 22vw, 340px);
+  }
+  .sf-discovery-experiences__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--sf-muted);
+    font-size: 0.74rem;
+  }
+  .sf-discovery-experiences__heading {
+    margin: 0.55rem 0 0.8rem;
+    font-size: clamp(1.7rem, 2.6vw, 3rem);
+    line-height: 1.04;
+  }
+  .sf-discovery-experiences__cards {
+    display: flex;
+    gap: var(--sf-gap);
+    flex: 1;
+  }
+  .sf-discovery-experiences__card {
+    flex: 1;
+    min-width: 0;
+    min-height: 430px;
+    position: relative;
+    overflow: hidden;
+    transition: flex 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .sf-discovery-experiences__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .sf-discovery-experiences__img--mobile { display: none; }
+  .sf-discovery-experiences__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(5,5,5,.14), rgba(5,5,5,.7));
+  }
+  .sf-discovery-experiences__content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    padding: 0.95rem;
+    display: grid;
+    min-height: 100%;
+    align-content: end;
+  }
+  .sf-discovery-experiences__card-eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+  }
+  .sf-discovery-experiences__card-heading {
+    margin: 0.45rem 0 0;
+    font-size: clamp(1.05rem, 1.5vw, 1.5rem);
+  }
+  .sf-discovery-experiences__card-copy {
+    margin: 0.45rem 0 0.6rem;
+    font-size: 0.92rem;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .sf-discovery-experiences__card:hover { flex: 1.45; }
+  }
+  @media (max-width: 989px) {
+    .sf-discovery-experiences {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-discovery-experiences__layout {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .sf-discovery-experiences__cards {
+      overflow-x: auto;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(84vw, 1fr);
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.35rem;
+    }
+    .sf-discovery-experiences__card {
+      min-height: 360px;
+      scroll-snap-align: start;
+      flex: unset;
+    }
+    .sf-discovery-experiences__img--desktop { display: none; }
+    .sf-discovery-experiences__img--mobile { display: block; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Discover Exp",
+  "tag": "section",
+  "class": "sf-discovery-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "paragraph", "content": "Recommended search: centennialcellarHERO2, Taste of History, Cellar Door Tasting, Fino food" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "wide" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "EXPERIENCES" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Immerse yourself\nin the Barossa." },
+    { "type": "text", "id": "intro_link_label", "label": "Intro link label", "default": "VIEW ALL EXPERIENCES" },
+    { "type": "url", "id": "intro_link_url", "label": "Intro link URL" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#050505" },
+    { "type": "color", "id": "intro_background", "label": "Intro panel background", "default": "#111315" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "muted_color", "label": "Muted color", "default": "#D6CEC1" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "range", "id": "card_gap", "label": "Card gap", "min": 8, "max": 36, "step": 2, "unit": "px", "default": 12 },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "experience",
+      "name": "Experience",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Centennial Cellar Tour & Tasting", "info": "Confirm exact name, description and price against the live booking system before launch - this default copy has not been verified against current tour/tasting inventory." },
+        { "type": "textarea", "id": "copy", "label": "Copy", "default": "Step into the world's longest continuously operating wine cellar." },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Learn more" },
+        { "type": "url", "id": "link_url", "label": "Link URL" },
+        { "type": "checkbox", "id": "featured", "label": "Featured", "default": false }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Discover Exp",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "experience", "settings": { "heading": "Centennial Cellar Tour & Tasting", "copy": "Step into the world's longest continuously operating wine cellar." } },
+        { "type": "experience", "settings": { "heading": "Classic Wine Tasting Experience", "copy": "Taste signature estate wines in a guided tasting experience." } },
+        { "type": "experience", "settings": { "heading": "A Taste of History Tour", "copy": "Explore the estate's defining sites and stories with a guided tour." } },
+        { "type": "experience", "settings": { "heading": "Food & Wine Experiences", "copy": "Curated food and wine pairings that celebrate the Barossa." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

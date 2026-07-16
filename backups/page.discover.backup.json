@@ -1,0 +1,73 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-banner",
+      "settings": {
+        "eyebrow": "175 years of",
+        "heading": "Winemaking Heritage.",
+        "body": "A legacy in every generation, from historic cellars to contemporary estate experiences.",
+        "button_label": "Discover Our Story",
+        "button_link": "#founding",
+        "button_style": "light",
+        "background_type": "image",
+        "background_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "heritage": {
+      "type": "split-media-text",
+      "settings": {
+        "eyebrow": "Our Heritage",
+        "heading": "A legacy in every generation",
+        "body": "<p>Stories, archives and fortified tradition shaped over 175 years in the Barossa Valley.</p>",
+        "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+        "image_side": "right",
+        "show_seal": true,
+        "button_label": "Learn more",
+        "button_link": "/pages/discover"
+      }
+    },
+    "collections": {
+      "type": "tile-row",
+      "blocks": {
+        "c1": { "type": "tile", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "title": "Village Collection", "link": "/collections/all" } },
+        "c2": { "type": "tile", "settings": { "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg", "title": "Bench Blend Collection", "link": "/collections/all" } },
+        "c3": { "type": "tile", "settings": { "image": "shopify://shop_images/Para-Grand-Tawny-91-Points.jpg", "title": "Para Tawny Collection", "link": "/collections/all" } },
+        "c4": { "type": "tile", "settings": { "image": "shopify://shop_images/bennos-basket-4.png", "title": "Gift Packs", "link": "/collections/all" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
+      "settings": {
+        "eyebrow": "Our Collections",
+        "heading": "Wines crafted to be timeless",
+        "columns": "4",
+        "background_color": "#F7F6F3",
+        "heading_color": "#12141A",
+        "text_color": "#565B63"
+      }
+    },
+    "estate_exp": {
+      "type": "tile-row",
+      "blocks": {
+        "e1": { "type": "tile", "settings": { "image": "shopify://shop_images/canape-tasting.jpg", "title": "Taste", "link": "/pages/visit" } },
+        "e2": { "type": "tile", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Dine", "link": "/pages/visit" } },
+        "e3": { "type": "tile", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Stay", "link": "/pages/visit" } }
+      },
+      "block_order": ["e1", "e2", "e3"],
+      "settings": {
+        "eyebrow": "The Estate Experience",
+        "heading": "More than wine. A place to belong.",
+        "columns": "3",
+        "background_color": "#0C0D10",
+        "heading_color": "#F5F7F8",
+        "text_color": "#F5F7F8"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter-bar",
+      "settings": { "eyebrow": "Stay in touch", "heading": "Join our estate mailing list." }
+    }
+  },
+  "order": ["hero", "heritage", "collections", "estate_exp", "newsletter"]
+}

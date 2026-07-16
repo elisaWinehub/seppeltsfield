@@ -1,0 +1,38 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+<section id="SfEventsGallery-{{ section.id }}" class="sf-events-gallery" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-text:{{ section.settings.text_color }};--sf-accent:{{ section.settings.accent_color }};--sf-gap:{{ section.settings.gap }}px;--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-container">
+    <div class="sf-events-gallery__head">
+      {% if section.settings.eyebrow != blank %}<p>{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.link_label != blank and section.settings.link_url != blank %}<a class="sf-events-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>{% endif %}
+    </div>
+    <div class="sf-events-gallery__track">
+      {% for block in section.blocks %}
+        {%- assign mobile_image = block.settings.mobile_image | default: block.settings.image -%}
+        <article class="sf-events-gallery__item" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'sf-events-gallery__img sf-events-gallery__img--desktop', loading: 'lazy', widths: '375,550,750,990,1200', sizes: '(min-width:990px) 18vw, 68vw', alt: block.settings.alt_text }}
+            {{ mobile_image | image_url: width: 900 | image_tag: class: 'sf-events-gallery__img sf-events-gallery__img--mobile', loading: 'lazy', widths: '375,550,750,900', sizes: '(max-width:989px) 70vw, 1px', alt: block.settings.alt_text }}
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-gallery{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-events-gallery__head{display:flex;justify-content:space-between;gap:1rem;color:var(--sf-text)}.sf-events-gallery__head p{margin:0;text-transform:uppercase;letter-spacing:.14em;font-size:.75rem;color:var(--sf-accent)}.sf-events-gallery__track{margin-top:.9rem;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(16rem,1fr);gap:var(--sf-gap);overflow-x:auto;scroll-snap-type:x mandatory}.sf-events-gallery__item{scroll-snap-align:start}.sf-events-gallery__img{width:100%;height:120px;object-fit:cover}.sf-events-gallery__img--mobile{display:none}@media(max-width:989px){.sf-events-gallery{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-gallery__img--desktop{display:none}.sf-events-gallery__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Gallery","tag":"section","class":"sf-events-section","max_blocks":12,"settings":[{"type":"paragraph","content":"Search files: Corporate Events, Wedding avenue, Functions dining, BRZ_8152"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"full"},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"MOMENTS TO REMEMBER"},{"type":"text","id":"link_label","label":"Link label","default":"VIEW GALLERY"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"color","id":"background_color","label":"Background","default":"#050505"},{"type":"color","id":"text_color","label":"Text color","default":"#FFFFFF"},{"type":"color","id":"accent_color","label":"Accent color","default":"#47A8DF"},{"type":"range","id":"gap","label":"Gap","min":4,"max":24,"step":2,"unit":"px","default":8},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":20},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":20},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":16},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":16}],"blocks":[{"type":"gallery_image","name":"Gallery image","settings":[{"type":"image_picker","id":"image","label":"Image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"text","id":"alt_text","label":"Alt text"}]}],"presets":[{"name":"SF Events Gallery","category":"Seppeltsfield","blocks":[{"type":"gallery_image"},{"type":"gallery_image"},{"type":"gallery_image"},{"type":"gallery_image"},{"type":"gallery_image"}]}]}
+{% endschema %}

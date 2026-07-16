@@ -5,3 +5,7 @@ node_modules/
 .vscode/
 dist/
 coverage/
+.tmp-file-import/
+.tmp-file-retry/
+.tmp-settings-pull/
+.tmp-theme-pull/

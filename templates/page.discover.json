@@ -1,73 +1,109 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {
-      "type": "hero-banner",
+    "sf_discovery_hero": {
+      "type": "sf-discovery-hero",
       "settings": {
-        "eyebrow": "175 years of",
-        "heading": "Winemaking Heritage.",
-        "body": "A legacy in every generation, from historic cellars to contemporary estate experiences.",
-        "button_label": "Discover Our Story",
-        "button_link": "#founding",
-        "button_style": "light",
-        "background_type": "image",
-        "background_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpeg",
-        "background_color": "#0C0D10",
-        "heading_color": "#F5F7F8",
-        "text_color": "#F5F7F8"
+        "desktop_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "mobile_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "button_url": "/pages/visit"
       }
     },
-    "heritage": {
-      "type": "split-media-text",
-      "settings": {
-        "eyebrow": "Our Heritage",
-        "heading": "A legacy in every generation",
-        "body": "<p>Stories, archives and fortified tradition shaped over 175 years in the Barossa Valley.</p>",
-        "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
-        "image_side": "right",
-        "show_seal": true,
-        "button_label": "Learn more",
-        "button_link": "/pages/discover"
-      }
-    },
-    "collections": {
-      "type": "tile-row",
+    "sf_discovery_quick_links": {
+      "type": "sf-discovery-quick-links",
       "blocks": {
-        "c1": { "type": "tile", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "title": "Centennial Collection", "link": "/collections/all" } },
-        "c2": { "type": "tile", "settings": { "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg", "title": "Luxury Still Collection", "link": "/collections/all" } },
-        "c3": { "type": "tile", "settings": { "image": "shopify://shop_images/Para-Grand-Tawny-91-Points.jpg", "title": "Fortified Collection", "link": "/collections/all" } },
-        "c4": { "type": "tile", "settings": { "image": "shopify://shop_images/bennos-basket-4.png", "title": "Gift Packs", "link": "/collections/all" } }
+        "link_1": { "type": "quick_link", "settings": { "icon": "wine_glass", "title": "TASTINGS", "copy": "Estate tastings and guided flights", "link_label": "Explore", "link_url": "/pages/visit" } },
+        "link_2": { "type": "quick_link", "settings": { "icon": "dining", "title": "DINE AT FINO", "copy": "Seasonal Barossa produce", "link_label": "Book", "link_url": "/pages/visit" } },
+        "link_3": { "type": "quick_link", "settings": { "icon": "bed", "title": "THE LODGE", "copy": "Heritage accommodation", "link_label": "Stay", "link_url": "/pages/visit" } },
+        "link_4": { "type": "quick_link", "settings": { "icon": "map", "title": "ESTATE MAP", "copy": "Plan your route", "link_label": "View", "link_url": "/pages/visit" } },
+        "link_5": { "type": "quick_link", "settings": { "icon": "event", "title": "WHAT'S ON", "copy": "Events and seasonal moments", "link_label": "See events", "link_url": "/pages/visit" } }
       },
-      "block_order": ["c1", "c2", "c3", "c4"],
+      "block_order": ["link_1", "link_2", "link_3", "link_4", "link_5"],
+      "settings": {}
+    },
+    "sf_discovery_heritage": {
+      "type": "sf-discovery-heritage",
       "settings": {
-        "eyebrow": "Our Collections",
-        "heading": "Wines crafted to be timeless",
-        "columns": "4",
-        "background_color": "#F7F6F3",
-        "heading_color": "#12141A",
-        "text_color": "#565B63"
+        "desktop_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "mobile_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "link_url": "/pages/heritage-story"
       }
     },
-    "estate_exp": {
-      "type": "tile-row",
+    "sf_discovery_experiences": {
+      "type": "sf-discovery-experiences",
       "blocks": {
-        "e1": { "type": "tile", "settings": { "image": "shopify://shop_images/canape-tasting.jpg", "title": "Taste", "link": "/pages/visit" } },
-        "e2": { "type": "tile", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Dine", "link": "/pages/visit" } },
-        "e3": { "type": "tile", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Stay", "link": "/pages/visit" } }
+        "experience_1": { "type": "experience", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "mobile_image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "heading": "Centennial Cellar Tour & Tasting", "copy": "Step into the world's longest continuously operating wine cellar.", "link_label": "Book now", "link_url": "/pages/experiences" } },
+        "experience_2": { "type": "experience", "settings": { "image": "shopify://shop_images/cellar-door-tasting.jpg", "mobile_image": "shopify://shop_images/cellar-door-tasting.jpg", "heading": "Classic Wine Tasting Experience", "copy": "Taste signature estate wines in a guided tasting experience.", "link_label": "Explore", "link_url": "/pages/experiences" } },
+        "experience_3": { "type": "experience", "settings": { "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg", "mobile_image": "shopify://shop_images/vineyardsandcellarsHERO.jpg", "heading": "A Taste of History Tour", "copy": "Explore the estate's defining sites and stories with a guided tour.", "link_label": "Discover", "link_url": "/pages/experiences" } },
+        "experience_4": { "type": "experience", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "mobile_image": "shopify://shop_images/finoHERO.jpg", "heading": "Food & Wine Experiences", "copy": "Curated food and wine pairings that celebrate the Barossa.", "link_label": "View all", "link_url": "/pages/experiences" } }
       },
-      "block_order": ["e1", "e2", "e3"],
+      "block_order": ["experience_1", "experience_2", "experience_3", "experience_4"],
       "settings": {
-        "eyebrow": "The Estate Experience",
-        "heading": "More than wine. A place to belong.",
-        "columns": "3",
-        "background_color": "#0C0D10",
-        "heading_color": "#F5F7F8",
-        "text_color": "#F5F7F8"
+        "intro_link_url": "/pages/experiences"
       }
     },
-    "newsletter": {
-      "type": "newsletter-bar",
-      "settings": { "eyebrow": "Stay in touch", "heading": "Join our estate mailing list." }
+    "sf_discovery_estate_map": {
+      "type": "sf-discovery-estate-map",
+      "blocks": {
+        "location_1": { "type": "location", "settings": { "number": "1", "name": "Cellar Door & Wine Tastings", "link_url": "/pages/visit" } },
+        "location_2": { "type": "location", "settings": { "number": "2", "name": "Fino Restaurant & Courtyard", "link_url": "/pages/visit" } },
+        "location_3": { "type": "location", "settings": { "number": "3", "name": "Centennial Cellar", "link_url": "/pages/heritage-story" } },
+        "location_4": { "type": "location", "settings": { "number": "4", "name": "The Lodge Accommodation", "link_url": "/pages/visit" } },
+        "location_5": { "type": "location", "settings": { "number": "5", "name": "JamFactory at Seppeltsfield", "link_url": "/pages/visit" } },
+        "location_6": { "type": "location", "settings": { "number": "6", "name": "Prohibition Liquor Co.", "link_url": "/pages/visit" } },
+        "location_7": { "type": "location", "settings": { "number": "7", "name": "Vasse Virgin Soaps", "link_url": "/pages/visit" } },
+        "location_8": { "type": "location", "settings": { "number": "8", "name": "Gardens & Walkways", "link_url": "/pages/visit" } }
+      },
+      "block_order": ["location_1", "location_2", "location_3", "location_4", "location_5", "location_6", "location_7", "location_8"],
+      "settings": {
+        "desktop_map": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "mobile_map": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "link_url": "/pages/visit"
+      }
+    },
+    "sf_discovery_lodge": {
+      "type": "sf-discovery-lodge",
+      "settings": {
+        "desktop_image": "shopify://shop_images/BMAC7229.jpg",
+        "mobile_image": "shopify://shop_images/BMAC7229.jpg",
+        "link_url": "/pages/visit"
+      }
+    },
+    "sf_discovery_visitor_info": {
+      "type": "sf-discovery-visitor-info",
+      "blocks": {
+        "info_1": { "type": "visitor_info", "settings": { "icon": "clock", "heading": "OPENING HOURS", "primary_text": "10:00am-5:00pm Daily", "secondary_text": "Good Friday closed" } },
+        "info_2": { "type": "visitor_info", "settings": { "icon": "location", "heading": "ADDRESS", "primary_text": "730 Seppeltsfield Road", "secondary_text": "Seppeltsfield SA 5355" } },
+        "info_3": { "type": "visitor_info", "settings": { "icon": "phone", "heading": "CONTACT", "primary_text": "(08) 8562 4377", "secondary_text": "info@seppeltsfield.com.au" } },
+        "info_4": { "type": "visitor_info", "settings": { "icon": "car", "heading": "GETTING HERE", "primary_text": "90 mins from Adelaide", "secondary_text": "Free parking on site" } }
+      },
+      "block_order": ["info_1", "info_2", "info_3", "info_4"],
+      "settings": {}
+    },
+    "sf_discovery_newsletter": {
+      "type": "sf-discovery-newsletter",
+      "settings": {
+        "background_image": "shopify://shop_images/centennialcellarHERO2.jpg",
+        "mobile_background_image": "shopify://shop_images/centennialcellarHERO2.jpg"
+      }
     }
   },
-  "order": ["hero", "heritage", "collections", "estate_exp", "newsletter"]
+  "order": [
+    "sf_discovery_hero",
+    "sf_discovery_quick_links",
+    "sf_discovery_heritage",
+    "sf_discovery_experiences",
+    "sf_discovery_estate_map",
+    "sf_discovery_lodge",
+    "sf_discovery_visitor_info",
+    "sf_discovery_newsletter"
+  ]
 }

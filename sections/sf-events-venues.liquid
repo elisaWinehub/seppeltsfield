@@ -1,0 +1,47 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+<section id="SfEventsVenues-{{ section.id }}" class="sf-events-venues" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-accent:{{ section.settings.accent_color }};--sf-gap:{{ section.settings.card_gap }}px;--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-container">
+    <div class="sf-events-venues__head">
+      <div>
+        {% if section.settings.eyebrow != blank %}<p class="sf-events-venues__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-events-venues__heading">{{ section.settings.heading }}</h2>{% endif %}
+      </div>
+      {% if section.settings.link_label != blank and section.settings.link_url != blank %}<a class="sf-events-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>{% endif %}
+    </div>
+    <div class="sf-events-venues__grid">
+      {% for block in section.blocks %}
+        {%- assign mobile_image = block.settings.mobile_image | default: block.settings.image -%}
+        <article class="sf-events-venues__card{% if block.settings.featured %} is-featured{% endif %}" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            {{ block.settings.image | image_url: width: 1200 | image_tag: class: 'sf-events-venues__img sf-events-venues__img--desktop', loading: 'lazy', widths: '375,550,750,990,1200', sizes: '(min-width:990px) 33vw, 86vw', alt: block.settings.image.alt }}
+            {{ mobile_image | image_url: width: 900 | image_tag: class: 'sf-events-venues__img sf-events-venues__img--mobile', loading: 'lazy', widths: '375,550,750,900', sizes: '(max-width:989px) 86vw, 1px', alt: mobile_image.alt }}
+          {% endif %}
+          <div class="sf-events-venues__body">
+            {% if block.settings.name != blank %}<h3>{{ block.settings.name }}</h3>{% endif %}
+            {% if block.settings.description != blank %}<p>{{ block.settings.description }}</p>{% endif %}
+            {% if block.settings.capacity != blank %}<p class="sf-events-venues__capacity">{{ block.settings.capacity }}</p>{% endif %}
+            {% if block.settings.link_label != blank and block.settings.link_url != blank %}<a class="sf-events-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>{% endif %}
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-venues{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-events-venues__head{display:flex;justify-content:space-between;gap:1rem;align-items:end}.sf-events-venues__eyebrow{margin:0;color:var(--sf-accent);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-events-venues__heading{margin:.5rem 0 0;color:var(--sf-head);font-size:clamp(1.7rem,2.5vw,2.8rem)}.sf-events-venues__grid{margin-top:1rem;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--sf-gap)}.sf-events-venues__card{border:1px solid color-mix(in srgb,var(--sf-text) 18%,transparent);background:#fff}.sf-events-venues__img{width:100%;height:210px;object-fit:cover}.sf-events-venues__img--mobile{display:none}.sf-events-venues__body{padding:1rem;color:var(--sf-text)}.sf-events-venues__body h3{margin:0;font-size:1rem}.sf-events-venues__body p{margin:.45rem 0 0;font-size:.9rem}.sf-events-venues__capacity{color:var(--sf-accent);text-transform:uppercase;letter-spacing:.08em;font-size:.72rem !important}@media(max-width:989px){.sf-events-venues{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-venues__head{flex-direction:column;align-items:flex-start}.sf-events-venues__grid{grid-template-columns:unset;grid-auto-flow:column;grid-auto-columns:minmax(86vw,1fr);overflow-x:auto;scroll-snap-type:x mandatory}.sf-events-venues__card{scroll-snap-align:start}.sf-events-venues__img--desktop{display:none}.sf-events-venues__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Venues","tag":"section","class":"sf-events-section","max_blocks":10,"settings":[{"type":"paragraph","content":"Search files: 1878 Centennial Cellar, 1888 Gravity Cellar, Great Terraced Vineyard"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"standard"},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"OUR VENUES"},{"type":"text","id":"heading","label":"Heading","default":"Spaces to suit every occasion"},{"type":"text","id":"link_label","label":"Link label","default":"VIEW ALL VENUES"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"color","id":"background_color","label":"Background","default":"#F4F1EA"},{"type":"color","id":"heading_color","label":"Heading color","default":"#111315"},{"type":"color","id":"text_color","label":"Body color","default":"#343434"},{"type":"color","id":"accent_color","label":"Accent color","default":"#47A8DF"},{"type":"range","id":"card_gap","label":"Card gap","min":8,"max":36,"step":2,"unit":"px","default":12},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":32},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":32}],"blocks":[{"type":"venue","name":"Venue","settings":[{"type":"image_picker","id":"image","label":"Image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"text","id":"name","label":"Venue name","default":"1878 Centennial Cellar","info":"Consider renaming 'The Vineyard' to 'Great Terraced Vineyard' if that is the intended location, to align with Seppeltsfield's documented vineyard story."},{"type":"textarea","id":"description","label":"Description","default":"Celebrate in Australia's longest continually operating wine cellar."},{"type":"text","id":"capacity","label":"Capacity","default":"CAPACITY: 10-120 GUESTS"},{"type":"text","id":"link_label","label":"Link label","default":"Learn more"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"checkbox","id":"featured","label":"Featured","default":false}]}],"presets":[{"name":"SF Events Venues","category":"Seppeltsfield","blocks":[{"type":"venue","settings":{"name":"1878 Centennial Cellar","description":"Celebrate in Australia's longest continually operating wine cellar.","capacity":"CAPACITY: 10-120 GUESTS"}},{"type":"venue","settings":{"name":"1888 Gravity Cellar","description":"A unique industrial space with heritage character and modern flexibility.","capacity":"CAPACITY: 20-200 GUESTS"}},{"type":"venue","settings":{"name":"The Vineyard","description":"Breathtaking outdoor settings for unforgettable gatherings under the Barossa sky.","capacity":"CAPACITY: 20-500 GUESTS"}}]}]}
+{% endschema %}

@@ -1,0 +1,249 @@
+{{ 'sf-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf-collection.js' | asset_url }}" type="module"></script>
+
+{% liquid
+  assign selected_sort = collection.sort_by | default: collection.default_sort_by
+%}
+
+<section
+  class="sf-main-collection-grid"
+  style="
+    --sf-grid-columns-desktop: {{ section.settings.desktop_columns }};
+    --sf-grid-columns-tablet: {{ section.settings.tablet_columns }};
+    --sf-grid-columns-mobile: {{ section.settings.mobile_columns }};
+    --sf-collection-grid-padding-top: {{ section.settings.padding_top }}px;
+    --sf-collection-grid-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+  {% paginate collection.products by section.settings.products_per_page %}
+    <div class="sf-main-collection-grid__toolbar">
+      {% if section.settings.show_result_count %}
+        <p class="sf-main-collection-grid__result-count">
+          Showing {{ paginate.current_offset | plus: 1 }}-{{ paginate.current_offset | plus: paginate.page_size | at_most: paginate.items }} of {{ paginate.items }} results
+        </p>
+      {% endif %}
+
+      {% if section.settings.show_sorting %}
+        <div class="sf-main-collection-grid__sort">
+          <label for="SfCollectionSort-{{ section.id }}">{{ section.settings.sort_label }}</label>
+          <select id="SfCollectionSort-{{ section.id }}" data-sf-collection-sort>
+            {% for option in collection.sort_options %}
+              <option value="{{ option.value }}" {% if option.value == selected_sort %}selected{% endif %}>
+                {{ option.name }}
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="sf-main-collection-grid__body">
+      <aside class="sf-main-collection-grid__filters">
+        {% content_for 'block', type: 'filters', id: 'filters', results: collection, results_size: collection.products_count %}
+      </aside>
+
+      <div class="sf-main-collection-grid__products-wrap">
+        {% if section.settings.show_active_filters %}
+          <ul class="sf-main-collection-grid__active-filters" role="list">
+            {% for filter in collection.filters %}
+              {% for active_value in filter.active_values %}
+                <li class="sf-main-collection-grid__active-filter">
+                  <a href="{{ active_value.url_to_remove }}">
+                    {{ active_value.label }}
+                    <span aria-hidden="true">×</span>
+                  </a>
+                </li>
+              {% endfor %}
+              {% if filter.type == 'price_range' %}
+                {% if filter.min_value.value != null or filter.max_value.value != null %}
+                  <li class="sf-main-collection-grid__active-filter">
+                    <a href="{{ filter.url_to_remove }}">
+                      {{ filter.min_value.value | default: 0 | money }} - {{ filter.max_value.value | default: filter.range_max | money }}
+                      <span aria-hidden="true">×</span>
+                    </a>
+                  </li>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </ul>
+        {% endif %}
+
+        {% if collection.products_count == 0 %}
+          <div class="sf-main-collection-grid__empty">
+            <h2>{{ section.settings.empty_heading }}</h2>
+            <p>{{ section.settings.empty_copy }}</p>
+            {% if section.settings.empty_cta_label != blank and section.settings.empty_cta_link != blank %}
+              <a class="button" href="{{ section.settings.empty_cta_link }}">{{ section.settings.empty_cta_label }}</a>
+            {% endif %}
+          </div>
+        {% else %}
+          <ul class="sf-main-collection-grid__products" role="list">
+            {% for product in collection.products %}
+              <li>
+                {% render 'sf-product-card', product: product, section: section %}
+              </li>
+            {% endfor %}
+          </ul>
+
+          {% render 'pagination-controls', paginate: paginate %}
+        {% endif %}
+      </div>
+    </div>
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "SF Main Collection Grid",
+  "class": "sf-collection-section",
+  "enabled_on": {
+    "templates": ["collection"]
+  },
+  "blocks": [
+    { "type": "filters" }
+  ],
+  "settings": [
+    { "type": "header", "content": "Grid and pagination" },
+    {
+      "type": "select",
+      "id": "desktop_columns",
+      "label": "Products per row on desktop",
+      "options": [
+        { "value": "3", "label": "3 columns" },
+        { "value": "4", "label": "4 columns" }
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "tablet_columns",
+      "label": "Tablet columns",
+      "options": [
+        { "value": "2", "label": "2 columns" },
+        { "value": "3", "label": "3 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "mobile_columns",
+      "label": "Mobile columns",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ],
+      "default": "2"
+    },
+    {
+      "type": "select",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "options": [
+        { "value": "12", "label": "12" },
+        { "value": "18", "label": "18" },
+        { "value": "24", "label": "24" },
+        { "value": "30", "label": "30" },
+        { "value": "36", "label": "36" }
+      ],
+      "default": "12"
+    },
+
+    { "type": "header", "content": "Toolbar" },
+    { "type": "checkbox", "id": "show_result_count", "label": "Show result count", "default": true },
+    { "type": "checkbox", "id": "show_sorting", "label": "Show sorting", "default": true },
+    { "type": "text", "id": "sort_label", "label": "Sort label", "default": "Sort by:" },
+    { "type": "checkbox", "id": "show_active_filters", "label": "Show active filter chips", "default": true },
+
+    { "type": "header", "content": "Product card" },
+    { "type": "checkbox", "id": "show_vendor", "label": "Show vendor", "default": false },
+    { "type": "checkbox", "id": "show_vintage", "label": "Show vintage", "default": true },
+    { "type": "checkbox", "id": "show_product_type", "label": "Show product type", "default": true },
+    { "type": "checkbox", "id": "show_subtitle", "label": "Show subtitle metafield", "default": false },
+    { "type": "text", "id": "subtitle_namespace", "label": "Subtitle metafield namespace", "default": "custom" },
+    { "type": "text", "id": "subtitle_key", "label": "Subtitle metafield key", "default": "subtitle" },
+    { "type": "checkbox", "id": "show_price", "label": "Show price", "default": true },
+    { "type": "checkbox", "id": "show_compare_at_price", "label": "Show compare-at price", "default": true },
+    { "type": "checkbox", "id": "show_quick_add", "label": "Show quick add", "default": true },
+    { "type": "checkbox", "id": "show_quantity_selector", "label": "Show quantity selector", "default": true },
+    {
+      "type": "select",
+      "id": "mobile_purchase_layout",
+      "label": "Mobile purchase row layout",
+      "options": [
+        { "value": "same-line", "label": "Same line" },
+        { "value": "stacked", "label": "Stacked" }
+      ],
+      "default": "same-line"
+    },
+    { "type": "text", "id": "add_to_cart_label", "label": "Add to cart label", "default": "Add to cart" },
+    { "type": "text", "id": "choose_options_label", "label": "Choose options label", "default": "Choose options" },
+    { "type": "checkbox", "id": "show_second_image_hover", "label": "Show second image on hover", "default": false },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "1 / 1", "label": "Square" },
+        { "value": "3 / 4", "label": "Portrait" },
+        { "value": "4 / 5", "label": "Tall portrait" }
+      ],
+      "default": "3 / 4"
+    },
+    {
+      "type": "select",
+      "id": "image_fit",
+      "label": "Image fit",
+      "options": [
+        { "value": "contain", "label": "Contain" },
+        { "value": "cover", "label": "Cover" }
+      ],
+      "default": "contain"
+    },
+    { "type": "color", "id": "image_background", "label": "Image background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_background", "label": "Card background", "default": "#FFFFFF" },
+    { "type": "color", "id": "card_border_color", "label": "Card border", "default": "#E6E6E6" },
+    { "type": "range", "id": "card_border_width", "label": "Card border width", "min": 0, "max": 4, "step": 1, "unit": "px", "default": 1 },
+    { "type": "range", "id": "card_border_radius", "label": "Card border radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 0 },
+    { "type": "range", "id": "card_padding", "label": "Card padding", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 12 },
+    { "type": "select", "id": "title_size", "label": "Product title size", "options": [{ "value": "0.9rem", "label": "Small" }, { "value": "1rem", "label": "Medium" }, { "value": "1.1rem", "label": "Large" }], "default": "1rem" },
+    { "type": "select", "id": "price_size", "label": "Price size", "options": [{ "value": "0.9rem", "label": "Small" }, { "value": "1rem", "label": "Medium" }, { "value": "1.1rem", "label": "Large" }], "default": "1rem" },
+    { "type": "select", "id": "button_size", "label": "Button size", "options": [{ "value": "0.7rem", "label": "Small" }, { "value": "0.75rem", "label": "Medium" }, { "value": "0.82rem", "label": "Large" }], "default": "0.75rem" },
+
+    { "type": "header", "content": "Score badge metafield" },
+    { "type": "checkbox", "id": "show_score_badge", "label": "Show score badge", "default": true },
+    { "type": "text", "id": "score_namespace", "label": "Score metafield namespace", "default": "custom" },
+    { "type": "text", "id": "score_key", "label": "Score metafield key", "default": "wine_score" },
+    { "type": "color", "id": "score_badge_bg", "label": "Badge background", "default": "#FFFFFF" },
+    { "type": "color", "id": "score_badge_text", "label": "Badge text colour", "default": "#111111" },
+    { "type": "color", "id": "score_badge_border", "label": "Badge border colour", "default": "#D9DFE5" },
+    { "type": "range", "id": "score_badge_size", "label": "Badge size", "min": 36, "max": 64, "step": 1, "unit": "px", "default": 44 },
+
+    { "type": "header", "content": "Empty state" },
+    { "type": "text", "id": "empty_heading", "label": "Empty heading", "default": "No wines found" },
+    { "type": "textarea", "id": "empty_copy", "label": "Empty copy", "default": "Try adjusting your filters or explore another collection." },
+    { "type": "text", "id": "empty_cta_label", "label": "Empty CTA label", "default": "Browse all products" },
+    { "type": "url", "id": "empty_cta_link", "label": "Empty CTA link" },
+
+    { "type": "header", "content": "Spacing" },
+    { "type": "range", "id": "padding_top", "label": "Padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 24 },
+    { "type": "range", "id": "padding_bottom", "label": "Padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 }
+  ],
+  "presets": [
+    {
+      "name": "SF Main Collection Grid",
+      "category": "Seppeltsfield",
+      "blocks": [
+        {
+          "type": "filters",
+          "settings": {
+            "enable_filtering": true,
+            "filter_style": "vertical",
+            "enable_sorting": false,
+            "enable_grid_density": false
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

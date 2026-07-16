@@ -1,31 +1,220 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "main": {
-      "type": "product-composer",
+    "sf_main_product": {
+      "type": "sf-main-product",
       "blocks": {
-        "gallery": { "type": "product-gallery", "settings": {} },
-        "title": { "type": "product-title", "settings": {} },
-        "badge": { "type": "product-points-badge", "settings": { "score": "95" } },
-        "purchase_options": { "type": "product-purchase-options", "settings": {} },
-        "price": { "type": "product-price", "settings": {} },
-        "quantity": { "type": "product-quantity", "settings": {} },
-        "buy_buttons": { "type": "product-buy-buttons", "settings": {} },
-        "trust": { "type": "product-trust-row", "settings": {} },
-        "accordion": { "type": "product-accordion", "settings": {} },
-        "reviews": { "type": "product-reviews", "settings": {} },
-        "related": { "type": "product-related", "settings": {} }
+        "breadcrumbs": {
+          "type": "breadcrumbs",
+          "settings": {
+            "show_collection": true,
+            "show_current_product": true
+          }
+        },
+        "eyebrow": {
+          "type": "eyebrow",
+          "settings": {
+            "dynamic_source": "subtitle",
+            "uppercase": true
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "teaser": {
+          "type": "teaser",
+          "settings": {
+            "use_description_fallback": false,
+            "max_characters": 180
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {}
+        },
+        "selling_plan": {
+          "type": "selling_plan",
+          "settings": {
+            "subscription_label": "Wine club subscription (10% off)",
+            "show_popular_badge": true,
+            "show_without_native_plans": true,
+            "fallback_discount_percent": 10
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {
+            "show_volume_suffix": true
+          }
+        },
+        "description": {
+          "type": "product_description",
+          "settings": {
+            "visible_paragraphs": 1
+          }
+        },
+        "purchase": {
+          "type": "quantity_and_buy_buttons",
+          "settings": {
+            "show_quantity": true,
+            "button_label": "Add to cart"
+          }
+        },
+        "trust": {
+          "type": "trust_icons",
+          "settings": {
+            "items": "delivery|Free delivery on orders over $150\nlock|Secure payment\nuser|Member pricing available\ngift|Gift packaging available",
+            "columns_desktop": 4,
+            "columns_mobile": 2,
+            "icon_size": 36
+          }
+        },
+        "tasting_notes": {
+          "type": "accordion_tasting_notes",
+          "settings": {}
+        },
+        "winemaker_notes": {
+          "type": "accordion_winemaker_notes",
+          "settings": {}
+        },
+        "vineyard": {
+          "type": "accordion_vineyard",
+          "settings": {}
+        },
+        "vintage_conditions": {
+          "type": "accordion_vintage",
+          "settings": {}
+        },
+        "food_pairing": {
+          "type": "accordion_food_pairing",
+          "settings": {}
+        },
+        "technical_details": {
+          "type": "accordion_technical",
+          "settings": {}
+        },
+        "awards_reviews": {
+          "type": "accordion_awards_reviews",
+          "settings": {}
+        },
+        "downloads": {
+          "type": "accordion_pdf",
+          "settings": {}
+        }
       },
-      "block_order": ["gallery", "title", "badge", "purchase_options", "price", "quantity", "buy_buttons", "trust", "accordion", "reviews", "related"],
+      "block_order": [
+        "breadcrumbs",
+        "eyebrow",
+        "title",
+        "description",
+        "teaser",
+        "variant_picker",
+        "price",
+        "selling_plan",
+        "purchase",
+        "tasting_notes",
+        "winemaker_notes",
+        "vineyard",
+        "vintage_conditions",
+        "food_pairing",
+        "technical_details",
+        "awards_reviews",
+        "downloads",
+        "trust"
+      ],
       "settings": {
-        "section_width": "page-width",
-        "padding_top": "lg",
-        "padding_bottom": "lg",
-        "background_type": "color",
-        "background_color": "#F7F6F3",
-        "heading_color": "#12141A",
-        "text_color": "#565B63"
+        "enable_image_zoom": true,
+        "thumbnail_width": 76
+      }
+    },
+    "sf_product_reviews": {
+      "type": "sf-product-reviews",
+      "settings": {
+        "enable_section": true,
+        "content_width": "standard"
+      }
+    },
+    "sf_product_recommendations": {
+      "type": "sf-product-recommendations",
+      "settings": {
+        "heading": "You may also enjoy",
+        "content_width": "standard",
+        "product_count": 4,
+        "recommendation_type": "related",
+        "show_quick_add": true,
+        "show_quantity_selector": true,
+        "show_score_badge": true,
+        "show_vintage": true,
+        "show_product_type": true,
+        "show_price": true,
+        "show_compare_at_price": true,
+        "image_ratio": "3 / 4",
+        "image_fit": "contain"
+      }
+    },
+    "sf_product_services": {
+      "type": "sf-product-service-strip",
+      "blocks": {
+        "service_delivery": {
+          "type": "item",
+          "settings": {
+            "builtin_icon": "delivery",
+            "heading": "NATIONWIDE DELIVERY",
+            "copy": "Fast and reliable delivery across Australia"
+          }
+        },
+        "service_gift": {
+          "type": "item",
+          "settings": {
+            "builtin_icon": "gift",
+            "heading": "GIFT PACKAGING",
+            "copy": "Beautifully packaged for any occasion"
+          }
+        },
+        "service_secure": {
+          "type": "item",
+          "settings": {
+            "builtin_icon": "secure",
+            "heading": "SECURE PAYMENTS",
+            "copy": "Safe and secure checkout guaranteed"
+          }
+        },
+        "service_quality": {
+          "type": "item",
+          "settings": {
+            "builtin_icon": "quality",
+            "heading": "ESTATE QUALITY",
+            "copy": "Award-winning wines from our historic estate"
+          }
+        }
+      },
+      "block_order": [
+        "service_delivery",
+        "service_gift",
+        "service_secure",
+        "service_quality"
+      ],
+      "settings": {
+        "content_width": "standard",
+        "columns_desktop": 4,
+        "columns_tablet": 4,
+        "columns_mobile": 2
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "sf_main_product",
+    "sf_product_reviews",
+    "sf_product_recommendations",
+    "sf_product_services"
+  ]
 }

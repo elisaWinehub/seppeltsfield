@@ -1,0 +1,152 @@
+{% comment %}
+  Static placeholder for demo purposes — replace with per-product dynamic reviews or a review app before launch.
+{% endcomment %}
+{{ 'sf-product.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+%}
+
+{% if section.settings.enable_section %}
+  <section
+    class="sf-product-reviews"
+    style="
+      --sf-review-columns: {{ section.settings.review_columns }};
+      --sf-review-star-color: {{ section.settings.star_color }};
+      background: {{ section.settings.background_color }};
+      color: {{ section.settings.text_color }};
+      border-top: 1px solid {{ section.settings.border_color }};
+      border-bottom: 1px solid {{ section.settings.border_color }};
+    "
+  >
+    <div class="sf-section-container" style="--sf-content-max: {{ content_max }};">
+      <div class="sf-product-reviews__header">
+      <div>
+        <h2 style="margin: 0 0 0.35rem; color: {{ section.settings.heading_color }};">{{ section.settings.heading }}</h2>
+        <p class="sf-product-reviews__summary">
+          <span class="sf-product-reviews__stars" style="color: {{ section.settings.star_color }};" aria-hidden="true">★★★★★</span>
+          <span style="color: {{ section.settings.star_color }};">4.9 out of 5</span>
+          <span>(128 reviews)</span>
+        </p>
+      </div>
+      <a
+        href="{{ section.settings.write_review_url | default: '#' }}"
+        class="sf-product-reviews__write"
+        style="color: {{ section.settings.accent_color }}; border-color: {{ section.settings.accent_color }};"
+      >
+        Write a Review
+      </a>
+    </div>
+
+    <div class="sf-product-reviews__distribution" aria-label="Rating distribution">
+      <div class="sf-product-reviews__distribution-row">
+        <span>5★</span>
+        <div class="sf-product-reviews__distribution-bar" aria-hidden="true"><span style="width: 78%;"></span></div>
+        <span>78%</span>
+      </div>
+      <div class="sf-product-reviews__distribution-row">
+        <span>4★</span>
+        <div class="sf-product-reviews__distribution-bar" aria-hidden="true"><span style="width: 14%;"></span></div>
+        <span>14%</span>
+      </div>
+      <div class="sf-product-reviews__distribution-row">
+        <span>3★</span>
+        <div class="sf-product-reviews__distribution-bar" aria-hidden="true"><span style="width: 5%;"></span></div>
+        <span>5%</span>
+      </div>
+      <div class="sf-product-reviews__distribution-row">
+        <span>2★</span>
+        <div class="sf-product-reviews__distribution-bar" aria-hidden="true"><span style="width: 2%;"></span></div>
+        <span>2%</span>
+      </div>
+      <div class="sf-product-reviews__distribution-row">
+        <span>1★</span>
+        <div class="sf-product-reviews__distribution-bar" aria-hidden="true"><span style="width: 1%;"></span></div>
+        <span>1%</span>
+      </div>
+    </div>
+
+    <div class="sf-product-reviews__cards">
+      <article class="sf-product-reviews__card">
+        <p style="margin: 0 0 0.4rem; color: {{ section.settings.star_color }};">★★★★★</p>
+        <h3 style="margin: 0 0 0.45rem; font-size: 1rem;">Exceptional vintage and finish</h3>
+        <p style="margin: 0 0 0.7rem;">Beautifully balanced and ideal with roast lamb. Will order again.</p>
+        <p style="margin: 0; font-size: 0.9rem; color: rgb(var(--color-foreground-rgb) / 0.7);">
+          James H. — Verified buyer — March 2026
+        </p>
+      </article>
+
+      <article class="sf-product-reviews__card">
+        <p style="margin: 0 0 0.4rem; color: {{ section.settings.star_color }};">★★★★★</p>
+        <h3 style="margin: 0 0 0.45rem; font-size: 1rem;">A cellar-door favourite</h3>
+        <p style="margin: 0 0 0.7rem;">Crisp, elegant and perfect with seafood. One of our go-to whites.</p>
+        <p style="margin: 0; font-size: 0.9rem; color: rgb(var(--color-foreground-rgb) / 0.7);">
+          Sarah M. — Verified buyer — February 2026
+        </p>
+      </article>
+
+      <article class="sf-product-reviews__card">
+        <p style="margin: 0 0 0.4rem; color: {{ section.settings.star_color }};">★★★★☆</p>
+        <h3 style="margin: 0 0 0.45rem; font-size: 1rem;">Lovely everyday drinking</h3>
+        <p style="margin: 0 0 0.7rem;">Great value and consistently well made. Arrived quickly and securely packaged.</p>
+        <p style="margin: 0; font-size: 0.9rem; color: rgb(var(--color-foreground-rgb) / 0.7);">
+          Michael T. — Verified buyer — January 2026
+        </p>
+      </article>
+    </div>
+    </div>
+  </section>
+{% endif %}
+
+{% schema %}
+{
+  "name": "SF Product Reviews",
+  "class": "sf-product-section",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Static placeholder for demo purposes — replace with per-product dynamic reviews or a review app before launch."
+    },
+    { "type": "checkbox", "id": "enable_section", "label": "Enable section", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Customer Reviews" },
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "standard"
+    },
+    { "type": "url", "id": "write_review_url", "label": "Write review URL" },
+    { "type": "range", "id": "review_columns", "label": "Review cards per row", "min": 1, "max": 4, "step": 1, "default": 3 },
+    { "type": "color", "id": "background_color", "label": "Background colour", "default": "#FFFFFF" },
+    { "type": "color", "id": "border_color", "label": "Border colour", "default": "#DDE2E8" },
+    { "type": "color", "id": "star_color", "label": "Star colour", "default": "#0CA7E0" },
+    { "type": "color", "id": "heading_color", "label": "Heading colour", "default": "#111111" },
+    { "type": "color", "id": "text_color", "label": "Text colour", "default": "#2F3338" },
+    { "type": "color", "id": "accent_color", "label": "Accent colour", "default": "#0CA7E0" }
+  ],
+  "presets": [
+    {
+      "name": "SF Product Reviews",
+      "category": "Seppeltsfield"
+    }
+  ]
+}
+{% endschema %}

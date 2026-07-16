@@ -1,0 +1,38 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign mobile_image = section.settings.mobile_image | default: section.settings.desktop_image
+-%}
+<section id="SfEventsChef-{{ section.id }}" class="sf-events-chef" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-muted:{{ section.settings.muted_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-container">
+    <div class="sf-events-chef__layout{% if section.settings.reverse_columns %} is-reverse{% endif %}">
+      <div class="sf-events-chef__content">
+        {% if section.settings.eyebrow != blank %}<p class="sf-events-chef__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-events-chef__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+        {% if section.settings.copy != blank %}<p class="sf-events-chef__copy">{{ section.settings.copy }}</p>{% endif %}
+        {% if section.settings.link_label != blank and section.settings.link_url != blank %}<a class="sf-events-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>{% endif %}
+      </div>
+      <div class="sf-events-chef__media">
+        {% if section.settings.desktop_image != blank %}
+          {{ section.settings.desktop_image | image_url: width: 1400 | image_tag: class: 'sf-events-chef__img sf-events-chef__img--desktop', loading: 'lazy', widths: '550,750,990,1200,1400', sizes: '(min-width:990px) 50vw, 100vw', alt: section.settings.desktop_image.alt }}
+          {{ mobile_image | image_url: width: 1000 | image_tag: class: 'sf-events-chef__img sf-events-chef__img--mobile', loading: 'lazy', widths: '375,550,750,900,1000', sizes: '(max-width:989px) 100vw, 1px', alt: mobile_image.alt }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-chef{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-events-chef__layout{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:1rem}.sf-events-chef__layout.is-reverse .sf-events-chef__content{order:2}.sf-events-chef__layout.is-reverse .sf-events-chef__media{order:1}.sf-events-chef__content{display:grid;align-content:center}.sf-events-chef__eyebrow{margin:0;color:var(--sf-muted);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-events-chef__heading{margin:.55rem 0 0;color:var(--sf-head);font-size:clamp(1.8rem,2.8vw,3rem);line-height:1.04}.sf-events-chef__copy{margin:.8rem 0 1rem;color:var(--sf-text)}.sf-events-chef__media{min-height:320px}.sf-events-chef__img{width:100%;height:100%;object-fit:cover}.sf-events-chef__img--mobile{display:none}@media(max-width:989px){.sf-events-chef{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-chef__layout{grid-template-columns:1fr}.sf-events-chef__img--desktop{display:none}.sf-events-chef__img--mobile{display:block}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Chef","tag":"section","class":"sf-events-section","settings":[{"type":"paragraph","content":"Search files: Owen Andrews, Executive Chef, Chef barrels"},{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"standard"},{"type":"image_picker","id":"desktop_image","label":"Desktop image"},{"type":"image_picker","id":"mobile_image","label":"Mobile image"},{"type":"checkbox","id":"reverse_columns","label":"Reverse columns","default":false},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"ARTISAN CUISINE"},{"type":"textarea","id":"heading","label":"Heading","default":"Crafted by our\nExecutive Chef"},{"type":"textarea","id":"copy","label":"Copy","default":"Owen Andrews and his team create seasonal menus that showcase the best of South Australia, paired perfectly with our estate-grown wines.","info":"Brand guide lists 'Owen Andrews Artisan Catering' as a by-appointment service, distinct from FINO Seppeltsfield Restaurant. Confirm his role relative to FINO before this section's framing is finalized."},{"type":"text","id":"link_label","label":"Link label","default":"MEET OWEN ANDREWS"},{"type":"url","id":"link_url","label":"Link URL"},{"type":"color","id":"background_color","label":"Background","default":"#F4F1EA"},{"type":"color","id":"heading_color","label":"Heading color","default":"#111315"},{"type":"color","id":"text_color","label":"Text color","default":"#424242"},{"type":"color","id":"muted_color","label":"Muted color","default":"#6D4B35"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":32},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":32}],"presets":[{"name":"SF Events Chef","category":"Seppeltsfield"}]}
+{% endschema %}

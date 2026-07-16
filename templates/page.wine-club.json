@@ -1,55 +1,62 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": {
-      "type": "hero-banner",
-      "settings": {
-        "eyebrow": "Wine Club",
-        "heading": "More than wine.\nA connection for life.",
-        "body": "Exclusive member pricing, invitations and access to limited cellar releases.",
-        "button_label": "Join the Club",
-        "button_link": "#tiers",
-        "button_style": "secondary",
-        "background_type": "image",
-        "background_image": "shopify://shop_images/centennialcellarHERO2.jpg",
-        "overlay_opacity": 40,
-        "background_color": "#0b0c0d",
-        "heading_color": "#f5f7f8",
-        "text_color": "#f5f7f8",
-        "heading_size": 64,
-        "text_size": 17,
-        "padding_top": "xl",
-        "padding_bottom": "lg",
-        "section_width": "page-width"
-      }
+    "sf_wine_club_hero": {
+      "type": "sf-wine-club-hero",
+      "settings": {}
     },
-    "why_join": {
-      "type": "trust-bar",
+    "sf_wine_club_benefits": {
+      "type": "sf-wine-club-benefits",
       "blocks": {
-        "j1": { "type": "trust_item", "settings": { "title": "Member pricing", "subtitle": "Preferred rates and seasonal offers", "icon": "◆" } },
-        "j2": { "type": "trust_item", "settings": { "title": "Priority access", "subtitle": "Centennial and limited drops", "icon": "✦" } },
-        "j3": { "type": "trust_item", "settings": { "title": "Events", "subtitle": "Invitations to member moments", "icon": "●" } }
+        "benefit_one": { "type": "benefit", "settings": { "icon": "🍾", "heading": "Exclusive Wines", "copy": "Access limited releases and museum wines not available anywhere else." } },
+        "benefit_two": { "type": "benefit", "settings": { "icon": "✦", "heading": "Member Discounts", "copy": "Enjoy savings on wines, experiences, dining and accommodation." } },
+        "benefit_three": { "type": "benefit", "settings": { "icon": "◴", "heading": "Invitations", "copy": "Be the first to receive invitations to member events and tastings." } },
+        "benefit_four": { "type": "benefit", "settings": { "icon": "⇢", "heading": "Complimentary Freight", "copy": "Complimentary delivery Australia-wide on eligible wine orders." } },
+        "benefit_five": { "type": "benefit", "settings": { "icon": "✉", "heading": "Member News", "copy": "Stay connected with our quarterly member newsletter." } },
+        "benefit_six": { "type": "benefit", "settings": { "icon": "♛", "heading": "Crown Society", "copy": "Earn Crown Society points with every purchase and experience." } }
       },
-      "block_order": ["j1", "j2", "j3"]
+      "block_order": ["benefit_one", "benefit_two", "benefit_three", "benefit_four", "benefit_five", "benefit_six"],
+      "settings": {}
     },
-    "tiers": {
-      "type": "tier-comparison",
+    "sf_wine_club_memberships": {
+      "type": "sf-wine-club-memberships",
       "blocks": {
-        "tier1": { "type": "tier", "settings": { "label": "Explorer", "price": "$120 / year", "description": "Core access to member pricing and selected estate invitations.", "cta": "Join Explorer", "link": "/account/register", "button_style": "light", "featured": false } },
-        "tier2": { "type": "tier", "settings": { "label": "Connoisseur", "price": "$220 / year", "description": "Most popular tier with expanded benefits and premium release access.", "cta": "Join Connoisseur", "link": "/account/register", "button_style": "primary", "featured": true } },
-        "tier3": { "type": "tier", "settings": { "label": "Collector", "price": "$360 / year", "description": "Highest tier for collectors wanting private allocations and events.", "cta": "Join Collector", "link": "/account/register", "button_style": "light", "featured": false } }
+        "tier_explorer": { "type": "membership_tier", "settings": { "tier_name": "Explorer", "price": "$65", "billing_suffix": "/ YEAR", "description": "Ideal for those beginning their Seppeltsfield journey.", "benefits_list": "2 curated wine selections per year\n10% discount on wine purchases\nMember newsletter\nCrown Society membership", "button_label": "JOIN EXPLORER" } },
+        "tier_connoisseur": { "type": "membership_tier", "settings": { "tier_name": "Connoisseur", "badge_text": "MOST POPULAR", "featured": true, "price": "$135", "billing_suffix": "/ YEAR", "description": "For those who appreciate the finer things.", "benefits_list": "3 curated wine selections per year\n15% discount on wine purchases\nExclusive member offers\nInvitations to member events\nCrown Society membership", "button_label": "JOIN CONNOISSEUR" } },
+        "tier_collector": { "type": "membership_tier", "settings": { "tier_name": "Collector", "price": "$250", "billing_suffix": "/ YEAR", "description": "For dedicated collectors and lovers of rare wines.", "benefits_list": "4 curated wine selections per year\n20% discount on wine purchases\nAccess to museum and library wines\nExclusive experiences and events\nCrown Society membership", "button_label": "JOIN COLLECTOR" } }
       },
-      "block_order": ["tier1", "tier2", "tier3"],
-      "settings": { "heading": "Find the perfect membership for you." }
+      "block_order": ["tier_explorer", "tier_connoisseur", "tier_collector"],
+      "settings": {}
     },
-    "crown": {
-      "type": "cta-banner",
-      "settings": {
-        "eyebrow": "Crown Society",
-        "heading": "Every bottle you enjoy brings you closer.",
-        "button_label": "Explore Crown Society"
-      }
+    "sf_wine_club_crown": {
+      "type": "sf-wine-club-crown-society",
+      "settings": {}
     },
-    "newsletter": { "type": "newsletter-bar", "settings": {} }
+    "sf_wine_club_stories": {
+      "type": "sf-wine-club-member-stories",
+      "blocks": {
+        "story_primary": { "type": "testimonial", "settings": { "quote": "The Wine Club connects us to the Barossa, the people and the stories behind every bottle.", "member_name": "JANE WILLIAMS", "subtitle": "MEMBER SINCE 2018", "link_label": "READ MORE MEMBER STORIES" } },
+        "gallery_1": { "type": "gallery_image", "settings": {} },
+        "gallery_2": { "type": "gallery_image", "settings": {} },
+        "gallery_3": { "type": "gallery_image", "settings": {} }
+      },
+      "block_order": ["story_primary", "gallery_1", "gallery_2", "gallery_3"],
+      "settings": {}
+    }
   },
-  "order": ["hero", "why_join", "tiers", "crown", "newsletter"]
+  "order": [
+    "sf_wine_club_hero",
+    "sf_wine_club_benefits",
+    "sf_wine_club_memberships",
+    "sf_wine_club_crown",
+    "sf_wine_club_stories"
+  ]
 }

@@ -1,0 +1,24 @@
+{{ 'sf-about.css' | asset_url | stylesheet_tag }}
+<section id="SfAboutAwards-{{ section.id }}" class="sf-about-awards" style="--sf-bg:{{ section.settings.background_color }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-accent:{{ section.settings.accent_color }};--sf-gap:{{ section.settings.gap }}px;--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-about-container">
+    <div class="sf-about-awards__head">
+      {% if section.settings.eyebrow != blank %}<p class="sf-about-awards__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+      {% if section.settings.heading != blank %}<h2 class="sf-about-awards__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+    </div>
+    <div class="sf-about-awards__track">
+      {% for block in section.blocks %}
+        <article class="sf-about-awards__item" {{ block.shopify_attributes }}>
+          {% if block.settings.logo != blank %}{{ block.settings.logo | image_url: width: 300 | image_tag: loading: 'lazy', widths: '80,120,160,220,300', sizes: '120px', alt: block.settings.title }}{% endif %}
+          {% if block.settings.title != blank %}<h3>{{ block.settings.title }}</h3>{% endif %}
+          {% if block.settings.caption != blank %}<p>{{ block.settings.caption }}</p>{% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-about-awards{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-about-awards__head{color:var(--sf-text)}.sf-about-awards__eyebrow{margin:0;color:var(--sf-accent);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-about-awards__heading{margin:.5rem 0 0;color:var(--sf-head);font-size:clamp(1.7rem,2.6vw,2.8rem)}.sf-about-awards__track{margin-top:1rem;display:grid;grid-auto-flow:column;grid-auto-columns:minmax(12rem,1fr);gap:var(--sf-gap);overflow-x:auto;scroll-snap-type:x mandatory}.sf-about-awards__item{scroll-snap-align:start;border:1px solid color-mix(in srgb,var(--sf-text) 20%,transparent);padding:.9rem;color:var(--sf-text);text-align:center}.sf-about-awards__item img{max-height:60px;width:auto;object-fit:contain}.sf-about-awards__item h3{margin:.55rem 0 0;font-size:.84rem}.sf-about-awards__item p{margin:.4rem 0 0;font-size:.76rem;color:color-mix(in srgb,var(--sf-text) 78%,transparent)}@media(max-width:989px){.sf-about-awards{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF About Awards","tag":"section","class":"sf-about-section","max_blocks":12,"settings":[{"type":"text","id":"eyebrow","label":"Eyebrow","default":"RECOGNISED EXCELLENCE"},{"type":"textarea","id":"heading","label":"Heading","default":"Honoured\nworldwide"},{"type":"color","id":"background_color","label":"Background","default":"#050505"},{"type":"color","id":"heading_color","label":"Heading color","default":"#FFFFFF"},{"type":"color","id":"text_color","label":"Text color","default":"#F4F1EA"},{"type":"color","id":"accent_color","label":"Accent color","default":"#47A8DF"},{"type":"range","id":"gap","label":"Gap","min":8,"max":36,"step":2,"unit":"px","default":8},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":24},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":24},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":20},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":20}],"blocks":[{"type":"award","name":"Award","settings":[{"type":"image_picker","id":"logo","label":"Award logo"},{"type":"text","id":"title","label":"Title","default":"2025 Halliday Top 5 Star Winery"},{"type":"text","id":"caption","label":"Caption","default":"Halliday Wine Companion"}]}],"presets":[{"name":"SF About Awards","category":"Seppeltsfield","blocks":[{"type":"award","settings":{"title":"2025 Halliday Top 5 Star Winery","caption":"Halliday Wine Companion"}},{"type":"award","settings":{"title":"World's Best Vineyards 2024","caption":"World's Best Vineyards"}},{"type":"award","settings":{"title":"2024 Halliday Hall of Fame","caption":"Halliday Awards"}},{"type":"award","settings":{"title":"Qantas Australian Tourism Awards","caption":"2024 - Best Tourism Winery"}},{"type":"award","settings":{"title":"South Australian Tourism Awards","caption":"2025 - Hall of Fame, Best Wineries, Breweries & Distilleries"}},{"type":"award","settings":{"title":"Top Wineries Australia 2025","caption":"The Real Review"}}]}]}
+{% endschema %}

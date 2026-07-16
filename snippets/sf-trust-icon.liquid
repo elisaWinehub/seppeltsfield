@@ -1,0 +1,30 @@
+{%- doc -%}
+  Renders a built-in trust icon by slug.
+
+  @param {string} icon
+{%- enddoc -%}
+
+{% case icon %}
+  {% when 'delivery' %}
+    {{ 'icon-orders.svg' | inline_asset_content }}
+  {% when 'lock' %}
+    {{ 'icon-checkmark.svg' | inline_asset_content }}
+  {% when 'shield' %}
+    {{ 'icon-shopify.svg' | inline_asset_content }}
+  {% when 'user' %}
+    {{ 'icon-account.svg' | inline_asset_content }}
+  {% when 'member' %}
+    {{ 'icon-account.svg' | inline_asset_content }}
+  {% when 'crown' %}
+    {{ 'icon-checkmark-burst.svg' | inline_asset_content }}
+  {% when 'gift' %}
+    {{ 'icon-discount.svg' | inline_asset_content }}
+  {% when 'wine' %}
+    {{ 'icon-add-to-cart.svg' | inline_asset_content }}
+  {% when 'leaf' %}
+    {{ 'icon-inventory.svg' | inline_asset_content }}
+  {% when 'award' %}
+    {{ 'icon-checkmark-burst.svg' | inline_asset_content }}
+  {% else %}
+    {{ 'icon-checkmark.svg' | inline_asset_content }}
+{% endcase %}

@@ -1,0 +1,38 @@
+{%- doc -%}
+  Quantity controls used in sf-product-card.
+
+  @param {string} [id_suffix]
+{%- enddoc -%}
+
+{% liquid
+  assign qty_id = 'SfQty-' | append: id_suffix
+%}
+
+<div
+  class="sf-product-card__qty"
+  data-sf-qty
+>
+  <button
+    type="button"
+    aria-label="Decrease quantity"
+    data-qty-change="-1"
+  >
+    -
+  </button>
+  <input
+    id="{{ qty_id }}"
+    type="number"
+    name="quantity"
+    value="1"
+    min="1"
+    inputmode="numeric"
+    aria-label="Quantity"
+  >
+  <button
+    type="button"
+    aria-label="Increase quantity"
+    data-qty-change="1"
+  >
+    +
+  </button>
+</div>

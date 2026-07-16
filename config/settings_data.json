@@ -11,6 +11,7 @@
   "current": {
     "logo_height": 36,
     "logo_height_mobile": 28,
+    "favicon": "shopify://shop_images/crown-icon.png",
     "page_background_color": "{{ settings.color_palette.background }}",
     "page_width": "narrow",
     "page_text_color": "{{ settings.color_palette.foreground }}",

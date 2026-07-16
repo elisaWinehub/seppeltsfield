@@ -1,0 +1,24 @@
+query {
+  files(first: 100, sortKey: CREATED_AT, reverse: true) {
+    nodes {
+      __typename
+      ... on MediaImage {
+        id
+        alt
+        image {
+          url
+        }
+        preview {
+          image {
+            url
+          }
+        }
+      }
+      ... on GenericFile {
+        id
+        alt
+        url
+      }
+    }
+  }
+}

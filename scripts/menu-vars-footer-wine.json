@@ -1,0 +1,10 @@
+{
+  "title": "Footer — Wine",
+  "handle": "footer-wine",
+  "items": [
+    { "title": "Wine Collections", "type": "HTTP", "url": "/collections" },
+    { "title": "All Wines", "type": "HTTP", "url": "/collections/all" },
+    { "title": "Limited Releases", "type": "HTTP", "url": "/collections/all" },
+    { "title": "Gift Vouchers", "type": "HTTP", "url": "/collections/all" }
+  ]
+}

@@ -1,0 +1,20 @@
+{%- doc -%}
+  Generic product accordion.
+
+  @param {string} heading
+  @param {string} content
+  @param {boolean} [open]
+  @param {object} [block]
+{%- enddoc -%}
+
+{% if content != blank %}
+  <details class="sf-product-accordion" {% if open %}open{% endif %} {{ block.shopify_attributes }}>
+    <summary>
+      <span>{{ heading }}</span>
+      <span class="sf-product-accordion__icon" aria-hidden="true"></span>
+    </summary>
+    <div class="sf-product-accordion__content">
+      {{ content }}
+    </div>
+  </details>
+{% endif %}

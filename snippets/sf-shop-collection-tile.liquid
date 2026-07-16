@@ -1,0 +1,138 @@
+{%- doc -%}
+  Renders a single shop collection tile.
+
+  @param {object} block
+  @param {object} section
+  @param {string} tile_size - standard | wide
+{%- enddoc -%}
+
+{%- liquid
+  assign tile_collection = block.settings.collection
+
+  assign tile_image = block.settings.image_override
+  if tile_image == blank and tile_collection != blank and tile_collection.image != blank
+    assign tile_image = tile_collection.image
+  endif
+  if tile_image == blank
+    assign tile_image = section.settings.default_tile_image
+  endif
+
+  assign tile_title = block.settings.title_override
+  if tile_title == blank and tile_collection != blank
+    assign tile_title = tile_collection.title
+  endif
+
+  assign tile_description = block.settings.description_override
+  if tile_description == blank and tile_collection != blank and tile_collection.description != blank
+    assign tile_description = tile_collection.description | strip_html | strip
+  endif
+
+  assign tile_url = block.settings.link_override
+  if tile_url == blank and tile_collection != blank
+    assign tile_url = tile_collection.url
+  endif
+
+  assign tile_label = block.settings.label_override
+  if tile_label == blank
+    assign tile_label = 'Explore'
+  endif
+
+  assign tile_eyebrow = block.settings.eyebrow_override
+
+  assign image_alt = block.settings.image_alt_override
+  if image_alt == blank and tile_collection != blank and tile_collection.image != blank
+    assign image_alt = tile_collection.image.alt
+  endif
+  if image_alt == blank
+    assign image_alt = tile_title
+  endif
+
+  assign image_filter = 'brightness(0.85)'
+  if tile_size == 'wide'
+    assign image_filter = 'brightness(0.82)'
+  endif
+  case block.settings.image_treatment
+    when 'grayscale'
+      assign image_filter = image_filter | append: ' grayscale(1)'
+    when 'sepia'
+      assign image_filter = image_filter | append: ' sepia(0.45)'
+  endcase
+
+  assign overlay_opacity = block.settings.overlay_opacity | divided_by: 100.0
+
+  assign zoom_enabled = section.settings.enable_hover_zoom
+  if block.settings.enable_hover_zoom == false
+    assign zoom_enabled = false
+  endif
+
+  if tile_size == 'wide'
+    assign tile_sizes = '(min-width: 990px) 50vw, 100vw'
+  else
+    assign tile_sizes = '(min-width: 990px) 33vw, 50vw'
+  endif
+-%}
+
+{%- unless tile_url == blank and section.settings.missing_link_behavior == 'hide' -%}
+  {% if tile_url == blank %}
+    <div
+      class="sf-shop-collections__placeholder{% if tile_size == 'wide' %} sf-shop-collections__placeholder--wide{% endif %}"
+      {{ block.shopify_attributes }}
+    >
+      <p class="sf-shop-collections__placeholder-text">
+        {% if tile_title != blank %}
+          {{ tile_title }} — assign a collection or link in Theme Editor.
+        {% else %}
+          Assign a collection or link in Theme Editor.
+        {% endif %}
+      </p>
+    </div>
+  {% else %}
+    <a
+      href="{{ tile_url }}"
+      class="sf-shop-collections__tile sf-shop-collections__tile--{{ tile_size }}{% if zoom_enabled %} sf-shop-collections__tile--zoom{% endif %}"
+      style="
+        --sf-shop-tile-position: {{ block.settings.image_position }};
+        --sf-shop-tile-filter: {{ image_filter }};
+        --sf-shop-tile-text: {{ block.settings.text_color }};
+        --sf-shop-tile-eyebrow: {{ block.settings.eyebrow_color }};
+        --sf-shop-tile-overlay-opacity: {{ overlay_opacity }};
+      "
+      {{ block.shopify_attributes }}
+    >
+      {% if tile_image != blank %}
+        <div class="sf-shop-collections__media">
+          {{
+            tile_image
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'lazy',
+              widths: '375, 550, 750, 990, 1200, 1440, 1800',
+              sizes: tile_sizes,
+              alt: image_alt
+          }}
+        </div>
+      {% endif %}
+
+      <div
+        class="sf-shop-collections__overlay sf-shop-collections__overlay--{{ tile_size }}"
+        aria-hidden="true"
+      ></div>
+
+      <div class="sf-shop-collections__content sf-shop-collections__content--{{ tile_size }}">
+        {% if tile_eyebrow != blank and tile_size == 'standard' %}
+          <p class="sf-shop-collections__eyebrow">{{ tile_eyebrow }}</p>
+        {% endif %}
+
+        {% if tile_title != blank %}
+          <h2 class="sf-shop-collections__title">{{ tile_title }}</h2>
+        {% endif %}
+
+        {% if tile_description != blank and tile_size == 'standard' %}
+          <p class="sf-shop-collections__description">{{ tile_description }}</p>
+        {% endif %}
+
+        <span class="sf-shop-collections__link-label">{{ tile_label }} →</span>
+      </div>
+    </a>
+  {% endif %}
+{%- endunless -%}

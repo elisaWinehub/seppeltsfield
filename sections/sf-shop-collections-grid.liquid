@@ -1,0 +1,234 @@
+{{ 'sf-shop-collections.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1280px'
+  endcase
+-%}
+
+<section
+  id="SfShopCollectionsGrid-{{ section.id }}"
+  class="sf-shop-collections{% if section.settings.enable_hover_zoom %} sf-shop-collections--zoom{% endif %}"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-shop-collections-bg: {{ section.settings.background_color }};
+    --sf-shop-collections-gap: {{ section.settings.grid_gap }}px;
+    --sf-shop-collections-radius: {{ section.settings.card_border_radius }}px;
+    --sf-shop-collections-cols-d: {{ section.settings.columns_desktop }};
+    --sf-shop-collections-cols-t: {{ section.settings.columns_tablet }};
+    --sf-shop-collections-cols-m: {{ section.settings.columns_mobile }};
+    --sf-shop-collections-util-cols-t: 2;
+    --sf-shop-collections-util-cols-m: 1;
+    --sf-shop-collections-tile-min-d: {{ section.settings.card_min_height_desktop }}px;
+    --sf-shop-collections-tile-min-m: {{ section.settings.card_min_height_mobile }}px;
+    --sf-shop-collections-wide-min-d: {{ section.settings.wide_min_height_desktop }}px;
+    --sf-shop-collections-wide-min-m: {{ section.settings.wide_min_height_mobile }}px;
+    --sf-shop-collections-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-shop-collections-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-shop-collections-pad-inline-d: {{ section.settings.padding_horizontal_desktop }}px;
+    --sf-shop-collections-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-shop-collections-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+    --sf-shop-collections-pad-inline-m: {{ section.settings.padding_horizontal_mobile }}px;
+  "
+>
+  <div class="sf-section-container" style="--sf-content-max: {{ content_max }};">
+    <div class="sf-shop-collections__primary">
+      {% for block in section.blocks %}
+        {% if block.type != 'collection_tile' or block.settings.tile_size == 'wide' %}
+          {% continue %}
+        {% endif %}
+        {% render 'sf-shop-collection-tile',
+          block: block,
+          section: section,
+          tile_size: 'standard'
+        %}
+      {% endfor %}
+    </div>
+
+    <div class="sf-shop-collections__utility">
+      {% for block in section.blocks %}
+        {% if block.type != 'collection_tile' or block.settings.tile_size != 'wide' %}
+          {% continue %}
+        {% endif %}
+        {% render 'sf-shop-collection-tile',
+          block: block,
+          section: section,
+          tile_size: 'wide'
+        %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF Shop Coll Grid",
+  "tag": "section",
+  "class": "sf-shop-section",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "type": "select",
+      "id": "content_width",
+      "label": "Content width",
+      "options": [
+        { "value": "narrow", "label": "Narrow" },
+        { "value": "standard", "label": "Standard" },
+        { "value": "wide", "label": "Wide" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "wide"
+    },
+    { "type": "image_picker", "id": "default_tile_image", "label": "Default tile image", "info": "Used when a tile has no manual image and its collection has no image." },
+    { "type": "color", "id": "background_color", "label": "Background colour", "default": "#FFFFFF" },
+    { "type": "range", "id": "columns_desktop", "label": "Standard columns desktop", "min": 2, "max": 6, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns_tablet", "label": "Standard columns tablet", "min": 2, "max": 4, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns_mobile", "label": "Standard columns mobile", "min": 1, "max": 3, "step": 1, "default": 2 },
+    { "type": "range", "id": "grid_gap", "label": "Grid gap", "min": 8, "max": 40, "step": 2, "unit": "px", "default": 16 },
+    { "type": "range", "id": "card_border_radius", "label": "Card border radius", "min": 0, "max": 24, "step": 1, "unit": "px", "default": 2 },
+    { "type": "range", "id": "card_min_height_desktop", "label": "Standard tile min height desktop", "min": 280, "max": 640, "step": 10, "unit": "px", "default": 480 },
+    { "type": "range", "id": "card_min_height_mobile", "label": "Standard tile min height mobile", "min": 220, "max": 480, "step": 10, "unit": "px", "default": 340 },
+    { "type": "range", "id": "wide_min_height_desktop", "label": "Wide tile min height desktop", "min": 160, "max": 400, "step": 10, "unit": "px", "default": 220 },
+    { "type": "range", "id": "wide_min_height_mobile", "label": "Wide tile min height mobile", "min": 140, "max": 320, "step": 10, "unit": "px", "default": 200 },
+    { "type": "checkbox", "id": "enable_hover_zoom", "label": "Enable hover zoom globally", "default": true },
+    {
+      "type": "select",
+      "id": "missing_link_behavior",
+      "label": "Tiles without a link",
+      "options": [
+        { "value": "hide", "label": "Hide tile" },
+        { "value": "placeholder", "label": "Show non-clickable placeholder" }
+      ],
+      "default": "hide"
+    },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 64 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 80 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 48 },
+    { "type": "range", "id": "padding_horizontal_desktop", "label": "Horizontal padding desktop", "min": 0, "max": 80, "step": 4, "unit": "px", "default": 40 },
+    { "type": "range", "id": "padding_horizontal_mobile", "label": "Horizontal padding mobile", "min": 0, "max": 48, "step": 4, "unit": "px", "default": 20 }
+  ],
+  "blocks": [
+    {
+      "type": "collection_tile",
+      "name": "Collection tile",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image_override", "label": "Image override" },
+        { "type": "text", "id": "title_override", "label": "Title override" },
+        { "type": "textarea", "id": "description_override", "label": "Description override" },
+        { "type": "url", "id": "link_override", "label": "Link override" },
+        { "type": "text", "id": "label_override", "label": "Link label override", "default": "Explore" },
+        { "type": "text", "id": "eyebrow_override", "label": "Eyebrow override" },
+        { "type": "text", "id": "image_alt_override", "label": "Image alt text override" },
+        {
+          "type": "select",
+          "id": "tile_size",
+          "label": "Tile size",
+          "options": [
+            { "value": "standard", "label": "Standard" },
+            { "value": "wide", "label": "Wide" }
+          ],
+          "default": "standard"
+        },
+        { "type": "color", "id": "overlay_color", "label": "Overlay colour", "default": "#050505" },
+        { "type": "range", "id": "overlay_opacity", "label": "Overlay opacity", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 85 },
+        { "type": "color", "id": "text_color", "label": "Text colour", "default": "#FFFFFF" },
+        { "type": "color", "id": "eyebrow_color", "label": "Eyebrow colour", "default": "#8FD0F2" },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image focal point",
+          "options": [
+            { "value": "center center", "label": "Centre" },
+            { "value": "top center", "label": "Top" },
+            { "value": "bottom center", "label": "Bottom" }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "select",
+          "id": "image_treatment",
+          "label": "Image treatment",
+          "options": [
+            { "value": "color", "label": "Colour" },
+            { "value": "grayscale", "label": "Grayscale" },
+            { "value": "sepia", "label": "Sepia" }
+          ],
+          "default": "color"
+        },
+        { "type": "checkbox", "id": "enable_hover_zoom", "label": "Enable hover zoom", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Shop Coll Grid",
+      "category": "Seppeltsfield",
+      "blocks": [
+        {
+          "type": "collection_tile",
+          "settings": {
+            "title_override": "Village Collection",
+            "description_override": "Contemporary, aromatic wines made to be enjoyed young.",
+            "eyebrow_override": "Contemporary & Aromatic"
+          }
+        },
+        {
+          "type": "collection_tile",
+          "settings": {
+            "title_override": "Bench Blend Collection",
+            "description_override": "The art of assemblage. Traditional and contemporary red blends.",
+            "eyebrow_override": "The Art of Assemblage"
+          }
+        },
+        {
+          "type": "collection_tile",
+          "settings": {
+            "title_override": "The Grounds Collection",
+            "description_override": "Single-vineyard Shiraz from all four points of the compass.",
+            "eyebrow_override": "Single Vineyard"
+          }
+        },
+        {
+          "type": "collection_tile",
+          "settings": {
+            "title_override": "Estate Icon Vineyard",
+            "description_override": "Bush vine Grenache from the Great Terraced Vineyard, planted 1855.",
+            "eyebrow_override": "Great Terraced Vineyard"
+          }
+        },
+        {
+          "type": "collection_tile",
+          "settings": {
+            "title_override": "Para Tawny Collection",
+            "description_override": "The heart of the fortified range since 1878.",
+            "eyebrow_override": "Fortified Since 1878"
+          }
+        },
+        {
+          "type": "collection_tile",
+          "settings": {
+            "tile_size": "wide",
+            "title_override": "Gifting & Vouchers"
+          }
+        },
+        {
+          "type": "collection_tile",
+          "settings": {
+            "tile_size": "wide",
+            "title_override": "Cellar Door Exclusives"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

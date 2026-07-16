@@ -1,0 +1,205 @@
+{{ 'sf-discovery.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign desktop_map = section.settings.desktop_map
+  assign mobile_map = section.settings.mobile_map | default: desktop_map
+-%}
+
+<section
+  id="SfDiscoveryEstateMap-{{ section.id }}"
+  class="sf-discovery-estate-map"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-head: {{ section.settings.heading_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-muted: {{ section.settings.muted_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-pad-top-d: {{ section.settings.padding_top_desktop }}px;
+    --sf-pad-bottom-d: {{ section.settings.padding_bottom_desktop }}px;
+    --sf-pad-top-m: {{ section.settings.padding_top_mobile }}px;
+    --sf-pad-bottom-m: {{ section.settings.padding_bottom_mobile }}px;
+  "
+>
+  <div class="sf-discovery-container">
+    <div class="sf-discovery-estate-map__layout{% if section.settings.reverse_columns %} is-reverse{% endif %}">
+      <div class="sf-discovery-estate-map__content">
+        {% if section.settings.eyebrow != blank %}<p class="sf-discovery-estate-map__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-discovery-estate-map__heading">{{ section.settings.heading }}</h2>{% endif %}
+        {% if section.settings.copy != blank %}<p class="sf-discovery-estate-map__copy">{{ section.settings.copy }}</p>{% endif %}
+        {% if section.settings.link_label != blank and section.settings.link_url != blank %}
+          <a class="sf-discovery-link" href="{{ section.settings.link_url }}">{{ section.settings.link_label }}</a>
+        {% endif %}
+        <div class="sf-discovery-estate-map__legend">
+          {% for block in section.blocks %}
+            <article class="sf-discovery-estate-map__legend-item" {{ block.shopify_attributes }}>
+              <span class="sf-discovery-estate-map__legend-num">{{ block.settings.number }}</span>
+              <div>
+                <h3>{{ block.settings.name }}</h3>
+                {% if block.settings.description != blank %}<p>{{ block.settings.description }}</p>{% endif %}
+                {% if block.settings.link_url != blank %}<a class="sf-discovery-link" href="{{ block.settings.link_url }}">Open</a>{% endif %}
+              </div>
+            </article>
+          {% endfor %}
+        </div>
+      </div>
+      <div class="sf-discovery-estate-map__map">
+        {% if desktop_map != blank %}
+          {{
+            desktop_map
+            | image_url: width: 1800
+            | image_tag:
+              class: 'sf-discovery-estate-map__img sf-discovery-estate-map__img--desktop',
+              loading: 'lazy',
+              widths: '550,750,990,1200,1440,1800',
+              sizes: '(min-width:990px) 52vw, 100vw',
+              alt: desktop_map.alt
+          }}
+          {{
+            mobile_map
+            | image_url: width: 1100
+            | image_tag:
+              class: 'sf-discovery-estate-map__img sf-discovery-estate-map__img--mobile',
+              loading: 'lazy',
+              widths: '375,550,750,900,1100',
+              sizes: '(max-width:989px) 100vw, 1px',
+              alt: mobile_map.alt
+          }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-discovery-estate-map {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-top-d);
+    padding-bottom: var(--sf-pad-bottom-d);
+  }
+  .sf-discovery-estate-map__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: 1rem;
+  }
+  .sf-discovery-estate-map__layout.is-reverse .sf-discovery-estate-map__content { order: 2; }
+  .sf-discovery-estate-map__layout.is-reverse .sf-discovery-estate-map__map { order: 1; }
+  .sf-discovery-estate-map__eyebrow {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--sf-muted);
+    font-size: 0.74rem;
+  }
+  .sf-discovery-estate-map__heading {
+    margin: 0.5rem 0 0;
+    color: var(--sf-head);
+    font-size: clamp(1.8rem, 2.9vw, 3rem);
+  }
+  .sf-discovery-estate-map__copy { margin: 0.75rem 0 0.95rem; }
+  .sf-discovery-estate-map__legend {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+  .sf-discovery-estate-map__legend-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem;
+  }
+  .sf-discovery-estate-map__legend-num {
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 100px;
+    background: var(--sf-accent);
+    color: #fff;
+    display: inline-grid;
+    place-items: center;
+    font-size: 0.78rem;
+  }
+  .sf-discovery-estate-map__legend-item h3 { margin: 0; font-size: 0.96rem; }
+  .sf-discovery-estate-map__legend-item p { margin: 0.25rem 0 0; font-size: 0.86rem; color: var(--sf-muted); }
+  .sf-discovery-estate-map__map { min-height: 420px; }
+  .sf-discovery-estate-map__img { width: 100%; height: 100%; object-fit: cover; }
+  .sf-discovery-estate-map__img--mobile { display: none; }
+  @media (max-width: 989px) {
+    .sf-discovery-estate-map {
+      padding-top: var(--sf-pad-top-m);
+      padding-bottom: var(--sf-pad-bottom-m);
+    }
+    .sf-discovery-estate-map__layout { grid-template-columns: 1fr; }
+    .sf-discovery-estate-map__legend { grid-template-columns: 1fr; }
+    .sf-discovery-estate-map__img--desktop { display: none; }
+    .sf-discovery-estate-map__img--mobile { display: block; }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF Discover Map",
+  "tag": "section",
+  "class": "sf-discovery-section",
+  "max_blocks": 12,
+  "settings": [
+    { "type": "paragraph", "content": "Recommended search: Estate Map, Events-at-Seppeltsfield-Estate-Map, Self-Guided History Experience Map" },
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "image_picker", "id": "desktop_map", "label": "Desktop map image" },
+    { "type": "image_picker", "id": "mobile_map", "label": "Mobile map image" },
+    { "type": "checkbox", "id": "reverse_columns", "label": "Reverse columns", "default": false },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "PLAN YOUR DAY" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Explore the Estate" },
+    { "type": "textarea", "id": "copy", "label": "Copy", "default": "From cellar door to dining, gardens to galleries, use our map to plan your perfect visit." },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "VIEW ESTATE MAP" },
+    { "type": "url", "id": "link_url", "label": "Link URL" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#F4F1EA" },
+    { "type": "color", "id": "heading_color", "label": "Heading color", "default": "#111315" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#4A4A4A" },
+    { "type": "color", "id": "muted_color", "label": "Muted color", "default": "#6D4B35" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "range", "id": "padding_top_desktop", "label": "Desktop padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_bottom_desktop", "label": "Desktop padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 56 },
+    { "type": "range", "id": "padding_top_mobile", "label": "Mobile padding top", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 },
+    { "type": "range", "id": "padding_bottom_mobile", "label": "Mobile padding bottom", "min": 0, "max": 200, "step": 4, "unit": "px", "default": 32 }
+  ],
+  "blocks": [
+    {
+      "type": "location",
+      "name": "Location",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "1" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Cellar Door & Wine Tastings" },
+        { "type": "textarea", "id": "description", "label": "Description" },
+        { "type": "url", "id": "link_url", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF Discover Map",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "location", "settings": { "number": "1", "name": "Cellar Door & Wine Tastings" } },
+        { "type": "location", "settings": { "number": "2", "name": "Fino Restaurant & Courtyard" } },
+        { "type": "location", "settings": { "number": "3", "name": "Centennial Cellar" } },
+        { "type": "location", "settings": { "number": "4", "name": "The Lodge Accommodation" } },
+        { "type": "location", "settings": { "number": "5", "name": "JamFactory at Seppeltsfield" } },
+        { "type": "location", "settings": { "number": "6", "name": "Prohibition Liquor Co." } },
+        { "type": "location", "settings": { "number": "7", "name": "Vasse Virgin Soaps" } },
+        { "type": "location", "settings": { "number": "8", "name": "Gardens & Walkways" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

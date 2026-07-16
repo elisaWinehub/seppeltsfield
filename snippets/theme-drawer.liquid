@@ -62,7 +62,8 @@
     // Only squeeze if at least one drawer was actually restored — saved
     // drawer IDs may not exist on every page (e.g. cart-drawer on /cart).
     var pageWrapper = document.querySelector('.page-wrapper');
-    if (pageWrapper && dialogs.length > 0) {
+    var squeezeableOpenDrawers = document.querySelectorAll('theme-drawer[open]:not([data-no-squeeze])');
+    if (pageWrapper && dialogs.length > 0 && squeezeableOpenDrawers.length > 0) {
       pageWrapper.style.transition = 'none';
       pageWrapper.classList.add('page-wrapper--drawer-open');
     }
@@ -88,21 +89,22 @@
   // ── Squeeze coordination ──
   // Listens to all drawers. Only squeezes on wide viewports.
   document.addEventListener('theme-drawer:open', () => {
-    if (squeezeQuery.matches) {
+    const openSqueezeableDrawer = document.querySelector('theme-drawer[open]:not([data-no-squeeze])');
+    if (squeezeQuery.matches && openSqueezeableDrawer) {
       pageWrapper?.classList.add('page-wrapper--drawer-open');
     }
   });
 
   document.addEventListener('theme-drawer:close', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
-    if (!openDrawer) {
+    const openSqueezeableDrawer = document.querySelector('theme-drawer[open]:not([data-no-squeeze])');
+    if (!openSqueezeableDrawer) {
       pageWrapper?.classList.remove('page-wrapper--drawer-open');
     }
   });
 
   squeezeQuery.addEventListener('change', () => {
-    const openDrawer = document.querySelector('theme-drawer[open]');
-    pageWrapper?.classList.toggle('page-wrapper--drawer-open', Boolean(openDrawer) && squeezeQuery.matches);
+    const openSqueezeableDrawer = document.querySelector('theme-drawer[open]:not([data-no-squeeze])');
+    pageWrapper?.classList.toggle('page-wrapper--drawer-open', Boolean(openSqueezeableDrawer) && squeezeQuery.matches);
   });
 
   // ── State persistence ──

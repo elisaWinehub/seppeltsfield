@@ -1,0 +1,93 @@
+{{ 'sf-events.css' | asset_url | stylesheet_tag }}
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+  assign event_types = section.settings.event_type_options | newline_to_br | split: '<br />'
+  assign guest_options = section.settings.guest_options | newline_to_br | split: '<br />'
+  assign venue_options = section.settings.venue_options | newline_to_br | split: '<br />'
+  assign budget_options = section.settings.budget_options | newline_to_br | split: '<br />'
+-%}
+<section id="SfEventsEnquiry-{{ section.id }}" class="sf-events-enquiry" style="--sf-content-max:{{ content_max }};--sf-bg:{{ section.settings.background_color }};--sf-head:{{ section.settings.heading_color }};--sf-text:{{ section.settings.text_color }};--sf-muted:{{ section.settings.muted_color }};--sf-form-bg:{{ section.settings.form_background }};--sf-field-bg:{{ section.settings.field_background }};--sf-field-text:{{ section.settings.field_text_color }};--sf-field-border:{{ section.settings.field_border_color }};--sf-pad-top-d:{{ section.settings.padding_top_desktop }}px;--sf-pad-bottom-d:{{ section.settings.padding_bottom_desktop }}px;--sf-pad-top-m:{{ section.settings.padding_top_mobile }}px;--sf-pad-bottom-m:{{ section.settings.padding_bottom_mobile }}px;">
+  <div class="sf-events-container">
+    <div class="sf-events-enquiry__layout{% if section.settings.reverse_columns %} is-reverse{% endif %}">
+      <div class="sf-events-enquiry__intro">
+        {% if section.settings.eyebrow != blank %}<p class="sf-events-enquiry__eyebrow">{{ section.settings.eyebrow }}</p>{% endif %}
+        {% if section.settings.heading != blank %}<h2 class="sf-events-enquiry__heading">{{ section.settings.heading | newline_to_br }}</h2>{% endif %}
+        {% if section.settings.copy != blank %}<p class="sf-events-enquiry__copy">{{ section.settings.copy }}</p>{% endif %}
+        <div class="sf-events-enquiry__contact">
+          {% if section.settings.phone != blank %}<p><a class="sf-events-link" href="tel:{{ section.settings.phone | replace: ' ', '' }}">{{ section.settings.phone }}</a></p>{% endif %}
+          {% if section.settings.email != blank %}<p><a class="sf-events-link" href="mailto:{{ section.settings.email }}">{{ section.settings.email }}</a></p>{% endif %}
+          {% if section.settings.address != blank %}<p>{{ section.settings.address | newline_to_br }}</p>{% endif %}
+          {% if section.settings.hours != blank %}<p>{{ section.settings.hours }}</p>{% endif %}
+        </div>
+      </div>
+      <div class="sf-events-enquiry__form-wrap">
+        {% form 'contact', class: 'sf-events-enquiry__form' %}
+          <div class="sf-events-enquiry__grid">
+            <label>
+              <span>{{ section.settings.label_name }}</span>
+              <input class="sf-events-input" type="text" name="contact[name]" value="{{ form.name }}" required>
+            </label>
+            <label>
+              <span>{{ section.settings.label_email }}</span>
+              <input class="sf-events-input" type="email" name="contact[email]" value="{{ form.email }}" required>
+            </label>
+            <label>
+              <span>{{ section.settings.label_phone }}</span>
+              <input class="sf-events-input" type="tel" name="contact[phone]" value="{{ form.phone }}">
+            </label>
+            <label>
+              <span>{{ section.settings.label_event_type }}</span>
+              <select class="sf-events-select" name="contact[Event type]">
+                {% for option in event_types %}{% assign value = option | strip %}{% if value != blank %}<option value="{{ value }}">{{ value }}</option>{% endif %}{% endfor %}
+              </select>
+            </label>
+            <label>
+              <span>{{ section.settings.label_event_date }}</span>
+              <input class="sf-events-input" type="date" name="contact[Event date]">
+            </label>
+            <label>
+              <span>{{ section.settings.label_guest_count }}</span>
+              <select class="sf-events-select" name="contact[Number of guests]">
+                {% for option in guest_options %}{% assign value = option | strip %}{% if value != blank %}<option value="{{ value }}">{{ value }}</option>{% endif %}{% endfor %}
+              </select>
+            </label>
+            <label>
+              <span>{{ section.settings.label_venue_pref }}</span>
+              <select class="sf-events-select" name="contact[Venue preference]">
+                {% for option in venue_options %}{% assign value = option | strip %}{% if value != blank %}<option value="{{ value }}">{{ value }}</option>{% endif %}{% endfor %}
+              </select>
+            </label>
+            <label>
+              <span>{{ section.settings.label_budget }}</span>
+              <select class="sf-events-select" name="contact[Budget range]">
+                {% for option in budget_options %}{% assign value = option | strip %}{% if value != blank %}<option value="{{ value }}">{{ value }}</option>{% endif %}{% endfor %}
+              </select>
+            </label>
+            <label class="sf-events-enquiry__message">
+              <span>{{ section.settings.label_message }}</span>
+              <textarea class="sf-events-textarea" name="contact[body]" rows="5"></textarea>
+            </label>
+          </div>
+          <button type="submit" class="sf-events-button sf-events-button--solid">{{ section.settings.submit_label }}</button>
+          {% if form.posted_successfully? %}<p class="sf-events-enquiry__feedback">{{ section.settings.success_message }}</p>{% endif %}
+          {% if form.errors %}<p class="sf-events-enquiry__feedback">{{ section.settings.error_message }}</p>{% endif %}
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</section>
+{% stylesheet %}
+.sf-events-enquiry{background:var(--sf-bg);padding-top:var(--sf-pad-top-d);padding-bottom:var(--sf-pad-bottom-d)}.sf-events-enquiry__layout{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,6fr);gap:1rem}.sf-events-enquiry__layout.is-reverse .sf-events-enquiry__intro{order:2}.sf-events-enquiry__layout.is-reverse .sf-events-enquiry__form-wrap{order:1}.sf-events-enquiry__eyebrow{margin:0;color:var(--sf-muted);text-transform:uppercase;letter-spacing:.14em;font-size:.75rem}.sf-events-enquiry__heading{margin:.55rem 0 0;color:var(--sf-head);font-size:clamp(1.8rem,2.7vw,2.9rem);line-height:1.04}.sf-events-enquiry__copy{margin:.8rem 0 1rem;color:var(--sf-text)}.sf-events-enquiry__contact p{margin:.35rem 0;color:var(--sf-text)}.sf-events-enquiry__form-wrap{background:var(--sf-form-bg);padding:1rem}.sf-events-enquiry__grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}.sf-events-enquiry__grid label{display:grid;gap:.25rem;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:var(--sf-muted)}.sf-events-input,.sf-events-select,.sf-events-textarea{background:var(--sf-field-bg);color:var(--sf-field-text);border:1px solid var(--sf-field-border);padding:.66rem .72rem;min-height:44px}.sf-events-enquiry__message{grid-column:1/-1}.sf-events-enquiry__feedback{margin:.7rem 0 0;color:var(--sf-text)}@media(max-width:989px){.sf-events-enquiry{padding-top:var(--sf-pad-top-m);padding-bottom:var(--sf-pad-bottom-m)}.sf-events-enquiry__layout{grid-template-columns:1fr}.sf-events-enquiry__grid{grid-template-columns:1fr}}
+{% endstylesheet %}
+{% schema %}
+{"name":"SF Events Enquiry","tag":"section","class":"sf-events-section","settings":[{"type":"select","id":"content_width","label":"Content width","options":[{"value":"narrow","label":"Narrow"},{"value":"standard","label":"Standard"},{"value":"wide","label":"Wide"},{"value":"full","label":"Full width"}],"default":"standard"},{"type":"checkbox","id":"reverse_columns","label":"Reverse columns","default":false},{"type":"text","id":"eyebrow","label":"Eyebrow","default":"ENQUIRE NOW"},{"type":"textarea","id":"heading","label":"Heading","default":"Start planning\nyour event"},{"type":"textarea","id":"copy","label":"Copy","default":"Our team will work with you to bring your vision to life and create an experience your guests will never forget."},{"type":"text","id":"phone","label":"Phone","default":"(08) 8562 4377"},{"type":"text","id":"email","label":"Email","default":"functions@seppeltsfield.com.au"},{"type":"textarea","id":"address","label":"Address","default":"730 Seppeltsfield Road\nSeppeltsfield SA 5355"},{"type":"text","id":"hours","label":"Opening hours","default":"Open daily, 10:00am-5:00pm"},{"type":"textarea","id":"event_type_options","label":"Event type options (line per option)","default":"Wedding\nCorporate function\nPrivate function\nDinner\nSpecial celebration\nOther"},{"type":"textarea","id":"guest_options","label":"Guest options (line per option)","default":"Under 20\n20-50\n50-100\n100-200\n200+"},{"type":"textarea","id":"venue_options","label":"Venue options (line per option)","default":"1878 Centennial Cellar\n1888 Gravity Cellar\nThe Vineyard\nUnsure"},{"type":"textarea","id":"budget_options","label":"Budget options (line per option)","default":"Under $5,000\n$5,000-$10,000\n$10,000-$20,000\n$20,000+"},{"type":"text","id":"label_name","label":"Name label","default":"YOUR NAME*"},{"type":"text","id":"label_email","label":"Email label","default":"EMAIL ADDRESS*"},{"type":"text","id":"label_phone","label":"Phone label","default":"PHONE NUMBER*"},{"type":"text","id":"label_event_type","label":"Event type label","default":"EVENT TYPE*"},{"type":"text","id":"label_event_date","label":"Event date label","default":"EVENT DATE*"},{"type":"text","id":"label_guest_count","label":"Guests label","default":"NUMBER OF GUESTS*"},{"type":"text","id":"label_venue_pref","label":"Venue preference label","default":"VENUE PREFERENCE"},{"type":"text","id":"label_budget","label":"Budget label","default":"BUDGET RANGE"},{"type":"text","id":"label_message","label":"Message label","default":"TELL US ABOUT YOUR EVENT"},{"type":"text","id":"submit_label","label":"Submit label","default":"SEND ENQUIRY"},{"type":"text","id":"success_message","label":"Success message","default":"Thank you, we will be in touch shortly."},{"type":"text","id":"error_message","label":"Error message","default":"Please complete the required fields and try again."},{"type":"color","id":"background_color","label":"Background","default":"#F4F1EA"},{"type":"color","id":"heading_color","label":"Heading color","default":"#111315"},{"type":"color","id":"text_color","label":"Text color","default":"#333333"},{"type":"color","id":"muted_color","label":"Muted color","default":"#6D4B35"},{"type":"color","id":"form_background","label":"Form background","default":"#ECE8E0"},{"type":"color","id":"field_background","label":"Field background","default":"#FFFFFF"},{"type":"color","id":"field_text_color","label":"Field text color","default":"#111315"},{"type":"color","id":"field_border_color","label":"Field border","default":"#D6CEC1"},{"type":"range","id":"padding_top_desktop","label":"Desktop padding top","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_bottom_desktop","label":"Desktop padding bottom","min":0,"max":200,"step":4,"unit":"px","default":56},{"type":"range","id":"padding_top_mobile","label":"Mobile padding top","min":0,"max":200,"step":4,"unit":"px","default":32},{"type":"range","id":"padding_bottom_mobile","label":"Mobile padding bottom","min":0,"max":200,"step":4,"unit":"px","default":32}],"presets":[{"name":"SF Events Enquiry","category":"Seppeltsfield"}]}
+{% endschema %}

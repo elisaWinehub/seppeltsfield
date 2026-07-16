@@ -1,0 +1,200 @@
+{{ 'sf-home.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  case section.settings.content_width
+    when 'narrow'
+      assign content_max = '960px'
+    when 'wide'
+      assign content_max = '1440px'
+    when 'full'
+      assign content_max = '100%'
+    else
+      assign content_max = '1200px'
+  endcase
+-%}
+
+<section
+  id="sf-home-utility-strip"
+  class="sf-home-utility-strip"
+  style="
+    --sf-content-max: {{ content_max }};
+    --sf-bg: {{ section.settings.background_color }};
+    --sf-text: {{ section.settings.text_color }};
+    --sf-accent: {{ section.settings.accent_color }};
+    --sf-divider: {{ section.settings.divider_color }};
+    --sf-pad-d: {{ section.settings.padding_desktop }}px;
+    --sf-pad-m: {{ section.settings.padding_mobile }}px;
+    --sf-icon-size: {{ section.settings.icon_size }}px;
+    --sf-cols-desktop: {{ section.settings.columns_desktop }};
+    --sf-cols-tablet: {{ section.settings.columns_tablet }};
+  "
+>
+  <div class="sf-section-container">
+    <div class="sf-home-utility-strip__grid sf-home-utility-strip__grid--mobile-{{ section.settings.mobile_layout }}">
+      {% for block in section.blocks %}
+        <article class="sf-home-utility-strip__item" {{ block.shopify_attributes }}>
+          <div class="sf-home-utility-strip__icon-wrap" style="color: {{ block.settings.icon_color | default: section.settings.accent_color }};">
+            {% if block.settings.icon_image != blank %}
+              {{
+                block.settings.icon_image
+                | image_url: width: 160
+                | image_tag: loading: 'lazy', widths: '60, 90, 120, 160', sizes: '48px', alt: block.settings.heading
+              }}
+            {% else %}
+              <span class="sf-home-utility-strip__icon">{{ block.settings.icon_symbol }}</span>
+            {% endif %}
+          </div>
+          <div>
+            {% if block.settings.heading != blank %}
+              <p class="sf-home-utility-strip__heading">{{ block.settings.heading }}</p>
+            {% endif %}
+            {% if block.settings.supporting_text != blank %}
+              <p class="sf-home-utility-strip__text">{{ block.settings.supporting_text }}</p>
+            {% endif %}
+            {% if block.settings.link_label != blank and block.settings.link_url != blank %}
+              <a class="sf-home-link sf-home-utility-strip__link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+            {% endif %}
+          </div>
+          {% if block.settings.show_divider and forloop.last == false %}
+            <span class="sf-home-utility-strip__divider" aria-hidden="true"></span>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+{% stylesheet %}
+  .sf-home-utility-strip {
+    background: var(--sf-bg);
+    color: var(--sf-text);
+    padding-top: var(--sf-pad-d);
+    padding-bottom: var(--sf-pad-d);
+  }
+  .sf-home-utility-strip__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--sf-cols-desktop), minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .sf-home-utility-strip__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    padding-right: 1rem;
+  }
+  .sf-home-utility-strip__icon-wrap {
+    width: var(--sf-icon-size);
+    min-height: var(--sf-icon-size);
+    display: grid;
+    place-items: center;
+    font-size: calc(var(--sf-icon-size) * 0.62);
+    line-height: 1;
+  }
+  .sf-home-utility-strip__icon-wrap img {
+    width: var(--sf-icon-size);
+    height: var(--sf-icon-size);
+    object-fit: contain;
+  }
+  .sf-home-utility-strip__heading {
+    margin: 0;
+    font-size: 0.86rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--sf-text);
+  }
+  .sf-home-utility-strip__text {
+    margin: 0.25rem 0 0;
+    color: color-mix(in srgb, var(--sf-text) 84%, transparent);
+    font-size: 0.9rem;
+  }
+  .sf-home-utility-strip__link {
+    margin-top: 0.4rem;
+    display: inline-block;
+    color: var(--sf-accent);
+  }
+  .sf-home-utility-strip__divider {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: var(--sf-divider);
+  }
+  @media (max-width: 989px) {
+    .sf-home-utility-strip {
+      padding-top: var(--sf-pad-m);
+      padding-bottom: var(--sf-pad-m);
+    }
+    .sf-home-utility-strip__grid {
+      grid-template-columns: repeat(var(--sf-cols-tablet), minmax(0, 1fr));
+    }
+    .sf-home-utility-strip__grid--mobile-scroll {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(78%, 1fr);
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 0.35rem;
+    }
+    .sf-home-utility-strip__grid--mobile-scroll .sf-home-utility-strip__item {
+      scroll-snap-align: start;
+    }
+    .sf-home-utility-strip__grid--mobile-stack {
+      grid-template-columns: 1fr;
+    }
+    .sf-home-utility-strip__grid--mobile-two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "SF - Home Utility",
+  "tag": "section",
+  "class": "sf-home-section",
+  "max_blocks": 8,
+  "settings": [
+    { "type": "select", "id": "content_width", "label": "Content width", "options": [{ "value": "narrow", "label": "Narrow" }, { "value": "standard", "label": "Standard" }, { "value": "wide", "label": "Wide" }, { "value": "full", "label": "Full width" }], "default": "standard" },
+    { "type": "color", "id": "background_color", "label": "Background color", "default": "#050505" },
+    { "type": "color", "id": "text_color", "label": "Text color", "default": "#FFFFFF" },
+    { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#47A8DF" },
+    { "type": "color", "id": "divider_color", "label": "Divider color", "default": "#4A4A4A" },
+    { "type": "range", "id": "columns_desktop", "label": "Columns desktop", "min": 2, "max": 6, "step": 1, "default": 3 },
+    { "type": "range", "id": "columns_tablet", "label": "Columns tablet", "min": 1, "max": 4, "step": 1, "default": 2 },
+    { "type": "range", "id": "icon_size", "label": "Icon size", "min": 16, "max": 52, "step": 2, "unit": "px", "default": 28 },
+    { "type": "select", "id": "mobile_layout", "label": "Mobile layout", "options": [{ "value": "scroll", "label": "Horizontal scroll" }, { "value": "stack", "label": "Stacked" }, { "value": "two", "label": "Two-column" }], "default": "scroll" },
+    { "type": "range", "id": "padding_desktop", "label": "Desktop vertical padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 20 },
+    { "type": "range", "id": "padding_mobile", "label": "Mobile vertical padding", "min": 0, "max": 120, "step": 4, "unit": "px", "default": 16 }
+  ],
+  "blocks": [
+    {
+      "type": "utility_item",
+      "name": "Utility item",
+      "settings": [
+        { "type": "select", "id": "icon_symbol", "label": "Icon", "options": [{ "value": "Ã¢â„¢â€º", "label": "Crown" }, { "value": "Ã¢â€”Â·", "label": "Clock" }, { "value": "Ã¢Å’â€“", "label": "Location" }, { "value": "Ã°Å¸ÂÂ·", "label": "Wine glass" }, { "value": "Ã¢â€”Â´", "label": "Calendar" }, { "value": "Ã¢â€¡Â¢", "label": "Truck" }, { "value": "Ã¢Å“Â¦", "label": "Gift" }], "default": "Ã¢â„¢â€º" },
+        { "type": "image_picker", "id": "icon_image", "label": "Custom icon image" },
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Crown Society" },
+        { "type": "text", "id": "supporting_text", "label": "Supporting text", "default": "Complimentary tasting benefit" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "url", "id": "link_url", "label": "Link URL" },
+        { "type": "color", "id": "icon_color", "label": "Icon color", "default": "#47A8DF" },
+        { "type": "checkbox", "id": "show_divider", "label": "Show divider", "default": true }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF - Home Utility",
+      "category": "Seppeltsfield",
+      "blocks": [
+        { "type": "utility_item", "settings": { "icon_symbol": "Ã¢â„¢â€º", "heading": "Crown Society", "supporting_text": "Complimentary tasting for members" } },
+        { "type": "utility_item", "settings": { "icon_symbol": "Ã¢â€”Â·", "heading": "Opening hours", "supporting_text": "Open daily 10:00amÃ¢â‚¬â€œ5:00pm" } },
+        { "type": "utility_item", "settings": { "icon_symbol": "Ã¢Å’â€“", "heading": "Barossa Valley", "supporting_text": "Seppeltsfield Road, Marananga" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
