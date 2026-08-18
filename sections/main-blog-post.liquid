@@ -211,15 +211,16 @@
       const root = document.querySelector('.journal-article');
       if (!root) return;
 
-      const forceSolidHeader = () => {
-        document.documentElement.classList.add('sf2-journal-article-solid-header');
+      const forceTransparentHeader = () => {
+        document.documentElement.classList.add('sf2-journal-article-transparent-header');
         const header = document.querySelector('[data-sf2-header]');
         const headerGroup = document.querySelector('#header-group');
         if (header) {
-          header.classList.remove('sf2-header--transparent');
+          header.classList.add('sf2-header--transparent');
         }
         if (headerGroup) {
-          headerGroup.classList.add('is-scrolled');
+          headerGroup.classList.remove('is-scrolled');
+          headerGroup.classList.remove('has-scrolled-header');
         }
       };
 
@@ -254,7 +255,7 @@
 
       window.addEventListener('load', setHeaderOffset);
       window.addEventListener('resize', setHeaderOffset);
-      forceSolidHeader();
+      forceTransparentHeader();
       setHeaderOffset();
       initCopyLink();
     })();
@@ -682,9 +683,10 @@
     max-width: 300px;
   }
 
-  .sf2-journal-article-solid-header #header-group,
-  .sf2-journal-article-solid-header #header-group .sf2-header {
-    background-color: #000 !important;
+  .sf2-journal-article-transparent-header #header-group,
+  .sf2-journal-article-transparent-header #header-group .sf2-header,
+  .sf2-journal-article-transparent-header #header-group .sf2-header__nav {
+    background-color: transparent !important;
   }
 
   .blog-post-comments-container {
