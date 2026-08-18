@@ -181,6 +181,8 @@
     (() => {
       const root = document.querySelector('.journal-article');
       if (!root) return;
+      const hero = root.querySelector('.journal-article__hero');
+      let solidThreshold = 96;
       const getHeaderNodes = () => {
         const header = document.querySelector('[data-sf2-header]');
         const headerGroup = document.querySelector('#header-group');
@@ -196,6 +198,21 @@
         [headerSection, headerGroup, header, headerNav].forEach((node) => {
           if (node) node.style.setProperty('background-color', background, 'important');
         });
+      };
+
+      const applyHeaderTransition = () => {
+        const { header, headerGroup, headerNav, headerSection } = getHeaderNodes();
+        [headerSection, headerGroup, header, headerNav].forEach((node) => {
+          if (node) node.style.setProperty('transition', 'background-color 180ms ease');
+        });
+      };
+
+      const setSolidThreshold = () => {
+        const { header } = getHeaderNodes();
+        const headerHeight = header ? Math.ceil(header.getBoundingClientRect().height) : 0;
+        const heroHeight = hero ? Math.ceil(hero.getBoundingClientRect().height) : 0;
+        const heroBasedThreshold = heroHeight > 0 ? Math.max(0, heroHeight - headerHeight) : 0;
+        solidThreshold = Math.max(96, heroBasedThreshold);
       };
 
       const forceTransparentHeader = () => {
@@ -222,7 +239,7 @@
       };
 
       const syncScrolledHeaderState = () => {
-        const hasScrolled = window.scrollY > 6;
+        const hasScrolled = window.scrollY > solidThreshold;
         const { header, headerGroup, headerSection } = getHeaderNodes();
         document.documentElement.classList.toggle('sf2-journal-article-header-scrolled', hasScrolled);
         if (header) {
@@ -259,9 +276,12 @@
 
       window.addEventListener('load', setHeaderOffset);
       window.addEventListener('resize', setHeaderOffset);
+      window.addEventListener('resize', setSolidThreshold);
       window.addEventListener('load', syncScrolledHeaderState);
       window.addEventListener('scroll', syncScrolledHeaderState, { passive: true });
+      applyHeaderTransition();
       forceTransparentHeader();
+      setSolidThreshold();
       setHeaderOffset();
       syncScrolledHeaderState();
       initCopyLink();
