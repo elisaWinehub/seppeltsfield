@@ -1,0 +1,128 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-header.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf2-header.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign logo = settings.logo
+  if settings.logo_inverse != blank
+    assign logo_inverse = settings.logo_inverse
+  else
+    assign logo_inverse = settings.logo
+  endif
+  assign logo_fallback_url = 'https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221'
+  assign logo_w = section.settings.logo_width | default: settings.logo_height | default: 36
+  assign menu = section.settings.main_menu
+  assign transparent = false
+  assign hero_header = false
+  assign commerce_solid = false
+  assign commerce_scroll_fixed = false
+
+  if section.settings.transparency_mode == 'always_transparent'
+    assign transparent = true
+    assign hero_header = true
+  elsif section.settings.transparency_mode == 'always_solid'
+  elsif section.settings.transparency_mode == 'auto'
+    if template.name == 'collection' or template.name == 'product' or template.name == 'search'
+      assign commerce_solid = true
+    else
+      assign transparent = true
+      assign hero_header = true
+    endif
+    if template.name == 'collection' or template.name == 'product'
+      assign commerce_scroll_fixed = true
+    endif
+  endif
+-%}
+
+<header
+  class="sf2-header{% if transparent %} sf2-header--transparent{% endif %}"
+  data-sf2-header
+  data-transparency="{{ section.settings.transparency_mode }}"
+  data-hero-header="{% if hero_header %}true{% else %}false{% endif %}"
+  data-commerce-solid="{% if commerce_solid %}true{% else %}false{% endif %}"
+  data-commerce-scroll-fixed="{% if commerce_scroll_fixed %}true{% else %}false{% endif %}"
+  style="--sf2-logo-width: {{ logo_w }}px;"
+>
+  <div class="sf2-wrap sf2-header__nav">
+    <a class="sf2-header__logo" href="{{ routes.root_url }}">
+      {%- if logo_inverse != blank -%}
+        {{ logo_inverse | image_url: width: 400 | image_tag: widths: '200,300,400', sizes: '188px', alt: shop.name, loading: 'eager' }}
+      {%- else -%}
+        <img
+          src="{{ logo_fallback_url }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ logo_w }}"
+          height="auto"
+          loading="eager"
+        >
+      {%- endif -%}
+    </a>
+
+    {%- if menu != blank -%}
+      <ul class="sf2-header__links" aria-label="Primary">
+        {%- for link in menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+
+    <div class="sf2-header__actions">
+      {% render 'sf2-button', preset: 'light', label: section.settings.cta_label, url: section.settings.cta_url, class: 'sf2-header__cta' %}
+      <button class="sf2-header__round sf2-header__menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="Sf2HeaderDrawer-{{ section.id }}" data-sf2-menu-open>
+        <span class="sf2-icon">{{ 'icon-menu.svg' | inline_asset_content }}</span>
+      </button>
+      <button class="sf2-header__round" type="button" aria-label="Search" on:click="#search-modal/showDialog">
+        {% render 'sf2-icon', icon: 'search' %}
+      </button>
+      <a class="sf2-header__round" href="{{ routes.account_url }}" aria-label="Account">
+        {% render 'sf2-icon', icon: 'account' %}
+      </a>
+      <button class="sf2-header__round" type="button" aria-label="Cart" on:click="#cart-drawer/toggle" aria-controls="cart-drawer">
+        {% render 'sf2-icon', icon: 'cart' %}
+      </button>
+    </div>
+  </div>
+
+  <div class="sf2-header__drawer" id="Sf2HeaderDrawer-{{ section.id }}" data-sf2-drawer hidden>
+    <button class="sf2-header__drawer-backdrop" type="button" aria-label="Close menu" data-sf2-menu-close></button>
+    <div class="sf2-header__drawer-panel" role="dialog" aria-modal="true" aria-label="Mobile menu">
+      <button class="sf2-header__round" type="button" aria-label="Close menu" data-sf2-menu-close>×</button>
+      {%- if menu != blank -%}
+        <ul class="sf2-header__drawer-nav">
+          {%- for link in menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      {% render 'sf2-button', preset: 'light', label: section.settings.cta_label, url: section.settings.cta_url %}
+    </div>
+  </div>
+</header>
+
+<button type="button" class="sf2-back-to-top" data-sf2-back-to-top aria-label="Back to top" hidden>
+  <span class="sf2-icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 19V5M7 10l5-5 5 5"/></svg>
+  </span>
+</button>
+
+{% schema %}
+{
+  "name": "SF2 Header",
+  "tag": "section",
+  "class": "sf2-header-section",
+  "settings": [
+    { "type": "range", "id": "logo_width", "label": "Logo width", "min": 100, "max": 240, "step": 4, "default": 188, "unit": "px" },
+    { "type": "link_list", "id": "main_menu", "label": "Main menu", "default": "main-menu" },
+    { "type": "text", "id": "cta_label", "label": "CTA label", "default": "Book Experience" },
+    { "type": "url", "id": "cta_url", "label": "CTA URL" },
+    { "type": "select", "id": "transparency_mode", "label": "Transparency", "default": "auto", "options": [
+      { "value": "auto", "label": "Auto (transparent over hero)" },
+      { "value": "always_transparent", "label": "Always transparent" },
+      { "value": "always_solid", "label": "Always solid" }
+    ]}
+  ],
+  "presets": [{ "name": "SF2 Header" }]
+}
+{% endschema %}

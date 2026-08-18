@@ -38,13 +38,18 @@
     {{ content_for_header }}
   </head>
 
-  <body class="page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
+  <body class="template-{{ template.name }}{% if template.suffix %} template-{{ template.name }}-{{ template.suffix }}{% endif %} page-width-{{ settings.page_width }} card-hover-effect-{{ settings.card_hover_effect }}">
     {% render 'skip-to-content-link', href: '#MainContent', text: 'accessibility.skip_to_text' %}
 
     {% render 'chat-drawer' %}
 
     <div class="page-wrapper">
-      <div id="header-group">
+      <div
+        id="header-group"
+        {% if template.name == 'product' or template.name == 'collection' %}
+          class="sf2-header-group--in-flow"
+        {% endif %}
+      >
         {% sections 'header-group' %}
       </div>
 

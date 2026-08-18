@@ -1,0 +1,74 @@
+{%- doc -%}
+  @param {product} product
+{%- enddoc -%}
+
+{%- liquid
+  assign open_first = true
+  assign mf = product.metafields.custom
+-%}
+
+<div class="sf2-product-accordions">
+  {%- if mf.tasting_notes != blank -%}
+    {%- capture answer -%}{{ mf.tasting_notes | metafield_tag }}{%- endcapture -%}
+    {% render 'sf2-accordion-item', question: 'Tasting Notes', answer: answer, open_by_default: open_first, id_prefix: 'product' %}
+    {%- assign open_first = false -%}
+  {%- endif -%}
+  {%- if mf.winemaker_notes != blank -%}
+    {%- capture answer -%}{{ mf.winemaker_notes | metafield_tag }}{%- endcapture -%}
+    {% render 'sf2-accordion-item', question: 'Winemaker Notes', answer: answer, open_by_default: open_first, id_prefix: 'product' %}
+    {%- assign open_first = false -%}
+  {%- endif -%}
+  {%- if mf.vineyard != blank -%}
+    {%- capture answer -%}{{ mf.vineyard | metafield_tag }}{%- endcapture -%}
+    {% render 'sf2-accordion-item', question: 'Vineyard', answer: answer, open_by_default: open_first, id_prefix: 'product' %}
+    {%- assign open_first = false -%}
+  {%- endif -%}
+  {%- if mf.vintage_conditions != blank -%}
+    {%- capture answer -%}{{ mf.vintage_conditions | metafield_tag }}{%- endcapture -%}
+    {% render 'sf2-accordion-item', question: 'Vintage Conditions', answer: answer, open_by_default: open_first, id_prefix: 'product' %}
+    {%- assign open_first = false -%}
+  {%- endif -%}
+  {%- if mf.food_pairing != blank -%}
+    {%- capture answer -%}{{ mf.food_pairing | metafield_tag }}{%- endcapture -%}
+    {% render 'sf2-accordion-item', question: 'Food Pairing', answer: answer, open_by_default: open_first, id_prefix: 'product' %}
+    {%- assign open_first = false -%}
+  {%- endif -%}
+
+  {%- liquid
+    assign has_technical = false
+    if mf.vintage != blank or mf.region != blank or mf.variety != blank or mf.alcohol != blank or mf.bottle_size != blank or mf.cellaring != blank or mf.technical_details != blank
+      assign has_technical = true
+    endif
+    assign pdf_url = blank
+    if mf.pdf != blank
+      if mf.pdf.value.url
+        assign pdf_url = mf.pdf.value.url
+      elsif mf.pdf.value != blank
+        assign pdf_url = mf.pdf.value
+      endif
+    endif
+    if pdf_url != blank
+      assign has_technical = true
+    endif
+  -%}
+  {%- if has_technical -%}
+    {%- capture answer -%}
+      <dl class="sf2-product-details">
+        {%- if mf.vintage != blank -%}<dt>Vintage</dt><dd>{% render 'sf-product-metafield-value', metafield: mf.vintage %}</dd>{%- endif -%}
+        {%- if mf.region != blank -%}<dt>Region</dt><dd>{% render 'sf-product-metafield-value', metafield: mf.region %}</dd>{%- endif -%}
+        {%- if mf.variety != blank -%}<dt>Variety</dt><dd>{% render 'sf-product-metafield-value', metafield: mf.variety %}</dd>{%- endif -%}
+        {%- if mf.alcohol != blank -%}<dt>Alcohol</dt><dd>{% render 'sf-product-metafield-value', metafield: mf.alcohol, append_unit: '%' %}</dd>{%- endif -%}
+        {%- if mf.bottle_size != blank -%}<dt>Bottle size</dt><dd>{% render 'sf-product-metafield-value', metafield: mf.bottle_size %}</dd>{%- endif -%}
+        {%- if mf.cellaring != blank -%}<dt>Cellaring</dt><dd>{% render 'sf-product-metafield-value', metafield: mf.cellaring, preserve_lines: true %}</dd>{%- endif -%}
+      </dl>
+      {%- if mf.technical_details != blank -%}<div class="sf2-product-details__extra rte">{{ mf.technical_details | metafield_tag }}</div>{%- endif -%}
+      {%- if pdf_url != blank -%}
+        <a class="sf2-product-details__download" href="{{ pdf_url }}" target="_blank" rel="noopener">
+          {% render 'sf2-icon', icon: 'arrow-right' %}
+          Download tasting notes PDF
+        </a>
+      {%- endif -%}
+    {%- endcapture -%}
+    {% render 'sf2-accordion-item', question: 'Technical Details', answer: answer, open_by_default: open_first, id_prefix: 'product' %}
+  {%- endif -%}
+</div>

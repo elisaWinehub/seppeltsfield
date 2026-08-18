@@ -1,0 +1,18 @@
+{%- doc -%}
+  @param {object} variant - Product variant
+{%- enddoc -%}
+
+{%- liquid
+  assign price_variant = variant
+  if price_variant == blank
+    assign price_variant = product.selected_or_first_available_variant
+  endif
+-%}
+
+<span class="sf2-price">
+  <span class="sf2-price__current">{{ price_variant.price | money }}</span>
+  {%- if price_variant.compare_at_price > price_variant.price -%}
+    <span class="visually-hidden">{{ 'products.product.price.regular_price' | t }}</span>
+    <s class="sf2-price__compare">{{ price_variant.compare_at_price | money }}</s>
+  {%- endif -%}
+</span>

@@ -1,0 +1,104 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign hero_height = section.settings.hero_height | default: 'editorial'
+  case hero_height
+    when 'compact'
+      assign min_h = 'var(--sf-hero-compact-m)'
+      assign min_h_d = 'var(--sf-hero-compact-d)'
+    when 'immersive'
+      assign min_h = 'var(--sf-hero-immersive-m)'
+      assign min_h_d = 'var(--sf-hero-immersive-d)'
+    when 'full_screen'
+      assign min_h = 'var(--sf-hero-full)'
+      assign min_h_d = 'var(--sf-hero-full)'
+    else
+      assign min_h = 'var(--sf-hero-editorial-m)'
+      assign min_h_d = 'var(--sf-hero-editorial-d)'
+  endcase
+-%}
+
+<section class="sf2-page-hero" style="--sf2-hero-min: {{ min_h }}; --sf2-hero-min-d: {{ min_h_d }};">
+  {%- if section.settings.background_image != blank -%}
+    <div class="sf2-page-hero__bg">
+      {% render 'sf2-picture', image: section.settings.background_image, mobile_image: section.settings.mobile_image, loading: 'eager', sizes: '100vw' %}
+    </div>
+  {%- endif -%}
+  <div class="sf2-wrap sf2-page-hero__content">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}
+        {% render 'sf2-eyebrow', text: section.settings.eyebrow, brand: true %}
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h1 class="sf2-serif sf2-page-hero__heading">{{ section.settings.heading }}</h1>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}
+        <div class="sf2-page-hero__body">{{ section.settings.body }}</div>
+      {%- endif -%}
+      <div class="sf2-page-hero__actions">
+        {%- liquid
+          assign hero_btn_url = section.settings.button_link
+          if hero_btn_url == blank
+            assign hero_btn_url = section.settings.button_url
+          endif
+        -%}
+        {%- if section.settings.button_label != blank and hero_btn_url != blank -%}
+          {% render 'sf2-button', preset: section.settings.button_preset, label: section.settings.button_label, url: hero_btn_url %}
+        {%- endif -%}
+        {%- if section.settings.secondary_button_label != blank -%}
+          {% render 'sf2-button', preset: section.settings.secondary_button_preset, label: section.settings.secondary_button_label, url: section.settings.secondary_button_url %}
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if section.settings.show_side_note and section.settings.note_heading != blank -%}
+      <aside class="sf2-page-hero__side">
+        <strong class="sf2-serif">{{ section.settings.note_heading }}</strong>
+        {%- if section.settings.note_body != blank -%}<span>{{ section.settings.note_body }}</span>{%- endif -%}
+      </aside>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Page Hero",
+  "tag": "section",
+  "class": "sf2-page-hero-section",
+  "settings": [
+    { "type": "select", "id": "hero_height", "label": "Hero height", "default": "editorial", "options": [
+      { "value": "compact", "label": "Compact" }, { "value": "editorial", "label": "Editorial" },
+      { "value": "immersive", "label": "Immersive" }, { "value": "full_screen", "label": "Full Screen" }
+    ]},
+    { "type": "image_picker", "id": "background_image", "label": "Background image" },
+    { "type": "image_picker", "id": "mobile_image", "label": "Mobile image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Crown Society" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Membership shaped around your taste." },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Explore Membership" },
+    { "type": "url", "id": "button_url", "label": "Button URL" },
+    { "type": "text", "id": "button_link", "label": "Button link override (anchors e.g. #membership)" },
+    { "type": "select", "id": "button_preset", "label": "Button preset", "default": "primary_blue", "options": [
+      { "value": "primary_blue", "label": "Primary Blue" }, { "value": "primary_dark", "label": "Primary Dark" },
+      { "value": "light", "label": "Light" }, { "value": "outline_light", "label": "Outline Light" }
+    ]},
+    { "type": "text", "id": "secondary_button_label", "label": "Secondary button label" },
+    { "type": "url", "id": "secondary_button_url", "label": "Secondary button URL" },
+    { "type": "select", "id": "secondary_button_preset", "label": "Secondary preset", "default": "outline_light", "options": [
+      { "value": "outline_light", "label": "Outline Light" }, { "value": "outline_dark", "label": "Outline Dark" }, { "value": "text_link", "label": "Text Link" }
+    ]},
+    { "type": "checkbox", "id": "show_side_note", "label": "Show side note", "default": true },
+    { "type": "text", "id": "note_heading", "label": "Note heading", "default": "Flexible, personal and distinctly Seppeltsfield." },
+    { "type": "text", "id": "note_body", "label": "Note body" },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "dark", "options": [
+      { "value": "dark", "label": "Dark" }, { "value": "black", "label": "Black" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "compact", "options": [
+      { "value": "compact", "label": "Compact" }, { "value": "standard", "label": "Standard" }
+    ]}
+  ],
+  "presets": [{ "name": "SF2 Page Hero" }]
+}
+{% endschema %}

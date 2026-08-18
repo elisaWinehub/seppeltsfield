@@ -1,0 +1,32 @@
+{%- doc -%}
+  @param {string} question
+  @param {string} answer - HTML richtext
+  @param {boolean} [open_by_default]
+  @param {string} [id_prefix]
+{%- enddoc -%}
+{%- liquid
+  assign prefix = id_prefix | default: 'sf2-acc'
+  assign uid = prefix | append: '-' | append: question | handleize
+  assign is_open = open_by_default | default: false
+-%}
+<div class="sf2-accordion{% if is_open %} is-open{% endif %}" data-sf2-accordion>
+  <button
+    type="button"
+    class="sf2-accordion__trigger"
+    id="{{ uid }}-trigger"
+    aria-expanded="{% if is_open %}true{% else %}false{% endif %}"
+    aria-controls="{{ uid }}-panel"
+  >
+    <span>{{ question }}</span>
+    {% render 'sf2-icon', icon: 'plus' %}
+  </button>
+  <div
+    id="{{ uid }}-panel"
+    class="sf2-accordion__panel"
+    role="region"
+    aria-labelledby="{{ uid }}-trigger"
+    {% unless is_open %}hidden{% endunless %}
+  >
+    <div class="sf2-accordion__content">{{ answer }}</div>
+  </div>
+</div>

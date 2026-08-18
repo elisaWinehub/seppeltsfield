@@ -1,0 +1,189 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+{{ 'sf-product.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-product.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf-product.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'sf2-faq.js' | asset_url }}" defer="defer"></script>
+
+<script type="application/ld+json">{{ product | structured_data }}</script>
+
+{%- liquid
+  assign selected_variant = product.selected_or_first_available_variant
+  assign variant_map_id = 'Sf2VariantMap-' | append: section.id
+  assign subtitle = product.metafields.custom.subtitle | default: product.metafields.custom.sub_title
+  assign eyebrow = subtitle
+  if eyebrow == blank
+    assign eyebrow = product.vendor
+  endif
+  assign teaser_metafield = product.metafields.custom.teaser
+  assign teaser_plain = blank
+  if teaser_metafield != blank
+    assign teaser_plain = teaser_metafield | metafield_text | strip_html | strip
+  endif
+  if teaser_plain == blank and product.description != blank
+    assign teaser_plain = product.description | strip_html | strip | truncate: 180
+  endif
+  assign volume_label = product.metafields.custom.bottle_size | default: product.metafields.custom.volume_statement | default: product.metafields.custom.volume_ml
+  if volume_label != blank
+    assign volume_label = volume_label | metafield_text | default: volume_label.value | default: volume_label
+  endif
+-%}
+
+{% render 'sf2-breadcrumbs', product: product, collection: collection %}
+
+<section class="sf2-product-main sf-product-main sf2-section">
+  <script id="{{ variant_map_id }}" type="application/json">
+    {
+      {% for variant in product.variants %}
+        "{{ variant.id }}": {
+          "price_text": {{ variant.price | money | json }},
+          "compare_at_text": {% if variant.compare_at_price > variant.price %}{{ variant.compare_at_price | money | json }}{% else %}null{% endif %},
+          "featured_media_id": {% if variant.featured_media %}{{ variant.featured_media.id }}{% else %}null{% endif %},
+          "selling_plans": {
+            {% for allocation in variant.selling_plan_allocations %}
+              "{{ allocation.selling_plan.id }}": {
+                "price_text": {{ allocation.price | money | json }},
+                "compare_at_text": {% if allocation.compare_at_price > allocation.price %}{{ allocation.compare_at_price | money | json }}{% else %}null{% endif %}
+              }{% unless forloop.last %},{% endunless %}
+            {% endfor %}
+          },
+          "fallback_subscription_text": null
+        }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    }
+  </script>
+
+  <div class="sf2-wrap sf2-product-main__grid">
+    <div class="sf2-product-main__media">
+      {% render 'sf-product-media-gallery', product: product, section: section %}
+    </div>
+
+    <div class="sf2-product-main__info">
+      {%- if eyebrow != blank -%}
+        {% render 'sf2-eyebrow', text: eyebrow, brand: true %}
+      {%- endif -%}
+      <h1 class="sf2-serif sf2-product-main__title">{{ product.title }}</h1>
+      {%- if teaser_plain != blank -%}<p class="sf2-product-main__subtitle">{{ teaser_plain }}</p>{%- endif -%}
+
+      {%- if section.settings.show_reviews_link -%}
+        <p class="sf2-product-main__reviews-link">
+          <a href="#reviews">{{ section.settings.reviews_link_label }}</a>
+        </p>
+      {%- endif -%}
+
+      {%- if product.selling_plan_groups.size > 0 -%}
+        {%- assign selling_block = section.blocks | where: 'type', 'selling_plan' | first -%}
+        {%- if selling_block -%}
+          {% render 'sf-product-selling-plan', product: product, selected_variant: selected_variant, block: selling_block, section: section %}
+        {%- endif -%}
+      {%- endif -%}
+
+      <p class="sf2-product-main__price">
+        <span data-sf-price>{{ selected_variant.price | money }}</span>
+        <span data-sf-compare-at {% unless selected_variant.compare_at_price > selected_variant.price %}hidden{% endunless %}>
+          <s>{{ selected_variant.compare_at_price | money }}</s>
+        </span>
+        {%- if section.settings.show_volume_suffix and volume_label != blank -%}
+          <span class="sf2-product-main__volume">/ {{ volume_label }}</span>
+        {%- endif -%}
+      </p>
+
+      {%- if product.variants.size > 1 -%}
+        <label class="visually-hidden" for="Sf2Variant-{{ section.id }}">Variant</label>
+        <select id="Sf2Variant-{{ section.id }}" class="sf2-product-main__variant" data-sf-variant-picker data-map-id="{{ variant_map_id }}">
+          {%- for variant in product.variants -%}
+            <option value="{{ variant.id }}" {% if variant.id == selected_variant.id %}selected{% endif %} {% unless variant.available %}disabled{% endunless %}>{{ variant.title }}</option>
+          {%- endfor -%}
+        </select>
+      {%- endif -%}
+
+      <product-form-component
+        data-section-id="{{ section.id }}"
+        data-product-id="{{ product.id }}"
+        data-product-url="{{ product.url }}"
+        on:submit="/handleSubmit"
+        data-quantity-default="1"
+        class="sf2-product-main__form"
+      >
+        <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+        {%- form 'product', product, data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+          <input type="hidden" name="id" value="{{ selected_variant.id }}" data-product-variant-id ref="variantId">
+          <input type="hidden" name="selling_plan" value="" data-sf-selling-plan-input>
+          <div class="sf2-product-main__buy-row">
+            {%- if section.settings.show_quantity -%}
+              {% render 'sf2-quantity-selector', id_suffix: section.id, product_form: true %}
+            {%- else -%}
+              <input type="hidden" name="quantity" value="1">
+            {%- endif -%}
+            {% render 'add-to-cart-button',
+              can_add_to_cart: selected_variant.available,
+              add_to_cart_text: section.settings.add_to_cart_label,
+              product: product,
+              class: 'sf2-btn sf2-btn--primary_dark sf2-product-main__buy add-to-cart-button'
+            %}
+          </div>
+        {%- endform -%}
+      </product-form-component>
+
+      {%- if section.blocks.size > 0 -%}
+        <div class="sf2-product-main__trust">
+          {%- for block in section.blocks -%}
+            {%- if block.type == 'trust_item' -%}
+              {% render 'sf2-trust-item', icon: block.settings.icon, label: block.settings.label %}
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+
+      {% render 'sf2-product-metafield-accordions', product: product %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Main Product",
+  "tag": "section",
+  "class": "sf2-product-main-section",
+  "enabled_on": { "templates": ["product"] },
+  "blocks": [
+    {
+      "type": "trust_item",
+      "name": "Trust item",
+      "limit": 4,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "delivery", "options": [
+          { "value": "delivery", "label": "Delivery" }, { "value": "shield-lock", "label": "Secure" }, { "value": "member-pricing", "label": "Member" },
+          { "value": "exclusive", "label": "Award" }, { "value": "estate-access", "label": "Estate" }, { "value": "vineyard-stewardship", "label": "Sustainable" }
+        ]},
+        { "type": "text", "id": "label", "label": "Label", "default": "Secure payment and checkout" }
+      ]
+    },
+    {
+      "type": "selling_plan",
+      "name": "Selling plan labels",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "one_time_label", "label": "One-time label", "default": "One-time purchase" },
+        { "type": "text", "id": "subscription_label", "label": "Subscription label", "default": "Wine Club subscription" },
+        { "type": "text", "id": "deliver_label", "label": "Delivery label", "default": "Delivery every" },
+        { "type": "checkbox", "id": "show_popular_badge", "label": "Show member badge", "default": true },
+        { "type": "text", "id": "popular_badge_label", "label": "Badge label", "default": "Member pricing" },
+        { "type": "checkbox", "id": "show_without_native_plans", "label": "Show without native plans", "default": false }
+      ]
+    }
+  ],
+  "settings": [
+    { "type": "checkbox", "id": "enable_image_zoom", "label": "Enable image zoom", "default": true },
+    { "type": "range", "id": "thumbnail_width", "label": "Thumbnail width", "min": 60, "max": 120, "step": 2, "unit": "px", "default": 82 },
+    { "type": "checkbox", "id": "show_quantity", "label": "Show quantity selector", "default": true },
+    { "type": "checkbox", "id": "show_volume_suffix", "label": "Show volume suffix on price", "default": true },
+    { "type": "text", "id": "add_to_cart_label", "label": "Add to cart label", "default": "Add to Cart" },
+    { "type": "checkbox", "id": "show_reviews_link", "label": "Show link to reviews section", "default": true },
+    { "type": "text", "id": "reviews_link_label", "label": "Reviews link label", "default": "Read reviews" }
+  ],
+  "presets": [{ "name": "SF2 Main Product" }]
+}
+{% endschema %}

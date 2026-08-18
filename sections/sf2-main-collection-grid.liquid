@@ -1,0 +1,179 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf2-collection.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign selected_sort = collection.sort_by | default: collection.default_sort_by
+  assign active_filter_count = 0
+  for filter in collection.filters
+    case filter.type
+      when 'price_range'
+        if filter.min_value.value != null or filter.max_value.value != null
+          assign active_filter_count = active_filter_count | plus: 1
+        endif
+      when 'boolean'
+        if filter.active_values[0].value
+          assign active_filter_count = active_filter_count | plus: 1
+        endif
+      else
+        assign active_filter_count = active_filter_count | plus: filter.active_values.size
+    endcase
+  endfor
+-%}
+
+<section
+  class="sf2-collection-grid sf2-section"
+  data-sf2-collection-grid
+  style="
+    --sf2-grid-columns-desktop: {{ section.settings.desktop_columns }};
+    --sf2-grid-columns-tablet: {{ section.settings.tablet_columns }};
+  "
+>
+  {% paginate collection.products by section.settings.products_per_page %}
+    <div class="sf2-collection-toolbar">
+      <div class="sf2-wrap sf2-collection-toolbar__grid">
+        <p class="sf2-collection-toolbar__count" role="status">
+          {%- if paginate.items == 1 -%}
+            {{ paginate.items }} product
+          {%- else -%}
+            {{ paginate.items }} products
+          {%- endif -%}
+        </p>
+
+        {%- if section.settings.show_sorting -%}
+          <div class="sf2-collection-toolbar__sort">
+            <label for="Sf2CollectionSort-{{ section.id }}">Sort by</label>
+            <select id="Sf2CollectionSort-{{ section.id }}" data-sf2-collection-sort>
+              {%- for option in collection.sort_options -%}
+                <option value="{{ option.value }}" {% if option.value == selected_sort %}selected{% endif %}>{{ option.name }}</option>
+              {%- endfor -%}
+            </select>
+          </div>
+        {%- endif -%}
+
+        <div class="sf2-collection-toolbar__view" role="group" aria-label="Product view">
+          <button type="button" class="is-active" data-sf2-view="grid" aria-label="Grid view" aria-pressed="true">
+            {% render 'sf2-icon', icon: 'grid' %}
+          </button>
+          <button type="button" data-sf2-view="list" aria-label="List view" aria-pressed="false">
+            {% render 'sf2-icon', icon: 'list' %}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="sf2-collection-listing">
+      <div class="sf2-wrap sf2-collection-listing__grid">
+        <aside class="sf2-collection-listing__filters">
+          {% content_for 'block', type: 'filters', id: 'filters', results: collection, results_size: collection.products_count %}
+        </aside>
+
+        <div class="sf2-collection-listing__main">
+          {%- if section.settings.show_active_filters and active_filter_count > 0 -%}
+            <ul class="sf2-collection-chips" role="list">
+              {%- for filter in collection.filters -%}
+                {%- for active_value in filter.active_values -%}
+                  <li>
+                    <a class="sf2-collection-chips__chip" href="{{ active_value.url_to_remove }}">
+                      {{ filter.label }}: {{ active_value.label }}
+                      <span aria-hidden="true">×</span>
+                    </a>
+                  </li>
+                {%- endfor -%}
+                {%- if filter.type == 'price_range' -%}
+                  {%- if filter.min_value.value != null or filter.max_value.value != null -%}
+                    <li>
+                      <a class="sf2-collection-chips__chip" href="{{ filter.url_to_remove }}">
+                        {{ filter.min_value.value | default: 0 | money }} – {{ filter.max_value.value | default: filter.range_max | money }}
+                        <span aria-hidden="true">×</span>
+                      </a>
+                    </li>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if collection.url -%}
+                <li><a class="sf2-collection-chips__clear" href="{{ collection.url }}">Clear all</a></li>
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
+
+          {%- if paginate.items == 0 -%}
+            <div class="sf2-collection-empty">
+              {%- if active_filter_count > 0 -%}
+                <h2>{{ section.settings.no_results_heading }}</h2>
+                <p>{{ section.settings.no_results_copy }}</p>
+                {%- if collection.url -%}
+                  <a class="sf2-btn sf2-btn--primary_dark" href="{{ collection.url }}">{{ section.settings.clear_filters_label }}</a>
+                {%- endif -%}
+              {%- else -%}
+                <h2>{{ section.settings.empty_heading }}</h2>
+                <p>{{ section.settings.empty_copy }}</p>
+                {%- if section.settings.empty_cta_label != blank and section.settings.empty_cta_link != blank -%}
+                  <a class="sf2-btn sf2-btn--primary_dark" href="{{ section.settings.empty_cta_link }}">{{ section.settings.empty_cta_label }}</a>
+                {%- endif -%}
+              {%- endif -%}
+            </div>
+          {%- else -%}
+            <ul class="sf2-collection-products" data-sf2-products role="list">
+              {%- for product in collection.products -%}
+                <li>
+                  {% render 'sf2-product-card', product: product, section: section, layout: 'grid' %}
+                </li>
+              {%- endfor -%}
+            </ul>
+            {% render 'sf2-pagination', paginate: paginate %}
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {% endpaginate %}
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Collection Grid",
+  "tag": "section",
+  "class": "sf2-collection-grid-section",
+  "enabled_on": { "templates": ["collection"] },
+  "blocks": [{ "type": "filters" }],
+  "settings": [
+    { "type": "select", "id": "desktop_columns", "label": "Desktop columns", "default": "3", "options": [
+      { "value": "3", "label": "3" }, { "value": "4", "label": "4" }
+    ]},
+    { "type": "select", "id": "tablet_columns", "label": "Tablet columns", "default": "2", "options": [
+      { "value": "2", "label": "2" }, { "value": "3", "label": "3" }
+    ]},
+    { "type": "select", "id": "products_per_page", "label": "Products per page", "default": "24", "options": [
+      { "value": "12", "label": "12" }, { "value": "24", "label": "24" }, { "value": "36", "label": "36" }
+    ]},
+    { "type": "checkbox", "id": "show_sorting", "label": "Show sorting", "default": true },
+    { "type": "checkbox", "id": "show_active_filters", "label": "Show active filter chips", "default": true },
+    { "type": "checkbox", "id": "show_quick_add", "label": "Show quick add", "default": true },
+    { "type": "checkbox", "id": "show_quantity_selector", "label": "Show quantity selector", "default": true },
+    { "type": "checkbox", "id": "show_second_image_hover", "label": "Show second image on hover", "default": true },
+    { "type": "text", "id": "add_to_cart_label", "label": "Add to cart label", "default": "Add to Cart" },
+    { "type": "text", "id": "choose_options_label", "label": "Choose options label", "default": "Choose options" },
+    { "type": "text", "id": "empty_heading", "label": "Empty collection heading", "default": "No products in this collection yet" },
+    { "type": "textarea", "id": "empty_copy", "label": "Empty collection copy", "default": "Check back soon or explore other Seppeltsfield collections." },
+    { "type": "text", "id": "empty_cta_label", "label": "Empty CTA label", "default": "Back to Shop" },
+    { "type": "url", "id": "empty_cta_link", "label": "Empty CTA link" },
+    { "type": "text", "id": "no_results_heading", "label": "No results heading", "default": "No matching products" },
+    { "type": "textarea", "id": "no_results_copy", "label": "No results copy", "default": "Try adjusting your filters to see more products in this collection." },
+    { "type": "text", "id": "clear_filters_label", "label": "Clear filters label", "default": "Clear all filters" }
+  ],
+  "presets": [{
+    "name": "SF2 Collection Grid",
+    "blocks": [{
+      "type": "filters",
+      "settings": {
+        "enable_filtering": true,
+        "filter_style": "vertical",
+        "enable_sorting": false,
+        "enable_grid_density": false
+      }
+    }]
+  }]
+}
+{% endschema %}

@@ -1,0 +1,14 @@
+mutation {
+  blogCreate(blog: { title: "Journal", handle: "journal" }) {
+    blog {
+      id
+      title
+      handle
+      templateSuffix
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

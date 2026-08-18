@@ -1,0 +1,72 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-home.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+
+<section id="Sf2Why-{{ section.id }}" class="sf2-why sf2-section" style="{{ section_style | strip }}">
+  <div class="sf2-wrap">
+    <div class="sf2-why__head">
+      <div>
+        {% render 'sf2-eyebrow', text: section.settings.eyebrow %}
+        <h2 class="sf2-serif">{{ section.settings.heading }}</h2>
+      </div>
+      {%- if section.settings.body != blank -%}
+        <p>{{ section.settings.body }}</p>
+      {%- endif -%}
+    </div>
+    <div class="sf2-why__grid">
+      {%- for block in section.blocks -%}
+        <article class="sf2-why__card" {{ block.shopify_attributes }}>
+          <div class="sf2-why__icon">{% render 'sf2-icon', icon: block.settings.icon, size: 34 %}</div>
+          {%- if block.settings.heading != blank -%}<h3>{{ block.settings.heading }}</h3>{%- endif -%}
+          {%- if block.settings.body != blank -%}<div>{{ block.settings.body }}</div>{%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Why Seppeltsfield",
+  "tag": "section",
+  "class": "sf2-why-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why Seppeltsfield" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A place unlike any other." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Before introducing products or bookings, the homepage should quickly explain what makes Seppeltsfield distinct to first-time visitors." },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "ivory", "options": [
+      { "value": "light", "label": "Light" }, { "value": "ivory", "label": "Ivory" }, { "value": "soft_blue", "label": "Soft Blue" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "standard", "options": [
+      { "value": "compact", "label": "Compact" }, { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }, { "value": "editorial", "label": "Editorial" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 3,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "heritage", "options": [
+          { "value": "heritage", "label": "Heritage" }, { "value": "collection", "label": "Collection" }, { "value": "destination", "label": "Destination" }, { "value": "crown", "label": "Crown" }
+        ]},
+        { "type": "text", "id": "heading", "label": "Heading", "default": "175 Years of Heritage" },
+        { "type": "richtext", "id": "body", "label": "Body", "default": "<p>One of Australia's most historic wine estates, established in the Barossa Valley in 1851.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF2 Why Seppeltsfield",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "heritage", "heading": "175 Years of Heritage", "body": "<p>One of Australia's most historic wine estates, established in the Barossa Valley in 1851.</p>" } },
+        { "type": "feature", "settings": { "icon": "collection", "heading": "The Centennial Collection", "body": "<p>An extraordinary unbroken lineage of single-vintage Para Tawny beginning in 1878.</p>" } },
+        { "type": "feature", "settings": { "icon": "destination", "heading": "A Destination Beyond Wine", "body": "<p>Cellar Door, FINO, accommodation, gardens, artisans and immersive estate experiences in one destination.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

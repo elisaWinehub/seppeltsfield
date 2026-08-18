@@ -9,54 +9,219 @@
  */
 {
   "sections": {
-    "sf_wine_club_hero": {
-      "type": "sf-wine-club-hero",
-      "settings": {}
+    "wc_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
+        "mobile_image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
+        "eyebrow": "The Crown Society",
+        "heading": "Membership shaped around your taste.",
+        "body": "<p>Choose your wines, enjoy year-round privileges and become part of the ongoing story of Seppeltsfield.</p>",
+        "button_label": "Explore Membership",
+        "button_url": "",
+        "button_link": "#membership",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "",
+        "secondary_button_url": "",
+        "show_side_note": true,
+        "note_heading": "Flexible, personal and distinctly Seppeltsfield.",
+        "note_body": "Membership includes preferred pricing, curated deliveries, member experiences and access across the estate.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
     },
-    "sf_wine_club_benefits": {
-      "type": "sf-wine-club-benefits",
+    "wc_intro": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "eyebrow": "Join the Crown Society",
+        "heading": "A wine club built around choice.",
+        "body": "<p>Members choose from carefully curated wine packs and receive preferred pricing, convenient delivery and access to member events across the estate.</p><p>Compare each tier below to find the selection that best suits your table and cellar.</p>",
+        "link_label": "",
+        "link_url": "",
+        "main_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "secondary_image": "shopify://shop_images/cellar-door-tasting.jpg",
+        "note_eyebrow": "Member privileges",
+        "note_heading": "Wine, experiences and estate access.",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wc_video": {
+      "type": "sf2-video-feature",
+      "settings": {
+        "eyebrow": "Inside the Crown Society",
+        "heading": "See what membership feels like.",
+        "body": "<p>Discover how Crown Society membership connects your wine selections with seasonal releases, member invitations and estate experiences.</p>",
+        "youtube_url": "",
+        "poster_image": "shopify://shop_images/vineyardsandcellarsHERO.jpg",
+        "play_label": "Play Crown Society video",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wc_tiers": {
+      "type": "sf2-wine-club-tiers",
       "blocks": {
-        "benefit_one": { "type": "benefit", "settings": { "icon": "🍾", "heading": "Exclusive Wines", "copy": "Access limited releases and museum wines not available anywhere else." } },
-        "benefit_two": { "type": "benefit", "settings": { "icon": "✦", "heading": "Member Discounts", "copy": "Enjoy savings on wines, experiences, dining and accommodation." } },
-        "benefit_three": { "type": "benefit", "settings": { "icon": "◴", "heading": "Invitations", "copy": "Be the first to receive invitations to member events and tastings." } },
-        "benefit_four": { "type": "benefit", "settings": { "icon": "⇢", "heading": "Complimentary Freight", "copy": "Complimentary delivery Australia-wide on eligible wine orders." } },
-        "benefit_five": { "type": "benefit", "settings": { "icon": "✉", "heading": "Member News", "copy": "Stay connected with our quarterly member newsletter." } },
-        "benefit_six": { "type": "benefit", "settings": { "icon": "♛", "heading": "Crown Society", "copy": "Earn Crown Society points with every purchase and experience." } }
+        "tier_1": {
+          "type": "tier",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+            "eyebrow": "Bright and fresh",
+            "title": "Whites & Lights",
+            "body": "<p>For members who enjoy white, sparkling and lighter-style wines across the Seppeltsfield portfolio.</p>",
+            "feature_1": "Curated mixed selection",
+            "feature_2": "Preferred member pricing",
+            "feature_3": "Flexible annual delivery",
+            "button_label": "Choose This Selection",
+            "button_url": "/pages/wine-club-membership"
+          }
+        },
+        "tier_2": {
+          "type": "tier",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
+            "eyebrow": "Rich and structured",
+            "title": "Reds Selection",
+            "body": "<p>A curated mix of red wines selected for members who favour depth, texture and classic Barossa character.</p>",
+            "feature_1": "Curated red wine pack",
+            "feature_2": "Preferred member pricing",
+            "feature_3": "Flexible annual delivery",
+            "button_label": "Choose This Selection",
+            "button_url": "/pages/wine-club-membership"
+          }
+        },
+        "tier_3": {
+          "type": "tier",
+          "settings": {
+            "image": "shopify://shop_images/provenance-of-para-HERO.jpg",
+            "eyebrow": "Versatile and varied",
+            "title": "All Occasions",
+            "body": "<p>A balanced mixed selection for members who enjoy discovering a broad range of Seppeltsfield wines.</p>",
+            "feature_1": "Mixed wine selection",
+            "feature_2": "Preferred member pricing",
+            "feature_3": "Flexible annual delivery",
+            "button_label": "Choose This Selection",
+            "button_url": "/pages/wine-club-membership"
+          }
+        }
       },
-      "block_order": ["benefit_one", "benefit_two", "benefit_three", "benefit_four", "benefit_five", "benefit_six"],
-      "settings": {}
+      "block_order": ["tier_1", "tier_2", "tier_3"],
+      "settings": {
+        "section_anchor_id": "membership",
+        "eyebrow": "Choose your selection",
+        "heading": "Three ways to join.",
+        "body": "Select the tier that suits your preferences and start your Crown Society membership.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
     },
-    "sf_wine_club_memberships": {
-      "type": "sf-wine-club-memberships",
+    "wc_how": {
+      "type": "sf2-how-it-works",
       "blocks": {
-        "tier_explorer": { "type": "membership_tier", "settings": { "tier_name": "Explorer", "price": "$65", "billing_suffix": "/ YEAR", "description": "Ideal for those beginning their Seppeltsfield journey.", "benefits_list": "2 curated wine selections per year\n10% discount on wine purchases\nMember newsletter\nCrown Society membership", "button_label": "JOIN EXPLORER" } },
-        "tier_connoisseur": { "type": "membership_tier", "settings": { "tier_name": "Connoisseur", "badge_text": "MOST POPULAR", "featured": true, "price": "$135", "billing_suffix": "/ YEAR", "description": "For those who appreciate the finer things.", "benefits_list": "3 curated wine selections per year\n15% discount on wine purchases\nExclusive member offers\nInvitations to member events\nCrown Society membership", "button_label": "JOIN CONNOISSEUR" } },
-        "tier_collector": { "type": "membership_tier", "settings": { "tier_name": "Collector", "price": "$250", "billing_suffix": "/ YEAR", "description": "For dedicated collectors and lovers of rare wines.", "benefits_list": "4 curated wine selections per year\n20% discount on wine purchases\nAccess to museum and library wines\nExclusive experiences and events\nCrown Society membership", "button_label": "JOIN COLLECTOR" } }
+        "step_1": { "type": "step", "settings": { "title": "Choose your wine selection", "body": "Select the mix that best suits your taste and the way you enjoy wine." } },
+        "step_2": { "type": "step", "settings": { "title": "Receive your deliveries", "body": "Your wines are prepared and delivered according to the membership schedule." } },
+        "step_3": { "type": "step", "settings": { "title": "Enjoy member privileges", "body": "Access preferred pricing, exclusive releases, events and estate experiences throughout the year." } }
       },
-      "block_order": ["tier_explorer", "tier_connoisseur", "tier_collector"],
-      "settings": {}
+      "block_order": ["step_1", "step_2", "step_3"],
+      "settings": {
+        "eyebrow": "How it works",
+        "heading": "Simple to join. Easy to enjoy.",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
     },
-    "sf_wine_club_crown": {
-      "type": "sf-wine-club-crown-society",
-      "settings": {}
-    },
-    "sf_wine_club_stories": {
-      "type": "sf-wine-club-member-stories",
+    "wc_benefits": {
+      "type": "sf2-benefit-grid",
       "blocks": {
-        "story_primary": { "type": "testimonial", "settings": { "quote": "The Wine Club connects us to the Barossa, the people and the stories behind every bottle.", "member_name": "JANE WILLIAMS", "subtitle": "MEMBER SINCE 2018", "link_label": "READ MORE MEMBER STORIES" } },
-        "gallery_1": { "type": "gallery_image", "settings": {} },
-        "gallery_2": { "type": "gallery_image", "settings": {} },
-        "gallery_3": { "type": "gallery_image", "settings": {} }
+        "b1": { "type": "benefit", "settings": { "icon": "member-pricing", "title": "Member pricing", "body": "Preferred pricing across selected Seppeltsfield wines and releases." } },
+        "b2": { "type": "benefit", "settings": { "icon": "delivery", "title": "Convenient delivery", "body": "Curated wine deliveries prepared and sent according to your membership." } },
+        "b3": { "type": "benefit", "settings": { "icon": "exclusive", "title": "Exclusive releases", "body": "Priority access to selected wines, limited releases and member-only offers." } },
+        "b4": { "type": "benefit", "settings": { "icon": "estate-access", "title": "Estate experiences", "body": "Access to special tastings, events and privileges across the estate." } },
+        "b5": { "type": "benefit", "settings": { "icon": "clock", "title": "Flexible annual delivery", "body": "Choose an annual delivery timing that fits your cellar planning and seasonal hosting." } },
+        "b6": { "type": "benefit", "settings": { "icon": "goblet", "title": "Curated selections", "body": "Each tier is assembled around your preference for whites, reds or a mixed profile." } }
       },
-      "block_order": ["story_primary", "gallery_1", "gallery_2", "gallery_3"],
-      "settings": {}
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6"],
+      "settings": {
+        "eyebrow": "Wine club benefits",
+        "heading": "Membership beyond the bottle.",
+        "body": "Every Crown Society benefit is listed below so you can quickly compare what membership includes.",
+        "show_login_link": true,
+        "login_label": "Member Login",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wc_experiences": {
+      "type": "sf2-experience-grid",
+      "blocks": {
+        "e1": { "type": "experience_card", "settings": { "image": "shopify://shop_images/cellar-door-tasting.jpg", "eyebrow": "Taste", "title": "Private tastings", "body": "Member moments centred on wine, heritage and the estate.", "link_label": "", "url": "/pages/wine-club-experiences" } },
+        "e2": { "type": "experience_card", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "eyebrow": "Dine", "title": "Estate dining", "body": "Special dining opportunities and seasonal member events.", "link_label": "", "url": "/pages/wine-club-experiences" } },
+        "e3": { "type": "experience_card", "settings": { "image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg", "eyebrow": "Gather", "title": "Exclusive events", "body": "Invitations to experiences throughout the Seppeltsfield calendar.", "link_label": "", "url": "/pages/wine-club-experiences" } }
+      },
+      "block_order": ["e1", "e2", "e3"],
+      "settings": {
+        "eyebrow": "Member experiences",
+        "heading": "Closer to the estate.",
+        "body": "From private tastings to estate dining, Crown Society members are invited into the Seppeltsfield experience year-round.",
+        "card_style": "overlay",
+        "grid_layout": "featured_first",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wc_commitment": {
+      "type": "sf2-text-columns",
+      "settings": {
+        "eyebrow": "Our shared commitment",
+        "heading": "A membership with a personal relationship.",
+        "body": "<p>By joining the Crown Society, members commit to their selected annual allocation.</p><p>Our team curates each selection and supports updates to preferences before fulfilment windows where possible.</p><p>Delivery timing, account support and membership terms are shared clearly during sign-up and in member communications.</p>",
+        "column_count": "2",
+        "color_scheme": "light",
+        "spacing_preset": "standard"
+      }
+    },
+    "wc_faq": {
+      "type": "sf2-faq",
+      "blocks": {
+        "faq_1": { "type": "faq_item", "settings": { "question": "How do I join?", "answer": "<p>Select your preferred Crown Society tier and complete the membership form to join.</p>", "open_by_default": true } },
+        "faq_2": { "type": "faq_item", "settings": { "question": "How is my wine selected?", "answer": "<p>Each tier is curated around a style profile, and our team assembles your annual allocation to match that selection.</p>", "open_by_default": false } },
+        "faq_3": { "type": "faq_item", "settings": { "question": "How often will I receive deliveries?", "answer": "<p>Crown Society deliveries are arranged annually according to your selected tier and fulfilment schedule.</p>", "open_by_default": false } },
+        "faq_4": { "type": "faq_item", "settings": { "question": "Can I change my selection or cancel?", "answer": "<p>Yes. Contact the Seppeltsfield team to request changes or discuss cancellation options in line with membership terms.</p>", "open_by_default": false } }
+      },
+      "block_order": ["faq_1", "faq_2", "faq_3", "faq_4"],
+      "settings": {
+        "section_anchor_id": "crown-society-faq",
+        "eyebrow": "Frequently asked questions",
+        "heading": "Need a quick answer before joining?",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wc_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Become a member",
+        "heading": "Choose your Crown Society selection.",
+        "body": "Join online, select your wines and begin enjoying member privileges across Seppeltsfield.",
+        "button_label": "Join the Crown Society",
+        "button_url": "/pages/wine-club-membership",
+        "button_preset": "primary_dark",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
     }
   },
   "order": [
-    "sf_wine_club_hero",
-    "sf_wine_club_benefits",
-    "sf_wine_club_memberships",
-    "sf_wine_club_crown",
-    "sf_wine_club_stories"
+    "wc_hero",
+    "wc_intro",
+    "wc_video",
+    "wc_tiers",
+    "wc_how",
+    "wc_benefits",
+    "wc_experiences",
+    "wc_commitment",
+    "wc_faq",
+    "wc_cta"
   ]
 }

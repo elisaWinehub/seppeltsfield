@@ -9,50 +9,141 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "hero-banner",
+    "be_hero": {
+      "type": "sf2-page-hero",
       "settings": {
-        "eyebrow": "Book Experience",
-        "heading": "Book your day on the estate.",
-        "body": "Choose from immersive tastings, tours and dining moments curated by our team.",
-        "button_label": "Start a Booking",
-        "button_link": "#booking-form",
-        "button_style": "light",
-        "background_type": "image",
+        "hero_height": "editorial",
         "background_image": "shopify://shop_images/dailytoursandtastingsHERO.jpg",
-        "background_color": "#0C0D10",
-        "heading_color": "#F5F7F8",
-        "text_color": "#F5F7F8"
+        "mobile_image": "shopify://shop_images/dailytoursandtastingsHERO.jpg",
+        "eyebrow": "Book an Experience",
+        "heading": "Choose how you want to experience Seppeltsfield.",
+        "body": "<p>Book wine tastings, estate tours, dining, accommodation and private events across one of the Barossa's most remarkable destinations.</p>",
+        "button_label": "",
+        "button_url": "",
+        "button_link": "",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "",
+        "secondary_button_url": "",
+        "show_side_note": true,
+        "note_heading": "One booking hub for the estate.",
+        "note_body": "This page brings together transactional booking pathways while the Visit page remains the inspiration and planning destination.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
       }
     },
-    "tiles": {
-      "type": "tile-row",
+    "be_journeys": {
+      "type": "sf2-journey-grid",
       "blocks": {
-        "b1": { "type": "tile", "settings": { "image": "shopify://shop_images/dailytoursandtastingsHERO.jpg", "title": "Centennial Cellar", "link": "/pages/book-experience" } },
-        "b2": { "type": "tile", "settings": { "image": "shopify://shop_images/Gravity-cellar-hero.jpg", "title": "Taste Your Birth Year", "link": "/pages/book-experience" } },
-        "b3": { "type": "tile", "settings": { "image": "shopify://shop_images/wedding-ceremony-subhero.jpg", "title": "Estate Tour", "link": "/pages/book-experience" } },
-        "b4": { "type": "tile", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Fino Dining", "link": "/pages/book-experience" } },
-        "b5": { "type": "tile", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Lodge Stay", "link": "/pages/book-experience" } }
+        "j1": { "type": "journey_card", "settings": { "image": "shopify://shop_images/cellar-door-tasting.jpg", "title": "Wine Tastings", "url": "#rezdy-booking" } },
+        "j2": { "type": "journey_card", "settings": { "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg", "title": "Estate Tours", "url": "#rezdy-booking" } },
+        "j3": { "type": "journey_card", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Restaurant", "url": "/pages/fino-restaurant" } },
+        "j4": { "type": "journey_card", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Accommodation", "url": "/pages/accommodation" } },
+        "j5": { "type": "journey_card", "settings": { "image": "shopify://shop_images/wedding-ceremony-subhero.jpg", "title": "Weddings & Private Events", "url": "/pages/weddings-private-events" } }
       },
-      "block_order": ["b1", "b2", "b3", "b4", "b5"],
+      "block_order": ["j1", "j2", "j3", "j4", "j5"],
       "settings": {
-        "eyebrow": "Choose an experience",
-        "heading": "Five ways to spend a day here",
-        "columns": "5",
-        "background_color": "#F7F6F3",
-        "heading_color": "#12141A",
-        "text_color": "#565B63"
+        "eyebrow": "Choose your experience",
+        "heading": "Five ways to book Seppeltsfield.",
+        "body": "Each card directs guests to the appropriate booking flow, partner platform or enquiry form.",
+        "color_scheme": "light",
+        "grid_style": "gapped",
+        "spacing_preset": "spacious"
       }
     },
-    "enquiry": {
-      "type": "enquiry-form",
+    "be_rezdy": {
+      "type": "sf2-rezdy-booking",
+      "blocks": {
+        "n1": { "type": "booking_note", "settings": { "icon": "clock", "title": "Choose a date and time", "body": "Live availability and pricing are provided by Rezdy." } },
+        "n2": { "type": "booking_note", "settings": { "icon": "catalogue", "title": "Select your experience", "body": "Wine tastings, cellar experiences and estate tours can all live within the embedded catalogue." } },
+        "n3": { "type": "booking_note", "settings": { "icon": "shield-lock", "title": "Complete your booking securely", "body": "Payment, confirmation and booking management remain within the external provider." } }
+      },
+      "block_order": ["n1", "n2", "n3"],
       "settings": {
-        "eyebrow": "Booking Details",
-        "heading": "Request your booking",
-        "topic": "Book experience enquiry",
-        "submit_label": "Request Booking"
+        "section_anchor_id": "rezdy-booking",
+        "eyebrow": "Tours and tastings",
+        "heading": "Book directly through Rezdy.",
+        "body": "The existing third-party booking system can remain embedded, but the surrounding page should feel fully integrated with the Seppeltsfield design system.",
+        "iframe_url": "https://seppeltsfield.rezdy.com/catalog/108982/tours-tastings?iframe=true",
+        "iframe_height": 1000,
+        "iframe_label": "Live tours and tastings",
+        "iframe_powered_by": "Powered by Rezdy",
+        "fallback_link_label": "Open booking catalogue",
+        "fallback_link_url": "https://seppeltsfield.rezdy.com/catalog/108982/tours-tastings",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "be_support": {
+      "type": "sf2-support-links",
+      "blocks": {
+        "s1": { "type": "support_link", "settings": { "title": "Restaurant reservations", "body": "Book FINO or find restaurant details and opening hours.", "url": "/pages/fino-restaurant" } },
+        "s2": { "type": "support_link", "settings": { "title": "Accommodation bookings", "body": "Explore The Lodge and available stay packages.", "url": "/pages/accommodation" } },
+        "s3": { "type": "support_link", "settings": { "title": "Weddings and private events", "body": "Start an enquiry for weddings, celebrations and corporate functions.", "url": "/pages/weddings-private-events" } },
+        "s4": { "type": "support_link", "settings": { "title": "Booking support", "body": "Contact the team if you need help choosing or arranging an experience.", "url": "/pages/contact" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "eyebrow": "Other booking pathways",
+        "heading": "Not every experience belongs in one iframe.",
+        "body": "Restaurant reservations, accommodation and private events may require different booking systems or enquiry flows. Keeping these clearly separated prevents confusion.",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "be_private": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "Weddings and private events",
+        "heading": "A remarkable setting for meaningful occasions.",
+        "body": "<p>Private events require more than a simple booking widget. This section introduces the opportunity and leads into a dedicated enquiry template with venue options, catering, galleries and downloadable information.</p>",
+        "link_label": "Explore private events",
+        "link_url": "/pages/weddings-private-events",
+        "image": "shopify://shop_images/wedding-ceremony-subhero.jpg",
+        "badge_text": "",
+        "layout": "media_left",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "be_faq": {
+      "type": "sf2-faq",
+      "blocks": {
+        "f1": { "type": "faq_item", "settings": { "question": "How do I book a wine tasting or tour?", "answer": "<p>Select your preferred experience, date and time through the Rezdy booking catalogue above.</p>", "open_by_default": true } },
+        "f2": { "type": "faq_item", "settings": { "question": "Can I book for a large group?", "answer": "<p>Large groups may require a direct enquiry so the team can confirm availability and recommend the most suitable experience.</p>", "open_by_default": false } },
+        "f3": { "type": "faq_item", "settings": { "question": "Where do I book FINO?", "answer": "<p>Restaurant bookings should route to the dedicated FINO page or its external reservation platform.</p>", "open_by_default": false } },
+        "f4": { "type": "faq_item", "settings": { "question": "Can I change or cancel a booking?", "answer": "<p>Booking amendments and cancellation terms are managed according to the conditions provided during checkout by the relevant booking platform.</p>", "open_by_default": false } }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "Booking information",
+        "heading": "Before you book.",
+        "color_scheme": "ivory",
+        "spacing_preset": "compact"
+      }
+    },
+    "be_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Need help deciding?",
+        "heading": "Let the team help plan your experience.",
+        "body": "Contact Seppeltsfield for group bookings, accessibility questions, private experiences or help choosing the right visit.",
+        "button_label": "Contact the Team",
+        "button_url": "/pages/contact",
+        "button_preset": "primary_dark",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
       }
     }
   },
-  "order": ["hero", "tiles", "enquiry"]
+  "order": [
+    "be_hero",
+    "be_journeys",
+    "be_rezdy",
+    "be_support",
+    "be_private",
+    "be_faq",
+    "be_cta"
+  ]
 }

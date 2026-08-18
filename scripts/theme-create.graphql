@@ -1,0 +1,15 @@
+mutation ThemeCreate($name: String, $source: URL!) {
+  themeCreate(name: $name, source: $source) {
+    theme {
+      id
+      name
+      role
+      themeStoreId
+      processing
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

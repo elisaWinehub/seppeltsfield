@@ -11,107 +11,48 @@
   "type": "header",
   "name": "Header",
   "sections": {
-    "header_announcements_9jGBFp": {
+    "header_announcements": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
+        "announcement_1": {
           "type": "_announcement",
           "settings": {
-            "text": "Welcome to our store",
-            "font": "var(--font-subheading--family)",
-            "font_size": "0.75rem",
-            "letter_spacing": "normal",
-            "case": "none"
-          },
-          "blocks": {}
+            "text": "WELCOME TO SEPPELTSFIELD · BAROSSA VALLEY · ESTABLISHED 1851",
+            "link": "",
+            "font": "var(--font-body--family)",
+            "font_size": "0.64rem",
+            "weight": "400",
+            "letter_spacing": "loose",
+            "case": "uppercase",
+            "text_color": "rgba(255, 255, 255, 0.74)"
+          }
         }
       },
       "block_order": [
-        "announcement_BxgCk9"
+        "announcement_1"
       ],
-      "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
-        "section_width": "page-width",
-        "background_color": "{{ settings.color_palette.background }}",
-        "divider_width": 1,
-        "divider_color": "{{ settings.color_palette.color2 }}",
-        "padding-block-start": 15,
-        "padding-block-end": 15
+        "section_width": "full-width",
+        "background_color": "#0b0c0e",
+        "divider_width": 0,
+        "padding-block-start": 12,
+        "padding-block-end": 12
       }
     },
-    "header_section": {
-      "type": "header",
-      "blocks": {
-        "header-logo": {
-          "type": "_header-logo",
-          "static": true,
-          "settings": {
-            "hide_logo_on_home_page": false,
-            "padding-block-start": 0,
-            "padding-block-end": 0
-          },
-          "blocks": {}
-        },
-        "header-menu": {
-          "type": "_header-menu",
-          "static": true,
-          "settings": {
-            "menu": "main-menu",
-            "type_font_primary_size": "0.875rem",
-            "menu_font_style": "inverse",
-            "type_font_primary_link": "body",
-            "type_case_primary_link": "none",
-            "menu_style": "featured_products",
-            "featured_products_aspect_ratio": "4 / 5",
-            "featured_collections_aspect_ratio": "16 / 9",
-            "image_border_radius": 0,
-            "navigation_bar": false,
-            "drawer_accordion": false,
-            "drawer_accordion_expand_first": false,
-            "drawer_dividers": false,
-            "show_header_cta": true,
-            "header_cta_label": "Book Experience",
-            "header_cta_url": "/pages/experiences",
-            "header_cta_bg_color": "#050505",
-            "header_cta_text_color": "#FFFFFF",
-            "header_cta_hover_bg_color": "#47A8DF",
-            "header_cta_hover_text_color": "#FFFFFF"
-          },
-          "blocks": {}
-        }
-      },
+    "sf2_header": {
+      "type": "sf2-header",
       "settings": {
-        "logo_position": "left",
-        "menu_position": "center",
-        "menu_row": "top",
-        "show_search": true,
-        "search_position": "right",
-        "search_row": "top",
-        "show_country": true,
-        "country_selector_style": false,
-        "show_language": true,
-        "localization_font": "heading",
-        "localization_font_size": "0.875rem",
-        "localization_position": "right",
-        "localization_row": "top",
-        "section_width": "page-width",
-        "section_height": "standard",
-        "enable_sticky_header": "always",
-        "divider_width": 0,
-        "divider_size": "page-width",
-        "border_width": 0,
-        "background_color_top": "{{ settings.color_palette.background }}",
-        "text_color_top": "#050505",
-        "enable_transparent_header_home": true,
-        "text_color_transparent_home": "#FFFFFF",
-        "enable_transparent_header_product": false,
-        "enable_transparent_header_collection": false
+        "logo_width": 188,
+        "main_menu": "main-menu",
+        "cta_label": "Book Experience",
+        "cta_url": "/pages/book-experience",
+        "transparency_mode": "auto"
       }
     }
   },
   "order": [
-    "header_announcements_9jGBFp",
-    "header_section"
+    "header_announcements",
+    "sf2_header"
   ]
 }

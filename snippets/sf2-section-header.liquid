@@ -1,0 +1,24 @@
+{%- doc -%}
+  @param {string} [eyebrow]
+  @param {boolean} [eyebrow_brand]
+  @param {string} [heading]
+  @param {string} [body]
+  @param {string} [link_label]
+  @param {string} [link_url]
+  @param {string} [scheme] - dark for light text on dark bg
+{%- enddoc -%}
+<div class="sf2-section-head{% if scheme == 'dark' %} sf2-section-head--dark{% endif %}">
+  <div class="sf2-section-head__main">
+    {%- if eyebrow != blank -%}
+      {% render 'sf2-eyebrow', text: eyebrow, brand: eyebrow_brand %}
+    {%- endif -%}
+    {%- if heading != blank -%}
+      <h2 class="sf2-serif sf2-section-head__heading">{{ heading }}</h2>
+    {%- endif -%}
+  </div>
+  {%- if link_label != blank and link_url != blank -%}
+    {% render 'sf2-button', preset: 'text_link', label: link_label, url: link_url, class: 'sf2-section-head__link' %}
+  {%- elsif body != blank -%}
+    <p class="sf2-section-head__body">{{ body }}</p>
+  {%- endif -%}
+</div>

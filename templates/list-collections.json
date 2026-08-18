@@ -1,140 +1,182 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "sf_shop_hero": {
-      "type": "sf-shop-hero",
+    "shop_hero": {
+      "type": "sf2-page-hero",
       "settings": {
-        "show_eyebrow": true,
-        "eyebrow": "Our Collections",
-        "heading": "Wines Crafted To Be Timeless",
-        "show_intro": true,
-        "intro": "Five collections shaped by 175 years of Barossa heritage — from contemporary still wines to the world's only unbroken lineage of single vintage Tawny.",
-        "show_crest": true,
-        "crest_type": "crown",
-        "crest_size": 26,
-        "crest_color": "#47A8DF",
-        "content_alignment": "center",
-        "content_max_width": 720,
-        "background_type": "solid",
-        "background_color": "#F4F1EA",
-        "eyebrow_color": "#2F86BA",
-        "heading_color": "#111315",
-        "intro_color": "#5A5A54",
-        "padding_top_desktop": 64,
-        "padding_bottom_desktop": 56,
-        "padding_top_mobile": 48,
-        "padding_bottom_mobile": 40
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "mobile_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "eyebrow": "Shop Seppeltsfield",
+        "heading": "Collections shaped by history, place and patience.",
+        "body": "<p>Explore Seppeltsfield's signature wine collections, limited releases, estate products and gifting.</p>",
+        "button_label": "",
+        "button_url": "",
+        "button_link": "",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "",
+        "secondary_button_url": "",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Begin with the collection.",
+        "note_body": "Discover rare fortified wines, contemporary releases, curated gifts and memorable estate experiences.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
       }
     },
-    "sf_shop_collections_grid": {
-      "type": "sf-shop-collections-grid",
+    "shop_featured": {
+      "type": "sf2-featured-collections",
       "blocks": {
-        "village": {
-          "type": "collection_tile",
+        "featured_1": {
+          "type": "collection_row",
           "settings": {
-            "image_override": "shopify://shop_images/1878-Centennial-Cellar.jpg",
-            "title_override": "Village Collection",
-            "description_override": "Contemporary, aromatic wines made to be enjoyed young.",
-            "eyebrow_override": "Contemporary & Aromatic",
-            "label_override": "Explore",
-            "tile_size": "standard"
-          }
-        },
-        "bench_blend": {
-          "type": "collection_tile",
-          "settings": {
-            "image_override": "shopify://shop_images/vineyardsandcellarsHERO.jpg",
-            "title_override": "Bench Blend Collection",
-            "description_override": "The art of assemblage. Traditional and contemporary red blends.",
-            "eyebrow_override": "The Art of Assemblage",
-            "label_override": "Explore",
-            "tile_size": "standard"
-          }
-        },
-        "the_grounds": {
-          "type": "collection_tile",
-          "settings": {
-            "image_override": "shopify://shop_images/Fortified-Wines.jpg",
-            "title_override": "The Grounds Collection",
-            "description_override": "Single-vineyard Shiraz from all four points of the compass.",
-            "eyebrow_override": "Single Vineyard",
-            "label_override": "Explore",
-            "tile_size": "standard"
-          }
-        },
-        "estate_icon": {
-          "type": "collection_tile",
-          "settings": {
-            "image_override": "shopify://shop_images/Cellar-Door-Products.jpg",
-            "title_override": "Estate Icon Vineyard",
-            "description_override": "Bush vine Grenache from the Great Terraced Vineyard, planted 1855.",
-            "eyebrow_override": "Great Terraced Vineyard",
-            "label_override": "Explore",
-            "tile_size": "standard"
-          }
-        },
-        "para_tawny": {
-          "type": "collection_tile",
-          "settings": {
-            "image_override": "shopify://shop_images/Member-Partner-Offers.jpg",
-            "title_override": "Para Tawny Collection",
-            "description_override": "The heart of the fortified range since 1878.",
-            "eyebrow_override": "Fortified Since 1878",
-            "label_override": "Explore",
-            "tile_size": "standard"
-          }
-        },
-        "gifting": {
-          "type": "collection_tile",
-          "settings": {
-            "image_override": "shopify://shop_images/Para-Grand-Tawny-91-Points.jpg",
-            "title_override": "Gifting & Vouchers",
-            "label_override": "Explore",
-            "tile_size": "wide",
-            "overlay_opacity": 55
-          }
-        },
-        "cellar_door": {
-          "type": "collection_tile",
-          "settings": {
-            "image_override": "shopify://shop_images/Old-Bottling-Hall-c1900-now-Seppeltsfields-Cellar-Door-1.jpg",
-            "title_override": "Cellar Door Exclusives",
-            "label_override": "Explore",
-            "tile_size": "wide",
-            "overlay_opacity": 55
+            "collection": "para-tawny",
+            "title_override": "Centennial Collection",
+            "image": "shopify://shop_images/seppelsfield-oct24-0060-web-1751248450385.jpg",
+            "label_text": "Featured Collection",
+            "eyebrow": "The icon",
+            "body": "<p>An extraordinary lineage of single-vintage Para Tawny matured in the historic Centennial Cellar.</p>",
+            "meta_tags": "From 1878, Single vintage, Historic releases",
+            "button_label": "Explore the Collection",
+            "button_url": "/collections/centenniral"
           }
         }
       },
       "block_order": [
-        "village",
-        "bench_blend",
-        "the_grounds",
-        "estate_icon",
-        "para_tawny",
-        "gifting",
-        "cellar_door"
+        "featured_1"
       ],
       "settings": {
-        "content_width": "wide",
-        "columns_desktop": 3,
-        "columns_tablet": 3,
-        "columns_mobile": 2,
-        "grid_gap": 16,
-        "card_border_radius": 2,
-        "card_min_height_desktop": 480,
-        "card_min_height_mobile": 340,
-        "wide_min_height_desktop": 220,
-        "wide_min_height_mobile": 200,
-        "enable_hover_zoom": true,
-        "missing_link_behavior": "placeholder",
-        "padding_top_desktop": 64,
-        "padding_bottom_desktop": 80,
-        "padding_top_mobile": 40,
-        "padding_bottom_mobile": 48
+        "eyebrow": "",
+        "heading": "",
+        "body": "",
+        "color_scheme": "soft_blue",
+        "grid_width": "contained",
+        "spacing_preset": "spacious"
+      }
+    },
+    "shop_showcase": {
+      "type": "sf2-collection-showcase",
+      "blocks": {
+        "c1": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "title_override": "Still Wines",
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+            "body": "Red, white, rosé and sparkling wines shaped by the estate and broader Barossa region.",
+            "url_override": "/collections/still-wines"
+          }
+        },
+        "c2": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "title_override": "Fortified Wines",
+            "image": "shopify://shop_images/para-grand--glasses-on-side-table-by-sofa-1687414300459.jpg",
+            "body": "Rich and complex expressions reflecting one of Seppeltsfield's defining winemaking traditions.",
+            "url_override": "/collections/fortified-wines"
+          }
+        },
+        "c3": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "title_override": "Gift Packs",
+            "image": "shopify://shop_images/Seppeltsfield-OCT25-0017-scaled.jpg",
+            "body": "Curated combinations for celebrations, milestones and meaningful occasions.",
+            "url_override": "/collections/gift-packs"
+          }
+        },
+        "c4": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "title_override": "Cellar Door Products",
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0122.jpg",
+            "body": "Estate merchandise, specialty items and products connected to a visit to Seppeltsfield.",
+            "url_override": "/collections/cellar-door-products"
+          }
+        },
+        "c5": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "title_override": "Limited Releases",
+            "image": "shopify://shop_images/Cellar-_-Home-WP.png",
+            "body": "Rare and seasonal releases showcasing the depth and character of Seppeltsfield winemaking.",
+            "url_override": "/collections/limited-releases"
+          }
+        },
+        "c6": {
+          "type": "collection_card",
+          "settings": {
+            "collection": "",
+            "title_override": "Gift Vouchers",
+            "image": "shopify://shop_images/Screenshot_2026-07-17_at_6.24.26_AM.png",
+            "body": "Flexible gifting for wine, dining and experiences across the Seppeltsfield estate.",
+            "url_override": "/collections/gift-vouchers"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6"
+      ],
+      "settings": {
+        "eyebrow": "Explore the range",
+        "heading": "Shop by collection.",
+        "body": "Browse the key Seppeltsfield collections and continue into the dedicated Shopify collection pages.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "shop_experience": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "Experience Seppeltsfield",
+        "heading": "Give more than a bottle.",
+        "body": "<p>Pair the Shop journey with tastings, estate tours, dining and accommodation experiences available across Seppeltsfield.</p>",
+        "link_label": "Explore experiences",
+        "link_url": "/pages/book-experience",
+        "image": "shopify://shop_images/N_Breen_BoatOCraigo-114.jpg",
+        "badge_text": "Wine · Dining · Stay",
+        "layout": "copy_left",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "shop_newsletter": {
+      "type": "sf2-newsletter",
+      "settings": {
+        "eyebrow": "New releases and estate news",
+        "heading": "Stay connected.",
+        "placeholder": "Email address",
+        "button_label": "Subscribe",
+        "success_message": "Thanks for subscribing.",
+        "error_message": "Please enter a valid email.",
+        "color_scheme": "black",
+        "spacing_preset": "standard"
       }
     }
   },
   "order": [
-    "sf_shop_hero",
-    "sf_shop_collections_grid"
+    "shop_hero",
+    "shop_featured",
+    "shop_showcase",
+    "shop_experience",
+    "shop_newsletter"
   ]
 }

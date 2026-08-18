@@ -9,400 +9,555 @@
  */
 {
   "sections": {
-    "sf_home_hero": {
-      "type": "sf-home-hero",
-      "settings": {
-        "content_width": "standard",
-        "desktop_image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg",
-        "enable_background_video": false,
-        "desktop_video_url": "",
-        "mobile_video_url": "",
-        "autoplay_video": true,
-        "loop_video": true,
-        "mute_video": true,
-        "background_color": "#050505",
-        "overlay_color": "#111315",
-        "overlay_opacity": 45,
-        "eyebrow": "BAROSSA VALLEY",
-        "heading": "175 Years of\nWinemaking\nHeritage.",
-        "copy": "<p>From 1851 to today, seven generations have shaped the Seppeltsfield estate and its renowned wines.</p>",
-        "content_align": "left",
-        "vertical_align": "end",
-        "content_max_width": 680,
-        "eyebrow_color": "#f4f1ea",
-        "heading_color": "#ffffff",
-        "text_color": "#f4f1ea",
-        "eyebrow_size_desktop": 12,
-        "eyebrow_size_mobile": 11,
-        "heading_size_desktop": 80,
-        "heading_size_mobile": 44,
-        "body_size_desktop": 17,
-        "body_size_mobile": 15,
-        "primary_label": "DISCOVER OUR STORY",
-        "primary_url": "",
-        "primary_new_tab": false,
-        "primary_style": "solid",
-        "primary_text_color": "#ffffff",
-        "primary_bg_color": "#47a8df",
-        "primary_border_color": "#47a8df",
-        "primary_hover_text_color": "#ffffff",
-        "primary_hover_bg_color": "#087ca7",
-        "secondary_label": "PLAN YOUR VISIT",
-        "secondary_url": "",
-        "secondary_new_tab": false,
-        "secondary_style": "outline",
-        "secondary_text_color": "#ffffff",
-        "secondary_bg_color": "rgba(0,0,0,0)",
-        "secondary_border_color": "#ffffff",
-        "secondary_hover_text_color": "#111315",
-        "secondary_hover_bg_color": "#f4f1ea",
-        "watch_label": "WATCH THE FILM",
-        "film_embed_url": "",
-        "show_scroll_indicator": true,
-        "scroll_label": "SCROLL",
-        "scroll_target": "#sf-home-utility-strip",
-        "min_height_desktop": 92,
-        "min_height_mobile": 74,
-        "padding_top_desktop": 24,
-        "padding_bottom_desktop": 36,
-        "padding_top_mobile": 20,
-        "padding_bottom_mobile": 24
-      }
-    },
-    "sf_home_utility": {
-      "type": "sf-home-utility-strip",
+    "sf2_hero": {
+      "type": "sf2-hero-slider",
       "blocks": {
-        "utility_one": {
-          "type": "utility_item",
+        "slide_1": {
+          "type": "slide",
           "settings": {
-            "icon_symbol": "♛",
-            "heading": "Crown Society",
-            "supporting_text": "Complimentary tasting for members",
-            "link_label": "",
-            "link_url": "",
-            "icon_color": "#47a8df",
-            "show_divider": true
+            "background_image": "shopify://shop_images/Seppelsfield-OCT24-0134.jpg",
+            "mobile_image": "shopify://shop_images/Seppelsfield-OCT24-0134.jpg",
+            "eyebrow": "175 years of Seppeltsfield",
+            "heading": "A legacy crowned by time.",
+            "body": "<p>Seven generations of winemaking, enduring craftsmanship and one of Australia's most significant wine estates.</p>",
+            "primary_button_label": "Explore Our History",
+            "primary_button_url": "/pages/heritage-story",
+            "secondary_button_label": "Plan Your Visit",
+            "secondary_button_url": "/pages/visit",
+            "note_heading": "",
+            "note_body": ""
           }
         },
-        "utility_two": {
-          "type": "utility_item",
+        "slide_2": {
+          "type": "slide",
           "settings": {
-            "icon_symbol": "◷",
-            "heading": "Open daily",
-            "supporting_text": "10:00am–5:00pm",
-            "link_label": "",
-            "link_url": "",
-            "icon_color": "#47a8df",
-            "show_divider": true
+            "background_image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
+            "mobile_image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
+            "eyebrow": "Centennial Collection",
+            "heading": "Every vintage tells a story.",
+            "body": "<p>An unparalleled collection of single-vintage Para Tawny, matured in the heart of the estate.</p>",
+            "primary_button_label": "Shop the Collection",
+            "primary_button_url": "/collections/centenniral",
+            "secondary_button_label": "Discover the Cellar",
+            "secondary_button_url": "/pages/heritage-story",
+            "note_heading": "",
+            "note_body": ""
           }
         },
-        "utility_three": {
-          "type": "utility_item",
+        "slide_3": {
+          "type": "slide",
           "settings": {
-            "icon_symbol": "⌖",
-            "heading": "Barossa Valley",
-            "supporting_text": "Seppeltsfield Road, Marananga",
-            "link_label": "",
-            "link_url": "",
-            "icon_color": "#47a8df",
-            "show_divider": true
+            "background_image": "shopify://shop_images/Seppelsfield-OCT24-0127.jpg",
+            "mobile_image": "shopify://shop_images/Seppelsfield-OCT24-0127.jpg",
+            "eyebrow": "The Seppeltsfield Estate",
+            "heading": "Taste, dine, stay and discover.",
+            "body": "<p>A landmark Barossa destination bringing together wine, food, art, gardens, architecture and hospitality.</p>",
+            "primary_button_label": "Explore the Estate",
+            "primary_button_url": "/pages/visit",
+            "secondary_button_label": "What's On",
+            "secondary_button_url": "/pages/functions-events",
+            "note_heading": "",
+            "note_body": ""
+          }
+        },
+        "quick_1": {
+          "type": "quick_link",
+          "settings": {
+            "icon": "crown",
+            "title": "Crown Society",
+            "subtitle": "Member pricing & privileges",
+            "url": "/pages/wine-club"
+          }
+        },
+        "quick_2": {
+          "type": "quick_link",
+          "settings": {
+            "icon": "clock",
+            "title": "Open Daily",
+            "subtitle": "Plan your estate visit",
+            "url": "/pages/visit"
+          }
+        },
+        "quick_3": {
+          "type": "quick_link",
+          "settings": {
+            "icon": "map-pin",
+            "title": "Barossa Valley",
+            "subtitle": "Seppeltsfield Road",
+            "url": "/pages/plan-your-visit"
+          }
+        },
+        "quick_4": {
+          "type": "quick_link",
+          "settings": {
+            "icon": "calendar",
+            "title": "Book Online",
+            "subtitle": "Tastings, tours & dining",
+            "url": "/pages/book-experience"
           }
         }
       },
       "block_order": [
-        "utility_one",
-        "utility_two",
-        "utility_three"
+        "slide_1",
+        "slide_2",
+        "slide_3",
+        "quick_1",
+        "quick_2",
+        "quick_3",
+        "quick_4"
       ],
       "settings": {
-        "content_width": "standard",
-        "background_color": "#050505",
-        "text_color": "#ffffff",
-        "accent_color": "#47a8df",
-        "divider_color": "#4a4a4a",
-        "columns_desktop": 3,
-        "columns_tablet": 2,
-        "icon_size": 28,
-        "mobile_layout": "scroll",
-        "padding_desktop": 20,
-        "padding_mobile": 16
+        "hero_height": "full_screen",
+        "autoplay_speed": 6.5,
+        "color_scheme": "dark",
+        "spacing_preset": "standard"
       }
     },
-    "sf_home_heritage": {
-      "type": "sf-home-heritage-story",
-      "settings": {
-        "content_width": "standard",
-        "eyebrow": "OUR HERITAGE",
-        "heading": "A Living Legacy\nSince 1851.",
-        "copy": "<p>Seppeltsfield is one of the world's great wine estates. Our Centennial Cellar, established in 1878, holds the world's only unbroken lineage of single vintage Tawny - 149 consecutive vintages and counting. We are the only winery on earth to release a 100 Year Old wine every single year since 1978.</p>",
-        "link_label": "EXPLORE OUR HISTORY",
-        "link_url": "",
-        "main_image": "shopify://shop_images/historyHERO.jpg",
-        "secondary_image": "shopify://shop_images/Old-Bottling-Hall-c1900-now-Seppeltsfields-Cellar-Door-1.jpg",
-        "document_image": "shopify://shop_images/provenance-of-para-HERO.jpg",
-        "mobile_media_layout": "stack",
-        "background_color": "#f4f1ea",
-        "heading_color": "#111315",
-        "text_color": "#2a2a2a",
-        "muted_color": "#6d4b35",
-        "accent_color": "#47a8df",
-        "heading_size_desktop": 62,
-        "heading_size_mobile": 38,
-        "body_size_desktop": 17,
-        "body_size_mobile": 15,
-        "padding_top_desktop": 72,
-        "padding_bottom_desktop": 72,
-        "padding_top_mobile": 44,
-        "padding_bottom_mobile": 44
-      }
-    },
-    "sf_home_timeline": {
-      "type": "sf-home-timeline",
+    "sf2_why": {
+      "type": "sf2-why-seppeltsfield",
       "blocks": {
-        "timeline_1": {
-          "type": "timeline_item",
+        "feature_1": {
+          "type": "feature",
           "settings": {
-            "year": "1851",
-            "heading": "Joseph Seppelt plants the first vines",
-            "description": "The Seppeltsfield story begins in the Barossa Valley.",
-            "image": "shopify://shop_images/1851-The-Seppelt-Homestead_e9d9bb2c-70b3-4b3a-9c6f-5304e5e516bd.png",
-            "link_label": "",
-            "link_url": "",
-            "highlighted": false
+            "icon": "heritage",
+            "heading": "175 Years of Heritage",
+            "body": "<p>One of Australia's most historic wine estates, established in the Barossa Valley in 1851.</p>"
           }
         },
-        "timeline_2": {
-          "type": "timeline_item",
+        "feature_2": {
+          "type": "feature",
           "settings": {
-            "year": "1878",
-            "heading": "Centennial Cellar is built, beginning 149 unbroken vintages of single vintage Tawny",
-            "description": "A puncheon is set aside to begin an unbroken annual tradition.",
-            "image": "shopify://shop_images/1878-Centennial-Cellar_1852609a-18d7-43fc-a756-b8f26a80b632.png",
-            "link_label": "",
-            "link_url": "",
-            "highlighted": false
+            "icon": "collection",
+            "heading": "The Centennial Collection",
+            "body": "<p>An extraordinary unbroken lineage of single-vintage Para Tawny beginning in 1878.</p>"
           }
         },
-        "timeline_3": {
-          "type": "timeline_item",
+        "feature_3": {
+          "type": "feature",
           "settings": {
-            "year": "1888",
-            "heading": "The Gravity Cellar is completed",
-            "description": "Built into the hillside for gentle gravity-fed fruit handling.",
-            "image": "shopify://shop_images/1888-Gravity-Cellar_368782e0-9011-4052-b064-54cfab58eda8.png",
-            "link_label": "",
-            "link_url": "",
-            "highlighted": false
-          }
-        },
-        "timeline_4": {
-          "type": "timeline_item",
-          "settings": {
-            "year": "1900",
-            "heading": "The Bottling Hall opens - today's Cellar Door and FINO Restaurant",
-            "description": "A working hall that evolved into a key estate destination.",
-            "image": "shopify://shop_images/1900-Bottling-Hall_b7672e51-26c2-4941-98e6-ed5ab58a0115.png",
-            "link_label": "",
-            "link_url": "",
-            "highlighted": false
-          }
-        },
-        "timeline_5": {
-          "type": "timeline_item",
-          "settings": {
-            "year": "2009",
-            "heading": "Warren Randall brings the estate into a new era",
-            "description": "Seppeltsfield enters the Randall Wine Group era.",
-            "image": "shopify://shop_images/2009-WDR-becomes-majority-shareholder_69f3e3ee-31b8-4127-88c0-7cb32135abae.png",
-            "link_label": "",
-            "link_url": "",
-            "highlighted": false
+            "icon": "destination",
+            "heading": "A Destination Beyond Wine",
+            "body": "<p>Cellar Door, FINO, accommodation, gardens, artisans and immersive estate experiences in one destination.</p>"
           }
         }
       },
       "block_order": [
-        "timeline_1",
-        "timeline_2",
-        "timeline_3",
-        "timeline_4",
-        "timeline_5"
+        "feature_1",
+        "feature_2",
+        "feature_3"
       ],
       "settings": {
-        "content_width": "standard",
-        "eyebrow": "OUR TIMELINE",
-        "intro_heading": "Milestones in Seppeltsfield history",
-        "intro_copy": "A story of heritage, innovation and craftsmanship.",
-        "show_timeline_images": true,
-        "mobile_layout": "scroll",
-        "background_color": "#111315",
-        "text_color": "#ffffff",
-        "muted_color": "#d6cec1",
-        "accent_color": "#47a8df",
-        "line_color": "#555555",
-        "columns_desktop": 5,
-        "timeline_gap": 18,
-        "padding_top_desktop": 56,
-        "padding_bottom_desktop": 56,
-        "padding_top_mobile": 32,
-        "padding_bottom_mobile": 32
+        "eyebrow": "Why Seppeltsfield",
+        "heading": "A place unlike any other.",
+        "body": "Before introducing products or bookings, the homepage should quickly explain what makes Seppeltsfield distinct to first-time visitors.",
+        "color_scheme": "ivory",
+        "spacing_preset": "standard"
       }
     },
-    "sf_home_experiences": {
-      "type": "sf-home-estate-experiences",
+    "sf2_journey": {
+      "type": "sf2-journey-grid",
       "blocks": {
-        "exp_1": {
-          "type": "experience",
+        "journey_1": {
+          "type": "journey_card",
+          "settings": {
+            "image": "shopify://shop_images/historyHERO.jpg",
+            "title": "Discover",
+            "url": "/pages/discover"
+          }
+        },
+        "journey_2": {
+          "type": "journey_card",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
+            "title": "Visit",
+            "url": "/pages/visit"
+          }
+        },
+        "journey_3": {
+          "type": "journey_card",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+            "title": "Shop",
+            "url": "/collections"
+          }
+        },
+        "journey_4": {
+          "type": "journey_card",
           "settings": {
             "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
-            "eyebrow": "Experience",
-            "heading": "Centennial Cellar",
-            "copy": "Explore one of the world’s most extraordinary wine collections.",
-            "link_label": "Explore",
-            "link_url": "",
-            "featured": false
+            "title": "Wine Club",
+            "url": "/pages/wine-club"
+          }
+        },
+        "journey_5": {
+          "type": "journey_card",
+          "settings": {
+            "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
+            "title": "Book Experience",
+            "url": "/pages/book-experience"
+          }
+        }
+      },
+      "block_order": [
+        "journey_1",
+        "journey_2",
+        "journey_3",
+        "journey_4",
+        "journey_5"
+      ],
+      "settings": {
+        "eyebrow": "Choose your journey",
+        "heading": "Explore Seppeltsfield your way.",
+        "body": "Five clear pathways mirror the approved navigation and help visitors immediately choose between storytelling, planning, shopping, membership and bookings.",
+        "color_scheme": "dark",
+        "grid_style": "connected",
+        "spacing_preset": "standard"
+      }
+    },
+    "sf2_intro": {
+      "type": "sf2-editorial-intro",
+      "settings": {
+        "eyebrow": "The house of Seppeltsfield",
+        "heading": "A grand estate with a living soul.",
+        "body": "<p>The homepage should introduce Seppeltsfield's stature without trying to tell its complete history. It establishes the brand, presents the estate as a premium destination, and leads visitors toward the most important journeys: visit, wine, membership, events and history.</p><p>The crown is treated as a visual signature through formal spacing, restrained typography, strong black-and-ivory contrast and precise use of Seppeltsfield blue rather than decorative metallic styling.</p>",
+        "link_label": "Enter the 175-year story",
+        "link_url": "/pages/heritage-story",
+        "seal_line_1": "Est. 1851",
+        "seal_line_2": "Barossa Valley",
+        "main_image": "shopify://shop_images/historyHERO.jpg",
+        "secondary_image": "shopify://shop_images/Old-Bottling-Hall-c1900-now-Seppeltsfields-Cellar-Door-1.jpg",
+        "label_eyebrow": "Seven generations",
+        "label_heading": "Heritage that remains in motion.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "sf2_gateway": {
+      "type": "sf2-estate-gateway",
+      "blocks": {
+        "gateway_1": {
+          "type": "gateway_card",
+          "settings": {
+            "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+            "title": "Cellar Door & Experiences",
+            "body": "Tastings, tours, the Centennial Cellar and the self-guided heritage experience.",
+            "url": "/pages/wine-tastings"
+          }
+        },
+        "gateway_2": {
+          "type": "gateway_card",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0225.jpg",
+            "title": "Dine at the Estate",
+            "body": "FINO, Café Gardens and seasonal food experiences across the property.",
+            "url": "/pages/fino-restaurant"
+          }
+        },
+        "gateway_3": {
+          "type": "gateway_card",
+          "settings": {
+            "image": "shopify://shop_images/BMAC7229.jpg",
+            "title": "Stay at The Lodge",
+            "body": "Private accommodation immersed in the architecture and landscape of Seppeltsfield.",
+            "url": "/pages/accommodation"
+          }
+        },
+        "gateway_4": {
+          "type": "gateway_card",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0145.jpg",
+            "title": "Artisans & Makers",
+            "body": "JamFactory, Vasse Virgin, Prohibition Distillery, YN Oak and specialist retailers.",
+            "url": "/pages/discover"
+          }
+        }
+      },
+      "block_order": [
+        "gateway_1",
+        "gateway_2",
+        "gateway_3",
+        "gateway_4"
+      ],
+      "settings": {
+        "eyebrow": "Discover the estate",
+        "heading": "One destination. Many ways to experience it.",
+        "body": "The existing Visit Us pages are grouped beneath one strong destination page, with filters or anchored sections for tastings, dining, makers, accommodation and practical visitor information.",
+        "color_scheme": "black",
+        "spacing_preset": "standard"
+      }
+    },
+    "sf2_history": {
+      "type": "sf2-history-preview",
+      "blocks": {
+        "chapter_1": {
+          "type": "chapter",
+          "settings": {
+            "year_label": "1851",
+            "title": "Foundation and the Seppelt family"
+          }
+        },
+        "chapter_2": {
+          "type": "chapter",
+          "settings": {
+            "year_label": "1878",
+            "title": "The Centennial Cellar begins"
+          }
+        },
+        "chapter_3": {
+          "type": "chapter",
+          "settings": {
+            "year_label": "1880s",
+            "title": "Architecture and gravity-flow winemaking"
+          }
+        },
+        "chapter_4": {
+          "type": "chapter",
+          "settings": {
+            "year_label": "1900s",
+            "title": "Growth, industry and the Barossa"
+          }
+        },
+        "chapter_5": {
+          "type": "chapter",
+          "settings": {
+            "year_label": "Today",
+            "title": "Custodianship and the next chapter"
+          }
+        }
+      },
+      "block_order": [
+        "chapter_1",
+        "chapter_2",
+        "chapter_3",
+        "chapter_4",
+        "chapter_5"
+      ],
+      "settings": {
+        "eyebrow": "A dedicated history destination",
+        "heading": "175 years deserves more than a timeline strip.",
+        "body": "<p>History should not be reduced to a single scrolling band on the homepage. Instead, the site introduces the scale of Seppeltsfield's story and routes visitors to a dedicated history destination with room for depth, imagery and chapter-based navigation.</p><p>The preview section establishes credibility and curiosity while keeping the homepage focused on discovery, visit planning and commerce.</p>",
+        "button_label": "Explore the Full History",
+        "button_url": "/pages/heritage-story",
+        "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg",
+        "callout_text": "The full history becomes its own immersive page",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "sf2_collections": {
+      "type": "sf2-featured-collections",
+      "blocks": {
+        "collection_1": {
+          "type": "collection_row",
+          "settings": {
+            "collection": "",
+            "title_override": "Centennial Collection",
+            "image": "shopify://shop_images/seppelsfield-oct24-0060-web-1751248450385.jpg",
+            "label_text": "",
+            "eyebrow": "The icon",
+            "body": "<p>An unparalleled lineage of single-vintage Para Tawny matured in the historic Centennial Cellar. This should be the principal collection story on the homepage.</p>",
+            "meta_tags": "From 1878, Single vintage, Historic releases",
+            "button_label": "Discover the Collection",
+            "button_url": "/collections/centenniral"
+          }
+        },
+        "collection_2": {
+          "type": "collection_row",
+          "settings": {
+            "collection": "",
+            "title_override": "Luxury Still Wines",
+            "image": "shopify://shop_images/para-grand--glasses-on-side-table-by-sofa-1687414300459.jpg",
+            "label_text": "",
+            "eyebrow": "Estate grown",
+            "body": "<p>Contemporary expressions of the Barossa shaped by vineyard character, thoughtful winemaking and the heritage of the estate.</p>",
+            "meta_tags": "Red, White, Rosé, Sparkling",
+            "button_label": "Explore Still Wines",
+            "button_url": "/collections/still-wines"
+          }
+        },
+        "collection_3": {
+          "type": "collection_row",
+          "settings": {
+            "collection": "",
+            "title_override": "Fortified Collection",
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0109.jpg",
+            "label_text": "",
+            "eyebrow": "A defining tradition",
+            "body": "<p>Rich, complex wines representing one of Seppeltsfield's most enduring areas of expertise and craftsmanship.</p>",
+            "meta_tags": "Para Tawny, Aged releases, Cellar classics",
+            "button_label": "Explore Fortified Wines",
+            "button_url": "/collections/fortified-wines"
+          }
+        },
+        "collection_4": {
+          "type": "collection_row",
+          "settings": {
+            "collection": "",
+            "title_override": "Gifting",
+            "image": "shopify://shop_images/Screenshot_2026-07-17_at_6.24.26_AM.png",
+            "label_text": "",
+            "eyebrow": "The art of giving",
+            "body": "<p>Curated wines, gift packs and vouchers presented with the elegance expected from the Seppeltsfield estate.</p>",
+            "meta_tags": "Gift packs, Vouchers, Special occasions",
+            "button_label": "Explore Gifting",
+            "button_url": "/collections/gift-packs"
+          }
+        }
+      },
+      "block_order": [
+        "collection_1",
+        "collection_2",
+        "collection_3",
+        "collection_4"
+      ],
+      "settings": {
+        "eyebrow": "Featured collections",
+        "heading": "Wine presented through story, not a product grid.",
+        "body": "The homepage leads visitors into the store through Seppeltsfield's most important collections. Prices, badges and Add to Cart buttons remain on collection and product templates.",
+        "color_scheme": "ivory",
+        "grid_width": "full_bleed",
+        "spacing_preset": "standard"
+      }
+    },
+    "sf2_experiences": {
+      "type": "sf2-experience-grid",
+      "blocks": {
+        "exp_1": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/seppeltsfield27052020-95-1598841709273.jpg",
+            "eyebrow": "Taste",
+            "title": "Wine Tastings",
+            "body": "Guided tastings from current releases to rare cellar experiences.",
+            "link_label": "View tastings",
+            "url": "/pages/wine-tastings"
           }
         },
         "exp_2": {
-          "type": "experience",
+          "type": "experience_card",
           "settings": {
-            "image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
-            "eyebrow": "Experience",
-            "heading": "Dine at FINO",
-            "copy": "Regional produce and estate views in every season.",
-            "link_label": "Explore",
-            "link_url": "",
-            "featured": false
+            "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
+            "eyebrow": "Discover",
+            "title": "Estate Tours",
+            "body": "Explore the cellars, architecture, gardens and remarkable history of the estate.",
+            "link_label": "View tours",
+            "url": "/pages/experiences"
           }
         },
         "exp_3": {
-          "type": "experience",
+          "type": "experience_card",
           "settings": {
-            "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
-            "eyebrow": "Experience",
-            "heading": "Stay at The Lodge",
-            "copy": "A luxurious stay among palms and vineyards.",
-            "link_label": "Explore",
-            "link_url": "",
-            "featured": false
-          }
-        },
-        "exp_4": {
-          "type": "experience",
-          "settings": {
-            "image": "shopify://shop_images/Seppelsfield-OCT24-0145.jpg",
-            "eyebrow": "Experience",
-            "heading": "Experiences on the Estate",
-            "copy": "Craft, culture and cellar discoveries.",
-            "link_label": "Explore",
-            "link_url": "",
-            "featured": false
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0225.jpg",
+            "eyebrow": "Dine",
+            "title": "FINO & Café Gardens",
+            "body": "Seasonal dining and relaxed estate hospitality in the heart of Seppeltsfield.",
+            "link_label": "Explore dining",
+            "url": "/pages/fino-restaurant"
           }
         }
       },
       "block_order": [
         "exp_1",
         "exp_2",
-        "exp_3",
-        "exp_4"
+        "exp_3"
       ],
       "settings": {
-        "content_width": "wide",
-        "intro_eyebrow": "THE ESTATE",
-        "intro_heading": "More Than Wine.\nAn Experience.",
-        "intro_copy": "Cellar door tastings, award-winning dining, luxury accommodation and immersive experiences await you.",
-        "intro_link_label": "EXPLORE THE ESTATE",
-        "intro_link_url": "",
-        "background_color": "#050505",
-        "intro_panel_background": "#111315",
-        "text_color": "#ffffff",
-        "muted_color": "#d6cec1",
-        "accent_color": "#47a8df",
-        "card_gap": 12,
-        "padding_top_desktop": 56,
-        "padding_bottom_desktop": 56,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 28
+        "section_anchor_id": "",
+        "eyebrow": "Experience Seppeltsfield",
+        "heading": "Turn discovery into a visit.",
+        "body": "Bookable experiences appear after the collection storytelling so commerce and visitation both receive clear, premium pathways.",
+        "card_style": "bordered",
+        "grid_layout": "equal",
+        "color_scheme": "light",
+        "spacing_preset": "standard"
       }
     },
-    "sf_home_featured_wine": {
-      "type": "sf-home-featured-wine",
+    "sf2_club": {
+      "type": "sf2-wine-club-cta",
+      "settings": {
+        "eyebrow": "The Crown Society",
+        "heading": "Membership worthy of the estate.",
+        "body": "Exclusive wine access, member pricing, complimentary delivery and private Seppeltsfield experiences.",
+        "button_label": "Explore Membership",
+        "button_url": "/pages/wine-club",
+        "icon": "crown",
+        "color_scheme": "black",
+        "spacing_preset": "compact"
+      }
+    },
+    "sf2_journal": {
+      "type": "sf2-journal-grid",
       "blocks": {
-        "quote_1": {
-          "type": "testimonial",
+        "story_1": {
+          "type": "story_card",
           "settings": {
-            "quote": "\"A testament to time, patience and place.\"",
-            "author": "Tyson Stelzer",
-            "publication": "Australian Wine Companion"
+            "image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg",
+            "eyebrow": "Heritage",
+            "title": "175 years in the Barossa",
+            "body": "A deeper look at the people, place and decisions that shaped the estate.",
+            "url": ""
+          }
+        },
+        "story_2": {
+          "type": "story_card",
+          "settings": {
+            "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg",
+            "eyebrow": "Winemaking",
+            "title": "Vintage report",
+            "body": "Seasonal insights from the vineyard and cellar.",
+            "url": ""
+          }
+        },
+        "story_3": {
+          "type": "story_card",
+          "settings": {
+            "image": "shopify://shop_images/Z62_5420.jpg",
+            "eyebrow": "Estate life",
+            "title": "From the FINO kitchen",
+            "body": "Food, producers and the changing seasons.",
+            "url": ""
           }
         }
       },
       "block_order": [
-        "quote_1"
+        "story_1",
+        "story_2",
+        "story_3"
       ],
       "settings": {
-        "content_width": "standard",
-        "featured_product": "2020-seppeltsfield-the-westing-barossa-shiraz-wine",
-        "eyebrow": "FEATURED WINE",
-        "manual_heading": "Para 21 Year Old Tawny",
-        "manual_description": "A complex and elegant tawny with nutty, spiced characters and a long, lingering finish.",
-        "image_override": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
-        "show_product_price": true,
-        "link_to_product": true,
-        "button_label": "DISCOVER PARA 21",
-        "button_url_override": "",
-        "autoplay_slider": false,
-        "autoplay_delay": 6000,
-        "show_arrows": true,
-        "show_counter": true,
-        "left_background": "#f4f1ea",
-        "middle_background": "#f4f1ea",
-        "right_background": "#111315",
-        "left_text_color": "#111315",
-        "right_text_color": "#ffffff",
-        "button_text_color": "#ffffff",
-        "button_bg_color": "#47a8df",
-        "button_border_color": "#47a8df",
-        "button_hover_text_color": "#ffffff",
-        "button_hover_bg_color": "#087ca7",
-        "padding_top_desktop": 52,
-        "padding_bottom_desktop": 52,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 28
+        "eyebrow": "From the estate journal",
+        "heading": "Stories from Seppeltsfield.",
+        "link_label": "View all stories",
+        "link_url": "",
+        "color_scheme": "ivory",
+        "spacing_preset": "standard"
       }
     },
-    "sf_home_crown_society": {
-      "type": "sf-home-crown-society",
+    "sf2_newsletter": {
+      "type": "sf2-newsletter",
       "settings": {
-        "content_width": "standard",
-        "dark_style": false,
-        "eyebrow": "THE CROWN SOCIETY",
-        "heading": "OUR WINE CLUB",
-        "copy": "Enjoy priority access to limited releases, exclusive events and special member benefits.",
-        "button_label": "LEARN MORE",
-        "button_url": "",
-        "content_alignment": "left",
-        "background_color": "#47a8df",
-        "text_color": "#ffffff",
-        "accent_color": "#ffffff",
-        "divider_color": "#ffffff47",
-        "button_text_color": "#ffffff",
-        "button_border_color": "#ffffff",
-        "button_hover_text_color": "#111315",
-        "button_hover_bg_color": "#ffffff",
-        "padding_top_desktop": 36,
-        "padding_bottom_desktop": 36,
-        "padding_top_mobile": 28,
-        "padding_bottom_mobile": 28
+        "eyebrow": "Join the community",
+        "heading": "News from the estate.",
+        "placeholder": "Your email address",
+        "button_label": "Subscribe",
+        "success_message": "Thanks for subscribing.",
+        "error_message": "Please enter a valid email.",
+        "color_scheme": "black",
+        "spacing_preset": "standard"
       }
     }
   },
   "order": [
-    "sf_home_hero",
-    "sf_home_utility",
-    "sf_home_heritage",
-    "sf_home_timeline",
-    "sf_home_experiences",
-    "sf_home_featured_wine",
-    "sf_home_crown_society"
+    "sf2_hero",
+    "sf2_why",
+    "sf2_journey",
+    "sf2_intro",
+    "sf2_gateway",
+    "sf2_history",
+    "sf2_collections",
+    "sf2_experiences",
+    "sf2_club",
+    "sf2_journal",
+    "sf2_newsletter"
   ]
 }

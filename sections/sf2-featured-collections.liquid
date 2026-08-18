@@ -1,0 +1,104 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-home.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+
+{%- assign grid_width = section.settings.grid_width | default: 'full_bleed' -%}
+
+<section id="collections" class="sf2-collection sf2-section{% if grid_width == 'contained' %} sf2-collection--contained{% endif %}" style="{{ section_style | strip }}">
+  {%- if section.settings.eyebrow != blank or section.settings.heading != blank or section.settings.body != blank -%}
+    <div class="sf2-wrap">
+      {% render 'sf2-section-header',
+        eyebrow: section.settings.eyebrow,
+        heading: section.settings.heading,
+        body: section.settings.body
+      %}
+    </div>
+  {%- endif -%}
+  {%- if grid_width == 'contained' -%}<div class="sf2-wrap">{% endif -%}
+  {%- assign row_count = section.blocks.size -%}
+  {%- for block in section.blocks -%}
+    {%- liquid
+      assign row_title = block.settings.title_override
+      if row_title == blank and block.settings.collection != blank
+        assign row_title = block.settings.collection.title
+      endif
+      assign row_url = block.settings.collection.url | default: block.settings.button_url
+      assign tags = block.settings.meta_tags | split: ','
+    -%}
+    {%- assign row_mod = forloop.index0 | modulo: 2 -%}
+    <article class="sf2-collection__row{% if row_mod == 1 %} is-reverse{% endif %}" {{ block.shopify_attributes }}>
+      <div class="sf2-collection__media">
+        {%- if block.settings.label_text != blank -%}
+          <span class="sf2-collection__label">{{ block.settings.label_text }}</span>
+        {%- else -%}
+          <span class="sf2-collection__index">{{ forloop.index | prepend: '0' | slice: -2, 2 }} / {{ row_count | prepend: '0' | slice: -2, 2 }}</span>
+        {%- endif -%}
+        {%- if block.settings.image != blank -%}
+          {% render 'sf2-picture', image: block.settings.image, sizes: '(min-width: 990px) 55vw, 100vw' %}
+        {%- elsif block.settings.collection != blank and block.settings.collection.image != blank -%}
+          {% render 'sf2-picture', image: block.settings.collection.image, sizes: '(min-width: 990px) 55vw, 100vw' %}
+        {%- endif -%}
+      </div>
+      <div class="sf2-collection__copy">
+        {%- if block.settings.eyebrow != blank -%}{% render 'sf2-eyebrow', text: block.settings.eyebrow, brand: true %}{%- endif -%}
+        {%- if row_title != blank -%}<h3 class="sf2-serif">{{ row_title }}</h3>{%- endif -%}
+        {%- if block.settings.body != blank -%}<div>{{ block.settings.body }}</div>{%- endif -%}
+        {%- if block.settings.meta_tags != blank -%}
+          <div class="sf2-collection__meta">
+            {%- for tag in tags -%}
+              {%- assign tag_trim = tag | strip -%}
+              {%- if tag_trim != blank -%}<span>{{ tag_trim }}</span>{%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        {%- if block.settings.button_label != blank -%}
+          {% render 'sf2-button', preset: 'primary_dark', label: block.settings.button_label, url: row_url %}
+        {%- endif -%}
+      </div>
+    </article>
+  {%- endfor -%}
+  {%- if grid_width == 'contained' -%}</div>{%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Featured Collections",
+  "tag": "section",
+  "class": "sf2-collection-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Featured collections" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Wine presented through story, not a product grid." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "The homepage leads visitors into the store through Seppeltsfield's most important collections. Prices, badges and Add to Cart buttons remain on collection and product templates." },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "ivory", "options": [
+      { "value": "light", "label": "Light" }, { "value": "ivory", "label": "Ivory" }, { "value": "soft_blue", "label": "Soft Blue" }
+    ]},
+    { "type": "select", "id": "grid_width", "label": "Grid width", "default": "full_bleed", "options": [
+      { "value": "full_bleed", "label": "Full bleed rows" }, { "value": "contained", "label": "Contained in page width" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "standard", "options": [
+      { "value": "compact", "label": "Compact" }, { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "collection_row",
+      "name": "Collection row",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "text", "id": "title_override", "label": "Title override" },
+        { "type": "image_picker", "id": "image", "label": "Image override" },
+        { "type": "text", "id": "label_text", "label": "Image label pill" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The icon" },
+        { "type": "richtext", "id": "body", "label": "Body" },
+        { "type": "text", "id": "meta_tags", "label": "Meta tags (comma-separated)", "default": "From 1878, Single vintage, Historic releases" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Discover the Collection" },
+        { "type": "url", "id": "button_url", "label": "Button URL override" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 Featured Collections" }]
+}
+{% endschema %}

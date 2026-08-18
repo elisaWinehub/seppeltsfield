@@ -9,212 +9,127 @@
  */
 {
   "sections": {
-    "sf_main_product": {
-      "type": "sf-main-product",
+    "sf2_main_product": {
+      "type": "sf2-main-product",
       "blocks": {
-        "breadcrumbs": {
-          "type": "breadcrumbs",
-          "settings": {
-            "show_collection": true,
-            "show_current_product": true
-          }
-        },
-        "eyebrow": {
-          "type": "eyebrow",
-          "settings": {
-            "dynamic_source": "subtitle",
-            "uppercase": true
-          }
-        },
-        "title": {
-          "type": "title",
-          "settings": {}
-        },
-        "teaser": {
-          "type": "teaser",
-          "settings": {
-            "use_description_fallback": false,
-            "max_characters": 180
-          }
-        },
-        "variant_picker": {
-          "type": "variant_picker",
-          "settings": {}
-        },
         "selling_plan": {
           "type": "selling_plan",
           "settings": {
-            "subscription_label": "Wine club subscription (10% off)",
+            "one_time_label": "One-time purchase",
+            "subscription_label": "Wine Club subscription",
+            "deliver_label": "Delivery every",
             "show_popular_badge": true,
-            "show_without_native_plans": true,
-            "fallback_discount_percent": 10
+            "popular_badge_label": "Member pricing",
+            "show_without_native_plans": false
           }
         },
-        "price": {
-          "type": "price",
+        "trust_delivery": {
+          "type": "trust_item",
           "settings": {
-            "show_volume_suffix": true
+            "icon": "delivery",
+            "label": "Free delivery on wine orders over $150"
           }
         },
-        "description": {
-          "type": "product_description",
+        "trust_secure": {
+          "type": "trust_item",
           "settings": {
-            "visible_paragraphs": 1
+            "icon": "shield-lock",
+            "label": "Secure payment and checkout"
           }
         },
-        "purchase": {
-          "type": "quantity_and_buy_buttons",
+        "trust_member": {
+          "type": "trust_item",
           "settings": {
-            "show_quantity": true,
-            "button_label": "Add to cart"
+            "icon": "member-pricing",
+            "label": "Member pricing available"
           }
-        },
-        "trust": {
-          "type": "trust_icons",
-          "settings": {
-            "items": "delivery|Free delivery on orders over $150\nlock|Secure payment\nuser|Member pricing available\ngift|Gift packaging available",
-            "columns_desktop": 4,
-            "columns_mobile": 2,
-            "icon_size": 36
-          }
-        },
-        "tasting_notes": {
-          "type": "accordion_tasting_notes",
-          "settings": {}
-        },
-        "winemaker_notes": {
-          "type": "accordion_winemaker_notes",
-          "settings": {}
-        },
-        "vineyard": {
-          "type": "accordion_vineyard",
-          "settings": {}
-        },
-        "vintage_conditions": {
-          "type": "accordion_vintage",
-          "settings": {}
-        },
-        "food_pairing": {
-          "type": "accordion_food_pairing",
-          "settings": {}
-        },
-        "technical_details": {
-          "type": "accordion_technical",
-          "settings": {}
-        },
-        "awards_reviews": {
-          "type": "accordion_awards_reviews",
-          "settings": {}
-        },
-        "downloads": {
-          "type": "accordion_pdf",
-          "settings": {}
         }
       },
       "block_order": [
-        "breadcrumbs",
-        "eyebrow",
-        "title",
-        "description",
-        "teaser",
-        "variant_picker",
-        "price",
         "selling_plan",
-        "purchase",
-        "tasting_notes",
-        "winemaker_notes",
-        "vineyard",
-        "vintage_conditions",
-        "food_pairing",
-        "technical_details",
-        "awards_reviews",
-        "downloads",
-        "trust"
+        "trust_delivery",
+        "trust_secure",
+        "trust_member"
       ],
       "settings": {
         "enable_image_zoom": true,
-        "thumbnail_width": 76
+        "thumbnail_width": 82,
+        "show_quantity": true,
+        "show_volume_suffix": true,
+        "add_to_cart_label": "Add to Cart",
+        "show_reviews_link": true,
+        "reviews_link_label": "Read reviews"
       }
     },
-    "sf_product_reviews": {
-      "type": "sf-product-reviews",
+    "sf2_product_reviews": {
+      "type": "sf2-product-reviews",
       "settings": {
-        "enable_section": true,
-        "content_width": "standard"
+        "heading": "Reviews"
       }
     },
-    "sf_product_recommendations": {
-      "type": "sf-product-recommendations",
+    "sf2_product_recommendations": {
+      "type": "sf2-product-recommendations",
       "settings": {
-        "heading": "You may also enjoy",
-        "content_width": "standard",
+        "eyebrow": "You may also enjoy",
+        "heading": "Related wines.",
         "product_count": 4,
         "recommendation_type": "related",
-        "show_quick_add": true,
-        "show_quantity_selector": true,
-        "show_score_badge": true,
-        "show_vintage": true,
-        "show_product_type": true,
-        "show_price": true,
-        "show_compare_at_price": true,
-        "image_ratio": "3 / 4",
-        "image_fit": "contain"
+        "show_view_all": true,
+        "view_all_label": "View all wines",
+        "show_second_image_hover": true,
+        "add_to_cart_label": "Add to Cart",
+        "choose_options_label": "Choose options"
       }
     },
-    "sf_product_services": {
-      "type": "sf-product-service-strip",
+    "sf2_brand_promises": {
+      "type": "sf2-brand-promises",
       "blocks": {
-        "service_delivery": {
-          "type": "item",
+        "promise_award": {
+          "type": "promise",
           "settings": {
-            "builtin_icon": "delivery",
-            "heading": "NATIONWIDE DELIVERY",
-            "copy": "Fast and reliable delivery across Australia"
+            "icon": "exclusive",
+            "title": "Award-winning",
+            "body": "Recognised by the world's best."
           }
         },
-        "service_gift": {
-          "type": "item",
+        "promise_family": {
+          "type": "promise",
           "settings": {
-            "builtin_icon": "gift",
-            "heading": "GIFT PACKAGING",
-            "copy": "Beautifully packaged for any occasion"
+            "icon": "building",
+            "title": "Family-owned",
+            "body": "Six generations of Barossa winemaking."
           }
         },
-        "service_secure": {
-          "type": "item",
+        "promise_est": {
+          "type": "promise",
           "settings": {
-            "builtin_icon": "secure",
-            "heading": "SECURE PAYMENTS",
-            "copy": "Safe and secure checkout guaranteed"
+            "icon": "crown",
+            "title": "Est. 1851",
+            "body": "A legacy of heritage and craftsmanship."
           }
         },
-        "service_quality": {
-          "type": "item",
+        "promise_sustainable": {
+          "type": "promise",
           "settings": {
-            "builtin_icon": "quality",
-            "heading": "ESTATE QUALITY",
-            "copy": "Award-winning wines from our historic estate"
+            "icon": "vineyard-stewardship",
+            "title": "Sustainable",
+            "body": "Committed to land and future generations."
           }
         }
       },
       "block_order": [
-        "service_delivery",
-        "service_gift",
-        "service_secure",
-        "service_quality"
+        "promise_award",
+        "promise_family",
+        "promise_est",
+        "promise_sustainable"
       ],
-      "settings": {
-        "content_width": "standard",
-        "columns_desktop": 4,
-        "columns_tablet": 4,
-        "columns_mobile": 2
-      }
+      "settings": {}
     }
   },
   "order": [
-    "sf_main_product",
-    "sf_product_reviews",
-    "sf_product_recommendations",
-    "sf_product_services"
+    "sf2_main_product",
+    "sf2_product_reviews",
+    "sf2_product_recommendations",
+    "sf2_brand_promises"
   ]
 }

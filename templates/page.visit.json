@@ -9,123 +9,248 @@
  */
 {
   "sections": {
-    "hero": {
-      "type": "hero-banner",
+    "visit_hero": {
+      "type": "sf2-page-hero",
       "settings": {
-        "eyebrow": "Visit Seppeltsfield",
-        "heading": "A place to experience, stay and savour.",
-        "body": "Plan your day in the Barossa with wine tastings, dining and accommodation at the estate.",
-        "button_label": "Plan Your Visit",
-        "button_link": "/pages/plan-your-visit",
-        "button_style": "light",
-        "background_type": "image",
+        "hero_height": "editorial",
         "background_image": "shopify://shop_images/The-Avenue-of-Hopes-and-Dreams-scaled.jpg",
-        "background_color": "#0C0D10",
-        "heading_color": "#F5F7F8",
-        "text_color": "#F5F7F8"
+        "mobile_image": "shopify://shop_images/The-Avenue-of-Hopes-and-Dreams-scaled.jpg",
+        "eyebrow": "Visit Seppeltsfield",
+        "heading": "One estate. A full day of wine, food, craft and history.",
+        "body": "<p>Open daily from 10am, Seppeltsfield is a living tourism village with the Cellar Door at its heart and wine, dining, art, craft, retail and accommodation across the estate.</p>",
+        "button_label": "Book an Experience",
+        "button_url": "/pages/book-experience",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "",
+        "secondary_button_url": "",
+        "show_side_note": true,
+        "note_heading": "A tourism village in the Barossa.",
+        "note_body": "Just under one hour from Adelaide, the estate brings together luxury wine experiences, regional dining, makers, gardens and places to stay.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
       }
     },
-    "facts": {
-      "type": "trust-bar",
+    "visit_anchor": {
+      "type": "sf2-anchor-nav",
       "blocks": {
-        "f1": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "1",
-            "title": "Wine Tastings",
-            "subtitle": "Daily cellar-door flights"
-          }
-        },
-        "f2": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "2",
-            "title": "Estate Experiences",
-            "subtitle": "Tours and curated tastings"
-          }
-        },
-        "f3": {
-          "type": "trust_item",
-          "settings": {
-            "icon": "3",
-            "title": "Dining & Stay",
-            "subtitle": "Restaurant and lodge options"
-          }
-        }
+        "a1": { "type": "anchor_link", "settings": { "label": "Wine", "url": "#wine" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "History", "url": "#history-experience" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Dining", "url": "#dining" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Village Partners", "url": "#village" } },
+        "a5": { "type": "anchor_link", "settings": { "label": "Stay", "url": "#stay" } },
+        "a6": { "type": "anchor_link", "settings": { "label": "Events", "url": "#events" } },
+        "a7": { "type": "anchor_link", "settings": { "label": "Plan Your Visit", "url": "#plan" } }
       },
-      "block_order": [
-        "f1",
-        "f2",
-        "f3"
-      ],
-      "settings": {}
+      "block_order": ["a1", "a2", "a3", "a4", "a5", "a6", "a7"],
+      "settings": { "color_scheme": "black" }
     },
-    "estate": {
-      "type": "split-media-text",
+    "visit_intro": {
+      "type": "sf2-editorial-split",
       "settings": {
-        "eyebrow": "Our Estate",
-        "heading": "175 years of Barossa heritage",
-        "body": "<p>Explore heritage architecture, palm-lined avenues and cellars built for generations.</p>",
-        "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg",
-        "image_side": "right",
-        "show_seal": true
+        "eyebrow": "One estate, many experiences",
+        "heading": "Come for the wine. Stay for the story.",
+        "body": "<p>The Visit page should act as the main destination planner. It replaces a long list of disconnected visitor pages with one visual overview, while linking into the specific templates guests need before arriving.</p><p>This page is designed to move visitors from inspiration into action without filling every section with buttons. The main routes are embedded through cards and understated text links.</p>",
+        "link_label": "Plan your visit",
+        "link_url": "/pages/plan-your-visit",
+        "main_image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg",
+        "secondary_image": "shopify://shop_images/cellar-door-tasting.jpg",
+        "note_eyebrow": "Open daily",
+        "note_heading": "Build your day around wine, food and the estate.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
       }
     },
-    "experiences": {
-      "type": "tile-row",
+    "visit_navigator": {
+      "type": "sf2-estate-navigator",
       "blocks": {
-        "x1": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
-            "title": "Wine Tasting",
-            "link": "/pages/book-experience"
-          }
-        },
-        "x2": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/dailytoursandtastingsHERO.jpg",
-            "title": "Estate Tour",
-            "link": "/pages/book-experience"
-          }
-        },
-        "x3": {
-          "type": "tile",
-          "settings": {
-            "image": "shopify://shop_images/Gravity-cellar-hero.jpg",
-            "title": "Restaurant Booking",
-            "link": "/pages/book-experience"
-          }
-        }
+        "n1": { "type": "nav_card", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "icon": "goblet", "title": "Cellar Door", "body": "Tastings, tours and the Centennial Cellar.", "url": "/pages/wine-tastings" } },
+        "n2": { "type": "nav_card", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "icon": "dining", "title": "FINO", "body": "Regional dining, produce and provenance.", "url": "/pages/fino-restaurant" } },
+        "n3": { "type": "nav_card", "settings": { "image": "shopify://shop_images/Seppelsfield-OCT24-0145.jpg", "icon": "cup", "title": "Benno's Café · Open 10am–4pm", "body": "Coffee, snacks, wine and relaxed garden seating.", "url": "/pages/cafe" } },
+        "n4": { "type": "nav_card", "settings": { "image": "shopify://shop_images/Seppelsfield-OCT24-0145.jpg", "icon": "village", "title": "Village Partners", "body": "Craft, design, skincare, spirits and artisan retail.", "url": "/pages/village-partners" } },
+        "n5": { "type": "nav_card", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "icon": "bed", "title": "The Lodge", "body": "Hosted accommodation a short walk from the estate.", "url": "/pages/accommodation" } },
+        "n6": { "type": "nav_card", "settings": { "image": "shopify://shop_images/historyHERO.jpg", "icon": "book", "title": "History Trail", "body": "Ten podcast stops in English and Mandarin.", "url": "/pages/self-guided-history-experience" } }
       },
-      "block_order": [
-        "x1",
-        "x2",
-        "x3"
-      ],
+      "block_order": ["n1", "n2", "n3", "n4", "n5", "n6"],
       "settings": {
-        "eyebrow": "Experiences",
-        "heading": "Immerse yourself in the Barossa.",
-        "columns": "3",
-        "background_color": "#0C0D10",
-        "heading_color": "#F5F7F8",
-        "text_color": "#F5F7F8"
+        "eyebrow": "Explore the estate",
+        "heading": "Build your day around the village.",
+        "body": "Seppeltsfield has evolved into a tourism village. This navigator gives guests a quick view of everything available before they choose a deeper page or booking route.",
+        "link_label": "View visitor information",
+        "link_url": "/pages/plan-your-visit",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
       }
     },
-    "newsletter": {
-      "type": "newsletter-bar",
+    "visit_experiences": {
+      "type": "sf2-experience-grid",
+      "blocks": {
+        "e1": { "type": "experience_card", "settings": { "image": "shopify://shop_images/cellar-door-tasting.jpg", "eyebrow": "Taste", "title": "Wine Tastings", "body": "Current releases, luxury collections and guided cellar-door tastings.", "link_label": "", "url": "/pages/wine-tastings" } },
+        "e2": { "type": "experience_card", "settings": { "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg", "eyebrow": "Explore", "title": "Collaborative Experiences", "body": "Premium Barossa collaborations, including Icons of the Barossa and Western Rangers.", "link_label": "", "url": "/pages/experiences" } },
+        "e3": { "type": "experience_card", "settings": { "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg", "eyebrow": "Heritage", "title": "Taste of History", "body": "Visit the Centennial Cellar and experience the rare opportunity to taste 100 Year Old Para Vintage Tawny.", "link_label": "", "url": "/pages/experiences" } }
+      },
+      "block_order": ["e1", "e2", "e3"],
       "settings": {
-        "eyebrow": "Stay in touch",
-        "heading": "Stories from the Estate"
+        "section_anchor_id": "wine",
+        "eyebrow": "Wine and estate experiences",
+        "heading": "Choose how you want to discover Seppeltsfield.",
+        "body": "Cellar Door is open daily from 10:30am to 5pm. Standard tastings are available for groups of up to six, with a separate enquiry route for larger groups.",
+        "card_style": "overlay",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_history": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "history-experience",
+        "eyebrow": "Self-guided history experience",
+        "heading": "Ten stories across the estate.",
+        "body": "<p>Guests follow a mapped route, scan QR codes at ten locations and listen to podcasts about the buildings and people that shaped Seppeltsfield. The series is available in English and Mandarin.</p>",
+        "link_label": "Explore the history trail",
+        "link_url": "/pages/self-guided-history-experience",
+        "image": "shopify://shop_images/historyHERO.jpg",
+        "badge_text": "Podcast trail · English and Mandarin",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_dining": {
+      "type": "sf2-dining-feature",
+      "blocks": {
+        "d1": { "type": "dining_link", "settings": { "label": "FINO Restaurant · Lunch 12–3pm", "url": "/pages/fino-restaurant" } },
+        "d2": { "type": "dining_link", "settings": { "label": "Benno's Café · Open 10am–4pm", "url": "/pages/cafe" } },
+        "d3": { "type": "dining_link", "settings": { "label": "Restaurant bookings", "url": "/pages/book-experience" } }
+      },
+      "block_order": ["d1", "d2", "d3"],
+      "settings": {
+        "section_anchor_id": "dining",
+        "image": "shopify://shop_images/finoHERO.jpg",
+        "label_eyebrow": "Estate dining",
+        "label_heading": "Seasonal food in a remarkable setting.",
+        "eyebrow": "Dine at Seppeltsfield",
+        "heading": "From long lunches to relaxed garden dining.",
+        "body": "FINO is the estate's progressive regional restaurant, focused on generosity, simplicity, produce and provenance. Café Gardens offers a more casual stop beside the main car park for coffee, snacks, ice cream, wine and local beer.",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_village": {
+      "type": "sf2-village-partners",
+      "blocks": {
+        "p1": { "type": "partner", "settings": { "eyebrow": "Craft + design", "title": "JamFactory", "body": "Studios, gallery, shop and hands-on workshops inside restored 1850s stables.", "meta_label": "Meet the makers", "url": "/pages/jamfactory" } },
+        "p2": { "type": "partner", "settings": { "eyebrow": "Olive oil skincare", "title": "Vasse Virgin", "body": "Natural handmade skin and body care, a working soap factory and DIY workshops.", "meta_label": "Open daily 10:30–5", "url": "/pages/vasse-virgin" } },
+        "p3": { "type": "partner", "settings": { "eyebrow": "Gin + cocktails", "title": "Prohibition Liquor Co.", "body": "A tasting room, cocktail bar and working distillery in the restored 1877 building.", "meta_label": "Open daily 11–5", "url": "/pages/prohibition-distillery" } },
+        "p4": { "type": "partner", "settings": { "eyebrow": "Artisan retail", "title": "The Tiny Knife Shop", "body": "Handmade knives by estate knifemaker Barry Gardner, with tutorials and in-person craft.", "meta_label": "Hours vary", "url": "/pages/tiny-knife-shop" } },
+        "p5": { "type": "partner", "settings": { "eyebrow": "Traditional craft", "title": "YN Oak Cooperage", "body": "See retired fortified barrels transformed by hand, or join a Cooper for a Day experience.", "meta_label": "Resident master cooper", "url": "/pages/yn-oak-cooperage" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4", "p5"],
+      "settings": {
+        "section_anchor_id": "village",
+        "eyebrow": "Explore the village",
+        "heading": "Meet the makers who call Seppeltsfield home.",
+        "body": "The estate's partners are a major point of difference and should be presented as a cohesive artisan village rather than hidden across separate menu items.",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_stay": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "stay",
+        "eyebrow": "Stay at the estate",
+        "heading": "Make Seppeltsfield part of the journey.",
+        "body": "<p>Built in 1903, The Lodge is a hosted four-suite guest house with country views, cooked breakfast, three acres of gardens and a pool, only a five-minute walk from the estate.</p>",
+        "link_label": "Explore accommodation",
+        "link_url": "/pages/accommodation",
+        "image": "shopify://shop_images/BMAC7229.jpg",
+        "badge_text": "The Lodge at Seppeltsfield",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_itineraries": {
+      "type": "sf2-itinerary-grid",
+      "blocks": {
+        "i1": { "type": "itinerary", "settings": { "image": "shopify://shop_images/cellar-door-tasting.jpg", "eyebrow": "Half day", "title": "Wine and lunch", "time_1": "10:30", "label_1": "Cellar Door tasting", "time_2": "12:00", "label_2": "Lunch at FINO", "time_3": "2:30", "label_3": "JamFactory and estate gardens" } },
+        "i2": { "type": "itinerary", "settings": { "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg", "eyebrow": "Heritage", "title": "The story of Seppeltsfield", "time_1": "10:30", "label_1": "Taste of History experience", "time_2": "12:30", "label_2": "Café Gardens", "time_3": "1:30", "label_3": "Self-guided podcast trail" } },
+        "i3": { "type": "itinerary", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "eyebrow": "Overnight", "title": "Stay at the estate", "time_1": "DAY 1", "label_1": "Luxury tasting, FINO and village partners", "time_2": "STAY", "label_2": "The Lodge at Seppeltsfield", "time_3": "DAY 2", "label_3": "Gardens, history trail and relaxed lunch" } }
+      },
+      "block_order": ["i1", "i2", "i3"],
+      "settings": {
+        "eyebrow": "Suggested itineraries",
+        "heading": "Make more of your time at Seppeltsfield.",
+        "body": "These are editorial planning tools rather than rigid packages. Each itinerary can be assembled from live Shopify section blocks and linked to the relevant booking pages.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_events": {
+      "type": "sf2-events-preview",
+      "blocks": {
+        "ev1": { "type": "event", "settings": { "day": "21", "month": "AUG", "title": "175 Years of Seppeltsfield Celebration", "subtitle": "21–23 August 2026 · The Louise and Seppeltsfield Estate", "url": "/pages/events-calendar" } },
+        "ev2": { "type": "event", "settings": { "day": "28", "month": "SEP", "title": "Winemaker tasting", "subtitle": "Limited-capacity guided experience", "url": "/pages/events-calendar" } },
+        "ev3": { "type": "event", "settings": { "day": "12", "month": "OCT", "title": "FINO seasonal lunch", "subtitle": "Restaurant event and paired wines", "url": "/pages/events-calendar" } },
+        "ev4": { "type": "event", "settings": { "day": "02", "month": "NOV", "title": "Estate heritage weekend", "subtitle": "Tours, exhibitions and artisan experiences", "url": "/pages/events-calendar" } }
+      },
+      "block_order": ["ev1", "ev2", "ev3", "ev4"],
+      "settings": {
+        "section_anchor_id": "events",
+        "eyebrow": "What's on",
+        "heading": "Events worth planning around.",
+        "body": "The Visit hub previews current estate events and routes into the dedicated calendar. Featured content can be populated dynamically from Shopify metaobjects or articles.",
+        "link_label": "View the full calendar",
+        "link_url": "/pages/events-calendar",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_plan": {
+      "type": "sf2-plan-info",
+      "blocks": {
+        "pi1": { "type": "info_item", "settings": { "icon": "clock", "title": "Opening hours", "body": "Estate from 10am daily; Cellar Door from 10:30am to 5pm." } },
+        "pi2": { "type": "info_item", "settings": { "icon": "map-pin", "title": "Getting here", "body": "Under one hour from Adelaide, with preferred transfer partners and onsite parking." } },
+        "pi3": { "type": "info_item", "settings": { "icon": "accessibility", "title": "Accessibility", "body": "Practical information for accessible arrival and estate movement." } },
+        "pi4": { "type": "info_item", "settings": { "icon": "ev-charge", "title": "EV charging and estate care", "body": "Four charging stations in the main car park, plus vineyard biosecurity guidance." } }
+      },
+      "block_order": ["pi1", "pi2", "pi3", "pi4"],
+      "settings": {
+        "section_anchor_id": "plan",
+        "eyebrow": "Plan your visit",
+        "heading": "Everything guests need before they arrive.",
+        "body": "Seppeltsfield is just under one hour from Adelaide. The estate opens from 10am daily and provides accessibility guidance, vineyard biosecurity information, local transfer recommendations and free EV charging in the main car park.",
+        "link_label": "View visitor information",
+        "link_url": "/pages/plan-your-visit",
+        "color_scheme": "black",
+        "spacing_preset": "spacious"
+      }
+    },
+    "visit_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Ready to visit?",
+        "heading": "Choose and book your experience.",
+        "body": "The Book Experience page becomes the transactional booking hub for tastings, tours, dining, accommodation and private events.",
+        "button_label": "Book Experience",
+        "button_url": "/pages/book-experience",
+        "button_preset": "primary_dark",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
       }
     }
   },
   "order": [
-    "hero",
-    "facts",
-    "estate",
-    "experiences",
-    "newsletter"
+    "visit_hero",
+    "visit_anchor",
+    "visit_intro",
+    "visit_navigator",
+    "visit_experiences",
+    "visit_history",
+    "visit_dining",
+    "visit_village",
+    "visit_stay",
+    "visit_itineraries",
+    "visit_events",
+    "visit_plan",
+    "visit_cta"
   ]
 }

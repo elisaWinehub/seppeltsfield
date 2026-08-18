@@ -1,0 +1,59 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+
+<section class="sf2-support sf2-section" style="{{ section_style | strip }}">
+  <div class="sf2-wrap sf2-support__grid">
+    <div class="sf2-support__copy">
+      {% render 'sf2-eyebrow', text: section.settings.eyebrow, brand: true %}
+      <h2 class="sf2-serif">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}<p>{{ section.settings.body }}</p>{%- endif -%}
+    </div>
+    <div class="sf2-support__list">
+      {%- for block in section.blocks -%}
+        <a class="sf2-support__link" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+          <div>
+            <b>{{ block.settings.title }}</b>
+            {%- if block.settings.body != blank -%}<span>{{ block.settings.body }}</span>{%- endif -%}
+          </div>
+          {% render 'sf2-icon', icon: 'arrow-right' %}
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Support Links",
+  "tag": "section",
+  "class": "sf2-support-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Other booking pathways" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Not every experience belongs in one iframe." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Restaurant reservations, accommodation and private events may require different booking systems or enquiry flows. Keeping these clearly separated prevents confusion." },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "dark", "options": [
+      { "value": "dark", "label": "Dark" }, { "value": "black", "label": "Black" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "spacious", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "support_link",
+      "name": "Support link",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Restaurant reservations" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "url", "id": "url", "label": "URL" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 Support Links" }]
+}
+{% endschema %}

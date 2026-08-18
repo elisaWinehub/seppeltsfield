@@ -5,7 +5,7 @@
     { "title": "Discover", "type": "HTTP", "url": "/pages/discover" },
     { "title": "Visit", "type": "HTTP", "url": "/pages/visit" },
     { "title": "Shop", "type": "HTTP", "url": "/collections" },
-    { "title": "Wine Club", "type": "HTTP", "url": "/pages/wine-club" },
-    { "title": "Functions & events", "type": "HTTP", "url": "/pages/functions-events" }
+    { "title": "Crown Society", "type": "HTTP", "url": "/pages/wine-club" },
+    { "title": "Journal", "type": "HTTP", "url": "/blogs/journal" }
   ]
 }

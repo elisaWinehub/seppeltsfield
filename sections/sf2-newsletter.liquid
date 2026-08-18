@@ -1,0 +1,54 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-home.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+
+<section class="sf2-newsletter sf2-section" style="{{ section_style | strip }}">
+  <div class="sf2-wrap sf2-newsletter__grid">
+    <div>
+      {% render 'sf2-eyebrow', text: section.settings.eyebrow, brand: true %}
+      <h2 class="sf2-serif">{{ section.settings.heading }}</h2>
+    </div>
+    <div>
+      {% form 'customer', class: 'sf2-newsletter__form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <label class="visually-hidden" for="Sf2NewsletterEmail-{{ section.id }}">Email</label>
+        <input id="Sf2NewsletterEmail-{{ section.id }}" type="email" name="contact[email]" value="{{ form.email }}" placeholder="{{ section.settings.placeholder }}" required autocomplete="email">
+        <button type="submit" aria-label="{{ section.settings.button_label }}">
+          {% render 'sf2-icon', icon: 'arrow-right' %}
+        </button>
+      {% endform %}
+      {%- if form.posted_successfully? -%}
+        <p class="sf2-newsletter__feedback" role="status">{{ section.settings.success_message }}</p>
+      {%- endif -%}
+      {%- if form.errors -%}
+        <p class="sf2-newsletter__feedback" role="alert">{{ section.settings.error_message }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Newsletter",
+  "tag": "section",
+  "class": "sf2-newsletter-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the community" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "News from the estate." },
+    { "type": "text", "id": "placeholder", "label": "Placeholder", "default": "Your email address" },
+    { "type": "text", "id": "button_label", "label": "Submit label", "default": "Subscribe" },
+    { "type": "text", "id": "success_message", "label": "Success message", "default": "Thanks for subscribing." },
+    { "type": "text", "id": "error_message", "label": "Error message", "default": "Please enter a valid email." },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "black", "options": [
+      { "value": "dark", "label": "Dark" }, { "value": "black", "label": "Black" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "standard", "options": [
+      { "value": "compact", "label": "Compact" }, { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "presets": [{ "name": "SF2 Newsletter" }]
+}
+{% endschema %}

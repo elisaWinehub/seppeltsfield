@@ -1,0 +1,79 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+
+<section class="sf2-itinerary sf2-section" style="{{ section_style | strip }}">
+  <div class="sf2-wrap">
+    {% render 'sf2-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      body: section.settings.body
+    %}
+    <div class="sf2-itinerary__grid">
+      {%- for block in section.blocks -%}
+        <article class="sf2-itinerary__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="sf2-itinerary__media">
+              {% render 'sf2-picture', image: block.settings.image, sizes: '(min-width: 990px) 33vw, 100vw' %}
+            </div>
+          {%- endif -%}
+          <div class="sf2-itinerary__copy">
+            {% render 'sf2-eyebrow', text: block.settings.eyebrow, brand: true %}
+            <h3>{{ block.settings.title }}</h3>
+            <div class="sf2-itinerary__timeline">
+              {%- if block.settings.time_1 != blank -%}
+                <div class="sf2-itinerary__row"><time>{{ block.settings.time_1 }}</time><span>{{ block.settings.label_1 }}</span></div>
+              {%- endif -%}
+              {%- if block.settings.time_2 != blank -%}
+                <div class="sf2-itinerary__row"><time>{{ block.settings.time_2 }}</time><span>{{ block.settings.label_2 }}</span></div>
+              {%- endif -%}
+              {%- if block.settings.time_3 != blank -%}
+                <div class="sf2-itinerary__row"><time>{{ block.settings.time_3 }}</time><span>{{ block.settings.label_3 }}</span></div>
+              {%- endif -%}
+            </div>
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Itinerary Grid",
+  "tag": "section",
+  "class": "sf2-itinerary-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Suggested itineraries" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Make more of your time at Seppeltsfield." },
+    { "type": "textarea", "id": "body", "label": "Body" },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "ivory", "options": [
+      { "value": "light", "label": "Light" }, { "value": "ivory", "label": "Ivory" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "spacious", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "itinerary",
+      "name": "Itinerary",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Half day" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Wine and lunch" },
+        { "type": "text", "id": "time_1", "label": "Time 1", "default": "10:30" },
+        { "type": "text", "id": "label_1", "label": "Label 1" },
+        { "type": "text", "id": "time_2", "label": "Time 2", "default": "12:00" },
+        { "type": "text", "id": "label_2", "label": "Label 2" },
+        { "type": "text", "id": "time_3", "label": "Time 3", "default": "2:30" },
+        { "type": "text", "id": "label_3", "label": "Label 3" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 Itinerary Grid" }]
+}
+{% endschema %}

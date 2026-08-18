@@ -1,0 +1,131 @@
+{%- doc -%}
+  Shared Seppeltsfield product card for collection grids, search, and recommendations.
+
+  @param {object} product
+  @param {object} section
+  @param {string} [layout] - grid or list
+{%- enddoc -%}
+
+{%- liquid
+  assign card_layout = layout | default: 'grid'
+  assign current_variant = product.selected_or_first_available_variant
+  assign featured_media = product.featured_media | default: product.media.first
+  assign secondary_media = blank
+  if product.media.size > 1
+    assign secondary_media = product.media[1]
+  endif
+
+  assign vintage_value = product.metafields.custom.vintage | default: product.metafields.details.vintage
+  assign region_value = product.metafields.custom.region | default: product.metafields.details.region
+  assign subtitle_value = product.metafields.custom.subtitle | default: region_value
+
+  assign meta_parts = blank
+  if vintage_value != blank
+    assign meta_parts = vintage_value
+  endif
+  if region_value != blank
+    if meta_parts != blank
+      assign meta_parts = meta_parts | append: ' · ' | append: region_value
+    else
+      assign meta_parts = region_value
+    endif
+  endif
+
+  assign can_direct_add = false
+  if product.has_only_default_variant and current_variant.available and product.selling_plan_groups.size == 0
+    assign can_direct_add = true
+  endif
+
+  assign purchase_label = section.settings.add_to_cart_label | default: 'Add to Cart'
+  assign choose_label = section.settings.choose_options_label | default: 'Choose options'
+-%}
+
+<article class="sf2-product-card sf2-product-card--{{ card_layout }}">
+  <a class="sf2-product-card__media" href="{{ product.url }}">
+    {%- if featured_media != blank -%}
+      {{
+        featured_media
+        | image_url: width: 800
+        | image_tag:
+          class: 'sf2-product-card__image sf2-product-card__image--primary',
+          widths: '240, 360, 480, 640, 800',
+          loading: 'lazy',
+          sizes: '(min-width: 1200px) 24vw, (min-width: 750px) 33vw, 100vw',
+          alt: featured_media.alt | default: product.title
+      }}
+      {%- if secondary_media != blank and section.settings.show_second_image_hover -%}
+        {{
+          secondary_media
+          | image_url: width: 800
+          | image_tag:
+            class: 'sf2-product-card__image sf2-product-card__image--secondary',
+            widths: '240, 360, 480, 640, 800',
+            loading: 'lazy',
+            sizes: '(min-width: 1200px) 24vw, (min-width: 750px) 33vw, 100vw',
+            alt: secondary_media.alt | default: product.title
+        }}
+      {%- endif -%}
+    {%- else -%}
+      {{ 'product-apparel-1' | placeholder_svg_tag: 'sf2-product-card__placeholder' }}
+    {%- endif -%}
+  </a>
+
+  <div class="sf2-product-card__copy">
+    {%- if meta_parts != blank -%}
+      {% render 'sf2-eyebrow', text: meta_parts, brand: true %}
+    {%- endif -%}
+    <h3 class="sf2-product-card__title"><a href="{{ product.url }}">{{ product.title }}</a></h3>
+    {%- if subtitle_value != blank -%}<p class="sf2-product-card__subtitle">{{ subtitle_value }}</p>{%- endif -%}
+
+    {% render 'sf2-price', variant: current_variant %}
+
+    <div class="sf2-product-card__actions">
+      {%- if product.available == false -%}
+        <button class="sf2-btn sf2-btn--outline_dark sf2-product-card__submit" type="button" disabled>
+          {{ 'products.product.sold_out' | t }}
+        </button>
+      {%- elsif can_direct_add and section.settings.show_quick_add -%}
+        <product-form-component
+          data-section-id="{{ section.id }}"
+          data-product-id="{{ product.id }}"
+          data-product-url="{{ product.url }}"
+          on:submit="/handleSubmit"
+          data-quantity-default="1"
+          class="sf2-product-card__form"
+        >
+          <div class="visually-hidden" aria-live="assertive" role="status" aria-atomic="true" ref="liveRegion"></div>
+          {%- form 'product', product, data-type: 'add-to-cart-form', novalidate: 'novalidate' -%}
+            <input type="hidden" name="id" value="{{ current_variant.id }}" ref="variantId">
+            <div class="sf2-product-card__purchase">
+              {%- if section.settings.show_quantity_selector -%}
+                {% render 'sf2-quantity-selector', id_suffix: product.id %}
+              {%- else -%}
+                <input type="hidden" name="quantity" value="1">
+              {%- endif -%}
+              <add-to-cart-component ref="addToCartButtonContainer" data-add-to-cart-animation="false">
+                <button
+                  type="submit"
+                  name="add"
+                  class="sf2-btn sf2-btn--primary_dark sf2-product-card__submit add-to-cart-button"
+                  ref="addToCartButton"
+                  on:click="/handleClick"
+                  data-sf2-cart-open="true"
+                >
+                  {{ purchase_label }}
+                </button>
+              </add-to-cart-component>
+            </div>
+          {%- endform -%}
+        </product-form-component>
+      {%- else -%}
+        <a href="{{ product.url }}" class="sf2-btn sf2-btn--primary_dark sf2-product-card__submit">
+          {%- if product.variants.size > 1 or product.options.size > 1 -%}
+            {{ choose_label }}
+          {%- else -%}
+            {{ purchase_label }}
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</article>

@@ -1,0 +1,23 @@
+{%- doc -%}
+  @param {object} paginate
+{%- enddoc -%}
+
+{%- if paginate.pages > 1 -%}
+  <nav class="sf2-pagination" aria-label="{{ 'general.pagination.label' | t }}">
+    {%- if paginate.previous -%}
+      <a class="sf2-pagination__link" href="{{ paginate.previous.url }}" aria-label="{{ 'general.pagination.previous' | t }}">←</a>
+    {%- endif -%}
+    {%- for part in paginate.parts -%}
+      {%- if part.is_link -%}
+        <a class="sf2-pagination__link" href="{{ part.url }}">{{ part.title }}</a>
+      {%- elsif part.title == '&hellip;' or part.title == '…' -%}
+        <span class="sf2-pagination__link sf2-pagination__ellipsis" aria-hidden="true">…</span>
+      {%- else -%}
+        <span class="sf2-pagination__link is-active" aria-current="page">{{ part.title }}</span>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if paginate.next -%}
+      <a class="sf2-pagination__link" href="{{ paginate.next.url }}" aria-label="{{ 'general.pagination.next' | t }}">→</a>
+    {%- endif -%}
+  </nav>
+{%- endif -%}

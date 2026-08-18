@@ -1,0 +1,6 @@
+{%- doc -%}
+  @param {string} text
+  @param {boolean} [brand]
+  @param {string} [class]
+{%- enddoc -%}
+<p class="sf2-eyebrow{% if brand %} sf2-eyebrow--brand{% endif %}{% if class %} {{ class }}{% endif %}">{{ text }}</p>

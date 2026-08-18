@@ -1,0 +1,67 @@
+{%- liquid
+  assign scheme = color_scheme | default: 'light'
+  case scheme
+    when 'ivory'
+      assign bg = '#F6F1E7'
+      assign text = '#101113'
+      assign muted = '#666B70'
+      assign accent = '#0CA7E0'
+    when 'soft_blue'
+      assign bg = '#EDF7FB'
+      assign text = '#101113'
+      assign muted = '#666B70'
+      assign accent = '#0CA7E0'
+    when 'dark'
+      assign bg = '#151619'
+      assign text = '#FFFFFF'
+      assign muted = 'rgba(255,255,255,0.65)'
+      assign accent = '#0CA7E0'
+    when 'black'
+      assign bg = '#0B0C0E'
+      assign text = '#FFFFFF'
+      assign muted = 'rgba(255,255,255,0.65)'
+      assign accent = '#0CA7E0'
+    when 'brand_blue'
+      assign bg = '#0CA7E0'
+      assign text = '#071117'
+      assign muted = 'rgba(7,17,23,0.72)'
+      assign accent = '#101113'
+    else
+      assign bg = '#FFFFFF'
+      assign text = '#101113'
+      assign muted = '#666B70'
+      assign accent = '#0CA7E0'
+  endcase
+
+  assign spacing = spacing_preset | default: 'standard'
+  case spacing
+    when 'compact'
+      assign pad_top_d = 48
+      assign pad_bottom_d = 48
+      assign pad_top_m = 32
+      assign pad_bottom_m = 32
+    when 'spacious'
+      assign pad_top_d = 112
+      assign pad_bottom_d = 112
+      assign pad_top_m = 80
+      assign pad_bottom_m = 80
+    when 'editorial'
+      assign pad_top_d = 144
+      assign pad_bottom_d = 144
+      assign pad_top_m = 96
+      assign pad_bottom_m = 96
+    else
+      assign pad_top_d = 80
+      assign pad_bottom_d = 80
+      assign pad_top_m = 56
+      assign pad_bottom_m = 56
+  endcase
+-%}
+--sf2-bg: {{ bg }};
+--sf2-text: {{ text }};
+--sf2-muted: {{ muted }};
+--sf2-accent: {{ accent }};
+--sf2-pad-top-d: {{ pad_top_d }}px;
+--sf2-pad-bottom-d: {{ pad_bottom_d }}px;
+--sf2-pad-top-m: {{ pad_top_m }}px;
+--sf2-pad-bottom-m: {{ pad_bottom_m }}px;

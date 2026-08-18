@@ -1,0 +1,65 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-product.css' | asset_url | stylesheet_tag }}
+
+<section class="sf2-brand-promises sf2-section" {{ section.shopify_attributes }}>
+  <div class="sf2-wrap">
+    <div class="sf2-brand-promises__grid">
+      {%- for block in section.blocks -%}
+        <div class="sf2-brand-promises__item" {{ block.shopify_attributes }}>
+          {% render 'sf2-icon', icon: block.settings.icon %}
+          <div>
+            {%- if block.settings.title != blank -%}<b class="sf2-serif">{{ block.settings.title }}</b>{%- endif -%}
+            {%- if block.settings.body != blank -%}<span>{{ block.settings.body }}</span>{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Brand Promises",
+  "tag": "section",
+  "class": "sf2-brand-promises-section",
+  "enabled_on": { "templates": ["product"] },
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "promise",
+      "name": "Promise",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "exclusive",
+          "options": [
+            { "value": "exclusive", "label": "Award" },
+            { "value": "building", "label": "House" },
+            { "value": "crown", "label": "Crown" },
+            { "value": "vineyard-stewardship", "label": "Leaf" },
+            { "value": "heritage", "label": "Heritage" },
+            { "value": "delivery", "label": "Delivery" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Award-winning" },
+        { "type": "text", "id": "body", "label": "Body", "default": "Recognised by the world's best." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "SF2 Brand Promises",
+      "blocks": [
+        { "type": "promise", "settings": { "icon": "exclusive", "title": "Award-winning", "body": "Recognised by the world's best." } },
+        { "type": "promise", "settings": { "icon": "building", "title": "Family-owned", "body": "Six generations of Barossa winemaking." } },
+        { "type": "promise", "settings": { "icon": "crown", "title": "Est. 1851", "body": "A legacy of heritage and craftsmanship." } },
+        { "type": "promise", "settings": { "icon": "vineyard-stewardship", "title": "Sustainable", "body": "Committed to land and future generations." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -6,140 +6,286 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
-    "main": {
-      "type": "main-page",
-      "blocks": {
-        "title": {
-          "type": "text",
-          "name": "t:names.title",
-          "settings": {
-            "text": "<h1>{{ closest.page.title }}</h1>",
-            "width": "100%",
-            "max_width": "normal",
-            "alignment": "center",
-            "type_preset": "h2",
-            "font": "var(--font-primary--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "content": {
-          "type": "text",
-          "name": "t:names.content",
-          "settings": {
-            "text": "{{ closest.page.content }}",
-            "width": "100%",
-            "max_width": "narrow",
-            "alignment": "center",
-            "type_preset": "rte",
-            "font": "var(--font-primary--family)",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "title",
-        "content"
-      ],
+    "contact_hero": {
+      "type": "sf2-page-hero",
       "settings": {
-        "content_direction": "column",
-        "gap": 32,
-        "background_color": "{{ settings.color_palette.background }}",
-        "padding-block-start": 40,
-        "padding-block-end": 0
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "mobile_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "eyebrow": "Contact Seppeltsfield",
+        "heading": "One place for every enquiry.",
+        "body": "<p>Find visitor information, opening hours, key contacts, distributor details, Australian stockists and answers to common questions.</p>",
+        "button_label": "",
+        "button_url": "",
+        "button_link": "",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "",
+        "secondary_button_url": "",
+        "show_side_note": true,
+        "note_heading": "Contact, trade and visitor support in one destination.",
+        "note_body": "This consolidated page replaces five separate contact-related pages with a single clear structure.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
       }
     },
-    "form": {
-      "type": "section",
+    "contact_cards": {
+      "type": "sf2-benefit-grid",
       "blocks": {
-        "contact_form_UwiCkQ": {
-          "type": "contact-form",
+        "c1": {
+          "type": "benefit",
           "settings": {
-            "width": "custom",
-            "custom_width": 50,
-            "width_mobile": "custom",
-            "custom_width_mobile": 100,
-            "input_style": "default",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "submit-button": {
-              "type": "contact-form-submit-button",
-              "static": true,
-              "settings": {
-                "label": "Submit",
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": []
+            "icon": "mail",
+            "title": "General Enquiries",
+            "body": "Questions about Seppeltsfield, the estate or online orders.",
+            "link_label": "cellarsales@seppeltsfield.com.au",
+            "link_url": "mailto:cellarsales@seppeltsfield.com.au"
+          }
+        },
+        "c2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "clock",
+            "title": "Visitor & Booking Support",
+            "body": "Help with tastings, estate tours, group bookings or your upcoming visit.",
+            "link_label": "Book Experience",
+            "link_url": "/pages/book-experience"
+          }
+        },
+        "c3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "building",
+            "title": "Trade & Distribution",
+            "body": "Distributor, retailer and wholesale enquiries across Australia and international markets.",
+            "link_label": "View trade contacts",
+            "link_url": "#trade"
+          }
+        },
+        "c4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "person",
+            "title": "Team Seppeltsfield",
+            "body": "Find key departmental contacts across the estate and business.",
+            "link_label": "Meet the team",
+            "link_url": "#team"
+          }
         }
       },
-      "block_order": [
-        "contact_form_UwiCkQ"
-      ],
-      "name": "t:names.contact_form",
+      "block_order": ["c1", "c2", "c3", "c4"],
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "section_width": "page-width",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 32,
-        "padding-block-end": 84
+        "eyebrow": "How can we help?",
+        "heading": "Start with the right contact.",
+        "body": "Rather than presenting a long block of text, the page gives visitors direct pathways for bookings, general enquiries, wine trade, media, stockists and estate information.",
+        "show_login_link": false,
+        "layout_style": "contact_cards",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "contact_location": {
+      "type": "sf2-location-map",
+      "blocks": {
+        "i1": { "type": "info_item", "settings": { "icon": "clock", "title": "Estate hours", "body": "Open daily from 10am to 5pm.", "link_url": "" } },
+        "i2": { "type": "info_item", "settings": { "icon": "goblet", "title": "Cellar Door", "body": "Open daily from 10:30am to 5pm. Bookings are recommended.", "link_url": "" } },
+        "i3": { "type": "info_item", "settings": { "icon": "map-pin", "title": "Getting here", "body": "Onsite parking, EV charging and transfer recommendations are available.", "link_url": "" } },
+        "i4": { "type": "info_item", "settings": { "icon": "phone", "title": "Phone", "body": "+61 (08) 8568 6200", "link_url": "tel:+61885686200" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"],
+      "settings": {
+        "map_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "address_line_1": "730 Seppeltsfield Road",
+        "address_line_2": "Seppeltsfield, Barossa Valley SA 5355 Australia",
+        "eyebrow": "Hours & location",
+        "heading": "Plan your arrival.",
+        "body": "Seppeltsfield is under one hour from Adelaide and is open to the public daily, excluding selected public holidays.",
+        "link_label": "View full visitor information",
+        "link_url": "/pages/plan-your-visit",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "contact_team": {
+      "type": "sf2-team-grid",
+      "blocks": {
+        "t1": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/cellar-door-tasting.jpg",
+            "department": "Visitor Experience",
+            "title": "Cellar Door & Tours",
+            "body": "Bookings, group visits and private tasting enquiries.",
+            "link_label": "Email team",
+            "link_url": "mailto:cellarsales@seppeltsfield.com.au"
+          }
+        },
+        "t2": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/finoHERO.jpg",
+            "department": "Functions",
+            "title": "Weddings & Events",
+            "body": "Corporate functions, weddings and private celebrations.",
+            "link_label": "Start an enquiry",
+            "link_url": "/pages/weddings-private-events"
+          }
+        },
+        "t3": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
+            "department": "Wine Trade",
+            "title": "Sales & Distribution",
+            "body": "Wholesale, distributor and retail stockist enquiries.",
+            "link_label": "View trade contacts",
+            "link_url": "#trade"
+          }
+        },
+        "t4": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+            "department": "Media",
+            "title": "Marketing & Partnerships",
+            "body": "Media, collaborations, brand partnerships and corporate enquiries.",
+            "link_label": "Send an enquiry",
+            "link_url": "#enquiry"
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"],
+      "settings": {
+        "section_anchor_id": "team",
+        "eyebrow": "Team Seppeltsfield",
+        "heading": "Key contacts across the estate.",
+        "body": "Only the most useful contacts should appear here. A larger team directory can be managed as Shopify metaobjects if required.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "contact_trade": {
+      "type": "sf2-trade-banner",
+      "blocks": {
+        "tr1": {
+          "type": "trade_card",
+          "settings": {
+            "eyebrow": "Distributors",
+            "heading": "Trade partners in Australia and abroad.",
+            "body": "Consolidate distributor information by region, state or country with expandable directories or Shopify metaobjects.",
+            "link_label": "View distributors",
+            "link_url": "/pages/distributors"
+          }
+        },
+        "tr2": {
+          "type": "trade_card",
+          "settings": {
+            "eyebrow": "Australian stockists",
+            "heading": "Find Seppeltsfield near you.",
+            "body": "Present stockists by state or postcode without maintaining a completely separate website page.",
+            "link_label": "Find a stockist",
+            "link_url": "/pages/stockists"
+          }
+        }
+      },
+      "block_order": ["tr1", "tr2"],
+      "settings": {
+        "section_anchor_id": "trade",
+        "spacing_preset": "spacious"
+      }
+    },
+    "contact_form": {
+      "type": "sf2-enquiry-form",
+      "blocks": {
+        "e1": { "type": "enquiry_option", "settings": { "label": "General enquiry" } },
+        "e2": { "type": "enquiry_option", "settings": { "label": "Cellar Door & bookings" } },
+        "e3": { "type": "enquiry_option", "settings": { "label": "Wine Club" } },
+        "e4": { "type": "enquiry_option", "settings": { "label": "Online orders" } },
+        "e5": { "type": "enquiry_option", "settings": { "label": "Weddings & private events" } },
+        "e6": { "type": "enquiry_option", "settings": { "label": "Trade & distribution" } },
+        "e7": { "type": "enquiry_option", "settings": { "label": "Stockists" } },
+        "e8": { "type": "enquiry_option", "settings": { "label": "Media & partnerships" } }
+      },
+      "block_order": ["e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8"],
+      "settings": {
+        "section_anchor_id": "enquiry",
+        "eyebrow": "Send an enquiry",
+        "heading": "Write to the right team.",
+        "body": "The enquiry type can route submissions to different recipients or Shopify Flow automations while keeping one consistent public form.",
+        "submit_label": "Submit Enquiry",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "contact_faq": {
+      "type": "sf2-faq",
+      "blocks": {
+        "f1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need to book a tasting?",
+            "answer": "<p>Bookings are recommended, particularly for weekends, public holidays and special experiences.</p>",
+            "open_by_default": true
+          }
+        },
+        "f2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Can I visit with a group?",
+            "answer": "<p>Groups of seven or more should contact the team so the appropriate experience and availability can be confirmed.</p>",
+            "open_by_default": false
+          }
+        },
+        "f3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Where can I buy Seppeltsfield wine?",
+            "answer": "<p>Wine is available online, at the Cellar Door and through selected retailers and distributors.</p>",
+            "open_by_default": false
+          }
+        },
+        "f4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How do I contact the Wine Club team?",
+            "answer": "<p>Choose Wine Club in the enquiry form or log in to your member account for account-specific support.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4"],
+      "settings": {
+        "section_anchor_id": "faq",
+        "eyebrow": "Frequently asked questions",
+        "heading": "Answers before you contact us.",
+        "color_scheme": "light",
+        "spacing_preset": "compact"
+      }
+    },
+    "contact_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Planning a visit?",
+        "heading": "Book your Seppeltsfield experience.",
+        "body": "Reserve tastings, tours and estate experiences through the dedicated booking hub.",
+        "button_label": "Book Experience",
+        "button_url": "/pages/book-experience",
+        "button_preset": "primary_dark",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
       }
     }
   },
   "order": [
-    "main",
-    "form"
+    "contact_hero",
+    "contact_cards",
+    "contact_location",
+    "contact_team",
+    "contact_trade",
+    "contact_form",
+    "contact_faq",
+    "contact_cta"
   ]
 }

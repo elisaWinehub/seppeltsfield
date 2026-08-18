@@ -1,0 +1,56 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+
+<section class="sf2-how sf2-section" style="{{ section_style | strip }}">
+  <div class="sf2-wrap sf2-how__grid">
+    <div class="sf2-how__copy">
+      {% render 'sf2-eyebrow', text: section.settings.eyebrow %}
+      <h2 class="sf2-serif">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="sf2-how__steps">
+      {%- for block in section.blocks -%}
+        <div class="sf2-how__step" {{ block.shopify_attributes }}>
+          <span>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <div>
+            <h3>{{ block.settings.title }}</h3>
+            {%- if block.settings.body != blank -%}<p>{{ block.settings.body }}</p>{%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 How It Works",
+  "tag": "section",
+  "class": "sf2-how-section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How it works" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Simple to join. Easy to enjoy." },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "soft_blue", "options": [
+      { "value": "soft_blue", "label": "Soft Blue" }, { "value": "light", "label": "Light" }, { "value": "ivory", "label": "Ivory" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "spacious", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Choose your wine selection" },
+        { "type": "textarea", "id": "body", "label": "Body" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 How It Works" }]
+}
+{% endschema %}

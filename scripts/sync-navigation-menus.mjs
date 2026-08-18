@@ -10,8 +10,8 @@ const MENU_DEFINITIONS = [
       { title: 'Discover', url: '/pages/discover' },
       { title: 'Visit', url: '/pages/visit' },
       { title: 'Shop', url: '/collections' },
-      { title: 'Wine Club', url: '/pages/wine-club' },
-      { title: 'Functions & events', url: '/pages/functions-events' },
+      { title: 'Crown Society', url: '/pages/wine-club' },
+      { title: 'Journal', url: '/blogs/journal' },
     ],
   },
   {
@@ -21,6 +21,7 @@ const MENU_DEFINITIONS = [
       { title: 'History', url: '/pages/heritage-story' },
       { title: 'Sustainability', url: '/pages/discover' },
       { title: 'Awards & Recognition', url: '/pages/discover' },
+      { title: 'Journal', url: '/blogs/journal' },
     ],
   },
   {

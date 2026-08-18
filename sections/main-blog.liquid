@@ -29,6 +29,33 @@
   >
     {% content_for 'blocks' %}
 
+    {% if blog.handle == 'journal' %}
+      {% assign journal_tags = 'Recipes|Estate News|Media|Winemaker Notes' | split: '|' %}
+      <nav class="journal-filter-bar" aria-label="Journal categories">
+        <a
+          class="journal-filter-bar__link{% if current_tags == blank %} is-active{% endif %}"
+          href="{{ blog.url }}"
+        >
+          All
+        </a>
+        {% for tag in journal_tags %}
+          {% assign tag_active = false %}
+          {% for current_tag in current_tags %}
+            {% if current_tag == tag %}
+              {% assign tag_active = true %}
+              {% break %}
+            {% endif %}
+          {% endfor %}
+          <a
+            class="journal-filter-bar__link{% if tag_active %} is-active{% endif %}"
+            href="{{ blog.url }}/tagged/{{ tag | handleize }}"
+          >
+            {{ tag }}
+          </a>
+        {% endfor %}
+      </nav>
+    {% endif %}
+
     <div
       ref="grid"
       class="blog-posts-container"
@@ -135,6 +162,27 @@
     width: 100%;
     column-gap: var(--columns-gap);
     row-gap: var(--rows-gap);
+  }
+
+  .journal-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin: 0 0 2rem;
+  }
+
+  .journal-filter-bar__link {
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: 999px;
+    color: rgb(var(--color-foreground-rgb));
+    font-size: 0.875rem;
+    padding: 0.45rem 0.85rem;
+    text-decoration: none;
+  }
+
+  .journal-filter-bar__link.is-active {
+    background: rgb(var(--color-foreground-rgb));
+    color: rgb(var(--color-background-rgb));
   }
 
   /**

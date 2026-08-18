@@ -1,89 +1,75 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "sf_collection_hero": {
-      "type": "sf-collection-hero",
-      "settings": {}
+    "col_banner": {
+      "type": "sf2-collection-banner",
+      "settings": {
+        "eyebrow": "Collection",
+        "custom_image": "shopify://shop_images/Seppelsfield-OCT24-0122.jpg",
+        "back_button_label": "Back to Shop",
+        "back_button_url": "/pages/shop",
+        "color_scheme": "ivory",
+        "spacing_preset": "compact"
+      }
     },
-    "sf_main_collection_grid": {
-      "type": "sf-main-collection-grid",
+    "col_grid": {
+      "type": "sf2-main-collection-grid",
       "blocks": {
         "filters": {
           "type": "filters",
+          "static": true,
           "settings": {
-            "enable_filtering": true,
-            "filter_style": "vertical",
-            "show_filter_label": true,
-            "enable_sorting": false,
-            "enable_grid_density": false
-          }
+            "enable_filtering": false,
+            "filter_style": "horizontal",
+            "filter_width": "centered",
+            "text_label_case": "default",
+            "show_swatch_label": false,
+            "show_filter_label": false,
+            "enable_sorting": true,
+            "enable_grid_density": true,
+            "background_color": "",
+            "text_color": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0,
+            "facets_margin_bottom": 8,
+            "facets_margin_right": 20
+          },
+          "blocks": {}
         }
       },
-      "block_order": [
-        "filters"
-      ],
       "settings": {
         "desktop_columns": "3",
         "tablet_columns": "2",
-        "mobile_columns": "2",
-        "products_per_page": "12",
-        "show_result_count": true,
+        "products_per_page": "24",
         "show_sorting": true,
-        "show_active_filters": true
+        "show_active_filters": true,
+        "show_quick_add": true,
+        "show_quantity_selector": true,
+        "show_second_image_hover": true,
+        "add_to_cart_label": "Add to Cart",
+        "choose_options_label": "Choose options",
+        "empty_heading": "No products in this collection yet",
+        "empty_copy": "Check back soon or explore other Seppeltsfield collections.",
+        "empty_cta_label": "Back to Shop",
+        "empty_cta_link": "/pages/shop",
+        "no_results_heading": "No matching products",
+        "no_results_copy": "Try adjusting your filters to see more products in this collection.",
+        "clear_filters_label": "Clear all filters"
       }
-    },
-    "sf_collection_services": {
-      "type": "sf-collection-service-strip",
-      "blocks": {
-        "service_delivery": {
-          "type": "service",
-          "settings": {
-            "icon": "delivery",
-            "heading": "NATIONWIDE DELIVERY",
-            "copy": "Fast and reliable delivery across Australia"
-          }
-        },
-        "service_gift": {
-          "type": "service",
-          "settings": {
-            "icon": "gift",
-            "heading": "GIFT PACKAGING",
-            "copy": "Beautifully packaged for any occasion"
-          }
-        },
-        "service_secure": {
-          "type": "service",
-          "settings": {
-            "icon": "secure",
-            "heading": "SECURE PAYMENTS",
-            "copy": "Safe and secure checkout guaranteed"
-          }
-        },
-        "service_quality": {
-          "type": "service",
-          "settings": {
-            "icon": "quality",
-            "heading": "ESTATE QUALITY",
-            "copy": "Award-winning wines from our historic estate"
-          }
-        }
-      },
-      "block_order": [
-        "service_delivery",
-        "service_gift",
-        "service_secure",
-        "service_quality"
-      ],
-      "settings": {}
-    },
-    "sf_collection_newsletter": {
-      "type": "sf-collection-newsletter",
-      "settings": {}
     }
   },
   "order": [
-    "sf_collection_hero",
-    "sf_main_collection_grid",
-    "sf_collection_services",
-    "sf_collection_newsletter"
+    "col_banner",
+    "col_grid"
   ]
 }

@@ -1,0 +1,27 @@
+{%- doc -%}
+  @param {string} id_suffix
+  @param {number} [min]
+  @param {number} [max]
+  @param {boolean} [product_form] - Use sf-product.js quantity hooks
+{%- enddoc -%}
+
+{%- liquid
+  assign qty_id = 'Sf2Qty-' | append: id_suffix
+  assign qty_min = min | default: 1
+  assign qty_max = max | default: 999
+-%}
+
+<div class="sf2-qty" data-sf2-qty{% if product_form %} data-sf-qty{% endif %}>
+  <button type="button" aria-label="{{ 'products.product.quantity.decrease' | t: product: '' }}" data-qty-change="-1"{% if product_form %} data-sf-qty-change="-1"{% endif %}>−</button>
+  <label class="visually-hidden" for="{{ qty_id }}">{{ 'products.product.quantity.input_label' | t: product: '' }}</label>
+  <input
+    id="{{ qty_id }}"
+    type="number"
+    name="quantity"
+    value="{{ qty_min }}"
+    min="{{ qty_min }}"
+    max="{{ qty_max }}"
+    inputmode="numeric"
+  >
+  <button type="button" aria-label="{{ 'products.product.quantity.increase' | t: product: '' }}" data-qty-change="1"{% if product_form %} data-sf-qty-change="1"{% endif %}>+</button>
+</div>

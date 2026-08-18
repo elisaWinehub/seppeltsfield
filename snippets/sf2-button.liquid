@@ -1,0 +1,22 @@
+{%- doc -%}
+  @param {string} preset - primary_blue | primary_dark | light | outline_light | outline_dark | text_link
+  @param {string} label
+  @param {string} [url]
+  @param {boolean} [new_tab]
+  @param {string} [class]
+  @param {string} [type] - button for submit
+{%- enddoc -%}
+{%- liquid
+  assign preset = preset | default: 'primary_blue'
+  assign btn_class = 'sf2-btn sf2-btn--' | append: preset
+  if class != blank
+    assign btn_class = btn_class | append: ' ' | append: class
+  endif
+-%}
+{%- if type == 'submit' -%}
+  <button type="submit" class="{{ btn_class }}">{{ label }}</button>
+{%- elsif url != blank -%}
+  <a href="{{ url }}" class="{{ btn_class }}"{% if new_tab %} target="_blank" rel="noopener"{% endif %}>{{ label }}</a>
+{%- else -%}
+  <span class="{{ btn_class }}">{{ label }}</span>
+{%- endif -%}

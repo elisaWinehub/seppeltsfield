@@ -1,0 +1,196 @@
+.page-wrapper {
+  position: relative;
+}
+
+#header-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 50;
+  background-color: transparent;
+  transition: background-color 0.25s ease;
+}
+
+#header-group.is-scrolled {
+  position: fixed;
+  background-color: #000000;
+}
+
+.shopify-section.sf2-header-section {
+  background-color: transparent;
+}
+
+.sf2-header {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  color: #fff;
+  background-color: transparent;
+}
+
+.sf2-header__nav { height: 92px; display: grid; grid-template-columns: 240px 1fr auto; align-items: center; gap: 25px; background-color: transparent; }
+.sf2-header__logo img {
+  width: auto;
+  max-width: var(--sf2-logo-width, 188px);
+  height: auto;
+  object-fit: contain;
+  transition: max-width 0.25s ease;
+}
+
+#header-group.is-scrolled .sf2-header__logo img {
+  max-width: 150px;
+}
+.sf2-header__links { display: flex; justify-content: center; gap: 28px; font-size: 1em; text-transform: uppercase; list-style: none; margin: 0; padding: 0; }
+.sf2-header__links a { opacity: 0.86; text-decoration: none; color: inherit; transition: color 0.25s ease, opacity 0.25s ease; }
+.sf2-header__links a.is-active { color: var(--sf-blue); opacity: 1; }
+.sf2-header__links a:hover,
+.sf2-header__links a:focus-visible { color: var(--sf-blue); opacity: 1; }
+.sf2-header__actions { display: flex; align-items: center; gap: 10px; }
+.sf2-header__actions .sf2-btn--light {
+  background-color: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+.sf2-header__actions .sf2-btn--light:hover,
+.sf2-header__actions .sf2-btn--light:focus-visible {
+  background-color: var(--sf-blue);
+  color: #000000;
+  border-color: var(--sf-blue);
+}
+.sf2-header__round { width: 38px; height: 38px; border: 1px solid rgba(255,255,255,0.38); border-radius: 50%; background: transparent; color: #fff; display: grid; place-items: center; padding: 0; cursor: pointer; }
+.sf2-header__round .sf2-icon { width: 17px; height: 17px; }
+.sf2-header__menu-btn { display: none; }
+.sf2-header__drawer { position: fixed; inset: 0; z-index: 100; pointer-events: none; }
+.sf2-header__drawer.is-open { pointer-events: auto; }
+.sf2-header__drawer-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,0.5); opacity: 0; transition: opacity 0.3s; }
+.sf2-header__drawer.is-open .sf2-header__drawer-backdrop { opacity: 1; }
+.sf2-header__drawer-panel { position: absolute; top: 0; right: 0; width: min(360px, 90vw); height: 100%; background-color: #000000; color: #fff; transform: translateX(100%); transition: transform 0.3s; padding: 24px; overflow-y: auto; }
+.sf2-header__drawer.is-open .sf2-header__drawer-panel { transform: translateX(0); }
+.sf2-header__drawer-nav { list-style: none; margin: 24px 0 0; padding: 0; display: grid; gap: 16px; background-color: transparent; }
+.sf2-header__drawer-nav a { color: inherit; text-decoration: none; font-size: 1rem; }
+
+/* Overlay header-group on hero sections — absolute header sits out of flow */
+.template-index #MainContent > .shopify-section:first-child,
+.template-page #MainContent > .shopify-section:first-child {
+  margin-top: 0;
+}
+
+/* Commerce product/collection — relative on load, fixed once scrolling */
+#header-group.sf2-header-group--in-flow,
+body:has(#MainContent[data-template='product']) #header-group,
+body:has(#MainContent[data-template='collection']) #header-group,
+.template-collection #header-group,
+.template-product #header-group {
+  position: relative;
+  top: auto;
+  left: auto;
+  right: auto;
+  background-color: #000000;
+}
+
+#header-group.sf2-header-group--in-flow.is-scrolled,
+body:has(#MainContent[data-template='product']) #header-group.is-scrolled,
+body:has(#MainContent[data-template='collection']) #header-group.is-scrolled,
+.template-collection #header-group.is-scrolled,
+.template-product #header-group.is-scrolled {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  background-color: #000000;
+}
+
+.template-product:has(#header-group.is-scrolled) #MainContent,
+.template-collection:has(#header-group.is-scrolled) #MainContent,
+body:has(#MainContent[data-template='product']):has(#header-group.is-scrolled) #MainContent,
+body:has(#MainContent[data-template='collection']):has(#header-group.is-scrolled) #MainContent {
+  padding-top: var(--sf2-header-group-height, 92px);
+}
+
+@media (max-width: 1000px) {
+  .sf2-header__links { display: none; }
+  .sf2-header__menu-btn { display: grid; }
+  .sf2-header__actions .sf2-btn--light { display: none; }
+  .sf2-header__nav { grid-template-columns: 1fr auto; }
+}
+@media (max-width: 650px) {
+  .sf2-header__nav { height: 74px; --sf2-header-nav-height: 74px; }
+  .sf2-header__logo img { max-width: 145px; }
+  #header-group.is-scrolled .sf2-header__logo img { max-width: 150px; }
+}
+
+/* Header-group announcement bar */
+#header-group .announcement-bar {
+  padding-block-start: calc(var(--padding-block-start, 12px) + 5px);
+  padding-block-end: calc(var(--padding-block-end, 12px) + 5px);
+}
+#header-group.has-scrolled-header .header-announcements-section,
+#header-group.has-scrolled-header .shopify-section:has(.announcement-bar) {
+  display: none;
+}
+#header-group .announcement-bar__slides {
+  width: 100%;
+  max-width: none;
+}
+#header-group .announcement-bar__slide {
+  place-content: center;
+  justify-items: center;
+}
+#header-group .announcement-bar__text {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+}
+
+.sf2-back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  z-index: 60;
+  width: 48px;
+  height: 48px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--sf-blue);
+  color: var(--sf-white);
+  display: grid;
+  place-items: center;
+  padding: 0;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, visibility 0.25s ease, transform 0.25s ease, background-color 0.25s ease;
+}
+
+.sf2-back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.sf2-back-to-top:hover,
+.sf2-back-to-top:focus-visible {
+  background: var(--sf-black);
+  color: var(--sf-white);
+}
+
+.sf2-back-to-top .sf2-icon {
+  width: 18px;
+  height: 18px;
+}
+
+@media (max-width: 650px) {
+  .sf2-back-to-top {
+    right: 16px;
+    bottom: 16px;
+    width: 44px;
+    height: 44px;
+  }
+}

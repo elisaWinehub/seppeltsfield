@@ -1,0 +1,35 @@
+{%- doc -%}
+  Generic breadcrumb trail for product and other templates.
+
+  @param {product} [product]
+  @param {collection} [collection]
+  @param {string} [home_label]
+  @param {string} [separator]
+{%- enddoc -%}
+
+{%- liquid
+  assign sep = separator | default: '/'
+  assign crumb_collection = collection
+  if crumb_collection == blank and product != blank
+    for coll in product.collections
+      if coll.handle != 'all'
+        assign crumb_collection = coll
+        break
+      endif
+    endfor
+  endif
+-%}
+
+<nav class="sf2-breadcrumbs" aria-label="Breadcrumb">
+  <div class="sf2-wrap sf2-breadcrumbs__inner">
+    <a href="{{ routes.root_url }}">{{ home_label | default: 'Home' }}</a>
+    {%- if crumb_collection != blank and crumb_collection.url != blank -%}
+      <span aria-hidden="true">{{ sep }}</span>
+      <a href="{{ crumb_collection.url }}">{{ crumb_collection.title }}</a>
+    {%- endif -%}
+    {%- if product != blank -%}
+      <span aria-hidden="true">{{ sep }}</span>
+      <span aria-current="page">{{ product.title }}</span>
+    {%- endif -%}
+  </div>
+</nav>

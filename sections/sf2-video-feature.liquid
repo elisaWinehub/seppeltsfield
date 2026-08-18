@@ -1,0 +1,102 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'sf2-video-feature.js' | asset_url }}" defer="defer"></script>
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+{%- liquid
+  assign video_id = ''
+  assign youtube_url = section.settings.youtube_url
+  if youtube_url contains 'youtu.be/'
+    assign video_id = youtube_url | split: 'youtu.be/' | last | split: '?' | first | split: '&' | first
+  elsif youtube_url contains 'watch?v='
+    assign video_id = youtube_url | split: 'watch?v=' | last | split: '&' | first
+  elsif youtube_url contains 'embed/'
+    assign video_id = youtube_url | split: 'embed/' | last | split: '?' | first
+  endif
+  assign embed_url = ''
+  if video_id != blank
+    assign embed_url = 'https://www.youtube.com/embed/' | append: video_id
+  endif
+  assign video_position = section.settings.video_position | default: 'right'
+  assign frame_style = section.settings.frame_style | default: 'standard'
+  assign anchor_id = section.settings.section_anchor_id | default: ''
+-%}
+
+<section{% if anchor_id != blank %} id="{{ anchor_id }}"{% endif %} class="sf2-video sf2-section sf2-video--{{ video_position }}{% if frame_style == 'tall' %} sf2-video--tall{% endif %}" style="{{ section_style | strip }}">
+  <div class="sf2-wrap sf2-video__grid">
+    <div class="sf2-video__copy">
+      {% render 'sf2-eyebrow', text: section.settings.eyebrow, brand: true %}
+      <h2 class="sf2-serif">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}<div>{{ section.settings.body }}</div>{%- endif -%}
+      {%- if section.blocks.size > 0 -%}
+        <div class="sf2-video__principles">
+          {%- for block in section.blocks -%}
+            <div class="sf2-video__principle" {{ block.shopify_attributes }}>
+              <span>{% if forloop.index < 10 %}0{% endif %}{{ forloop.index }}</span>
+              <b>{{ block.settings.label }}</b>
+            </div>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+        <div class="sf2-video__link">
+          {% render 'sf2-button', preset: 'text_link', label: section.settings.link_label, url: section.settings.link_url %}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="sf2-video__frame" data-sf2-video-frame{% if embed_url != blank %} data-youtube-embed="{{ embed_url }}"{% endif %}>
+      {%- if section.settings.poster_image != blank -%}
+        {% render 'sf2-picture', image: section.settings.poster_image, sizes: '(min-width: 990px) 55vw, 100vw' %}
+      {%- endif -%}
+      {%- if embed_url != blank -%}
+        <button type="button" class="sf2-video__play" data-sf2-video-play aria-label="{{ section.settings.play_label | default: 'Play video' }}">
+          {% render 'sf2-icon', icon: 'play' %}
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Video Feature",
+  "tag": "section",
+  "class": "sf2-video-section",
+  "settings": [
+    { "type": "text", "id": "section_anchor_id", "label": "Section anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Inside the Crown Society" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "See what membership feels like." },
+    { "type": "richtext", "id": "body", "label": "Body" },
+    { "type": "text", "id": "youtube_url", "label": "YouTube URL" },
+    { "type": "image_picker", "id": "poster_image", "label": "Poster image" },
+    { "type": "text", "id": "play_label", "label": "Play button label", "default": "Play Crown Society video" },
+    { "type": "select", "id": "video_position", "label": "Video position", "default": "right", "options": [
+      { "value": "right", "label": "Right" }, { "value": "left", "label": "Left" }
+    ]},
+    { "type": "select", "id": "frame_style", "label": "Frame style", "default": "standard", "options": [
+      { "value": "standard", "label": "16:9 standard" }, { "value": "tall", "label": "Tall editorial" }
+    ]},
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link_url", "label": "Link URL" },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "dark", "options": [
+      { "value": "dark", "label": "Dark" }, { "value": "black", "label": "Black" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "spacious", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "principle",
+      "name": "Principle",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Respect for place" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 Video Feature" }]
+}
+{% endschema %}

@@ -1,0 +1,72 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+{%- assign anchor_id = section.settings.section_anchor_id | default: 'team' -%}
+
+<section id="{{ anchor_id }}" class="sf2-team sf2-section" style="{{ section_style | strip }}">
+  <div class="sf2-wrap">
+    {% render 'sf2-section-header',
+      eyebrow: section.settings.eyebrow,
+      heading: section.settings.heading,
+      body: section.settings.body
+    %}
+    <div class="sf2-team__grid">
+      {%- for block in section.blocks -%}
+        <article class="sf2-team__card" {{ block.shopify_attributes }}>
+          {%- if block.settings.image != blank -%}
+            <div class="sf2-team__media">
+              {% render 'sf2-picture', image: block.settings.image, sizes: '(min-width: 990px) 25vw, 50vw' %}
+            </div>
+          {%- endif -%}
+          <div class="sf2-team__copy">
+            {% render 'sf2-eyebrow', text: block.settings.department, brand: true %}
+            <h3>{{ block.settings.title }}</h3>
+            {%- if block.settings.body != blank -%}<p>{{ block.settings.body }}</p>{%- endif -%}
+            {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+              <a class="sf2-team__link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Team Grid",
+  "tag": "section",
+  "class": "sf2-team-section",
+  "settings": [
+    { "type": "text", "id": "section_anchor_id", "label": "Section anchor ID", "default": "team" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Team Seppeltsfield" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Key contacts across the estate." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Only the most useful contacts should appear here. A larger team directory can be managed as Shopify metaobjects if required." },
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "ivory", "options": [
+      { "value": "light", "label": "Light" }, { "value": "ivory", "label": "Ivory" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "spacious", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "team_member",
+      "name": "Team member",
+      "limit": 6,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "department", "label": "Department", "default": "Visitor Experience" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Cellar Door & Tours" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "link_label", "label": "Link label", "default": "Email team" },
+        { "type": "text", "id": "link_url", "label": "Link URL" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 Team Grid" }]
+}
+{% endschema %}

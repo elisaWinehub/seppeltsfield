@@ -1,0 +1,10 @@
+query {
+  theme(id: "gid://shopify/OnlineStoreTheme/157991305368") {
+    id
+    name
+    processing
+    processingFailed
+    themeStoreId
+    role
+  }
+}

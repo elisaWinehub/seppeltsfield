@@ -1,0 +1,93 @@
+{%- doc -%}
+  @param {string} icon - search | account | cart | arrow-right | crown | heritage | collection | destination | clock | map-pin | calendar
+  @param {string} [class]
+  @param {number} [size] - width and height in px
+{%- enddoc -%}
+{%- liquid
+  assign icon_class = 'sf2-icon'
+  if class != blank
+    assign icon_class = icon_class | append: ' ' | append: class
+  endif
+  assign icon_style = blank
+  if size != blank
+    assign icon_style = 'width: ' | append: size | append: 'px; height: ' | append: size | append: 'px;'
+  endif
+-%}
+<span class="{{ icon_class }}"{% if icon_style != blank %} style="{{ icon_style }}"{% endif %} aria-hidden="true">
+  {%- case icon -%}
+    {%- when 'search' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6"/><path d="m16 16 4 4"/></svg>
+    {%- when 'account' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-4 3.2-6 7-6s6.2 2 7 6"/></svg>
+    {%- when 'cart' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h2l2 10h9l2-7H7"/><circle cx="10" cy="19" r="1"/><circle cx="17" cy="19" r="1"/></svg>
+    {%- when 'arrow-right' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M14 7l5 5-5 5"/></svg>
+    {%- when 'plus' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5v14"/></svg>
+    {%- when 'crown' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8l4 3 4-6 4 6 4-3-2 10H6L4 8Z"/><path d="M7 18h10"/></svg>
+    {%- when 'heritage' -%}
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 15l9 7 6-13 6 13 9-7-5 22H14L9 15Z"/><path d="M16 37h16M19 42h10"/></svg>
+    {%- when 'collection' -%}
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13 7h22v9c0 10-4 18-11 25-7-7-11-15-11-25V7Z"/><path d="M18 12h12M18 18h12M20 25h8"/></svg>
+    {%- when 'destination' -%}
+      <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 36h34M11 36V20l13-9 13 9v16"/><path d="M18 36V25h12v11M8 20h32"/></svg>
+    {%- when 'clock' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/></svg>
+    {%- when 'map-pin' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2"/></svg>
+    {%- when 'calendar' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="6" width="14" height="13" rx="1"/><path d="M8 4v4M16 4v4M5 10h14"/></svg>
+    {%- when 'goblet' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3h8l-1 8a3 3 0 0 1-6 0L8 3Z"/><path d="M12 14v6M8 20h8"/></svg>
+    {%- when 'dining' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 3v8M4 3v5a3 3 0 0 0 6 0V3M7 11v10M16 3v18M16 3c3 2 4 5 4 8h-4"/></svg>
+    {%- when 'cup' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 8h11v8a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-2M7 4h7"/></svg>
+    {%- when 'village' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20h16M6 20V9l6-5 6 5v11M9 20v-6h6v6"/></svg>
+    {%- when 'bed' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 18V9M20 18V9M4 14h16M7 9h10a3 3 0 0 1 3 3v2H4v-2a3 3 0 0 1 3-3Z"/></svg>
+    {%- when 'book' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 4h14v16H5z"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
+    {%- when 'accessibility' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="7" r="2"/><path d="M12 10v10M8 13h8M9 20l3-5 3 5"/></svg>
+    {%- when 'ev-charge' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M5 10c4 0 7-2 7-6M19 10c-4 0-7-2-7-6"/></svg>
+    {%- when 'play' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="m10 8 6 4-6 4V8Z" fill="currentColor" stroke="none"/></svg>
+    {%- when 'mail' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v12H4z"/><path d="m4 8 8 6 8-6"/></svg>
+    {%- when 'building' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20h16M6 20V9l6-5 6 5v11M9 20v-6h6v6"/></svg>
+    {%- when 'person' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="3"/><path d="M5 20c.8-4 3.2-6 7-6s6.2 2 7 6"/></svg>
+    {%- when 'phone' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h16v14H4z"/><path d="M8 9h8M8 13h5"/></svg>
+    {%- when 'catalogue' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v12H4z"/><path d="M8 7V4h8v3M4 11h16"/></svg>
+    {%- when 'shield-lock' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21c5-3 8-7 8-12-4 0-7-2-8-5-1 3-4 5-8 5 0 5 3 9 8 12Z"/></svg>
+    {%- when 'member-pricing' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h16v12H4z"/><path d="M8 7V4h8v3M4 11h16"/></svg>
+    {%- when 'delivery' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 7h11v10H4zM15 10h3l2 3v4h-5z"/><circle cx="8" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/></svg>
+    {%- when 'exclusive' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M8 12h8M12 8v8"/></svg>
+    {%- when 'estate-access' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M7 4h10v5a5 5 0 0 1-10 0V4Z"/><path d="M12 14v6M8 20h8"/></svg>
+    {%- when 'vineyard-stewardship' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21c5-3 8-7 8-12-4 0-7-2-8-5-1 3-4 5-8 5 0 5 3 9 8 12Z"/><path d="M8 14c2-2 4-3 8-4"/></svg>
+    {%- when 'biodiversity' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 3v18M5 10c4 0 7-2 7-6M19 10c-4 0-7-2-7-6M6 16c3 0 5-1 6-4M18 16c-3 0-5-1-6-4"/></svg>
+    {%- when 'energy' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/><circle cx="12" cy="12" r="4"/></svg>
+    {%- when 'custodianship' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 17c3-6 7-9 16-10-1 8-5 12-11 12-2 0-4-1-5-2Z"/><path d="M7 17c3-3 6-5 10-7"/></svg>
+    {%- when 'grid' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="4" width="6" height="6"/><rect x="14" y="4" width="6" height="6"/><rect x="4" y="14" width="6" height="6"/><rect x="14" y="14" width="6" height="6"/></svg>
+    {%- when 'list' -%}
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg>
+  {%- endcase -%}
+</span>

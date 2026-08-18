@@ -1,0 +1,92 @@
+{% render 'sf2-fonts' %}
+{{ 'sf2-tokens.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-components.css' | asset_url | stylesheet_tag }}
+{{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
+
+{%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+{%- assign anchor_id = section.settings.section_anchor_id | default: '' -%}
+
+<section{% if anchor_id != blank %} id="{{ anchor_id }}"{% endif %} class="sf2-benefits sf2-section{% if section.settings.show_decorative_circle %} sf2-benefits--circle{% endif %}{% if section.settings.color_scheme == 'dark' or section.settings.color_scheme == 'black' %} sf2-benefits--dark{% endif %}" style="{{ section_style | strip }}">
+  <div class="sf2-wrap sf2-benefits__grid{% if section.settings.layout_style == 'contact_cards' %} sf2-benefits__grid--contact{% endif %}">
+    <div class="sf2-benefits__copy">
+      {% render 'sf2-eyebrow', text: section.settings.eyebrow, brand: section.settings.eyebrow_brand %}
+      <h2 class="sf2-serif">{{ section.settings.heading }}</h2>
+      {%- if section.settings.body != blank -%}<p>{{ section.settings.body }}</p>{%- endif -%}
+      {%- if section.settings.link_label != blank and section.settings.link_url != blank -%}
+        <div class="sf2-benefits__link">
+          {% render 'sf2-button', preset: 'text_link', label: section.settings.link_label, url: section.settings.link_url %}
+        </div>
+      {%- endif -%}
+      {%- if section.settings.show_login_link -%}
+        <div class="sf2-benefits__login">
+          {% render 'sf2-button', preset: 'text_link', label: section.settings.login_label, url: routes.account_login_url %}
+        </div>
+      {%- endif -%}
+    </div>
+    <div class="sf2-benefits__list">
+      {%- for block in section.blocks -%}
+        <article class="sf2-benefits__card" {{ block.shopify_attributes }}>
+          {% render 'sf2-icon', icon: block.settings.icon %}
+          <h3>{{ block.settings.title }}</h3>
+          {%- if block.settings.body != blank -%}<p>{{ block.settings.body }}</p>{%- endif -%}
+          {%- if block.settings.link_label != blank and block.settings.link_url != blank -%}
+            <a class="sf2-benefits__card-link" href="{{ block.settings.link_url }}">{{ block.settings.link_label }}</a>
+          {%- endif -%}
+        </article>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "SF2 Benefit Grid",
+  "tag": "section",
+  "class": "sf2-benefits-section",
+  "settings": [
+    { "type": "text", "id": "section_anchor_id", "label": "Section anchor ID" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Wine club benefits" },
+    { "type": "checkbox", "id": "eyebrow_brand", "label": "Brand-colour eyebrow", "default": false },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Membership beyond the bottle." },
+    { "type": "textarea", "id": "body", "label": "Body", "default": "Every Crown Society benefit is listed below for quick, clear comparison." },
+    { "type": "text", "id": "link_label", "label": "Link label" },
+    { "type": "url", "id": "link_url", "label": "Link URL" },
+    { "type": "checkbox", "id": "show_login_link", "label": "Show member login link", "default": true },
+    { "type": "text", "id": "login_label", "label": "Login link label", "default": "Member Login" },
+    { "type": "checkbox", "id": "show_decorative_circle", "label": "Show decorative circle", "default": false },
+    { "type": "select", "id": "layout_style", "label": "Layout style", "default": "standard", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "contact_cards", "label": "Contact cards" }
+    ]},
+    { "type": "select", "id": "color_scheme", "label": "Color scheme", "default": "light", "options": [
+      { "value": "light", "label": "Light" }, { "value": "ivory", "label": "Ivory" },
+      { "value": "dark", "label": "Dark" }, { "value": "black", "label": "Black" }
+    ]},
+    { "type": "select", "id": "spacing_preset", "label": "Spacing", "default": "spacious", "options": [
+      { "value": "standard", "label": "Standard" }, { "value": "spacious", "label": "Spacious" }
+    ]}
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "limit": 6,
+      "settings": [
+        { "type": "select", "id": "icon", "label": "Icon", "default": "member-pricing", "options": [
+          { "value": "mail", "label": "Mail" }, { "value": "clock", "label": "Clock" }, { "value": "building", "label": "Building" },
+          { "value": "person", "label": "Person" }, { "value": "phone", "label": "Phone" }, { "value": "goblet", "label": "Bottle / goblet" },
+          { "value": "member-pricing", "label": "Member pricing" }, { "value": "delivery", "label": "Delivery" },
+          { "value": "exclusive", "label": "Exclusive" }, { "value": "estate-access", "label": "Estate access" },
+          { "value": "vineyard-stewardship", "label": "Vineyard stewardship" }, { "value": "biodiversity", "label": "Biodiversity" },
+          { "value": "energy", "label": "Energy and resources" }, { "value": "custodianship", "label": "Custodianship" },
+          { "value": "map-pin", "label": "Map pin" }
+        ]},
+        { "type": "text", "id": "title", "label": "Title", "default": "Member pricing" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "link_label", "label": "Link label" },
+        { "type": "text", "id": "link_url", "label": "Link URL (supports mailto: and anchors)" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "SF2 Benefit Grid" }]
+}
+{% endschema %}

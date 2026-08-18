@@ -11,242 +11,52 @@
   "type": "footer",
   "name": "Footer",
   "sections": {
-    "footer_seppeltsfield": {
-      "type": "footer",
+    "sf2_footer": {
+      "type": "sf2-footer",
       "blocks": {
-        "brand_group": {
-          "type": "group",
+        "col_discover": {
+          "type": "footer_column",
           "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-start",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 10,
-            "width": "fill",
-            "custom_width": 100,
-            "width_mobile": "fill",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "background_media": "none",
-            "background_color": "",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_color": "",
-            "border_radius": 0,
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "image_FytQk4": {
-              "type": "image",
-              "name": "t:names.image",
-              "settings": {
-                "image": "shopify://shop_images/Seppeltsfield-logo_Est1851_HERO_no_Background.png",
-                "link": "",
-                "image_ratio": "adapt",
-                "width": "fill",
-                "custom_width": 100,
-                "width_mobile": "fill",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_color": "",
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "brand_blurb": {
-              "type": "text",
-              "settings": {
-                "text": "<p>175 years of winemaking heritage in the heart of the Barossa Valley.</p>",
-                "width": "100%",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "rte",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "text_color": "",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "image_FytQk4",
-            "brand_blurb"
-          ]
-        },
-        "discover_links": {
-          "type": "menu",
-          "settings": {
-            "menu": "footer-discover",
             "heading": "Discover",
-            "menu_spacing": 10,
-            "show_as_accordion": false,
-            "accordion_icon": "caret",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "menu": "footer-discover"
+          }
         },
-        "visit_links": {
-          "type": "menu",
+        "col_visit": {
+          "type": "footer_column",
           "settings": {
-            "menu": "footer-visit",
             "heading": "Visit",
-            "menu_spacing": 10,
-            "show_as_accordion": false,
-            "accordion_icon": "caret",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "menu": "footer-visit"
+          }
         },
-        "shop_links": {
-          "type": "menu",
+        "col_wine": {
+          "type": "footer_column",
           "settings": {
-            "menu": "footer-wine",
             "heading": "Wine",
-            "menu_spacing": 10,
-            "show_as_accordion": false,
-            "accordion_icon": "caret",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "menu": "footer-wine"
+          }
         },
-        "contact_links": {
-          "type": "menu",
+        "col_contact": {
+          "type": "footer_column",
           "settings": {
-            "menu": "footer-contact",
             "heading": "Contact",
-            "menu_spacing": 10,
-            "show_as_accordion": false,
-            "accordion_icon": "caret",
-            "accordion_dividers": false,
-            "background_color": "",
-            "text_color": "",
-            "heading_preset": "h6",
-            "link_preset": "paragraph",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
+            "menu": "footer-contact"
+          }
         }
       },
       "block_order": [
-        "brand_group",
-        "discover_links",
-        "visit_links",
-        "shop_links",
-        "contact_links"
+        "col_discover",
+        "col_visit",
+        "col_wine",
+        "col_contact"
       ],
-      "name": "t:names.footer",
       "settings": {
-        "section_width": "page-width",
-        "gap": 28,
-        "column_count": "5",
-        "background_color": "#0c0d10",
-        "padding-block-start": 56,
-        "padding-block-end": 40
-      }
-    },
-    "footer_utilities_seppeltsfield": {
-      "type": "footer-utilities",
-      "blocks": {
-        "copyright": {
-          "type": "footer-copyright",
-          "settings": {
-            "show_powered_by": false,
-            "text_color": "",
-            "font_size": "0.75rem",
-            "case": "none"
-          },
-          "blocks": {}
-        },
-        "policy_list": {
-          "type": "footer-policy-list",
-          "settings": {
-            "text_color": "",
-            "font_size": "0.75rem",
-            "case": "none"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "copyright",
-        "policy_list"
-      ],
-      "name": "t:names.utilities",
-      "settings": {
-        "section_width": "page-width",
-        "gap": 24,
-        "background_color": "#0c0d10",
-        "divider_thickness": 1,
-        "divider_color": "#f5f7f829",
-        "padding-block-start": 20,
-        "padding-block-end": 48
+        "blurb": "<p>A premium Shopify homepage balancing heritage, destination storytelling, collection discovery and bookable estate experiences.</p>",
+        "legal_text": "Seppeltsfield",
+        "legal_links": ""
       }
     }
   },
   "order": [
-    "footer_seppeltsfield",
-    "footer_utilities_seppeltsfield"
+    "sf2_footer"
   ]
 }
