@@ -12,6 +12,10 @@
   endif
   assign article_word_count = article.content | strip_html | split: ' ' | size
   assign article_read_time = article_word_count | divided_by: 220
+  assign journal_source_blog = article.blog
+  if blogs['journal'] and blogs['journal'].articles_count > 0
+    assign journal_source_blog = blogs['journal']
+  endif
   if article_read_time < 1
     assign article_read_time = 1
   endif
@@ -96,7 +100,7 @@
           <h2>More Journal stories</h2>
           <ul>
             {% assign sidebar_count = 0 %}
-            {% for sidebar_article in article.blog.articles %}
+            {% for sidebar_article in journal_source_blog.articles %}
               {% if sidebar_article.id != article.id and sidebar_count < 8 %}
                 {% assign sidebar_count = sidebar_count | plus: 1 %}
                 <li>
@@ -107,51 +111,15 @@
                 </li>
               {% endif %}
             {% endfor %}
+            {% if sidebar_count == 0 %}
+              <li>
+                <span class="journal-article__sidebar-date">No additional stories yet.</span>
+              </li>
+            {% endif %}
           </ul>
         </aside>
       </div>
     </div>
-
-    <section class="journal-article__related">
-      <div class="section">
-        <div class="journal-article__related-head">
-          <h2>More from the Journal</h2>
-          <a href="{{ article.blog.url }}">View all</a>
-        </div>
-        <div class="journal-article__related-grid">
-          {% assign related_count = 0 %}
-          {% for related_article in article.blog.articles %}
-            {% if related_article.id != article.id and related_count < 3 %}
-              {% assign related_count = related_count | plus: 1 %}
-              <a class="journal-article__related-card" href="{{ related_article.url }}">
-                <div class="journal-article__related-media">
-                  {% if related_article.image %}
-                    {{ related_article.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: related_article.title }}
-                  {% else %}
-                    <div class="journal-image-placeholder" aria-hidden="true">
-                      {% if settings.logo_inverse != blank %}
-                        {{ settings.logo_inverse | image_url: width: 260 | image_tag: widths: '180,220,260', sizes: '(min-width: 990px) 20vw, 100vw', alt: shop.name, loading: 'lazy' }}
-                      {% elsif settings.logo != blank %}
-                        {{ settings.logo | image_url: width: 260 | image_tag: widths: '180,220,260', sizes: '(min-width: 990px) 20vw, 100vw', alt: shop.name, loading: 'lazy' }}
-                      {% else %}
-                        <img src="https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221" alt="{{ shop.name | escape }}" loading="lazy">
-                      {% endif %}
-                    </div>
-                  {% endif %}
-                  {% if related_article.tags.size > 0 %}
-                    <span>{{ related_article.tags.first }}</span>
-                  {% endif %}
-                </div>
-                <div class="journal-article__related-copy">
-                  <h3>{{ related_article.title }}</h3>
-                  <p>{{ related_article.published_at | date: '%d %b %Y' }}</p>
-                </div>
-              </a>
-            {% endif %}
-          {% endfor %}
-        </div>
-      </div>
-    </section>
   </div>
 {% else %}
   <div
@@ -440,7 +408,7 @@
     font-size: 0.9rem;
     letter-spacing: 0.06em;
     margin: 0 0 0.85rem;
-    text-transform: uppercase;
+    text-transform: none;
   }
 
   .journal-article__sidebar ul {
@@ -583,87 +551,6 @@
     margin: 0;
   }
 
-  .journal-article__related {
-    border-top: 1px solid rgba(16, 17, 19, 0.14);
-    margin-top: 4rem;
-    padding-top: 3.2rem;
-  }
-
-  .journal-article__related-head {
-    align-items: baseline;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1.4rem;
-  }
-
-  .journal-article__related-head h2 {
-    font-size: 1.9rem;
-    margin: 0;
-  }
-
-  .journal-article__related-head a {
-    border-bottom: 1px solid currentColor;
-    color: #101113;
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-decoration: none;
-    text-transform: uppercase;
-  }
-
-  .journal-article__related-grid {
-    display: grid;
-    gap: 1.5rem;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .journal-article__related-card {
-    background: #fff;
-    border: 1px solid rgba(16, 17, 19, 0.14);
-    color: inherit;
-    text-decoration: none;
-  }
-
-  .journal-article__related-media {
-    height: 12.75rem;
-    position: relative;
-  }
-
-  .journal-article__related-media img {
-    height: 100%;
-    object-fit: cover;
-    width: 100%;
-  }
-
-  .journal-article__related-media span {
-    background: #fff;
-    color: #101113;
-    font-size: 0.66rem;
-    left: 0.9rem;
-    letter-spacing: 0.08em;
-    padding: 0.3rem 0.55rem;
-    position: absolute;
-    text-transform: uppercase;
-    top: 0.9rem;
-  }
-
-  .journal-article__related-copy {
-    padding: 1rem 1rem 1.2rem;
-  }
-
-  .journal-article__related-copy h3 {
-    font-size: 1.3rem;
-    line-height: 1.1;
-    margin: 0 0 0.45rem;
-    text-transform: none;
-  }
-
-  .journal-article__related-copy p {
-    color: #666b70;
-    font-size: 0.76rem;
-    margin: 0;
-    text-transform: none;
-  }
-
   .journal-image-placeholder {
     align-items: center;
     background: #000;
@@ -751,9 +638,6 @@
       top: auto;
     }
 
-    .journal-article__related-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
   }
 
   @media screen and (max-width: 749px) {
@@ -769,10 +653,6 @@
     .journal-article__meta {
       margin: 0;
       width: 100%;
-    }
-
-    .journal-article__related-grid {
-      grid-template-columns: 1fr;
     }
 
     .journal-article__hero-wrap {
