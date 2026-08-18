@@ -2,11 +2,16 @@
 
 {% liquid
   assign max_items = section.settings.max_products
+  assign is_journal_tag_404 = false
+  if template.name == '404' and request.path contains '/blogs/journal/tagged/'
+    assign is_journal_tag_404 = true
+  endif
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
 %}
 
+{% unless is_journal_tag_404 %}
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
@@ -85,6 +90,7 @@
     {%- content_for 'blocks' -%}
   </div>
 </div>
+{% endunless %}
 
 {% schema %}
 {

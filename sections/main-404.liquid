@@ -4,8 +4,82 @@
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+  assign is_journal_tag_404 = false
+  assign requested_tag_handle = ''
+  if request.path contains '/blogs/journal/tagged/'
+    assign requested_tag_handle = request.path | split: '/blogs/journal/tagged/' | last | split: '/' | first
+    if requested_tag_handle != blank
+      assign is_journal_tag_404 = true
+    endif
+  endif
 %}
 
+{% if is_journal_tag_404 %}
+  {% assign requested_tag_label = requested_tag_handle | replace: '-', ' ' | replace: '_', ' ' %}
+  {% capture requested_tag_label %}
+    {% assign words = requested_tag_label | split: ' ' %}
+    {% for word in words %}
+      {{ word | capitalize }}{% unless forloop.last %} {% endunless %}
+    {% endfor %}
+  {% endcapture %}
+  <div class="journal-listing journal-listing--empty-state">
+    <section class="journal-listing__hero">
+      <div class="section journal-listing__hero-inner">
+        <p class="journal-listing__eyebrow">The Seppeltsfield Journal</p>
+        <h1 class="journal-listing__title">{{ requested_tag_label | strip }} from the estate.</h1>
+        <p class="journal-listing__intro">Browse Journal stories in {{ requested_tag_label | strip }}.</p>
+      </div>
+    </section>
+
+    <section class="journal-listing__filters">
+      <div class="section">
+        {% assign journal_tags = 'Recipes:recipes|Estate News:estate-news|Media:media|Winemaker Notes:winemaker-notes' | split: '|' %}
+        <nav class="journal-filter-bar" aria-label="Journal categories">
+          <a class="journal-filter-bar__link" href="/blogs/journal">All</a>
+          {% for tag_pair in journal_tags %}
+            {% assign pair = tag_pair | split: ':' %}
+            {% assign tag_label = pair[0] %}
+            {% assign tag_handle = pair[1] %}
+            <a
+              class="journal-filter-bar__link{% if requested_tag_handle == tag_handle %} is-active{% endif %}"
+              href="/blogs/journal/tagged/{{ tag_handle }}"
+            >
+              {{ tag_label }}
+            </a>
+          {% endfor %}
+        </nav>
+      </div>
+    </section>
+
+    <section class="journal-listing__empty">
+      <div class="section">
+        <div class="journal-listing__empty-card">
+          <h2>No stories tagged "{{ requested_tag_label | strip }}" yet.</h2>
+          <p>Check back soon for new Journal updates in this category.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    (() => {
+      const listing = document.querySelector('.journal-listing--empty-state');
+      if (!listing) return;
+      const setHeaderOffset = () => {
+        const stickyCandidates = document.querySelectorAll('.announcement-bar, .sf2-header');
+        let maxBottom = 0;
+        stickyCandidates.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.bottom > maxBottom) maxBottom = rect.bottom;
+        });
+        listing.style.setProperty('--journal-header-offset', `${Math.ceil(maxBottom)}px`);
+      };
+      window.addEventListener('load', setHeaderOffset);
+      window.addEventListener('resize', setHeaderOffset);
+      setHeaderOffset();
+    })();
+  </script>
+{% else %}
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
@@ -33,6 +107,108 @@
     </div>
   </div>
 </div>
+{% endif %}
+
+{% stylesheet %}
+  .journal-listing--empty-state {
+    background: #f8f6f1;
+    color: #101113;
+  }
+
+  .journal-listing__hero,
+  .journal-listing__filters {
+    background: #0a0b0d;
+  }
+
+  .journal-listing__hero-inner {
+    padding-block: calc(var(--journal-header-offset, 140px) + 2.6rem) 2.75rem;
+    text-align: center;
+  }
+
+  .journal-listing__eyebrow {
+    color: #9de3fa;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    margin: 0 0 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .journal-listing__title {
+    color: #fff;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    margin: 0 0 1rem;
+  }
+
+  .journal-listing__intro {
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0 auto;
+    max-width: 38rem;
+  }
+
+  .journal-listing__filters .section {
+    padding-block: 0 3rem;
+  }
+
+  .journal-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .journal-filter-bar__link {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.875rem;
+    padding: 0.55rem 1.1rem;
+    text-decoration: none;
+  }
+
+  .journal-filter-bar__link.is-active {
+    background: #fff;
+    color: #0a0b0d;
+  }
+
+  .journal-listing__empty {
+    padding: 3.2rem 0 5.5rem;
+  }
+
+  .journal-listing__empty-card {
+    background: #fff;
+    border: 1px solid rgba(16, 17, 19, 0.14);
+    margin: 0 auto;
+    max-width: 760px;
+    padding: 2.4rem;
+    text-align: center;
+  }
+
+  .journal-listing__empty-card h2 {
+    font-size: 2rem;
+    margin: 0 0 0.8rem;
+    text-transform: none;
+  }
+
+  .journal-listing__empty-card p {
+    color: #666b70;
+    margin: 0;
+  }
+
+  @media screen and (max-width: 749px) {
+    .journal-listing__hero-inner {
+      padding-block: calc(var(--journal-header-offset, 110px) + 2rem) 2.4rem;
+    }
+
+    .journal-filter-bar {
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+      white-space: nowrap;
+    }
+  }
+{% endstylesheet %}
 
 {% schema %}
 {
