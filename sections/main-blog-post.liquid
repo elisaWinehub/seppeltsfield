@@ -195,6 +195,22 @@
 
       const setHeaderBackground = (background) => {
         const { header, headerGroup, headerNav, headerSection } = getHeaderNodes();
+        if (background == 'transparent') {
+          if (headerGroup) {
+            headerGroup.style.removeProperty('background-color');
+          }
+          if (headerSection) {
+            headerSection.style.removeProperty('background-color');
+          }
+          if (header) {
+            header.style.removeProperty('background-color');
+          }
+          if (headerNav) {
+            headerNav.style.removeProperty('background-color');
+          }
+          return;
+        }
+
         [headerSection, headerGroup, header, headerNav].forEach((node) => {
           if (node) node.style.setProperty('background-color', background, 'important');
         });
@@ -239,11 +255,15 @@
       };
 
       const syncScrolledHeaderState = () => {
-        const hasScrolled = window.scrollY > solidThreshold;
+        const hasScrolled = window.scrollY > 0;
         const { header, headerGroup, headerSection } = getHeaderNodes();
         document.documentElement.classList.toggle('sf2-journal-article-header-scrolled', hasScrolled);
         if (header) {
-          header.classList.toggle('sf2-header--transparent', !hasScrolled);
+          if (hasScrolled) {
+            header.classList.remove('sf2-header--transparent');
+          } else {
+            header.classList.add('sf2-header--transparent');
+          }
         }
         if (headerGroup) {
           headerGroup.classList.toggle('is-scrolled', hasScrolled);
@@ -656,7 +676,6 @@
     width: 52%;
   }
 
-  .sf2-journal-article-transparent-header #header-group,
   .sf2-journal-article-transparent-header #header-group .sf2-header,
   .sf2-journal-article-transparent-header #header-group .sf2-header__nav {
     background-color: transparent !important;
@@ -664,6 +683,7 @@
 
   .sf2-journal-article-header-scrolled .shopify-section.sf2-header-section,
   .sf2-journal-article-header-scrolled #header-group,
+  .sf2-journal-article-header-scrolled #header-group.is-scrolled,
   .sf2-journal-article-header-scrolled #header-group .sf2-header,
   .sf2-journal-article-header-scrolled #header-group .sf2-header__nav {
     background-color: #000 !important;
