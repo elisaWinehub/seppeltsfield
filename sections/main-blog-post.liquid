@@ -202,6 +202,11 @@
         root.style.setProperty('--journal-header-offset', `${Math.ceil(maxBottom)}px`);
       };
 
+      const syncScrolledHeaderState = () => {
+        const hasScrolled = window.scrollY > 6;
+        document.documentElement.classList.toggle('sf2-journal-article-header-scrolled', hasScrolled);
+      };
+
       const initCopyLink = () => {
         const button = root.querySelector('[data-copy-link]');
         if (!button) return;
@@ -223,8 +228,11 @@
 
       window.addEventListener('load', setHeaderOffset);
       window.addEventListener('resize', setHeaderOffset);
+      window.addEventListener('load', syncScrolledHeaderState);
+      window.addEventListener('scroll', syncScrolledHeaderState, { passive: true });
       forceTransparentHeader();
       setHeaderOffset();
+      syncScrolledHeaderState();
       initCopyLink();
     })();
   </script>
@@ -575,6 +583,13 @@
   .sf2-journal-article-transparent-header #header-group .sf2-header,
   .sf2-journal-article-transparent-header #header-group .sf2-header__nav {
     background-color: transparent !important;
+  }
+
+  .sf2-journal-article-header-scrolled .shopify-section.sf2-header-section,
+  .sf2-journal-article-header-scrolled #header-group,
+  .sf2-journal-article-header-scrolled #header-group .sf2-header,
+  .sf2-journal-article-header-scrolled #header-group .sf2-header__nav {
+    background-color: #000 !important;
   }
 
   .blog-post-comments-container {
