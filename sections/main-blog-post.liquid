@@ -5,7 +5,9 @@
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
   assign is_journal_article = false
-  if article.blog.handle == 'journal'
+  if blog.handle == 'journal'
+    assign is_journal_article = true
+  elsif article.url contains '/blogs/journal/'
     assign is_journal_article = true
   endif
   assign article_word_count = article.content | strip_html | split: ' ' | size
@@ -24,10 +26,30 @@
           <span>/</span>
           <a href="{{ article.blog.url }}/tagged/{{ article.tags.first | handleize }}">{{ article.tags.first }}</a>
         {% endif %}
+        <span>/</span>
+        <span>{{ article.title }}</span>
       </div>
     </nav>
 
-    <header class="journal-article__hero-wrap">
+    <header class="journal-article__head">
+      <div class="journal-article__read">
+        {% if article.tags.size > 0 %}
+          <p class="journal-article__tag">{{ article.tags.first }}</p>
+        {% endif %}
+        <h1>{{ article.title }}</h1>
+        <p class="journal-article__dek">{{ article.excerpt_or_content | strip_html | truncate: 220 }}</p>
+        <div class="journal-article__byline">
+          <div class="journal-article__avatar">{{ article.author | slice: 0 }}</div>
+          <div class="journal-article__who">
+            <strong>{{ article.author }}</strong>
+            <span>{{ article.published_at | date: '%d %B %Y' }}</span>
+          </div>
+          <p class="journal-article__meta">{{ article_read_time }} min read</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="journal-article__hero-wrap">
       <div class="journal-article__hero">
         {% if article.image %}
           {{ article.image | image_url: width: 2200 | image_tag: loading: 'lazy', alt: article.title }}
@@ -42,25 +64,8 @@
             {% endif %}
           </div>
         {% endif %}
-        <div class="journal-article__hero-overlay">
-          <div class="journal-article__read">
-            {% if article.tags.size > 0 %}
-              <p class="journal-article__tag">{{ article.tags.first }}</p>
-            {% endif %}
-            <h1>{{ article.title }}</h1>
-            <p class="journal-article__dek">{{ article.excerpt_or_content | strip_html | truncate: 220 }}</p>
-            <div class="journal-article__byline">
-              <div class="journal-article__avatar">{{ article.author | slice: 0 }}</div>
-              <div class="journal-article__who">
-                <strong>{{ article.author }}</strong>
-                <span>{{ article.published_at | date: '%d %B %Y' }}</span>
-              </div>
-              <p class="journal-article__meta">{{ article_read_time }} min read</p>
-            </div>
-          </div>
-        </div>
       </div>
-    </header>
+    </div>
 
     <div class="journal-article__content section">
       <div class="journal-article__content-grid">
@@ -77,6 +82,13 @@
               <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" target="_blank" rel="noopener">f</a>
               <a href="https://x.com/intent/tweet?url={{ share_url | url_encode }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener">x</a>
               <button type="button" data-copy-link data-link="{{ share_url }}" data-default-label="⎘" data-success-label="✓" aria-label="Copy article link">⎘</button>
+            </div>
+          </div>
+          <div class="journal-article__read journal-article__author-card">
+            <div class="journal-article__author-avatar">{{ article.author | slice: 0 }}</div>
+            <div>
+              <p class="journal-article__author-name">{{ article.author }}</p>
+              <p class="journal-article__author-bio">Contributor to the Seppeltsfield Journal.</p>
             </div>
           </div>
         </div>
@@ -266,8 +278,12 @@
     text-transform: uppercase;
   }
 
+  .journal-article__head {
+    padding: 1.1rem 0 2rem;
+  }
+
   .journal-article__hero-wrap {
-    margin-top: 1rem;
+    margin-top: 0;
   }
 
   .journal-article__tag {
@@ -286,6 +302,10 @@
     line-height: 1.05;
     margin: 0 0 0.9rem;
     text-transform: none;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+    word-break: normal;
   }
 
   .journal-article__dek {
@@ -349,35 +369,6 @@
     min-height: 320px;
     object-fit: cover;
     width: 100%;
-  }
-
-  .journal-article__hero-overlay {
-    align-items: end;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.16) 55%, rgba(0, 0, 0, 0));
-    bottom: 0;
-    color: #fff;
-    display: flex;
-    left: 0;
-    padding: 2rem 0 2.5rem;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .journal-article__hero-overlay .journal-article__tag {
-    background: #0ca7e0;
-    color: #071117;
-  }
-
-  .journal-article__hero-overlay .journal-article__dek,
-  .journal-article__hero-overlay .journal-article__who span,
-  .journal-article__hero-overlay .journal-article__meta {
-    color: rgba(255, 255, 255, 0.85);
-  }
-
-  .journal-article__hero-overlay .journal-article__byline {
-    border-bottom-color: rgba(255, 255, 255, 0.25);
-    border-top-color: rgba(255, 255, 255, 0.25);
   }
 
   .journal-article__content {
@@ -447,6 +438,23 @@
     color: #2b2d30;
   }
 
+  .journal-article__body .rte img {
+    display: block;
+    height: auto;
+    margin: 2rem auto;
+    max-width: 100%;
+  }
+
+  .journal-article__body .rte figure {
+    margin: 2rem auto;
+  }
+
+  .journal-article__body .rte figcaption {
+    color: #666b70;
+    font-size: 0.78rem;
+    margin-top: 0.5rem;
+  }
+
   .journal-article__share-wrap {
     margin-top: 2.2rem;
   }
@@ -494,6 +502,38 @@
   .journal-article__share button.is-copied {
     background: #101113;
     color: #fff;
+  }
+
+  .journal-article__author-card {
+    align-items: center;
+    background: #fff;
+    border: 1px solid rgba(16, 17, 19, 0.14);
+    display: grid;
+    gap: 0.85rem;
+    grid-template-columns: auto 1fr;
+    margin-top: 2.2rem;
+    padding: 1.2rem;
+  }
+
+  .journal-article__author-avatar {
+    align-items: center;
+    background: #101113;
+    border-radius: 999px;
+    color: #fff;
+    display: flex;
+    height: 2.6rem;
+    justify-content: center;
+    width: 2.6rem;
+  }
+
+  .journal-article__author-name {
+    font-size: 0.95rem;
+    margin: 0 0 0.2rem;
+  }
+
+  .journal-article__author-bio {
+    color: #666b70;
+    margin: 0;
   }
 
   .journal-article__related {
@@ -684,6 +724,11 @@
 
     .journal-article__crumb {
       padding-top: calc(var(--journal-header-offset, 110px) + 0.8rem);
+    }
+
+    .journal-article__author-card {
+      grid-template-columns: 1fr;
+      text-align: center;
     }
   }
 {% endstylesheet %}
