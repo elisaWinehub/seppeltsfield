@@ -27,43 +27,76 @@
       </div>
     </nav>
 
-    <header class="journal-article__head">
-      <div class="journal-article__read">
-        {% if article.tags.size > 0 %}
-          <p class="journal-article__tag">{{ article.tags.first }}</p>
-        {% endif %}
-        <h1>{{ article.title }}</h1>
-        <p class="journal-article__dek">{{ article.excerpt_or_content | strip_html | truncate: 220 }}</p>
-        <div class="journal-article__byline">
-          <div class="journal-article__avatar">{{ article.author | slice: 0 }}</div>
-          <div class="journal-article__who">
-            <strong>{{ article.author }}</strong>
-            <span>{{ article.published_at | date: '%d %B %Y' }}</span>
+    <header class="journal-article__hero-wrap">
+      <div class="journal-article__hero">
+        {% if article.image %}
+          {{ article.image | image_url: width: 2200 | image_tag: loading: 'lazy', alt: article.title }}
+        {% else %}
+          <div class="journal-image-placeholder journal-image-placeholder--hero" aria-hidden="true">
+            {% if settings.logo_inverse != blank %}
+              {{ settings.logo_inverse | image_url: width: 500 | image_tag: widths: '260,380,500', sizes: '260px', alt: shop.name, loading: 'lazy' }}
+            {% elsif settings.logo != blank %}
+              {{ settings.logo | image_url: width: 500 | image_tag: widths: '260,380,500', sizes: '260px', alt: shop.name, loading: 'lazy' }}
+            {% else %}
+              <img src="https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221" alt="{{ shop.name | escape }}" loading="lazy">
+            {% endif %}
           </div>
-          <p class="journal-article__meta">{{ article_read_time }} min read</p>
+        {% endif %}
+        <div class="journal-article__hero-overlay">
+          <div class="journal-article__read">
+            {% if article.tags.size > 0 %}
+              <p class="journal-article__tag">{{ article.tags.first }}</p>
+            {% endif %}
+            <h1>{{ article.title }}</h1>
+            <p class="journal-article__dek">{{ article.excerpt_or_content | strip_html | truncate: 220 }}</p>
+            <div class="journal-article__byline">
+              <div class="journal-article__avatar">{{ article.author | slice: 0 }}</div>
+              <div class="journal-article__who">
+                <strong>{{ article.author }}</strong>
+                <span>{{ article.published_at | date: '%d %B %Y' }}</span>
+              </div>
+              <p class="journal-article__meta">{{ article_read_time }} min read</p>
+            </div>
+          </div>
         </div>
       </div>
     </header>
 
-    {% if article.image %}
-      <div class="journal-article__hero">
-        {{ article.image | image_url: width: 2200 | image_tag: loading: 'lazy', alt: article.title }}
-      </div>
-    {% endif %}
-
-    <div class="journal-article__body">
-      <div class="journal-article__read rte">
-        {{ article.content }}
-      </div>
-    </div>
-
-    <div class="journal-article__share-wrap">
-      <div class="journal-article__read journal-article__share">
-        {% assign share_url = shop.secure_url | append: article.url %}
-        <span>Share</span>
-        <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" target="_blank" rel="noopener">f</a>
-        <a href="https://x.com/intent/tweet?url={{ share_url | url_encode }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener">x</a>
-        <a href="mailto:?subject={{ article.title | url_encode }}&body={{ share_url | url_encode }}">@</a>
+    <div class="journal-article__content section">
+      <div class="journal-article__content-grid">
+        <div class="journal-article__main">
+          <div class="journal-article__body">
+            <div class="journal-article__read rte">
+              {{ article.content }}
+            </div>
+          </div>
+          <div class="journal-article__share-wrap">
+            <div class="journal-article__read journal-article__share">
+              {% assign share_url = shop.secure_url | append: article.url %}
+              <span>Share</span>
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{ share_url | url_encode }}" target="_blank" rel="noopener">f</a>
+              <a href="https://x.com/intent/tweet?url={{ share_url | url_encode }}&text={{ article.title | url_encode }}" target="_blank" rel="noopener">x</a>
+              <button type="button" data-copy-link data-link="{{ share_url }}" data-default-label="⎘" data-success-label="✓" aria-label="Copy article link">⎘</button>
+            </div>
+          </div>
+        </div>
+        <aside class="journal-article__sidebar" aria-label="Other journal articles">
+          <h2>More Journal stories</h2>
+          <ul>
+            {% assign sidebar_count = 0 %}
+            {% for sidebar_article in article.blog.articles %}
+              {% if sidebar_article.id != article.id and sidebar_count < 8 %}
+                {% assign sidebar_count = sidebar_count | plus: 1 %}
+                <li>
+                  <a href="{{ sidebar_article.url }}">
+                    <span class="journal-article__sidebar-title">{{ sidebar_article.title }}</span>
+                    <span class="journal-article__sidebar-date">{{ sidebar_article.published_at | date: '%d %b %Y' }}</span>
+                  </a>
+                </li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </aside>
       </div>
     </div>
 
@@ -82,6 +115,16 @@
                 <div class="journal-article__related-media">
                   {% if related_article.image %}
                     {{ related_article.image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: related_article.title }}
+                  {% else %}
+                    <div class="journal-image-placeholder" aria-hidden="true">
+                      {% if settings.logo_inverse != blank %}
+                        {{ settings.logo_inverse | image_url: width: 260 | image_tag: widths: '180,220,260', sizes: '(min-width: 990px) 20vw, 100vw', alt: shop.name, loading: 'lazy' }}
+                      {% elsif settings.logo != blank %}
+                        {{ settings.logo | image_url: width: 260 | image_tag: widths: '180,220,260', sizes: '(min-width: 990px) 20vw, 100vw', alt: shop.name, loading: 'lazy' }}
+                      {% else %}
+                        <img src="https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221" alt="{{ shop.name | escape }}" loading="lazy">
+                      {% endif %}
+                    </div>
                   {% endif %}
                   {% if related_article.tags.size > 0 %}
                     <span>{{ related_article.tags.first }}</span>
@@ -150,6 +193,49 @@
   </div>
 {% endif %}
 
+{% if is_journal_article %}
+  <script>
+    (() => {
+      const root = document.querySelector('.journal-article');
+      if (!root) return;
+
+      const setHeaderOffset = () => {
+        const stickyCandidates = document.querySelectorAll('.announcement-bar, .sf2-header');
+        let maxBottom = 0;
+        stickyCandidates.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.bottom > maxBottom) maxBottom = rect.bottom;
+        });
+        root.style.setProperty('--journal-header-offset', `${Math.ceil(maxBottom)}px`);
+      };
+
+      const initCopyLink = () => {
+        const button = root.querySelector('[data-copy-link]');
+        if (!button) return;
+        button.addEventListener('click', async () => {
+          const link = button.getAttribute('data-link') || window.location.href;
+          const successLabel = button.getAttribute('data-success-label') || 'Copied';
+          const defaultLabel = button.getAttribute('data-default-label') || 'Copy';
+          try {
+            await navigator.clipboard.writeText(link);
+            button.textContent = successLabel;
+            button.classList.add('is-copied');
+            window.setTimeout(() => {
+              button.textContent = defaultLabel;
+              button.classList.remove('is-copied');
+            }, 1800);
+          } catch (error) {}
+        });
+      };
+
+      window.addEventListener('load', setHeaderOffset);
+      window.addEventListener('resize', setHeaderOffset);
+      setHeaderOffset();
+      initCopyLink();
+    })();
+  </script>
+{% endif %}
+
 <script type="application/ld+json">
   {{ article | structured_data }}
 </script>
@@ -168,7 +254,7 @@
   }
 
   .journal-article__crumb {
-    padding-top: 1.4rem;
+    padding-top: calc(var(--journal-header-offset, 140px) + 1rem);
   }
 
   .journal-article__crumb .journal-article__read {
@@ -180,8 +266,8 @@
     text-transform: uppercase;
   }
 
-  .journal-article__head {
-    padding: 1.8rem 0 2.4rem;
+  .journal-article__hero-wrap {
+    margin-top: 1rem;
   }
 
   .journal-article__tag {
@@ -199,6 +285,7 @@
     font-size: clamp(2.1rem, 5vw, 3.6rem);
     line-height: 1.05;
     margin: 0 0 0.9rem;
+    text-transform: none;
   }
 
   .journal-article__dek {
@@ -249,10 +336,11 @@
   }
 
   .journal-article__hero {
-    background: #fff;
+    background: #000;
     max-height: 640px;
     min-height: 320px;
     overflow: hidden;
+    position: relative;
   }
 
   .journal-article__hero img {
@@ -261,6 +349,94 @@
     min-height: 320px;
     object-fit: cover;
     width: 100%;
+  }
+
+  .journal-article__hero-overlay {
+    align-items: end;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.68), rgba(0, 0, 0, 0.16) 55%, rgba(0, 0, 0, 0));
+    bottom: 0;
+    color: #fff;
+    display: flex;
+    left: 0;
+    padding: 2rem 0 2.5rem;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  .journal-article__hero-overlay .journal-article__tag {
+    background: #0ca7e0;
+    color: #071117;
+  }
+
+  .journal-article__hero-overlay .journal-article__dek,
+  .journal-article__hero-overlay .journal-article__who span,
+  .journal-article__hero-overlay .journal-article__meta {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  .journal-article__hero-overlay .journal-article__byline {
+    border-bottom-color: rgba(255, 255, 255, 0.25);
+    border-top-color: rgba(255, 255, 255, 0.25);
+  }
+
+  .journal-article__content {
+    margin-top: 2.8rem;
+  }
+
+  .journal-article__content-grid {
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: minmax(0, 1fr) 280px;
+  }
+
+  .journal-article__sidebar {
+    align-self: start;
+    border-left: 1px solid rgba(16, 17, 19, 0.14);
+    padding-left: 1.25rem;
+    position: sticky;
+    top: calc(var(--journal-header-offset, 140px) + 1rem);
+  }
+
+  .journal-article__sidebar h2 {
+    font-size: 0.9rem;
+    letter-spacing: 0.06em;
+    margin: 0 0 0.85rem;
+    text-transform: uppercase;
+  }
+
+  .journal-article__sidebar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .journal-article__sidebar li + li {
+    border-top: 1px solid rgba(16, 17, 19, 0.14);
+    margin-top: 0.8rem;
+    padding-top: 0.8rem;
+  }
+
+  .journal-article__sidebar a {
+    color: inherit;
+    display: block;
+    text-decoration: none;
+  }
+
+  .journal-article__sidebar-title {
+    display: block;
+    font-size: 0.95rem;
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+    text-transform: none;
+  }
+
+  .journal-article__sidebar-date {
+    color: #666b70;
+    display: block;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
 
   .journal-article__body {
@@ -300,6 +476,24 @@
     justify-content: center;
     text-decoration: none;
     width: 2.1rem;
+  }
+
+  .journal-article__share button {
+    align-items: center;
+    background: transparent;
+    border: 1px solid rgba(16, 17, 19, 0.2);
+    border-radius: 999px;
+    color: #101113;
+    cursor: pointer;
+    display: flex;
+    height: 2.1rem;
+    justify-content: center;
+    width: 2.1rem;
+  }
+
+  .journal-article__share button.is-copied {
+    background: #101113;
+    color: #fff;
   }
 
   .journal-article__related {
@@ -373,13 +567,34 @@
     font-size: 1.3rem;
     line-height: 1.1;
     margin: 0 0 0.45rem;
+    text-transform: none;
   }
 
   .journal-article__related-copy p {
     color: #666b70;
     font-size: 0.76rem;
     margin: 0;
-    text-transform: uppercase;
+    text-transform: none;
+  }
+
+  .journal-image-placeholder {
+    align-items: center;
+    background: #000;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .journal-image-placeholder img {
+    display: block;
+    max-width: 240px;
+    object-fit: contain;
+    width: 48%;
+  }
+
+  .journal-image-placeholder--hero img {
+    max-width: 300px;
   }
 
   .blog-post-comments-container {
@@ -430,6 +645,19 @@
   }
 
   @media screen and (max-width: 989px) {
+    .journal-article__content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .journal-article__sidebar {
+      border-left: 0;
+      border-top: 1px solid rgba(16, 17, 19, 0.14);
+      padding-left: 0;
+      padding-top: 1.1rem;
+      position: static;
+      top: auto;
+    }
+
     .journal-article__related-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -452,6 +680,10 @@
 
     .journal-article__related-grid {
       grid-template-columns: 1fr;
+    }
+
+    .journal-article__crumb {
+      padding-top: calc(var(--journal-header-offset, 110px) + 0.8rem);
     }
   }
 {% endstylesheet %}

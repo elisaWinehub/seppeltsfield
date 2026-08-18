@@ -12,6 +12,10 @@
   if blog.handle == 'journal'
     assign is_journal = true
   endif
+  assign journal_active_tag = ''
+  if current_tags != blank
+    assign journal_active_tag = current_tags | first
+  endif
 %}
 
 {% if is_journal %}
@@ -19,10 +23,17 @@
     <section class="journal-listing__hero">
       <div class="section journal-listing__hero-inner">
         <p class="journal-listing__eyebrow">The Seppeltsfield Journal</p>
-        <h1 class="journal-listing__title">Stories from the estate.</h1>
-        <p class="journal-listing__intro">
-          Recipes and pairing ideas from our winemakers, news from across the estate, and the occasional word from the press.
-        </p>
+        {% if journal_active_tag != blank %}
+          <h1 class="journal-listing__title">{{ journal_active_tag }} from the estate.</h1>
+          <p class="journal-listing__intro">
+            Browse Journal stories in {{ journal_active_tag }}.
+          </p>
+        {% else %}
+          <h1 class="journal-listing__title">Stories from the estate.</h1>
+          <p class="journal-listing__intro">
+            Recipes and pairing ideas from our winemakers, news from across the estate, and the occasional word from the press.
+          </p>
+        {% endif %}
       </div>
     </section>
 
@@ -48,14 +59,28 @@
     </section>
 
     {% paginate blog.articles by 10 %}
+      {% assign show_featured_article = false %}
+      {% if paginate.current_page == 1 %}
+        {% assign show_featured_article = true %}
+      {% endif %}
       {% assign featured_article = blog.articles.first %}
-      {% if featured_article %}
+      {% if featured_article and show_featured_article %}
         <section class="journal-listing__feature">
           <div class="section">
             <a class="journal-feature" href="{{ featured_article.url }}">
               <div class="journal-feature__media">
                 {% if featured_article.image %}
                   {{ featured_article.image | image_url: width: 1800 | image_tag: loading: 'lazy', alt: featured_article.title }}
+                {% else %}
+                  <div class="journal-image-placeholder" aria-hidden="true">
+                    {% if settings.logo_inverse != blank %}
+                      {{ settings.logo_inverse | image_url: width: 420 | image_tag: widths: '220,320,420', sizes: '220px', alt: shop.name, loading: 'lazy' }}
+                    {% elsif settings.logo != blank %}
+                      {{ settings.logo | image_url: width: 420 | image_tag: widths: '220,320,420', sizes: '220px', alt: shop.name, loading: 'lazy' }}
+                    {% else %}
+                      <img src="https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221" alt="{{ shop.name | escape }}" loading="lazy">
+                    {% endif %}
+                  </div>
                 {% endif %}
                 {% if featured_article.tags.size > 0 %}
                   <span class="journal-feature__tag">{{ featured_article.tags.first }}</span>
@@ -75,18 +100,33 @@
         </section>
       {% endif %}
 
-      <section class="journal-listing__grid-section">
+      <section class="journal-listing__grid-section" data-journal-listing data-section-id="{{ section.id }}">
         <div class="section">
           <div class="journal-listing__label">
             <h3>Latest from the Journal</h3>
             <span>{{ blog.articles_count }} articles</span>
           </div>
-          <div class="journal-listing__grid">
-            {% for article in blog.articles offset: 1 %}
+          <div class="journal-listing__grid" data-journal-grid>
+            {% if show_featured_article %}
+              {% assign listing_offset = 1 %}
+            {% else %}
+              {% assign listing_offset = 0 %}
+            {% endif %}
+            {% for article in blog.articles offset: listing_offset %}
               <a class="journal-card" href="{{ article.url }}">
                 <div class="journal-card__media">
                   {% if article.image %}
                     {{ article.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: article.title }}
+                  {% else %}
+                    <div class="journal-image-placeholder" aria-hidden="true">
+                      {% if settings.logo_inverse != blank %}
+                        {{ settings.logo_inverse | image_url: width: 360 | image_tag: widths: '200,280,360', sizes: '(min-width: 750px) 33vw, 100vw', alt: shop.name, loading: 'lazy' }}
+                      {% elsif settings.logo != blank %}
+                        {{ settings.logo | image_url: width: 360 | image_tag: widths: '200,280,360', sizes: '(min-width: 750px) 33vw, 100vw', alt: shop.name, loading: 'lazy' }}
+                      {% else %}
+                        <img src="https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221" alt="{{ shop.name | escape }}" loading="lazy">
+                      {% endif %}
+                    </div>
                   {% endif %}
                   {% if article.tags.size > 0 %}
                     <span class="journal-card__tag">{{ article.tags.first }}</span>
@@ -102,8 +142,15 @@
           </div>
 
           {% if paginate.next %}
-            <div class="journal-listing__load-more">
-              <a href="{{ paginate.next.url }}">Load more articles</a>
+            <div class="journal-listing__load-more" data-journal-load-more-wrap>
+              <button
+                type="button"
+                data-journal-load-more
+                data-next-url="{{ paginate.next.url }}"
+                data-loading-label="Loading..."
+              >
+                Load more articles
+              </button>
             </div>
           {% endif %}
         </div>
@@ -234,6 +281,85 @@
   </blog-posts-list>
 {% endif %}
 
+{% if is_journal %}
+  <script>
+    (() => {
+      const setHeaderOffset = () => {
+        const listing = document.querySelector('.journal-listing');
+        if (!listing) return;
+        const stickyCandidates = document.querySelectorAll('.announcement-bar, .sf2-header');
+        let maxBottom = 0;
+        stickyCandidates.forEach((el) => {
+          const rect = el.getBoundingClientRect();
+          if (rect.bottom > maxBottom) maxBottom = rect.bottom;
+        });
+        listing.style.setProperty('--journal-header-offset', `${Math.ceil(maxBottom)}px`);
+      };
+
+      const initLoadMore = () => {
+        const listing = document.querySelector('[data-journal-listing]');
+        if (!listing) return;
+        const grid = listing.querySelector('[data-journal-grid]');
+        const loadMoreWrap = listing.querySelector('[data-journal-load-more-wrap]');
+        const loadMoreButton = listing.querySelector('[data-journal-load-more]');
+        if (!grid || !loadMoreWrap || !loadMoreButton) return;
+
+        const loadNextPage = async () => {
+          const nextUrl = loadMoreButton.getAttribute('data-next-url');
+          if (!nextUrl) {
+            loadMoreWrap.remove();
+            return;
+          }
+
+          const loadingLabel = loadMoreButton.getAttribute('data-loading-label') || 'Loading...';
+          const originalLabel = loadMoreButton.textContent;
+          loadMoreButton.disabled = true;
+          loadMoreButton.textContent = loadingLabel;
+
+          try {
+            const fetchUrl = new URL(nextUrl, window.location.origin);
+            fetchUrl.searchParams.set('section_id', '{{ section.id }}');
+            const response = await fetch(fetchUrl.toString(), { credentials: 'same-origin' });
+            const html = await response.text();
+            const doc = new DOMParser().parseFromString(html, 'text/html');
+            const incomingGrid = doc.querySelector('[data-journal-grid]');
+            const incomingButton = doc.querySelector('[data-journal-load-more]');
+            if (!incomingGrid) throw new Error('Missing incoming grid');
+
+            grid.insertAdjacentHTML('beforeend', incomingGrid.innerHTML);
+            if (incomingButton) {
+              const incomingNext = incomingButton.getAttribute('data-next-url');
+              if (incomingNext) {
+                loadMoreButton.setAttribute('data-next-url', incomingNext);
+              } else {
+                loadMoreWrap.remove();
+              }
+            } else {
+              loadMoreWrap.remove();
+            }
+          } catch (error) {
+            loadMoreButton.disabled = false;
+            loadMoreButton.textContent = originalLabel;
+            return;
+          }
+
+          if (document.body.contains(loadMoreButton)) {
+            loadMoreButton.disabled = false;
+            loadMoreButton.textContent = originalLabel;
+          }
+        };
+
+        loadMoreButton.addEventListener('click', loadNextPage);
+      };
+
+      window.addEventListener('load', setHeaderOffset);
+      window.addEventListener('resize', setHeaderOffset);
+      setHeaderOffset();
+      initLoadMore();
+    })();
+  </script>
+{% endif %}
+
 {% stylesheet %}
   .journal-listing {
     background: #f8f6f1;
@@ -246,7 +372,7 @@
   }
 
   .journal-listing__hero-inner {
-    padding-block: 5.25rem 2.75rem;
+    padding-block: calc(var(--journal-header-offset, 140px) + 2.6rem) 2.75rem;
     text-align: center;
   }
 
@@ -349,6 +475,7 @@
     font-size: clamp(1.8rem, 3vw, 2.5rem);
     line-height: 1.1;
     margin: 0.8rem 0 1rem;
+    text-transform: none;
   }
 
   .journal-feature p {
@@ -434,6 +561,7 @@
     font-size: 1.45rem;
     line-height: 1.1;
     margin: 0 0 0.65rem;
+    text-transform: none;
   }
 
   .journal-card__body p {
@@ -454,14 +582,36 @@
     margin-top: 2.4rem;
   }
 
-  .journal-listing__load-more a {
+  .journal-listing__load-more button {
+    background: transparent;
     border: 1px solid #101113;
     color: #101113;
+    cursor: pointer;
     font-size: 0.74rem;
     letter-spacing: 0.06em;
     padding: 0.8rem 1.6rem;
-    text-decoration: none;
     text-transform: uppercase;
+  }
+
+  .journal-listing__load-more button:disabled {
+    opacity: 0.65;
+  }
+
+  .journal-image-placeholder {
+    align-items: center;
+    background: #000;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    min-height: 100%;
+    width: 100%;
+  }
+
+  .journal-image-placeholder img {
+    display: block;
+    max-width: 220px;
+    width: 48%;
+    object-fit: contain;
   }
 
   .journal-listing__signup {
@@ -563,7 +713,7 @@
 
   @media screen and (max-width: 749px) {
     .journal-listing__hero-inner {
-      padding-block: 4.3rem 2.4rem;
+      padding-block: calc(var(--journal-header-offset, 110px) + 2rem) 2.4rem;
     }
 
     .journal-listing__filters .section {
