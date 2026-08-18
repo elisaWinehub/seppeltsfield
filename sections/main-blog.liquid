@@ -1,5 +1,3 @@
-
-
 <script
   src="{{ 'blog-posts-list.js' | asset_url }}"
   type="module"
@@ -10,144 +8,434 @@
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+  assign is_journal = false
+  if blog.handle == 'journal'
+    assign is_journal = true
+  endif
 %}
 
-<blog-posts-list section-id="{{ section.id }}">
-  <div
-    class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
-  ></div>
-  <div
-    class="
-      section
-      {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
-      blog-posts
-      spacing-style
-      size-style
-    "
-    data-testid="blog-posts"
-    style="{% render 'spacing-style', settings: section.settings %}"
-  >
-    {% content_for 'blocks' %}
+{% if is_journal %}
+  <div class="journal-listing">
+    <section class="journal-listing__hero">
+      <div class="section journal-listing__hero-inner">
+        <p class="journal-listing__eyebrow">The Seppeltsfield Journal</p>
+        <h1 class="journal-listing__title">Stories from the estate.</h1>
+        <p class="journal-listing__intro">
+          Recipes and pairing ideas from our winemakers, news from across the estate, and the occasional word from the press.
+        </p>
+      </div>
+    </section>
 
-    {% if blog.handle == 'journal' %}
-      {% assign journal_tags = 'Recipes|Estate News|Media|Winemaker Notes' | split: '|' %}
-      <nav class="journal-filter-bar" aria-label="Journal categories">
-        <a
-          class="journal-filter-bar__link{% if current_tags == blank %} is-active{% endif %}"
-          href="{{ blog.url }}"
-        >
-          All
-        </a>
-        {% for tag in journal_tags %}
-          {% assign tag_active = false %}
-          {% for current_tag in current_tags %}
-            {% if current_tag == tag %}
-              {% assign tag_active = true %}
-              {% break %}
-            {% endif %}
+    <section class="journal-listing__filters">
+      <div class="section">
+        {% assign journal_tags = 'Recipes|Estate News|Media|Winemaker Notes' | split: '|' %}
+        <nav class="journal-filter-bar" aria-label="Journal categories">
+          <a class="journal-filter-bar__link{% if current_tags == blank %} is-active{% endif %}" href="{{ blog.url }}">All</a>
+          {% for tag in journal_tags %}
+            {% assign tag_active = false %}
+            {% for current_tag in current_tags %}
+              {% if current_tag == tag %}
+                {% assign tag_active = true %}
+                {% break %}
+              {% endif %}
+            {% endfor %}
+            <a class="journal-filter-bar__link{% if tag_active %} is-active{% endif %}" href="{{ blog.url }}/tagged/{{ tag | handleize }}">
+              {{ tag }}
+            </a>
           {% endfor %}
-          <a
-            class="journal-filter-bar__link{% if tag_active %} is-active{% endif %}"
-            href="{{ blog.url }}/tagged/{{ tag | handleize }}"
-          >
-            {{ tag }}
-          </a>
-        {% endfor %}
-      </nav>
-    {% endif %}
+        </nav>
+      </div>
+    </section>
 
-    <div
-      ref="grid"
-      class="blog-posts-container"
-    >
-      {% liquid
-        assign items_on_page = blog.articles.size
-      %}
-      {% for article in blog.articles %}
-        {% liquid
-          # Defaults for compact layout
-          assign col_span = 2
-          assign scale = 0.6
-          assign is_horizontal = false
+    {% paginate blog.articles by 10 %}
+      {% assign featured_article = blog.articles.first %}
+      {% if featured_article %}
+        <section class="journal-listing__feature">
+          <div class="section">
+            <a class="journal-feature" href="{{ featured_article.url }}">
+              <div class="journal-feature__media">
+                {% if featured_article.image %}
+                  {{ featured_article.image | image_url: width: 1800 | image_tag: loading: 'lazy', alt: featured_article.title }}
+                {% endif %}
+                {% if featured_article.tags.size > 0 %}
+                  <span class="journal-feature__tag">{{ featured_article.tags.first }}</span>
+                {% endif %}
+              </div>
+              <div class="journal-feature__copy">
+                <p class="journal-feature__eyebrow">Featured</p>
+                <h2>{{ featured_article.title }}</h2>
+                <p>{{ featured_article.excerpt_or_content | strip_html | truncate: 220 }}</p>
+                <p class="journal-feature__meta">
+                  <span>{{ featured_article.author }}</span>
+                  <span>{{ featured_article.published_at | date: '%d %b %Y' }}</span>
+                </p>
+              </div>
+            </a>
+          </div>
+        </section>
+      {% endif %}
 
-          case items_on_page
-            when 1
-              # Single post: full width hero
-              assign col_span = 6
-              assign scale = 1
-              assign is_horizontal = true
-            when 2
-              # Two posts: both standard side by side
-              assign col_span = 3
-              assign scale = 0.8
-            when 3
-              # Three posts: hero + 2 standard
-              if forloop.index == 1
-                assign col_span = 6
-                assign scale = 1
-                assign is_horizontal = true
-              else
-                assign col_span = 3
-                assign scale = 0.8
-              endif
-            when 4
-              # Four posts: all standard in 2x2 grid
-              assign col_span = 3
-              assign scale = 0.8
-            when 5
-              # Five posts: hero + 4 standard
-              if forloop.index == 1
-                assign col_span = 6
-                assign scale = 1
-                assign is_horizontal = true
-              else
-                assign col_span = 3
-                assign scale = 0.8
-              endif
-            else
-              # 6+ posts: hero, 2 standard, rest compact
-              if forloop.index == 1
-                assign col_span = 6
-                assign scale = 1
-                assign is_horizontal = true
-              elsif forloop.index <= 3
-                assign col_span = 3
-                assign scale = 0.8
-              else
-                assign col_span = 2
-                assign scale = 0.6
-              endif
-          endcase
-        %}
-        {% style %}
-          [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
-            --col-span: {{ col_span }};
-            --blog-post-card-scale: {{ scale }};
-          }
+      <section class="journal-listing__grid-section">
+        <div class="section">
+          <div class="journal-listing__label">
+            <h3>Latest from the Journal</h3>
+            <span>{{ blog.articles_count }} articles</span>
+          </div>
+          <div class="journal-listing__grid">
+            {% for article in blog.articles offset: 1 %}
+              <a class="journal-card" href="{{ article.url }}">
+                <div class="journal-card__media">
+                  {% if article.image %}
+                    {{ article.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: article.title }}
+                  {% endif %}
+                  {% if article.tags.size > 0 %}
+                    <span class="journal-card__tag">{{ article.tags.first }}</span>
+                  {% endif %}
+                </div>
+                <div class="journal-card__body">
+                  <h4>{{ article.title }}</h4>
+                  <p>{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>
+                  <p class="journal-card__meta">{{ article.author }} · {{ article.published_at | date: '%d %b %Y' }}</p>
+                </div>
+              </a>
+            {% endfor %}
+          </div>
 
-          @media screen and (max-width: 749px) {
-            [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
-              --col-span: 6;
-              --blog-post-card-scale: 0.5;
-            }
-          }
-        {% endstyle %}
-        <div
-          class="blog-post-item{% if is_horizontal %} blog-post-item--horizontal{% endif %}"
-          data-testid="blog-post-item"
-          data-blog-index="{{ section.id }}-{{ forloop.index }}"
-        >
-          {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
+          {% if paginate.next %}
+            <div class="journal-listing__load-more">
+              <a href="{{ paginate.next.url }}">Load more articles</a>
+            </div>
+          {% endif %}
         </div>
-      {% endfor %}
-    </div>
+      </section>
+    {% endpaginate %}
   </div>
-</blog-posts-list>
+{% else %}
+  <blog-posts-list section-id="{{ section.id }}">
+    <div
+      class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+    ></div>
+    <div
+      class="
+        section
+        {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+        blog-posts
+        spacing-style
+        size-style
+      "
+      data-testid="blog-posts"
+      style="{% render 'spacing-style', settings: section.settings %}"
+    >
+      {% content_for 'blocks' %}
+      <div ref="grid" class="blog-posts-container">
+        {% liquid
+          assign items_on_page = blog.articles.size
+        %}
+        {% for article in blog.articles %}
+          {% liquid
+            assign col_span = 2
+            assign scale = 0.6
+            assign is_horizontal = false
+
+            case items_on_page
+              when 1
+                assign col_span = 6
+                assign scale = 1
+                assign is_horizontal = true
+              when 2
+                assign col_span = 3
+                assign scale = 0.8
+              when 3
+                if forloop.index == 1
+                  assign col_span = 6
+                  assign scale = 1
+                  assign is_horizontal = true
+                else
+                  assign col_span = 3
+                  assign scale = 0.8
+                endif
+              when 4
+                assign col_span = 3
+                assign scale = 0.8
+              when 5
+                if forloop.index == 1
+                  assign col_span = 6
+                  assign scale = 1
+                  assign is_horizontal = true
+                else
+                  assign col_span = 3
+                  assign scale = 0.8
+                endif
+              else
+                if forloop.index == 1
+                  assign col_span = 6
+                  assign scale = 1
+                  assign is_horizontal = true
+                elsif forloop.index <= 3
+                  assign col_span = 3
+                  assign scale = 0.8
+                else
+                  assign col_span = 2
+                  assign scale = 0.6
+                endif
+            endcase
+          %}
+          {% style %}
+            [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
+              --col-span: {{ col_span }};
+              --blog-post-card-scale: {{ scale }};
+            }
+
+            @media screen and (max-width: 749px) {
+              [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
+                --col-span: 6;
+                --blog-post-card-scale: 0.5;
+              }
+            }
+          {% endstyle %}
+          <div
+            class="blog-post-item{% if is_horizontal %} blog-post-item--horizontal{% endif %}"
+            data-testid="blog-post-item"
+            data-blog-index="{{ section.id }}-{{ forloop.index }}"
+          >
+            {% content_for 'block', id: 'static-blog-post-card', type: '_blog-post-card', article: article %}
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </blog-posts-list>
+{% endif %}
 
 {% stylesheet %}
-  /**
-   * Blog posts page layout
-   */
+  .journal-listing {
+    background: #f8f6f1;
+    color: #101113;
+  }
+
+  .journal-listing__hero,
+  .journal-listing__filters {
+    background: #0a0b0d;
+  }
+
+  .journal-listing__hero-inner {
+    padding-block: 5.25rem 2.75rem;
+    text-align: center;
+  }
+
+  .journal-listing__eyebrow {
+    color: #9de3fa;
+    font-size: 0.72rem;
+    letter-spacing: 0.15em;
+    margin: 0 0 0.9rem;
+    text-transform: uppercase;
+  }
+
+  .journal-listing__title {
+    color: #fff;
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1;
+    margin: 0 0 1rem;
+  }
+
+  .journal-listing__intro {
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0 auto;
+    max-width: 38rem;
+  }
+
+  .journal-listing__filters .section {
+    padding-block: 0 3rem;
+  }
+
+  .journal-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    justify-content: center;
+    margin: 0;
+  }
+
+  .journal-filter-bar__link {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.875rem;
+    padding: 0.55rem 1.1rem;
+    text-decoration: none;
+  }
+
+  .journal-filter-bar__link.is-active {
+    background: #fff;
+    color: #0a0b0d;
+  }
+
+  .journal-listing__feature {
+    padding-block: 4.4rem 1.25rem;
+  }
+
+  .journal-feature {
+    background: #fff;
+    border: 1px solid rgba(16, 17, 19, 0.14);
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    text-decoration: none;
+  }
+
+  .journal-feature__media {
+    min-height: 23rem;
+    position: relative;
+  }
+
+  .journal-feature__media img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .journal-feature__tag {
+    background: #0ca7e0;
+    color: #071117;
+    font-size: 0.66rem;
+    left: 1rem;
+    letter-spacing: 0.08em;
+    padding: 0.35rem 0.65rem;
+    position: absolute;
+    text-transform: uppercase;
+    top: 1rem;
+  }
+
+  .journal-feature__copy {
+    align-self: center;
+    padding: 2.6rem;
+  }
+
+  .journal-feature__eyebrow {
+    color: #666b70;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .journal-feature h2 {
+    font-size: clamp(1.8rem, 3vw, 2.5rem);
+    line-height: 1.1;
+    margin: 0.8rem 0 1rem;
+  }
+
+  .journal-feature p {
+    color: #666b70;
+    margin: 0;
+  }
+
+  .journal-feature__meta {
+    align-items: center;
+    display: flex;
+    font-size: 0.75rem;
+    gap: 0.7rem;
+    margin-top: 1.2rem;
+    text-transform: uppercase;
+  }
+
+  .journal-listing__grid-section {
+    padding-block: 3.25rem 7rem;
+  }
+
+  .journal-listing__label {
+    align-items: baseline;
+    border-bottom: 1px solid rgba(16, 17, 19, 0.14);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1rem;
+  }
+
+  .journal-listing__label h3 {
+    font-size: 1.8rem;
+    margin: 0;
+  }
+
+  .journal-listing__label span {
+    color: #666b70;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .journal-listing__grid {
+    display: grid;
+    gap: 1.5rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .journal-card {
+    background: #fff;
+    border: 1px solid rgba(16, 17, 19, 0.14);
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .journal-card__media {
+    height: 14rem;
+    position: relative;
+  }
+
+  .journal-card__media img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .journal-card__tag {
+    background: #fff;
+    color: #101113;
+    font-size: 0.66rem;
+    left: 0.9rem;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.55rem;
+    position: absolute;
+    text-transform: uppercase;
+    top: 0.9rem;
+  }
+
+  .journal-card__body {
+    padding: 1.2rem 1.2rem 1.3rem;
+  }
+
+  .journal-card__body h4 {
+    font-size: 1.45rem;
+    line-height: 1.1;
+    margin: 0 0 0.65rem;
+  }
+
+  .journal-card__body p {
+    color: #666b70;
+    margin: 0 0 0.65rem;
+  }
+
+  .journal-card__meta {
+    font-size: 0.73rem;
+    letter-spacing: 0.04em;
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  .journal-listing__load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 2.4rem;
+  }
+
+  .journal-listing__load-more a {
+    border: 1px solid #101113;
+    color: #101113;
+    font-size: 0.74rem;
+    letter-spacing: 0.06em;
+    padding: 0.8rem 1.6rem;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
   .blog-posts {
     --page-content-width: var(--narrow-page-width);
     --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
@@ -164,40 +452,11 @@
     row-gap: var(--rows-gap);
   }
 
-  .journal-filter-bar {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    margin: 0 0 2rem;
-  }
-
-  .journal-filter-bar__link {
-    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
-    border-radius: 999px;
-    color: rgb(var(--color-foreground-rgb));
-    font-size: 0.875rem;
-    padding: 0.45rem 0.85rem;
-    text-decoration: none;
-  }
-
-  .journal-filter-bar__link.is-active {
-    background: rgb(var(--color-foreground-rgb));
-    color: rgb(var(--color-background-rgb));
-  }
-
-  /**
-   * Blog post item grid positioning and scaling.
-   * Layout is calculated in Liquid based on total article count.
-   * Mobile overrides are applied per-item in inline styles for proper specificity.
-   */
   .blog-post-item {
     grid-column: span var(--col-span);
     background-color: var(--color-background);
   }
 
-  /**
-   * When there's no image, the blog post item has a border.
-   */
   .blog-post-item {
     border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
     padding: 0 1rem 1rem;
@@ -206,6 +465,41 @@
   .blog-post-item:has(.blog-post-card__image-container) {
     border: none;
     padding: 0;
+  }
+
+  @media screen and (max-width: 989px) {
+    .journal-feature {
+      grid-template-columns: 1fr;
+    }
+
+    .journal-feature__media {
+      min-height: 18rem;
+    }
+
+    .journal-listing__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .journal-listing__hero-inner {
+      padding-block: 4.3rem 2.4rem;
+    }
+
+    .journal-listing__filters .section {
+      padding-block-end: 2.2rem;
+    }
+
+    .journal-filter-bar {
+      justify-content: flex-start;
+      overflow-x: auto;
+      padding-bottom: 0.3rem;
+      white-space: nowrap;
+    }
+
+    .journal-listing__grid {
+      grid-template-columns: 1fr;
+    }
   }
 {% endstylesheet %}
 
