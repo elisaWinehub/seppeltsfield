@@ -192,14 +192,26 @@
     (() => {
       const root = document.querySelector('.journal-article');
       if (!root) return;
-      const header = document.querySelector('[data-sf2-header]');
-      const headerGroup = document.querySelector('#header-group');
-      const headerSection =
-        (header && header.closest('.shopify-section.sf2-header-section')) ||
-        document.querySelector('.shopify-section.sf2-header-section');
+      const getHeaderNodes = () => {
+        const header = document.querySelector('[data-sf2-header]');
+        const headerGroup = document.querySelector('#header-group');
+        const headerNav = header ? header.querySelector('.sf2-header__nav') : document.querySelector('.sf2-header__nav');
+        const headerSection =
+          (header && header.closest('.shopify-section.sf2-header-section')) ||
+          document.querySelector('.shopify-section.sf2-header-section');
+        return { header, headerGroup, headerNav, headerSection };
+      };
+
+      const setHeaderBackground = (background) => {
+        const { header, headerGroup, headerNav, headerSection } = getHeaderNodes();
+        [headerSection, headerGroup, header, headerNav].forEach((node) => {
+          if (node) node.style.setProperty('background-color', background, 'important');
+        });
+      };
 
       const forceTransparentHeader = () => {
         document.documentElement.classList.add('sf2-journal-article-transparent-header');
+        const { header, headerGroup } = getHeaderNodes();
         if (header) {
           header.classList.add('sf2-header--transparent');
         }
@@ -207,6 +219,7 @@
           headerGroup.classList.remove('is-scrolled');
           headerGroup.classList.remove('has-scrolled-header');
         }
+        setHeaderBackground('transparent');
       };
 
       const setHeaderOffset = () => {
@@ -221,6 +234,7 @@
 
       const syncScrolledHeaderState = () => {
         const hasScrolled = window.scrollY > 6;
+        const { header, headerGroup, headerSection } = getHeaderNodes();
         document.documentElement.classList.toggle('sf2-journal-article-header-scrolled', hasScrolled);
         if (header) {
           header.classList.toggle('sf2-header--transparent', !hasScrolled);
@@ -232,6 +246,7 @@
         if (headerSection) {
           headerSection.classList.toggle('sf2-journal-header-scrolled', hasScrolled);
         }
+        setHeaderBackground(hasScrolled ? '#000' : 'transparent');
       };
 
       const initCopyLink = () => {
