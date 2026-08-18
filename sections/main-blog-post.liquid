@@ -56,7 +56,6 @@
                 <p class="journal-article__tag">{{ article.tags.first }}</p>
               {% endif %}
               <h1>{{ article.title }}</h1>
-              <p class="journal-article__dek">{{ article.excerpt_or_content | strip_html | truncate: 220 }}</p>
               <div class="journal-article__byline">
                 <div class="journal-article__avatar">{{ article.author | slice: 0 }}</div>
                 <div class="journal-article__who">
@@ -379,7 +378,7 @@
   .journal-article__hero {
     background: #000;
     max-height: 640px;
-    min-height: 320px;
+    min-height: 600px;
     overflow: hidden;
     padding-top: 0;
     position: relative;
