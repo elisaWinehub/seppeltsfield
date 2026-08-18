@@ -1,0 +1,44 @@
+{% liquid
+  assign journal_active_tag_label = active_tag_label | strip
+  assign journal_active_tag_handle = active_tag_handle | strip
+  assign journal_blog_url = blog_url | default: '/blogs/journal'
+  assign journal_tags = 'Recipes:recipes|Estate News:estate-news|Media:media|Winemaker Notes:winemaker-notes' | split: '|'
+%}
+
+<section class="journal-listing__hero">
+  <div class="section journal-listing__hero-inner">
+    <p class="journal-listing__eyebrow">The Seppeltsfield Journal</p>
+    {% if journal_active_tag_label != blank %}
+      <h1 class="journal-listing__title">{{ journal_active_tag_label }} from the estate.</h1>
+      <p class="journal-listing__intro">
+        Browse Journal stories in {{ journal_active_tag_label }}.
+      </p>
+    {% else %}
+      <h1 class="journal-listing__title">Stories from the estate.</h1>
+      <p class="journal-listing__intro">
+        Recipes and pairing ideas from our winemakers, news from across the estate, and the occasional word from the press.
+      </p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="journal-listing__filters">
+  <div class="section">
+    <nav class="journal-filter-bar" aria-label="Journal categories">
+      <a class="journal-filter-bar__link{% if journal_active_tag_handle == blank %} is-active{% endif %}" href="{{ journal_blog_url }}">
+        All
+      </a>
+      {% for tag_pair in journal_tags %}
+        {% assign pair = tag_pair | split: ':' %}
+        {% assign tag_label = pair[0] %}
+        {% assign tag_handle = pair[1] %}
+        <a
+          class="journal-filter-bar__link{% if journal_active_tag_handle == tag_handle %} is-active{% endif %}"
+          href="{{ journal_blog_url }}/tagged/{{ tag_handle }}"
+        >
+          {{ tag_label }}
+        </a>
+      {% endfor %}
+    </nav>
+  </div>
+</section>

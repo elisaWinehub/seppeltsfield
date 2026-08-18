@@ -3,7 +3,12 @@
 {% liquid
   assign max_items = section.settings.max_products
   assign is_journal_tag_404 = false
-  if template.name == '404' and request.path contains '/blogs/journal/tagged/'
+  assign requested_path_for_404 = request.path
+  if requested_path_for_404 == blank or requested_path_for_404 == '/404'
+    assign page_url = content_for_header | split: '"pageurl":"' | last | split: '"' | first | replace: '\/', '/' | replace: '%2F', '/' | replace: '%3A', ':'
+    assign requested_path_for_404 = page_url | split: '/myshopify.com' | last
+  endif
+  if requested_path_for_404 contains '/blogs/journal/tagged/'
     assign is_journal_tag_404 = true
   endif
   if section.settings.background_color != blank
