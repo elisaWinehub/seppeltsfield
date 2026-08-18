@@ -60,17 +60,6 @@
     </div>
 
     <div class="journal-article__content section">
-      <nav class="journal-article__crumb">
-        <div class="journal-article__read">
-          <a href="{{ article.blog.url }}">{{ article.blog.title }}</a>
-          {% if article.tags.size > 0 %}
-            <span>/</span>
-            <a href="{{ article.blog.url }}/tagged/{{ article.tags.first | handleize }}">{{ article.tags.first }}</a>
-          {% endif %}
-          <span>/</span>
-          <span>{{ article.title }}</span>
-        </div>
-      </nav>
       <div class="journal-article__content-grid">
         <div class="journal-article__main">
           <div class="journal-article__body">
