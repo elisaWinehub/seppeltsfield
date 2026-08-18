@@ -1,0 +1,15 @@
+mutation CreateJournalArticle($article: ArticleCreateInput!) {
+  articleCreate(article: $article) {
+    article {
+      id
+      title
+      handle
+      publishedAt
+      tags
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

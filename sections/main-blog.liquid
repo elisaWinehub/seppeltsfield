@@ -109,6 +109,34 @@
         </div>
       </section>
     {% endpaginate %}
+
+    <section class="journal-listing__signup">
+      <div class="section journal-listing__signup-grid">
+        <div>
+          <p class="journal-listing__signup-eyebrow">Join the community</p>
+          <h2 class="journal-listing__signup-title">Never miss a story.</h2>
+          <p class="journal-listing__signup-copy">
+            New recipes, estate news and winemaker notes, straight to your inbox.
+          </p>
+        </div>
+        <div>
+          {% form 'customer', class: 'journal-listing__signup-form' %}
+            <input type="hidden" name="contact[tags]" value="newsletter">
+            <label class="visually-hidden" for="JournalNewsletterEmail-{{ section.id }}">Email</label>
+            <input
+              id="JournalNewsletterEmail-{{ section.id }}"
+              type="email"
+              name="contact[email]"
+              value="{{ form.email }}"
+              placeholder="Your email address"
+              required
+              autocomplete="email"
+            >
+            <button type="submit">Subscribe</button>
+          {% endform %}
+        </div>
+      </div>
+    </section>
   </div>
 {% else %}
   <blog-posts-list section-id="{{ section.id }}">
@@ -436,6 +464,58 @@
     text-transform: uppercase;
   }
 
+  .journal-listing__signup {
+    background: #0ca7e0;
+    color: #071117;
+    padding-block: 4.3rem;
+  }
+
+  .journal-listing__signup-grid {
+    align-items: center;
+    display: grid;
+    gap: 1.8rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .journal-listing__signup-eyebrow {
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    margin: 0 0 0.55rem;
+    text-transform: uppercase;
+  }
+
+  .journal-listing__signup-title {
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    line-height: 1.05;
+    margin: 0 0 0.45rem;
+  }
+
+  .journal-listing__signup-copy {
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  .journal-listing__signup-form {
+    display: flex;
+    gap: 0.55rem;
+  }
+
+  .journal-listing__signup-form input {
+    border: 1px solid #071117;
+    min-height: 3rem;
+    min-width: 16rem;
+    padding: 0 0.9rem;
+  }
+
+  .journal-listing__signup-form button {
+    background: #071117;
+    border: 1px solid #071117;
+    color: #fff;
+    min-height: 3rem;
+    padding: 0 1rem;
+    text-transform: uppercase;
+  }
+
   .blog-posts {
     --page-content-width: var(--narrow-page-width);
     --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
@@ -499,6 +579,19 @@
 
     .journal-listing__grid {
       grid-template-columns: 1fr;
+    }
+
+    .journal-listing__signup-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .journal-listing__signup-form {
+      flex-direction: column;
+    }
+
+    .journal-listing__signup-form input {
+      min-width: 0;
+      width: 100%;
     }
   }
 {% endstylesheet %}

@@ -1,0 +1,18 @@
+query {
+  blogs(first: 20) {
+    nodes {
+      id
+      title
+      handle
+      articles(first: 50) {
+        nodes {
+          id
+          title
+          handle
+          publishedAt
+          tags
+        }
+      }
+    }
+  }
+}
