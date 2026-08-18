@@ -105,6 +105,21 @@
                 {% assign sidebar_count = sidebar_count | plus: 1 %}
                 <li>
                   <a href="{{ sidebar_article.url }}">
+                    <span class="journal-article__sidebar-media">
+                      {% if sidebar_article.image %}
+                        {{ sidebar_article.image | image_url: width: 560 | image_tag: loading: 'lazy', alt: sidebar_article.title }}
+                      {% else %}
+                        <span class="journal-image-placeholder journal-image-placeholder--sidebar" aria-hidden="true">
+                          {% if settings.logo_inverse != blank %}
+                            {{ settings.logo_inverse | image_url: width: 220 | image_tag: widths: '160,220', sizes: '(min-width: 990px) 280px, 100vw', alt: shop.name, loading: 'lazy' }}
+                          {% elsif settings.logo != blank %}
+                            {{ settings.logo | image_url: width: 220 | image_tag: widths: '160,220', sizes: '(min-width: 990px) 280px, 100vw', alt: shop.name, loading: 'lazy' }}
+                          {% else %}
+                            <img src="https://cdn.shopify.com/s/files/1/0780/2608/0408/files/Seppeltsfield-logo_Est1851_HERO_no_Background.png?v=1783903221" alt="{{ shop.name | escape }}" loading="lazy">
+                          {% endif %}
+                        </span>
+                      {% endif %}
+                    </span>
                     <span class="journal-article__sidebar-title">{{ sidebar_article.title }}</span>
                     <span class="journal-article__sidebar-date">{{ sidebar_article.published_at | date: '%d %b %Y' }}</span>
                   </a>
@@ -437,6 +452,21 @@
     text-decoration: none;
   }
 
+  .journal-article__sidebar-media {
+    aspect-ratio: 16 / 9;
+    display: block;
+    margin-bottom: 0.65rem;
+    overflow: hidden;
+    width: 100%;
+  }
+
+  .journal-article__sidebar-media img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
   .journal-article__sidebar-title {
     display: block;
     font-size: 0.95rem;
@@ -577,6 +607,11 @@
 
   .journal-image-placeholder--hero img {
     max-width: 300px;
+  }
+
+  .journal-image-placeholder--sidebar img {
+    max-width: 150px;
+    width: 52%;
   }
 
   .sf2-journal-article-transparent-header #header-group,
