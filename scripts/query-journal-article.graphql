@@ -1,0 +1,17 @@
+query JournalArticle($id: ID!) {
+  article(id: $id) {
+    id
+    title
+    handle
+    tags
+    publishedAt
+    author {
+      name
+    }
+    image {
+      url
+      altText
+    }
+    body
+  }
+}
