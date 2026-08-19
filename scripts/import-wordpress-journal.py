@@ -20,6 +20,7 @@ import urllib.error
 import urllib.parse
 import urllib.request
 import xml.etree.ElementTree as ET
+from collections import Counter
 from html.parser import HTMLParser
 
 
@@ -692,9 +693,202 @@ def upsert_article(post: dict, body: str, image_map: dict[str, str], existing: d
     raise RuntimeError(last_errors)
 
 
+def mapped_image_url(url: str, image_map: dict[str, str]) -> str | None:
+    if not url:
+        return None
+    for key in (url, canonical_image_url(url)):
+        hosted = image_map.get(key)
+        if hosted and hosted != SKIPPED_IMAGE:
+            return hosted
+    return None
+
+
+def index_articles_by_wp_id(articles: list[dict]) -> dict[str, dict]:
+    indexed: dict[str, dict] = {}
+    for article in articles:
+        for tag in article.get("tags") or []:
+            if str(tag).startswith("wp-id-"):
+                indexed[str(tag)] = article
+    return indexed
+
+
+def print_verify_report(posts: list[dict], articles: list[dict], skipped: list[tuple[str, str]]) -> dict:
+    by_wp = index_articles_by_wp_id(articles)
+    with_image = [article for article in articles if (article.get("image") or {}).get("url")]
+    without_image = [article for article in articles if not (article.get("image") or {}).get("url")]
+    missing_posts = [post for post in posts if f"wp-id-{post['id']}" not in by_wp]
+    expected_no_image = [post for post in posts if not post.get("featured_url")]
+    unexpected_no_image = []
+    for article in without_image:
+        tags = [str(tag) for tag in (article.get("tags") or [])]
+        wp_tag = next((tag for tag in tags if tag.startswith("wp-id-")), "")
+        post_id = wp_tag.replace("wp-id-", "", 1) if wp_tag else ""
+        post = next((item for item in posts if item["id"] == post_id), None)
+        if post and post.get("featured_url"):
+            unexpected_no_image.append(article)
+
+    print("\n=== LIVE SHOPIFY VERIFY ===")
+    print(f"XML published posts: {len(posts)}")
+    print(f"XML skipped non-published: {len(skipped)}")
+    print(f"XML posts with featured image: {sum(1 for post in posts if post.get('featured_url'))}")
+    print(f"XML posts without featured image: {len(expected_no_image)}")
+    print(f"Shopify Journal articles: {len(articles)}")
+    print(f"Shopify articles with featured image: {len(with_image)}")
+    print(f"Shopify articles without featured image: {len(without_image)}")
+    print(f"WP posts missing from Shopify: {len(missing_posts)}")
+    print(f"Articles missing an image that WordPress had: {len(unexpected_no_image)}")
+    for post in expected_no_image:
+        print(f"  expected placeholder: {post['clean_title']}")
+    for article in unexpected_no_image:
+        print(f"  UNEXPECTED missing image: {article.get('title')} ({article.get('handle')})")
+    for post in missing_posts:
+        print(f"  MISSING article: {post['clean_title']} ({post.get('handle')})")
+
+    print("Duplicate-title pairs (expected if WordPress reused a title):")
+    title_counts = Counter(normalize_title(article.get("title") or "") for article in articles)
+    for title, count in title_counts.items():
+        if count > 1:
+            print(f"  {count}x {title}")
+            for article in articles:
+                if normalize_title(article.get("title") or "") == title:
+                    print(
+                        f"    {article.get('publishedAt')} {article.get('handle')} {article.get('tags')}"
+                    )
+    return {
+        "articles": len(articles),
+        "with_image": len(with_image),
+        "without_image": len(without_image),
+        "unexpected_missing": len(unexpected_no_image),
+        "missing_posts": len(missing_posts),
+    }
+
+
+def set_article_image(article_id: str, image_url: str, alt_text: str) -> dict:
+    response = execute_query(
+        "update-journal-article.graphql",
+        {
+            "id": article_id,
+            "article": {"image": {"url": image_url, "altText": alt_text}},
+        },
+        allow_mutations=True,
+    )
+    result = response.get("articleUpdate") or {}
+    errors = result.get("userErrors") or []
+    if errors:
+        raise RuntimeError(errors)
+    return result.get("article") or {}
+
+
+def backfill_featured_images(posts: list[dict], skipped: list[tuple[str, str]]) -> None:
+    cache = load_cache()
+    image_map = dict(cache.get("images") or {})
+    existing_articles = fetch_existing_articles()
+    before = print_verify_report(posts, existing_articles, skipped)
+    print("\n=== FEATURED IMAGE BACKFILL ===")
+    print(
+        f"Before: {before['with_image']}/{before['articles']} articles have a featured image "
+        f"({before['without_image']} without)."
+    )
+
+    by_wp = index_articles_by_wp_id(existing_articles)
+    already_had = []
+    no_wp_image = []
+    attached = []
+    created = []
+    failed = []
+
+    for index, post in enumerate(posts, start=1):
+        wp_tag = f"wp-id-{post['id']}"
+        article = by_wp.get(wp_tag)
+        featured_url = post.get("featured_url") or ""
+        print(f"[{index}/{len(posts)}] {post['clean_title']}", end="")
+        if not article:
+            print(" -> missing article, creating")
+            try:
+                image_map = rehost_images(collect_image_urls([post]), cache)
+                body = rewrite_body(post["body"], image_map)
+                action, created_article = upsert_article(post, body, image_map, None)
+                if created_article:
+                    existing_articles.append(created_article)
+                    by_wp[wp_tag] = created_article
+                created.append(post["clean_title"])
+            except Exception as error:
+                failed.append((post["clean_title"], str(error)))
+                print(f"  FAILED: {error}")
+            time.sleep(0.2)
+            continue
+
+        if (article.get("image") or {}).get("url"):
+            print(" -> already has featured image")
+            already_had.append(post["clean_title"])
+            continue
+        if not featured_url:
+            print(" -> no WordPress featured image (placeholder)")
+            no_wp_image.append(post["clean_title"])
+            continue
+
+        shopify_url = mapped_image_url(featured_url, image_map)
+        if not shopify_url:
+            print(" -> uploading featured image")
+            image_map = rehost_images([featured_url], cache)
+            shopify_url = mapped_image_url(featured_url, image_map)
+        else:
+            print(" -> attaching cached featured image")
+        if not shopify_url:
+            failed.append((post["clean_title"], f"featured image unavailable: {featured_url}"))
+            print(f"  FAILED: featured image unavailable")
+            continue
+        try:
+            updated = set_article_image(article["id"], shopify_url, post["clean_title"])
+            if updated:
+                article.update(updated)
+            attached.append(post["clean_title"])
+        except Exception as error:
+            failed.append((post["clean_title"], str(error)))
+            print(f"  FAILED: {error}")
+        time.sleep(0.2)
+
+    after_articles = fetch_existing_articles()
+    after = print_verify_report(posts, after_articles, skipped)
+    print("\n=== BACKFILL SUMMARY ===")
+    print(f"Already had featured image: {len(already_had)}")
+    print(f"No WordPress featured image: {len(no_wp_image)}")
+    print(f"Attached featured image: {len(attached)}")
+    print(f"Created missing articles: {len(created)}")
+    print(f"Failed: {len(failed)}")
+    print(
+        f"After: {after['with_image']}/{after['articles']} articles have a featured image "
+        f"({after['without_image']} without)."
+    )
+    if attached:
+        print("Attached titles:")
+        for title in attached:
+            print(f"  - {title}")
+    if created:
+        print("Created titles:")
+        for title in created:
+            print(f"  - {title}")
+    if failed:
+        print("Failed titles:")
+        for title, error in failed:
+            print(f"  - {title}: {error}")
+    if after["unexpected_missing"]:
+        raise SystemExit("Backfill incomplete: WordPress featured images are still missing in Shopify.")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--xml", default=str(DEFAULT_XML))
+    parser.add_argument(
+        "--backfill-images",
+        action="store_true",
+        help="Attach missing featured images on existing Journal articles only.",
+    )
+    parser.add_argument(
+        "--verify",
+        action="store_true",
+        help="Compare the WordPress export against live Shopify Journal data and exit.",
+    )
     args = parser.parse_args()
     xml_path = pathlib.Path(args.xml)
     if not xml_path.exists():
@@ -709,6 +903,17 @@ def main() -> None:
     print("Flagged [dflip] posts:")
     for title in dflip_posts or ["(none)"]:
         print(f"  - {title}")
+
+    if args.verify:
+        articles = fetch_existing_articles()
+        report = print_verify_report(posts, articles, skipped)
+        if report["unexpected_missing"] or report["missing_posts"] or report["articles"] != len(posts):
+            raise SystemExit("Live Shopify Journal does not match the WordPress export.")
+        return
+
+    if args.backfill_images:
+        backfill_featured_images(posts, skipped)
+        return
 
     cache = load_cache()
     image_urls = collect_image_urls(posts)

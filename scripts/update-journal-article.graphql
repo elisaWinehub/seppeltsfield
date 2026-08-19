@@ -6,6 +6,11 @@ mutation UpdateJournalArticle($id: ID!, $article: ArticleUpdateInput!) {
       handle
       publishedAt
       tags
+      image {
+        id
+        url
+        altText
+      }
     }
     userErrors {
       field

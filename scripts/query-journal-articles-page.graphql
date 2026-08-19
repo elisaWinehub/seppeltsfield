@@ -10,7 +10,11 @@ query JournalArticlesPage($blogId: ID!, $cursor: String) {
         tags
         publishedAt
         image {
+          id
           url
+          altText
+          width
+          height
         }
       }
       pageInfo {
