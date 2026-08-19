@@ -9,6 +9,7 @@ query JournalArticle($id: ID!) {
       name
     }
     image {
+      id
       url
       altText
     }
