@@ -9,3 +9,4 @@ coverage/
 .tmp-file-retry/
 .tmp-settings-pull/
 .tmp-theme-pull/
+scripts/.journal-wp-import-cache.json

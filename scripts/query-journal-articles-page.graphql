@@ -1,0 +1,22 @@
+query JournalArticlesPage($blogId: ID!, $cursor: String) {
+  blog(id: $blogId) {
+    id
+    handle
+    articles(first: 100, after: $cursor) {
+      nodes {
+        id
+        title
+        handle
+        tags
+        publishedAt
+        image {
+          url
+        }
+      }
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+    }
+  }
+}

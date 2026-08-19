@@ -1,0 +1,21 @@
+mutation FileCreate($files: [FileCreateInput!]!) {
+  fileCreate(files: $files) {
+    files {
+      id
+      fileStatus
+      alt
+      ... on MediaImage {
+        image {
+          url
+        }
+      }
+      ... on GenericFile {
+        url
+      }
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
