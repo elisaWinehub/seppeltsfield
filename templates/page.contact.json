@@ -61,7 +61,7 @@
             "title": "Trade & Distribution",
             "body": "Distributor, retailer and wholesale enquiries across Australia and international markets.",
             "link_label": "View trade contacts",
-            "link_url": "#trade"
+            "link_url": "/pages/where-to-buy"
           }
         },
         "c4": {
@@ -141,7 +141,7 @@
             "title": "Sales & Distribution",
             "body": "Wholesale, distributor and retail stockist enquiries.",
             "link_label": "View trade contacts",
-            "link_url": "#trade"
+            "link_url": "/pages/where-to-buy"
           }
         },
         "t4": {
@@ -174,9 +174,9 @@
           "settings": {
             "eyebrow": "Distributors",
             "heading": "Trade partners in Australia and abroad.",
-            "body": "Consolidate distributor information by region, state or country with expandable directories or Shopify metaobjects.",
+            "body": "Speak with the sales team, or find our Australian and international distributors.",
             "link_label": "View distributors",
-            "link_url": "/pages/distributors"
+            "link_url": "/pages/where-to-buy#contacts"
           }
         },
         "tr2": {
@@ -184,9 +184,9 @@
           "settings": {
             "eyebrow": "Australian stockists",
             "heading": "Find Seppeltsfield near you.",
-            "body": "Present stockists by state or postcode without maintaining a completely separate website page.",
+            "body": "A selection of Australian retailers by state, plus Cellar Door and the online shop.",
             "link_label": "Find a stockist",
-            "link_url": "/pages/stockists"
+            "link_url": "/pages/where-to-buy#stockists"
           }
         }
       },
@@ -242,7 +242,7 @@
           "type": "faq_item",
           "settings": {
             "question": "Where can I buy Seppeltsfield wine?",
-            "answer": "<p>Wine is available online, at the Cellar Door and through selected retailers and distributors.</p>",
+            "answer": "<p>Wine is available online, at the Cellar Door, and through selected retailers and distributors. <a href=\"/pages/where-to-buy\" title=\"Where to buy\">Find stockists and trade contacts</a>.</p>",
             "open_by_default": false
           }
         },
