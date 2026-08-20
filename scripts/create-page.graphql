@@ -1,0 +1,15 @@
+mutation PageCreate($page: PageCreateInput!) {
+  pageCreate(page: $page) {
+    page {
+      id
+      title
+      handle
+      templateSuffix
+      publishedAt
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}
