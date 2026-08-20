@@ -241,7 +241,7 @@
             "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
             "title": "Cellar Door & Experiences",
             "body": "Tastings, tours, the Centennial Cellar and the self-guided heritage experience.",
-            "url": "/pages/wine-tastings"
+            "url": "/pages/experiences"
           }
         },
         "gateway_2": {
@@ -430,7 +430,7 @@
             "title": "Wine Tastings",
             "body": "Guided tastings from current releases to rare cellar experiences.",
             "link_label": "View tastings",
-            "url": "/pages/wine-tastings"
+            "url": "/pages/experiences"
           }
         },
         "exp_2": {

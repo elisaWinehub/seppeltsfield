@@ -18,11 +18,18 @@
     </div>
     <div class="sf2-awards__list">
       {%- for block in section.blocks -%}
-        <a class="sf2-awards__row" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
-          <time datetime="{{ block.settings.year_label }}">{{ block.settings.year_label }}</time>
-          <b>{{ block.settings.title }}</b>
-          {% render 'sf2-icon', icon: 'arrow-right' %}
-        </a>
+        {%- if block.settings.url != blank -%}
+          <a class="sf2-awards__row" href="{{ block.settings.url }}" {{ block.shopify_attributes }}>
+            <time datetime="{{ block.settings.year_label }}">{{ block.settings.year_label }}</time>
+            <b>{{ block.settings.title }}</b>
+            {% render 'sf2-icon', icon: 'arrow-right' %}
+          </a>
+        {%- else -%}
+          <div class="sf2-awards__row" {{ block.shopify_attributes }}>
+            <time datetime="{{ block.settings.year_label }}">{{ block.settings.year_label }}</time>
+            <b>{{ block.settings.title }}</b>
+          </div>
+        {%- endif -%}
       {%- endfor -%}
     </div>
   </div>
@@ -51,7 +58,7 @@
     {
       "type": "award",
       "name": "Award",
-      "limit": 6,
+      "limit": 12,
       "settings": [
         { "type": "text", "id": "year_label", "label": "Year or label", "default": "2026" },
         { "type": "text", "id": "title", "label": "Title", "default": "Major estate recognition or award title" },
@@ -59,6 +66,9 @@
       ]
     }
   ],
-  "presets": [{ "name": "SF2 Awards List" }]
+  "enabled_on": {
+    "templates": ["page"]
+  },
+  "presets": [{ "name": "SF2 Awards List", "category": "Seppeltsfield" }]
 }
 {% endschema %}

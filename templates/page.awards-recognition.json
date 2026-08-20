@@ -1,0 +1,96 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "Awards & Recognition",
+  "sections": {
+    "awards_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/provenance-of-para-HERO.jpg",
+        "mobile_image": "shopify://shop_images/provenance-of-para-HERO.jpg",
+        "eyebrow": "Awards & Recognition",
+        "heading": "Honoured at home and around the world.",
+        "body": "<p>Seppeltsfield has been recognised with a range of national and international awards, spanning winemaking, tourism and the living estate.</p>",
+        "button_label": "View Awards",
+        "button_url": "",
+        "button_link": "#awards",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Plan Your Visit",
+        "secondary_button_url": "/pages/visit",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Australia's Best Tourism Winery",
+        "note_body": "2024 Qantas Australian Tourism Awards, with South Australian Hall of Fame recognition in 2025.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
+    },
+    "awards_intro": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "Recognition",
+        "heading": "A legacy measured in craft, place and welcome.",
+        "body": "<p>Seppeltsfield has been honoured with a range of national and international awards. These milestones sit alongside the Centennial Collection, the Gravity Cellar and more than 175 years of Barossa winemaking.</p><p>Rather than a logo wall, this page records the recognitions that mark the estate's current chapter — in wine, tourism and custodianship of the grounds.</p>",
+        "link_label": "Discover our winemaking",
+        "link_url": "/pages/winemaking",
+        "main_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "secondary_image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+        "note_eyebrow": "Halliday Wine Companion",
+        "note_heading": "Top 5 Star Winery, 2025. Hall of Fame, 2024.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "awards_list": {
+      "type": "sf2-awards-list",
+      "blocks": {
+        "aw1": { "type": "award", "settings": { "year_label": "2025", "title": "Halliday Top 5 Star Rating", "url": "" } },
+        "aw2": { "type": "award", "settings": { "year_label": "2025", "title": "The Real Review, Top Wineries in Australia", "url": "" } },
+        "aw3": { "type": "award", "settings": { "year_label": "2025", "title": "South Australian Tourism Awards — Hall of Fame, Best Wineries, Breweries & Distilleries", "url": "" } },
+        "aw4": { "type": "award", "settings": { "year_label": "2024", "title": "World's Best Vineyards", "url": "" } },
+        "aw5": { "type": "award", "settings": { "year_label": "2024", "title": "Halliday Hall of Fame", "url": "" } },
+        "aw6": { "type": "award", "settings": { "year_label": "2024", "title": "Best Tourism Winery, Qantas Australian Tourism Awards", "url": "" } }
+      },
+      "block_order": ["aw1", "aw2", "aw3", "aw4", "aw5", "aw6"],
+      "settings": {
+        "section_anchor_id": "awards",
+        "eyebrow": "Recent accolades",
+        "heading": "National and international awards.",
+        "body": "Seppeltsfield has been honoured with a range of national and international awards, most recently including the recognitions listed here. Further awards can be added in the theme editor.",
+        "link_label": "",
+        "link_url": "",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "awards_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Visit the estate",
+        "heading": "See the story in the cellars and vineyards.",
+        "body": "Taste current releases, walk the Avenue of Palms, and experience the Centennial Cellar in person.",
+        "button_label": "Plan Your Visit",
+        "button_url": "/pages/visit",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
+  },
+  "order": [
+    "awards_hero",
+    "awards_intro",
+    "awards_list",
+    "awards_cta"
+  ]
+}

@@ -8,30 +8,210 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "Experiences",
   "sections": {
-    "hero": {
-      "type": "hero-banner",
+    "exp_hero": {
+      "type": "sf2-page-hero",
       "settings": {
-        "eyebrow": "Experiences",
-        "heading": "Taste, tour and dine at Seppeltsfield.",
-        "body": "Book guided cellar tastings, heritage tours and estate dining across the property.",
-        "button_label": "Book now",
-        "button_link": "/pages/plan-your-visit",
-        "button_style": "light",
-        "background_type": "image",
-        "overlay_opacity": 40,
-        "background_color": "#0b0c0d",
-        "heading_color": "#f5f7f8",
-        "text_color": "#f5f7f8",
-        "heading_size": 64,
-        "text_size": 17,
-        "padding_top": "xl",
-        "padding_bottom": "lg",
-        "section_width": "page-width"
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/dailytoursandtastingsHERO.jpg",
+        "mobile_image": "shopify://shop_images/dailytoursandtastingsHERO.jpg",
+        "eyebrow": "Taste, Tour & Discover",
+        "heading": "World-class luxury experiences at Cellar Door.",
+        "body": "<p>We invite you to visit our historic estate in the heart of the Barossa, just under one hour’s drive from Adelaide. Bookings are recommended.</p>",
+        "button_label": "Book a Tasting",
+        "button_url": "/pages/book-experience",
+        "button_link": "",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Opening Hours",
+        "secondary_button_url": "",
+        "secondary_button_link": "#hours",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Open daily, 10:30am – 5pm",
+        "note_body": "Closed Good Friday, Christmas Day, Boxing Day and New Year’s Day. Last tasting bookings at 4pm.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
       }
     },
-    "features": { "type": "feature-grid", "settings": { "heading": "Estate experiences" } },
-    "newsletter": { "type": "newsletter-cta", "settings": {} }
+    "exp_anchor": {
+      "type": "sf2-anchor-nav",
+      "blocks": {
+        "a1": { "type": "anchor_link", "settings": { "label": "Tastings", "url": "#tastings" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "Tours", "url": "#tours" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Collaborations", "url": "#tastings" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Book", "url": "/pages/book-experience" } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4"],
+      "settings": {
+        "enable_sticky": true,
+        "color_scheme": "black"
+      }
+    },
+    "exp_intro": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "hours",
+        "eyebrow": "Cellar Door",
+        "heading": "The heart of the estate.",
+        "body": "<p>Seppeltsfield is a multi-award-winning tourism destination, providing world-class luxury experiences with the cellar door serving as the heart of the estate.</p><p>We look forward to welcoming you. Capacity is limited, so bookings are recommended to avoid disappointment. We recommend allowing 45 minutes for a wine tasting experience, and therefore our last booking times are at 4pm.</p><p>Seppeltsfield Cellar Door offers visitors a range of tasting and tour experiences, including cellar door tastings and private tour experiences through our Centennial Cellar. Groups can be accommodated for privately hosted tours and wine tasting in a private room — however, availability is limited. Tasting fees apply.</p>",
+        "link_label": "Book now",
+        "link_url": "/pages/book-experience",
+        "main_image": "shopify://shop_images/cellar-door-tasting.jpg",
+        "secondary_image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
+        "note_eyebrow": "Groups of 6 or fewer",
+        "note_heading": "Cellar Door tastings are limited to a maximum of 6 people.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "exp_grid": {
+      "type": "sf2-experience-grid",
+      "blocks": {
+        "e1": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/cellar-door-tasting.jpg",
+            "eyebrow": "Taste",
+            "title": "Cellar Door tastings",
+            "body": "Current releases and luxury collections in a guided tasting. Availability for groups in Cellar Door is limited to a maximum of 6 people. Tasting fees apply.",
+            "link_label": "Book a tasting",
+            "url": "/pages/book-experience"
+          }
+        },
+        "e2": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/centennialcellarHERO2.jpg",
+            "eyebrow": "Heritage",
+            "title": "Centennial Cellar experiences",
+            "body": "A living museum of Australian winemaking history, and the jewel in the crown of the Seppeltsfield estate. Taste from an unbroken lineage of Tawny.",
+            "link_label": "Book a tour",
+            "url": "/pages/book-experience"
+          }
+        },
+        "e3": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
+            "eyebrow": "Explore",
+            "title": "Daily tours & tastings",
+            "body": "Immerse in an ultimate wine experience across the historic grounds, cellars and vineyards of the estate.",
+            "link_label": "View times",
+            "url": "/pages/book-experience"
+          }
+        },
+        "e4": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg",
+            "eyebrow": "Collaborate",
+            "title": "Icons of the Barossa",
+            "body": "A premium collaborative experience with Ultimate Winery Experiences, showcasing icons of the Barossa.",
+            "link_label": "View more",
+            "url": "https://www.ultimatewineryexperiences.com.au/experiences/icons-of-the-barossa/"
+          }
+        },
+        "e5": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+            "eyebrow": "Collaborate",
+            "title": "Western Rangers Experience",
+            "body": "Explore the western ridge with Western Rangers, a collaborative tasting and touring experience.",
+            "link_label": "View more",
+            "url": "https://www.westernrangers.com.au/"
+          }
+        },
+        "e6": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/Private-Functions.jpg",
+            "eyebrow": "Groups",
+            "title": "Group bookings of 7 or more",
+            "body": "Privately hosted tours and wine tasting in a private room can be arranged. Availability is limited.",
+            "link_label": "Enquire for groups",
+            "url": "/pages/functions-events"
+          }
+        }
+      },
+      "block_order": ["e1", "e2", "e3", "e4", "e5", "e6"],
+      "settings": {
+        "section_anchor_id": "tastings",
+        "eyebrow": "Estate experiences",
+        "heading": "Tastings, tours and collaborations.",
+        "body": "Book via Cellar Door for groups of up to 6. For 7 or more guests, enquire for a privately hosted experience.",
+        "card_style": "bordered",
+        "grid_layout": "equal",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "exp_faq": {
+      "type": "sf2-faq",
+      "blocks": {
+        "q1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Do I need to book a tasting?",
+            "answer": "<p>Bookings are recommended to avoid disappointment. Capacity is limited. Allow 45 minutes for a wine tasting; last bookings are at 4pm.</p>",
+            "open_by_default": true
+          }
+        },
+        "q2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "How many people can taste in Cellar Door?",
+            "answer": "<p>Wine tasting for groups in Cellar Door is limited to a maximum of 6 people. Tasting fees apply. For 7 or more people, please enquire for group bookings.</p>",
+            "open_by_default": false
+          }
+        },
+        "q3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "What is the dress code?",
+            "answer": "<p>We kindly ask our guests to dress in presentable, smart-casual attire. Clothing with offensive slogans, messaging, imagery, or anything that incites violence is strictly prohibited, as are costumes. Please adhere to the dress code to avoid the possibility of being refused entry.</p>",
+            "open_by_default": false
+          }
+        },
+        "q4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "When is Cellar Door open?",
+            "answer": "<p>Seppeltsfield Cellar Door is open to the public from 10:30am to 5pm daily. Closed Good Friday, Christmas Day, Boxing Day and New Year’s Day.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": ["q1", "q2", "q3", "q4"],
+      "settings": {
+        "section_anchor_id": "faq",
+        "eyebrow": "Before you visit",
+        "heading": "Bookings, groups and dress code.",
+        "color_scheme": "light"
+      }
+    },
+    "exp_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Reserve your place",
+        "heading": "Book a tasting or tour.",
+        "body": "Choose a Cellar Door tasting, Centennial Cellar experience, or a guided tour of the estate.",
+        "button_label": "Book Experience",
+        "button_url": "/pages/book-experience",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "tours",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
   },
-  "order": ["hero", "features", "newsletter"]
+  "order": [
+    "exp_hero",
+    "exp_anchor",
+    "exp_intro",
+    "exp_grid",
+    "exp_faq",
+    "exp_cta"
+  ]
 }
