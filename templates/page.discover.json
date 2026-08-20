@@ -140,10 +140,10 @@
     "disc_estate": {
       "type": "sf2-estate-navigator",
       "blocks": {
-        "m1": { "type": "nav_card", "settings": { "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg", "eyebrow": "Architecture", "icon": "", "title": "Historic buildings", "body": "", "url": "/pages/gardens-architecture" } },
-        "m2": { "type": "nav_card", "settings": { "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg", "eyebrow": "Landscape", "icon": "", "title": "Vineyards", "body": "", "url": "/pages/vineyards-cellars" } },
-        "m3": { "type": "nav_card", "settings": { "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg", "eyebrow": "Cellars", "icon": "", "title": "Gravity-flow heritage", "body": "", "url": "/pages/vineyards-cellars" } },
-        "m4": { "type": "nav_card", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "eyebrow": "Gardens", "icon": "", "title": "Estate grounds", "body": "", "url": "/pages/gardens-architecture" } }
+        "m1": { "type": "nav_card", "settings": { "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg", "eyebrow": "Architecture", "icon": "", "title": "Historic buildings", "body": "", "url": "/pages/the-estate#architecture" } },
+        "m2": { "type": "nav_card", "settings": { "image": "shopify://shop_images/vineyardsandcellarsHERO.jpg", "eyebrow": "Landscape", "icon": "", "title": "Vineyards", "body": "", "url": "/pages/the-estate#vineyards" } },
+        "m3": { "type": "nav_card", "settings": { "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg", "eyebrow": "Cellars", "icon": "", "title": "Gravity-flow heritage", "body": "", "url": "/pages/the-estate#cellars" } },
+        "m4": { "type": "nav_card", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "eyebrow": "Gardens", "icon": "", "title": "Estate grounds", "body": "", "url": "/pages/the-estate#gardens" } }
       },
       "block_order": ["m1", "m2", "m3", "m4"],
       "settings": {
