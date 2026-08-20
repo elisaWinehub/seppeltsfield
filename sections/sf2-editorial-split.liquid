@@ -4,8 +4,9 @@
 {{ 'sf2-inner-pages.css' | asset_url | stylesheet_tag }}
 
 {%- capture section_style -%}{% render 'sf2-scheme-vars', color_scheme: section.settings.color_scheme, spacing_preset: section.settings.spacing_preset %}{%- endcapture -%}
+{%- assign anchor_id = section.settings.section_anchor_id | default: '' -%}
 
-<section class="sf2-split sf2-section" style="{{ section_style | strip }}">
+<section{% if anchor_id != blank %} id="{{ anchor_id }}"{% endif %} class="sf2-split sf2-section" style="{{ section_style | strip }}">
   <div class="sf2-wrap sf2-split__grid">
     <div class="sf2-split__copy">
       {% render 'sf2-eyebrow', text: section.settings.eyebrow %}
@@ -42,6 +43,7 @@
   "tag": "section",
   "class": "sf2-split-section",
   "settings": [
+    { "type": "text", "id": "section_anchor_id", "label": "Section anchor ID" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Join the Crown Society" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "A wine club built around choice." },
     { "type": "richtext", "id": "body", "label": "Body" },

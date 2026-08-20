@@ -1,0 +1,185 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "estate_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg",
+        "mobile_image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg",
+        "eyebrow": "The Estate",
+        "heading": "Architecture, landscape and living craftsmanship.",
+        "body": "<p>On the Western Ridge of the Barossa Valley, Seppeltsfield brings together more than 420 acres of ancient vineyard, gardens and heritage-listed architecture.</p>",
+        "button_label": "Explore the Grounds",
+        "button_url": "",
+        "button_link": "#vineyards",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Plan Your Visit",
+        "secondary_button_url": "/pages/visit",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "James Halliday",
+        "note_body": "The most historic winery and greatest showpiece of the Barossa Valley.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
+    },
+    "estate_anchor": {
+      "type": "sf2-anchor-nav",
+      "blocks": {
+        "a1": { "type": "anchor_link", "settings": { "label": "Vineyards", "url": "#vineyards" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "Cellars", "url": "#cellars" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Gardens", "url": "#gardens" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Architecture", "url": "#architecture" } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4"],
+      "settings": {
+        "enable_sticky": true,
+        "color_scheme": "black"
+      }
+    },
+    "estate_intro": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "eyebrow": "Western Ridge, Barossa Valley",
+        "heading": "A village shaped by welcome.",
+        "body": "<p>The estate sits among the westerly townships of Seppeltsfield, Greenock and Marananga, where rolling vineyard hills meet open fields of cereal crops.</p><p>More than 2,000 Canary Island Date Palms line the approaching roads as an avenue to the property. Upon arrival, a Barossa community of wine, food, art and beauty awaits: Cellar Door, FINO, JamFactory and the wider village.</p><p>Throughout the 19th and 20th centuries, the Seppelt family were known for generous hospitality, welcoming travellers of all origins. We continue that village vision, sharing the history, heritage and provenance of this remarkable estate.</p>",
+        "link_label": "Walk the history trail",
+        "link_url": "/pages/visit#history-experience",
+        "main_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg",
+        "secondary_image": "shopify://shop_images/THE-AVENUE-OF-PALMS.jpg",
+        "note_eyebrow": "Est. 1851",
+        "note_heading": "Over 2,000 palms line the road to the estate.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "estate_vineyards": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "vineyards",
+        "eyebrow": "Vineyards",
+        "heading": "The Great Terraced Vineyard.",
+        "body": "<p>Vineyards immediately around the estate span more than 250 acres, planted to the Barossa's traditional varieties of Shiraz, Grenache and Cabernet, with small holdings of Touriga. Wider plantings run across the Western Ridge and into the Eden Valley.</p><p>The most prized site is the Great Terraced Vineyard, on a hillside of ironstone, quartz and slate. Its bush-vine Grenache, 60 to 80 years old, is planted in contours that follow the land. Fruit once reserved for fortified wine now also becomes small-batch still wines.</p>",
+        "link_label": "Discover our winemaking",
+        "link_url": "/pages/winemaking",
+        "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
+        "badge_text": "Bush vine Grenache · 60–80 years",
+        "layout": "copy_left",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "estate_cellars": {
+      "type": "sf2-history-feature",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "1878", "label": "Centennial Cellar completed" } },
+        "s2": { "type": "stat", "settings": { "value": "100", "label": "Years of maturation before release" } },
+        "s3": { "type": "stat", "settings": { "value": "1888", "label": "Gravity Cellar completed" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "section_anchor_id": "cellars",
+        "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+        "label_eyebrow": "The jewel of the estate",
+        "label_heading": "An unbroken lineage of every vintage since 1878.",
+        "eyebrow": "The cellars",
+        "heading": "A living museum of Australian wine.",
+        "body": "<p>Joseph Seppelt began plans for a new bluestone cellar in 1866. Twelve years later, after his father's death, Benno completed the stone cellars and set aside a puncheon of his finest wine, not to be bottled for 100 years.</p><p>That 1878 Tawny remains the start of an unbroken lineage. Each vintage still lays down a barrel of the finest wine. The Centennial Cellar is a living museum of Australian winemaking, and the jewel in the crown of the estate.</p>",
+        "link_label": "Taste it at Cellar Door",
+        "link_url": "/pages/visit#wine",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "estate_gravity": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "1888 Gravity Cellar",
+        "heading": "Built into the hillside. Revived for vintage.",
+        "body": "<p>Oscar Benno Seppelt designed the Gravity Cellar as a series of terraces, so fruit could move through the winery by gravity. What began as engineering logic is now a coveted winemaking principle: minimal handling, open fermentation, and wines of heightened aroma and purity.</p><p>Decommissioned in the 1980s and dormant for nearly 30 years, the cellar was revived for the 2010 vintage and is once again at the centre of Seppeltsfield winemaking.</p>",
+        "link_label": "Meet the winemaking team",
+        "link_url": "/pages/winemaking#team",
+        "image": "shopify://shop_images/1888-Gravity-Cellar.jpg",
+        "badge_text": "South Australian heritage-listed",
+        "layout": "media_left",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "estate_gardens": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "gardens",
+        "eyebrow": "Gardens",
+        "heading": "Palms, elms and a Barossa courtyard.",
+        "body": "<p>The most iconic landscape in the valley is the Avenue of Palms: a five-kilometre trail of Canary Island Date Palms, planted by Seppeltsfield workers during the Great Depression. More than 2,000 palms now line Seppeltsfield Road.</p><p>In the village, a citrus courtyard and cascading water feature welcome guests to Cellar Door, with palms and crepe myrtle shading the FINO dining space. Elm Walk, planted by the Seppelt family around 1900, crosses Greenock Creek — a cool hideaway in a Barossa summer, under eucalypts, pines and poplars, with kookaburras, magpies and, at dawn or dusk, the occasional kangaroo.</p>",
+        "link_label": "Plan a day on the estate",
+        "link_url": "/pages/visit",
+        "main_image": "shopify://shop_images/THE-AVENUE-OF-PALMS.jpg",
+        "secondary_image": "shopify://shop_images/finoHERO.jpg",
+        "note_eyebrow": "The Avenue of Palms",
+        "note_heading": "Five kilometres of Canary Island Date Palms.",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "estate_architecture": {
+      "type": "sf2-benefit-grid",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "building", "title": "Seppelt Family Homestead", "body": "Established in 1851, the homestead is among twelve South Australian State Heritage listed buildings on the estate." } },
+        "b2": { "type": "benefit", "settings": { "icon": "estate-access", "title": "Cellars, hall and laboratory", "body": "Blending Cellars (1867–1878), the Dining Hall (1870–1890), Winemakers Terrace & Chimney (1877) and Laboratory (1945), built in local slate, bluestone and ironstone." } },
+        "b3": { "type": "benefit", "settings": { "icon": "custodianship", "title": "Stables and Bottling Hall", "body": "The Clydesdale Stables (1850) and Bottling Hall (1900) were redeveloped by Max Pritchard and Grieve Gillett, now home to JamFactory and Cellar Door." } },
+        "b4": { "type": "benefit", "settings": { "icon": "map-pin", "title": "Family Mausoleum", "body": "A Greco-Roman inspired lookout east of the estate, reached from Seppeltsfield Road. The climb is steep, and the panorama is worth it." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "section_anchor_id": "architecture",
+        "eyebrow": "Architecture",
+        "eyebrow_brand": true,
+        "heading": "Nineteenth-century stone. Contemporary craft.",
+        "body": "Woven through the grounds is a blend of 19th and 20th century architecture, set against recently redeveloped buildings. Twelve State Heritage listed structures remain part of daily life on the estate.",
+        "link_label": "Explore the heritage story",
+        "link_url": "/pages/heritage-story",
+        "show_login_link": false,
+        "show_decorative_circle": false,
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "estate_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Visit the estate",
+        "heading": "Walk the palms. See the cellars.",
+        "body": "Open daily, Seppeltsfield is a living village of wine, gardens, architecture and makers. Come for a tasting, stay for the story.",
+        "button_label": "Plan Your Visit",
+        "button_url": "/pages/visit",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
+  },
+  "order": [
+    "estate_hero",
+    "estate_anchor",
+    "estate_intro",
+    "estate_vineyards",
+    "estate_cellars",
+    "estate_gravity",
+    "estate_gardens",
+    "estate_architecture",
+    "estate_cta"
+  ]
+}
