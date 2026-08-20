@@ -1,0 +1,212 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "wine_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
+        "mobile_image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
+        "eyebrow": "Our Winemaking",
+        "heading": "Guided by time. Defined by place.",
+        "body": "<p>Luxury still wines, shaped by a 175-year fortified tradition and a house style of elegance, medium weight and aromatic depth.</p>",
+        "button_label": "Meet the Team",
+        "button_url": "",
+        "button_link": "#team",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Taste the Wines",
+        "secondary_button_url": "/collections",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Chief Winemaker Fiona Donald",
+        "note_body": "Leading the cellar since 2009, and custodian of the Centennial Cellar.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
+    },
+    "wine_anchor": {
+      "type": "sf2-anchor-nav",
+      "blocks": {
+        "a1": { "type": "anchor_link", "settings": { "label": "Philosophy", "url": "#philosophy" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "House Style", "url": "#house-style" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Team", "url": "#team" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Cellar", "url": "#cellar" } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4"],
+      "settings": {
+        "enable_sticky": true,
+        "color_scheme": "black"
+      }
+    },
+    "wine_philosophy": {
+      "type": "sf2-video-feature",
+      "blocks": {
+        "p1": { "type": "principle", "settings": { "label": "Respect for place" } },
+        "p2": { "type": "principle", "settings": { "label": "Patience in the cellar" } },
+        "p3": { "type": "principle", "settings": { "label": "Craft passed through generations" } },
+        "p4": { "type": "principle", "settings": { "label": "Innovation with purpose" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"],
+      "settings": {
+        "section_anchor_id": "philosophy",
+        "eyebrow": "Our winemaking philosophy",
+        "heading": "A new chapter for a 175-year-old estate.",
+        "body": "<p>The star is starting to well and truly shine on the estate's new chapter: the luxury collection of still wines, possible since gaining full ownership of the trademark in 2017.</p><p>Seppeltsfield's winemaking philosophy reflects both our history and future endeavours. Our ambition is to match our reputation for the fortified wine collection with the luxury still wine collection.</p><p>We are proudly celebrating the re-imagining of traditional fortified varietals as luxury still wine expressions, including Shiraz, Grenache, Touriga and Mataro.</p>",
+        "youtube_url": "https://youtu.be/5mAGyq6R7U4",
+        "poster_image": "shopify://shop_images/Grape-Receival-Gravity-Flow.jpg",
+        "play_label": "Play winemaking film",
+        "video_position": "right",
+        "frame_style": "tall",
+        "link_label": "Explore our heritage",
+        "link_url": "/pages/heritage-story",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wine_house": {
+      "type": "sf2-benefit-grid",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "goblet", "title": "Style and elegance", "body": "Wines of poise rather than weight for weight's sake, built to sit at the table and in the cellar." } },
+        "b2": { "type": "benefit", "settings": { "icon": "exclusive", "title": "Medium weight", "body": "A house style of balance and restraint, with fruit, tannin and oak in careful proportion." } },
+        "b3": { "type": "benefit", "settings": { "icon": "vineyard-stewardship", "title": "Aromatic", "body": "Still-wine expressions of Shiraz, Grenache, Touriga and Mataro, reimagined from our fortified tradition." } },
+        "b4": { "type": "benefit", "settings": { "icon": "clock", "title": "Ageing potential", "body": "Wines made with future cellaring in mind, not only for drinking in their youth." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "section_anchor_id": "house-style",
+        "eyebrow": "House style",
+        "eyebrow_brand": true,
+        "heading": "Wines of style, elegance and future.",
+        "body": "Our Seppeltsfield house style is wines of style and elegance, medium weight and aromatic, with future ageing potential.",
+        "link_label": "Shop the collection",
+        "link_url": "/collections",
+        "show_login_link": false,
+        "show_decorative_circle": false,
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wine_team": {
+      "type": "sf2-team-grid",
+      "blocks": {
+        "t1": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/warren-randall.jpg",
+            "department": "Executive Chairman & Proprietor",
+            "title": "Warren Randall",
+            "body": "Warren has over forty-four years of winemaking experience: sixteen as an employee and twenty-eight steering the ship in his own businesses. After Adelaide University and Charles Sturt University, he redefined Australia's sparkling wine landscape at Seppelt Great Western. He purchased Seppeltsfield in 2009 and has led the revival of the village, the 1888 Gravity Cellar, and the estate as a world-class tourism destination and fine wine brand.",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "t2": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/fiona-donald.jpg",
+            "department": "Chief Winemaker",
+            "title": "Fiona Donald",
+            "body": "Fiona has more than thirty-five years in wine. A Roseworthy Oenology graduate, she worked at Thomas Hardy, Barossa Valley Estate, Penfolds and Hardy's before joining Seppeltsfield in 2009. She led the resurrection of the 1888 Gravity Cellar, is custodian of the Centennial Cellar, and was named Barossa Winemaker of the Year in 2012. She is a Baron of Barossa and a Len Evans Tutorial Scholar.",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "t3": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/charlie-seppelt.jpg",
+            "department": "Senior Winemaker",
+            "title": "Charlie Seppelt",
+            "body": "Fifth generation of Seppeltsfield's founding family, Charlie has completed more than thirty vintages in Australia and abroad. He joined the Randall Wine Group in 2017 after vintages at d'Arenberg, Torbreck, Hardy's Tintara, Jackson Family Wines and estates in France, the United States and New Zealand. He is a Len Evans Tutorial Scholar.",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "t4": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/julian-bermingham.jpg",
+            "department": "Winemaker",
+            "title": "Julian Bermingham",
+            "body": "A Charles Sturt Wine Science graduate with more than a decade in the industry, Julian spent over ten years at Teusner Wines in the Barossa before joining Seppeltsfield in 2023. Originally from Queensland, he came to wine through fine-wine retail, followed his curiosity to the Barossa for vintage, and stayed.",
+            "link_label": "",
+            "link_url": ""
+          }
+        },
+        "t5": {
+          "type": "team_member",
+          "settings": {
+            "image": "shopify://shop_images/kingsley-fuller.jpg",
+            "department": "Group Viticulturist",
+            "title": "Kingsley Fuller",
+            "body": "Kingsley has over nineteen years in wine. A University of Adelaide graduate in Viticultural Science, he leads the vineyard team across twenty-five Barossa and Eden Valley sites, from new plantings to historic blocks, working closely with winemaking to translate site character into the wines.",
+            "link_label": "",
+            "link_url": ""
+          }
+        }
+      },
+      "block_order": ["t1", "t2", "t3", "t4", "t5"],
+      "settings": {
+        "section_anchor_id": "team",
+        "eyebrow": "Our winemaking team",
+        "heading": "The people behind every vintage.",
+        "body": "From the 1888 Gravity Cellar to twenty-five vineyard sites across the Barossa and Eden Valley, the team carries both the fortified legacy and the luxury still-wine chapter.",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wine_cellar": {
+      "type": "sf2-history-feature",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "1888", "label": "Gravity Cellar completed" } },
+        "s2": { "type": "stat", "settings": { "value": "1878", "label": "Centennial Cellar begins" } },
+        "s3": { "type": "stat", "settings": { "value": "2009", "label": "Cellar revival begins" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "section_anchor_id": "cellar",
+        "image": "shopify://shop_images/1888-Gravity-Cellar.jpg",
+        "label_eyebrow": "Gravity-flow winemaking",
+        "label_heading": "Fruit moves through the hillside cellar with a gentler hand.",
+        "eyebrow": "The cellar",
+        "heading": "A living winery, not a museum.",
+        "body": "<p>Warren Randall's revival of Seppeltsfield restored the 1888 Gravity Cellar as a working winery and tourism destination. Fiona Donald was central to that resurrection, and remains custodian of the Centennial Cellar, where a single vintage Tawny has been set aside each year since 1878.</p><p>The same places that built the fortified reputation now shape the luxury still wines: gravity-flow handling, historic plantings, and a cellar team working vintage after vintage.</p>",
+        "link_label": "Taste it at Cellar Door",
+        "link_url": "/pages/visit#wine",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wine_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Visit the estate",
+        "heading": "See the cellar. Taste the wines.",
+        "body": "Cellar Door is open daily. Book a tasting, walk the estate, or explore the collections from home.",
+        "button_label": "Plan Your Visit",
+        "button_url": "/pages/visit",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
+  },
+  "order": [
+    "wine_hero",
+    "wine_anchor",
+    "wine_philosophy",
+    "wine_house",
+    "wine_team",
+    "wine_cellar",
+    "wine_cta"
+  ]
+}
