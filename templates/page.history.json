@@ -1,0 +1,171 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "History",
+  "sections": {
+    "history_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/historyHERO.jpg",
+        "mobile_image": "shopify://shop_images/historyHERO.jpg",
+        "eyebrow": "History",
+        "heading": "A national treasure of the Barossa.",
+        "body": "<p>Established by Joseph and Johanna Seppelt just 15 years after the European settlement of South Australia, Seppeltsfield helped shape the history of the Australian wine industry.</p>",
+        "button_label": "Explore the Timeline",
+        "button_url": "",
+        "button_link": "#timeline",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Visit the Estate",
+        "secondary_button_url": "/pages/visit",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "The show place of Australia",
+        "note_body": "For the magnitude of the works, and the quality of wines, spirits and vinegars produced, it is unequalled in Australasia.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
+    },
+    "history_anchor": {
+      "type": "sf2-anchor-nav",
+      "blocks": {
+        "a1": { "type": "anchor_link", "settings": { "label": "Origins", "url": "#origins" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "Dynasty", "url": "#dynasty" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Timeline", "url": "#timeline" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Custodianship", "url": "#custodianship" } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4"],
+      "settings": {
+        "enable_sticky": true,
+        "color_scheme": "black"
+      }
+    },
+    "history_origins": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "origins",
+        "eyebrow": "Joseph & Johanna Seppelt · First generation",
+        "heading": "From Silesia to the Hundred of Nuriootpa.",
+        "body": "<p>Seppeltsfield was established in the Barossa Valley by Joseph and Johanna Seppelt just 15 years after the European settlement of South Australia. Steeped in rich Barossan heritage, the estate is considered a true national treasure which helped shape the history of the Australian wine industry.</p><p>In 1851, Joseph Seppelt, an emigrant of Silesia, purchased 158 acres of land in the Hundred of Nuriootpa from Hermann Kook, farmer of Tanunda, at £1 an acre. Designating it Seppeltsfield, Joseph’s original intention was to farm tobacco, with later Seppelt generations concentrating the estate’s efforts on grape growing and winemaking.</p>",
+        "link_label": "Walk the estate",
+        "link_url": "/pages/the-estate",
+        "main_image": "shopify://shop_images/Historic-group-photo.jpg",
+        "secondary_image": "shopify://shop_images/Old-Bottling-Hall-c1900.jpg",
+        "note_eyebrow": "Est. 1851",
+        "note_heading": "158 acres, purchased at £1 an acre.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "history_dynasty": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "dynasty",
+        "eyebrow": "Benno & Sophie Seppelt · Second generation",
+        "heading": "The jewel in the family crown.",
+        "body": "<p>The family’s business grew rapidly in the late 1800s, feeding demand from England for wines and spirits out of imperial preference, as well as the supply of medicinal Brandy to Australian hospitals.</p><p>Seppeltsfield flourished into the 20th century, as part of the Seppelt family’s expanding interests in the liquor industry, which grew to include vineyards and wineries across various Australian regions. Along with wine, the Seppelt stable included spirits such as Brandy, Gin and Vermouth, as well as an assortment of cordials, vinegars and essences.</p><p>Whilst the Seppelt expansions of Great Western and Rutherglen (Victoria) were highly prized, it was always the original home of Seppeltsfield in the Barossa that was regarded as the jewel in the family crown.</p>",
+        "link_label": "Explore the cellars",
+        "link_url": "/pages/the-estate#cellars",
+        "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+        "badge_text": "Centennial Collection · every vintage from 1878",
+        "layout": "copy_left",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "history_timeline": {
+      "type": "sf-about-timeline",
+      "blocks": {
+        "timeline_1": { "type": "timeline_item", "settings": { "year": "1851", "heading": "Joseph and Johanna Seppelt establish the estate", "description": "158 acres in the Hundred of Nuriootpa, designated Seppeltsfield. The Homestead and Stables follow.", "image": "shopify://shop_images/Historic-group-photo.jpg", "mobile_image": "shopify://shop_images/Historic-group-photo.jpg", "highlighted": true } },
+        "timeline_2": { "type": "timeline_item", "settings": { "year": "1855", "heading": "Great Terraced Vineyard Grenache is planted", "description": "Bush vines on ironstone, quartz and slate, later replanted in contoured rows in 1958.", "image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg", "mobile_image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg", "highlighted": false } },
+        "timeline_3": { "type": "timeline_item", "settings": { "year": "1878", "heading": "The Centennial Cellar is built", "description": "A single vintage Tawny is set aside each year, creating an unbroken lineage still released today.", "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "mobile_image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "highlighted": false } },
+        "timeline_4": { "type": "timeline_item", "settings": { "year": "1888", "heading": "Gravity Cellar is built into the hillside", "description": "Fruit moves through the winery by gravity for gentle handling — later revived for the 2010 vintage.", "image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "mobile_image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "highlighted": false } },
+        "timeline_5": { "type": "timeline_item", "settings": { "year": "1900", "heading": "The Bottling Hall is established", "description": "Today this site is home to Cellar Door and FINO Restaurant.", "image": "shopify://shop_images/Old-Bottling-Hall-c1900.jpg", "mobile_image": "shopify://shop_images/Old-Bottling-Hall-c1900.jpg", "highlighted": false } },
+        "timeline_6": { "type": "timeline_item", "settings": { "year": "1929", "heading": "The Avenue of Palms", "description": "More than 2,000 Canary Island Date Palms line the approaching roads as an avenue to the estate.", "image": "shopify://shop_images/THE-AVENUE-OF-PALMS.jpg", "mobile_image": "shopify://shop_images/THE-AVENUE-OF-PALMS.jpg", "highlighted": false } },
+        "timeline_7": { "type": "timeline_item", "settings": { "year": "1978", "heading": "First release of 100 Year Old Tawny", "description": "The 1878 vintage is released, beginning the estate’s annual 100-year-old single vintage tradition.", "image": "shopify://shop_images/Grape-Receival-Gravity-Flow.jpg", "mobile_image": "shopify://shop_images/Grape-Receival-Gravity-Flow.jpg", "highlighted": false } },
+        "timeline_8": { "type": "timeline_item", "settings": { "year": "1985", "heading": "Corporate ownership begins", "description": "B Seppelt & Sons is sold. Nearly three decades of corporate ownership follow, until private return in 2007.", "image": "shopify://shop_images/historyHERO.jpg", "mobile_image": "shopify://shop_images/historyHERO.jpg", "highlighted": false } },
+        "timeline_9": { "type": "timeline_item", "settings": { "year": "2009", "heading": "Warren Randall becomes majority shareholder", "description": "The estate returns to private custodianship under a qualified viticulturist and winemaker who worked for the Seppelt family in the 1980s.", "image": "shopify://shop_images/warren-randall.jpg", "mobile_image": "shopify://shop_images/warren-randall.jpg", "highlighted": true } },
+        "timeline_10": { "type": "timeline_item", "settings": { "year": "2024", "heading": "Best Tourism Winery", "description": "Qantas Australian Tourism Awards recognise Seppeltsfield as Australia’s Best Tourism Winery, with Hall of Fame accolades following in 2025.", "image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg", "mobile_image": "shopify://shop_images/Seppelsfield-OCT24-0004.jpg", "highlighted": false } }
+      },
+      "block_order": ["timeline_1", "timeline_2", "timeline_3", "timeline_4", "timeline_5", "timeline_6", "timeline_7", "timeline_8", "timeline_9", "timeline_10"],
+      "settings": {
+        "section_anchor_id": "timeline",
+        "eyebrow": "175 years",
+        "heading": "Defining moments",
+        "copy": "In honour of our 175th anniversary, these milestones tell the story of an estate that has helped shape the nation’s wine history — and today stands as Australia’s Best Tourism Winery.",
+        "link_label": "Visit the estate",
+        "link_url": "/pages/visit"
+      }
+    },
+    "history_cellars": {
+      "type": "sf2-history-feature",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "1878", "label": "Centennial Cellar begins" } },
+        "s2": { "type": "stat", "settings": { "value": "100", "label": "Year old single vintage, released each year" } },
+        "s3": { "type": "stat", "settings": { "value": "1888", "label": "Gravity Cellar built into the hillside" } }
+      },
+      "block_order": ["s1", "s2", "s3"],
+      "settings": {
+        "section_anchor_id": "cellars",
+        "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg",
+        "label_eyebrow": "The Centennial Collection",
+        "label_heading": "The only winery in the world to release a 100 year old, single vintage wine each year.",
+        "eyebrow": "Cellars of the estate",
+        "heading": "An unbroken lineage of Tawny.",
+        "body": "<p>Seppeltsfield is most famed for the Centennial Collection — an irreplaceable and unbroken lineage of Tawny, every vintage from 1878 to the current year. The estate also boasts a remarkable collection of Apera (Australian Sherry), crossing Fino to Oloroso styles, Tokay and Muscat, all held in vast Solero nursery cellars.</p><p>More recently, the recommissioning of the 1888 Gravity Cellar has revitalised the estate’s prowess with still wines. Super premium Barossa red varietals are once again passed through the Gravity Cellar, which enables gentle colour and tannin extraction — now a coveted modern day winemaking practice.</p>",
+        "link_label": "Discover our winemaking",
+        "link_url": "/pages/winemaking",
+        "color_scheme": "soft_blue",
+        "spacing_preset": "spacious"
+      }
+    },
+    "history_custodianship": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "custodianship",
+        "eyebrow": "Private custodianship",
+        "heading": "Returned to private hands, held in trust.",
+        "body": "<p>Regarded as one of Australia’s most successful wine dynasties, the Seppelt family maintained ownership of their wine interests, including Seppeltsfield, until 1985. B Seppelt &amp; Sons, as it was then known, went on to evolve into a period of corporate ownership which extended nearly three decades.</p><p>The estate returned to private ownership in 2007, now under the custodianship of proprietor Warren Randall — a qualified viticulturist and winemaker who worked for the Seppelt family during the 1980s. Warren is supported by investors Randolph and Anita Bowen, Peg Lindner and family, and Nathan and Candice Waks.</p><p>The estate is viewed by Warren as a custodianship of the Seppelt family legacy. He is passionate about driving the sense of community which they were renowned for establishing.</p>",
+        "link_label": "Meet the winemaking team",
+        "link_url": "/pages/winemaking#team",
+        "main_image": "shopify://shop_images/warren-randall.jpg",
+        "secondary_image": "shopify://shop_images/THE-AVENUE-OF-PALMS.jpg",
+        "note_eyebrow": "Since 2007",
+        "note_heading": "A custodianship of the Seppelt family legacy.",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "history_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "A new golden era",
+        "heading": "History, community and fine winemaking.",
+        "body": "FINO Restaurant, Café at Seppeltsfield, JamFactory Craft + Design, Vasse Virgin and Cellar Door contribute to the renaissance of Australia’s iconic wine estate.",
+        "button_label": "Plan Your Visit",
+        "button_url": "/pages/visit",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
+  },
+  "order": [
+    "history_hero",
+    "history_anchor",
+    "history_origins",
+    "history_dynasty",
+    "history_timeline",
+    "history_cellars",
+    "history_custodianship",
+    "history_cta"
+  ]
+}

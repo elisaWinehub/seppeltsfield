@@ -1,0 +1,151 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "name": "Sustainability",
+  "sections": {
+    "sust_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
+        "mobile_image": "shopify://shop_images/Great_Terraced_Vineyard_Tour.jpg",
+        "eyebrow": "Sustainability",
+        "heading": "Leave the land thriving for generations ahead.",
+        "body": "<p>All wineries and vineyards in the Randall Wine group use Freshcare and Sustainable Winegrowing Australia to demonstrate our commitment to the environment, our business, our community, and the Australian wine industry.</p>",
+        "button_label": "Our Commitments",
+        "button_url": "",
+        "button_link": "#commitments",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "EV Charging",
+        "secondary_button_url": "",
+        "secondary_button_link": "#charging",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Close to 9,000 hectares",
+        "note_body": "Land holdings across South Australia. Changes here are significant, not small.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
+    },
+    "sust_anchor": {
+      "type": "sf2-anchor-nav",
+      "blocks": {
+        "a1": { "type": "anchor_link", "settings": { "label": "Approach", "url": "#approach" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "Commitments", "url": "#commitments" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "EV Charging", "url": "#charging" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Policies", "url": "#policies" } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4"],
+      "settings": {
+        "enable_sticky": true,
+        "color_scheme": "black"
+      }
+    },
+    "sust_approach": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "approach",
+        "eyebrow": "Randall Wine group",
+        "heading": "Certified practice, reviewed every year.",
+        "body": "<p>All wineries and vineyards that form part of the Randall Wine group use the Freshcare Australian Wine Industry Standard of Sustainable Practice — Winery Standard and the Sustainable Winegrowing Australia program, to demonstrate its commitment to sustainability for the benefits of the environment, our business, our community, and the Australian Wine Industry.</p><p>We demonstrate this by our commitment and compliance to the requirements of the Freshcare Australian Wine Industry Standard of Sustainable Practice — Winery Standard and the Freshcare Rules; Sustainable Winegrowing Australia; and legislative requirements; to ensure we safeguard the natural environment in which our business operates.</p><p>We have developed a Sustainability Action Plan to help guide continual improvements and outcomes in sustainability within our business. We inform all our workers of our business’ commitment to Sustainability and review this statement annually in conjunction with the Sustainability Action Plan.</p>",
+        "link_label": "Sustainable Winegrowing Australia",
+        "link_url": "http://www.sustainablewinegrowing.com.au",
+        "main_image": "shopify://shop_images/fiona-donald.jpg",
+        "secondary_image": "shopify://shop_images/kingsley-fuller.jpg",
+        "note_eyebrow": "Pictured",
+        "note_heading": "Fiona Donald, Kingsley Fuller and Dr Mardi Longbottom (AWRI). Photographer: Dragan Radocaj.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "sust_commitments": {
+      "type": "sf2-benefit-grid",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "biodiversity", "title": "Biodiversity", "body": "Creating more areas of biodiversity and nurturing what we already have." } },
+        "b2": { "type": "benefit", "settings": { "icon": "energy", "title": "Solar and energy", "body": "Investigating solar systems including battery storage to reduce electricity bills and reliance on the grid." } },
+        "b3": { "type": "benefit", "settings": { "icon": "custodianship", "title": "Waste and reuse", "body": "Continuing to divert waste from landfill, repurposing, reusing and recycling wherever possible." } },
+        "b4": { "type": "benefit", "settings": { "icon": "vineyard-stewardship", "title": "Water", "body": "Monitoring our water usage and looking for opportunities to conserve and find new sources of water." } },
+        "b5": { "type": "benefit", "settings": { "icon": "goblet", "title": "Grape marc and stalks", "body": "Collecting leftover grape (grape marc) and stalks for livestock feed or compost, reducing the farm’s carbon emissions." } },
+        "b6": { "type": "benefit", "settings": { "icon": "estate-access", "title": "9,000 hectares", "body": "With total land holdings of close to 9,000 hectares in South Australia, we believe our changes will be a significant improvement to the environment." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6"],
+      "settings": {
+        "section_anchor_id": "commitments",
+        "eyebrow": "Sustainability Action Plan",
+        "eyebrow_brand": true,
+        "heading": "Where we believe our biggest impact can be made.",
+        "body": "We do all of this to build a strong sustainable business as well as to leave the land we work on in a better, thriving state for future generations. We are documenting the work so that over time we can measure the difference we have made. Put simply, sustainability is the right thing to do for our business, our land and our people.",
+        "link_label": "",
+        "link_url": "",
+        "show_login_link": false,
+        "show_decorative_circle": true,
+        "color_scheme": "black",
+        "spacing_preset": "spacious"
+      }
+    },
+    "sust_charging": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "charging",
+        "eyebrow": "Electric vehicle charging",
+        "heading": "Charge on the estate, free of charge.",
+        "body": "<p>We are pleased to offer visitors to the Seppeltsfield Estate access to our Electric Vehicle Charging Stations, free of charge.</p><p>As part of the Porsche Destination Charging network, we have two 11kW charging points onsite, which can charge all electric vehicles. We also have two Tesla Charging Stations, dedicated to Tesla electric vehicles only.</p><p>All four Electric Vehicle Charging Stations are located in the main car park, in front of the Café Gardens.</p>",
+        "link_label": "Plan your visit",
+        "link_url": "/pages/visit",
+        "image": "shopify://shop_images/Seppeltsfield_Wide_Estate_-_Dragan_Fine_Art_Photography.jpg",
+        "badge_text": "Four stations · main car park",
+        "layout": "copy_left",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "sust_policies": {
+      "type": "sf2-support-links",
+      "blocks": {
+        "l1": { "type": "support_link", "settings": { "title": "Sustainable Winegrowing Australia", "body": "Learn more about the national program we participate in.", "url": "http://www.sustainablewinegrowing.com.au" } },
+        "l2": { "type": "support_link", "settings": { "title": "Commitment Statement for Sustainability Goals", "body": "Download our commitment statement.", "url": "https://acrobat.adobe.com/id/urn:aaid:sc:AP:c5ec096b-4f27-4d98-b9b2-7f4c760a99a9" } },
+        "l3": { "type": "support_link", "settings": { "title": "Environmental, Social and Governance Policy", "body": "Download our ESG policy.", "url": "https://acrobat.adobe.com/id/urn:aaid:sc:AP:c6a4d62e-f8d2-4ee3-90f9-5b5abeb9835c" } },
+        "l4": { "type": "support_link", "settings": { "title": "Sustainability Action Plan 2025", "body": "Download our current action plan.", "url": "https://acrobat.adobe.com/id/urn:aaid:sc:AP:c8a6113a-b209-4f25-9581-d480f829d129" } }
+      },
+      "block_order": ["l1", "l2", "l3", "l4"],
+      "settings": {
+        "section_anchor_id": "policies",
+        "eyebrow": "Policies and plans",
+        "heading": "Read the documents behind the work.",
+        "body": "These statements are reviewed annually in conjunction with the Sustainability Action Plan.",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
+    },
+    "sust_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Visit the estate",
+        "heading": "See custodianship on the ground.",
+        "body": "Walk the vineyards, gardens and cellars — and charge while you are here.",
+        "button_label": "Plan Your Visit",
+        "button_url": "/pages/visit",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
+  },
+  "order": [
+    "sust_hero",
+    "sust_anchor",
+    "sust_approach",
+    "sust_commitments",
+    "sust_charging",
+    "sust_policies",
+    "sust_cta"
+  ]
+}

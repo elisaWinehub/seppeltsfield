@@ -185,10 +185,10 @@
     "disc_awards": {
       "type": "sf2-awards-list",
       "blocks": {
-        "aw1": { "type": "award", "settings": { "year_label": "2026", "title": "Major estate recognition or award title", "url": "/pages/awards-recognition" } },
-        "aw2": { "type": "award", "settings": { "year_label": "2025", "title": "Centennial Collection accolade", "url": "/pages/awards-recognition" } },
-        "aw3": { "type": "award", "settings": { "year_label": "2024", "title": "Winemaking or heritage recognition", "url": "/pages/awards-recognition" } },
-        "aw4": { "type": "award", "settings": { "year_label": "Archive", "title": "Explore the complete awards history", "url": "/pages/awards-recognition" } }
+        "aw1": { "type": "award", "settings": { "year_label": "2025", "title": "Halliday Top 5 Star Rating", "url": "/pages/awards-recognition" } },
+        "aw2": { "type": "award", "settings": { "year_label": "2025", "title": "The Real Review, Top Wineries in Australia", "url": "/pages/awards-recognition" } },
+        "aw3": { "type": "award", "settings": { "year_label": "2024", "title": "World's Best Vineyards", "url": "/pages/awards-recognition" } },
+        "aw4": { "type": "award", "settings": { "year_label": "2024", "title": "Best Tourism Winery, Qantas Australian Tourism Awards", "url": "/pages/awards-recognition" } }
       },
       "block_order": ["aw1", "aw2", "aw3", "aw4"],
       "settings": {
@@ -205,10 +205,10 @@
     "disc_sustainability": {
       "type": "sf2-benefit-grid",
       "blocks": {
-        "b1": { "type": "benefit", "settings": { "icon": "vineyard-stewardship", "title": "Vineyard stewardship", "body": "" } },
-        "b2": { "type": "benefit", "settings": { "icon": "biodiversity", "title": "Biodiversity", "body": "" } },
-        "b3": { "type": "benefit", "settings": { "icon": "energy", "title": "Energy and resources", "body": "" } },
-        "b4": { "type": "benefit", "settings": { "icon": "custodianship", "title": "Long-term custodianship", "body": "" } }
+        "b1": { "type": "benefit", "settings": { "icon": "vineyard-stewardship", "title": "Vineyard stewardship", "body": "Freshcare Winery Standard and Sustainable Winegrowing Australia guide practice across the Randall Wine group." } },
+        "b2": { "type": "benefit", "settings": { "icon": "biodiversity", "title": "Biodiversity", "body": "Creating more areas of biodiversity and nurturing what we already have." } },
+        "b3": { "type": "benefit", "settings": { "icon": "energy", "title": "Energy and resources", "body": "Solar and battery storage, waste diversion, water conservation, and free EV charging on the estate." } },
+        "b4": { "type": "benefit", "settings": { "icon": "custodianship", "title": "Long-term custodianship", "body": "Close to 9,000 hectares in South Australia, left in a better, thriving state for future generations." } }
       },
       "block_order": ["b1", "b2", "b3", "b4"],
       "settings": {
