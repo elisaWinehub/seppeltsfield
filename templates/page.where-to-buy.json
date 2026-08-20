@@ -1,0 +1,250 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "wtb_hero": {
+      "type": "sf2-page-hero",
+      "settings": {
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/cellar-door-tasting.jpg",
+        "mobile_image": "shopify://shop_images/cellar-door-tasting.jpg",
+        "eyebrow": "Where to buy",
+        "heading": "Find Seppeltsfield near you.",
+        "body": "<p>Shop online, taste at Cellar Door, or find a retailer. Trade partners and Australian stockists are listed below.</p>",
+        "button_label": "Shop Online",
+        "button_url": "/collections",
+        "button_link": "",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Find a Stockist",
+        "secondary_button_url": "#stockists",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Cellar Door, daily.",
+        "note_body": "Taste and buy on the estate, open from 10:30am to 5pm.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
+      }
+    },
+    "wtb_anchor": {
+      "type": "sf2-anchor-nav",
+      "blocks": {
+        "a1": { "type": "anchor_link", "settings": { "label": "Shop", "url": "#shop" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "Contacts", "url": "#contacts" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Australia", "url": "#australia" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "International", "url": "#international" } },
+        "a5": { "type": "anchor_link", "settings": { "label": "Stockists", "url": "#stockists" } }
+      },
+      "block_order": ["a1", "a2", "a3", "a4", "a5"],
+      "settings": {
+        "enable_sticky": true,
+        "color_scheme": "black"
+      }
+    },
+    "wtb_shop": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "shop",
+        "eyebrow": "Buy from Seppeltsfield",
+        "heading": "Online, on the estate, or through our partners.",
+        "body": "<p>The most direct way to buy is from us: the online shop for current releases, and Cellar Door for tastings, rare fortifieds and wines to take home.</p><p>Crown Society members receive preferred pricing and curated deliveries. For wholesale and retail supply, the sales team and distributors are listed below.</p>",
+        "link_label": "Join the Crown Society",
+        "link_url": "/pages/wine-club",
+        "main_image": "shopify://shop_images/Fortified-Wines.jpg",
+        "secondary_image": "shopify://shop_images/Cellar-Door-Products.jpg",
+        "note_eyebrow": "Open daily",
+        "note_heading": "Cellar Door from 10:30am to 5pm.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wtb_contacts": {
+      "type": "sf2-team-grid",
+      "blocks": {
+        "t1": {
+          "type": "team_member",
+          "settings": {
+            "image": "",
+            "department": "Head of Global Sales",
+            "title": "Simon Carter",
+            "body": "International and global sales enquiries. +61 (0) 417 411 530",
+            "link_label": "simon@therandallwinegroup.com.au",
+            "link_url": "mailto:simon@therandallwinegroup.com.au"
+          }
+        },
+        "t2": {
+          "type": "team_member",
+          "settings": {
+            "image": "",
+            "department": "Sales Manager, Australia, New Zealand & Pacific Islands",
+            "title": "Iain Westlake",
+            "body": "Australian, New Zealand and Pacific Islands sales. +61 (0) 448 019 121",
+            "link_label": "iainw@rwg.wine",
+            "link_url": "mailto:iainw@rwg.wine"
+          }
+        }
+      },
+      "block_order": ["t1", "t2"],
+      "settings": {
+        "section_anchor_id": "contacts",
+        "eyebrow": "Seppeltsfield sales contacts",
+        "heading": "Speak with the sales team.",
+        "body": "For distributor, wholesale and stockist enquiries, start with the contacts below.",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wtb_australia": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "australia",
+        "eyebrow": "Australia",
+        "heading": "Domaine Wine Shippers.",
+        "body": "<p>Our Australian distributor is Domaine Wine Shippers, based in Blackburn, Victoria.</p><p>Suite 1/14 Albert Street, Blackburn VIC 3130. Phone 1300 397 397. domainewineshippers.com.au</p>",
+        "link_label": "Visit Domaine Wine Shippers",
+        "link_url": "https://www.domainewineshippers.com.au",
+        "image": "shopify://shop_images/Seppelsfield-OCT24-0208.jpg",
+        "badge_text": "Australian distributor",
+        "layout": "copy_left",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wtb_international": {
+      "type": "sf2-faq",
+      "blocks": {
+        "i1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "UK & Europe",
+            "answer": "<p>Denmark — Ludv. Bjorns Vinhandel A/S. lb-vin@lb-vin.dk. +45 33 15 16 13. lb-vin.dk</p><p>Sweden — Quaffable Wines. daniel@quaffablewines.se. quaffablewines.se</p>",
+            "open_by_default": true
+          }
+        },
+        "i2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "North America",
+            "answer": "<p>USA — Legend Australia. hello@legendaustralia.com. +1 917 478 7190. legendaustralia.com</p><p>Western Canada (British Columbia, Alberta, Manitoba, Saskatchewan) — The Delf Group Inc. inquiries@delfwines.com. +1 604 940 9557.</p><p>Ontario — Drinks Ontario. drinksontario.com</p>",
+            "open_by_default": false
+          }
+        },
+        "i3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Asia",
+            "answer": "<p>Hong Kong — Watson's Wine. +852 2606 8828. watsonswine.com. Watson House, 1-5 Wo Liu Hang Road, Fo Tan, Shatin, New Territories.</p><p>Singapore — The Straits Wine Company. +1800 8888 333. straitswine.com. 6 Harper Road, Leong Huat Building #01-02, Singapore 369674.</p><p>South Korea — J&amp;J Wine. jaekis@naver.com. +82 10 7309 2187.</p><p>Vietnam — RADA Vietnam. ilovewines@radavietnam.vn. +84 936 088 313. ilovewines.vn</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": ["i1", "i2", "i3"],
+      "settings": {
+        "section_anchor_id": "international",
+        "eyebrow": "International distributors",
+        "heading": "Partners across Europe, North America and Asia.",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wtb_stockists": {
+      "type": "sf2-faq",
+      "blocks": {
+        "s1": {
+          "type": "faq_item",
+          "settings": {
+            "question": "South Australia",
+            "answer": "<p>Edinburgh Cellars, East End Cellars, West Beach Cellars, Goodwood Cellars, Regions Cellars, Hutt Street Cellars, The Highway, Arkaba Hotel, Marion Hotel, Crafers Hotel, Cremorne Hotel, Stirling Hotel, Brompton Hotel, The Victory Hotel.</p>",
+            "open_by_default": true
+          }
+        },
+        "s2": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Victoria",
+            "answer": "<p>Rathdowne Cellars, Nick's Wine Merchants, Ritchie's Liquor, Campana's Cellars, Black Rock Cellars, Merrijig Inn.</p>",
+            "open_by_default": false
+          }
+        },
+        "s3": {
+          "type": "faq_item",
+          "settings": {
+            "question": "New South Wales",
+            "answer": "<p>Sackville Bottle Shop, Chambers Cellars, Camperdown Cellars, Porters Liquor, Summer Hill Wine Shop, The Lambton Fridge.</p>",
+            "open_by_default": false
+          }
+        },
+        "s4": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Queensland",
+            "answer": "<p>The Wine Emporium, Flash Bottle Shop, Victoria and Montague Bottle Shop, Craft Wine Store, SW1 Bottle Shop, Crosby Road Wine and Ales, Cellarbrations Nambour Hotel, West End Brisbane, Great Northern Hotel.</p>",
+            "open_by_default": false
+          }
+        },
+        "s5": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Western Australia",
+            "answer": "<p>Old Bridge Cellars, Dunsborough Cellars, Big Brews Liquor, Liquor Barons.</p>",
+            "open_by_default": false
+          }
+        },
+        "s6": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Tasmania",
+            "answer": "<p>Lark Cellar Door, The Tasman, Peppers Cradle Mountain Lodge.</p>",
+            "open_by_default": false
+          }
+        },
+        "s7": {
+          "type": "faq_item",
+          "settings": {
+            "question": "Australian Capital Territory",
+            "answer": "<p>QT Hotel Canberra, Lyneham Cellars.</p>",
+            "open_by_default": false
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3", "s4", "s5", "s6", "s7"],
+      "settings": {
+        "section_anchor_id": "stockists",
+        "eyebrow": "Australian retail stockists",
+        "heading": "A selection of retailers by state.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "wtb_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "Need help finding a wine?",
+        "heading": "Shop online, or write to the sales team.",
+        "body": "Retail lists change. If you cannot find Seppeltsfield near you, contact the team or order from the estate.",
+        "button_label": "Send a Trade Enquiry",
+        "button_url": "/pages/contact#enquiry",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
+      }
+    }
+  },
+  "order": [
+    "wtb_hero",
+    "wtb_anchor",
+    "wtb_shop",
+    "wtb_contacts",
+    "wtb_australia",
+    "wtb_international",
+    "wtb_stockists",
+    "wtb_cta"
+  ]
+}
