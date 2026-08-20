@@ -8,6 +8,7 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "Winemaking",
   "sections": {
     "wine_hero": {
       "type": "sf2-page-hero",

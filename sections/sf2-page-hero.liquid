@@ -49,7 +49,15 @@
           {% render 'sf2-button', preset: section.settings.button_preset, label: section.settings.button_label, url: hero_btn_url %}
         {%- endif -%}
         {%- if section.settings.secondary_button_label != blank -%}
-          {% render 'sf2-button', preset: section.settings.secondary_button_preset, label: section.settings.secondary_button_label, url: section.settings.secondary_button_url %}
+          {%- liquid
+            assign hero_btn2_url = section.settings.secondary_button_link
+            if hero_btn2_url == blank
+              assign hero_btn2_url = section.settings.secondary_button_url
+            endif
+          -%}
+          {%- if hero_btn2_url != blank -%}
+            {% render 'sf2-button', preset: section.settings.secondary_button_preset, label: section.settings.secondary_button_label, url: hero_btn2_url %}
+          {%- endif -%}
         {%- endif -%}
       </div>
     </div>
@@ -86,6 +94,7 @@
     ]},
     { "type": "text", "id": "secondary_button_label", "label": "Secondary button label" },
     { "type": "url", "id": "secondary_button_url", "label": "Secondary button URL" },
+    { "type": "text", "id": "secondary_button_link", "label": "Secondary link override (anchors e.g. #venues)" },
     { "type": "select", "id": "secondary_button_preset", "label": "Secondary preset", "default": "outline_light", "options": [
       { "value": "outline_light", "label": "Outline Light" }, { "value": "outline_dark", "label": "Outline Dark" }, { "value": "text_link", "label": "Text Link" }
     ]},
@@ -99,6 +108,7 @@
       { "value": "compact", "label": "Compact" }, { "value": "standard", "label": "Standard" }
     ]}
   ],
-  "presets": [{ "name": "SF2 Page Hero" }]
+  "enabled_on": { "templates": ["page"] },
+  "presets": [{ "name": "SF2 Page Hero", "category": "Seppeltsfield" }]
 }
 {% endschema %}
