@@ -1,0 +1,15 @@
+mutation PageUpdate($id: ID!, $page: PageUpdateInput!) {
+  pageUpdate(id: $id, page: $page) {
+    page {
+      id
+      title
+      handle
+      templateSuffix
+      publishedAt
+    }
+    userErrors {
+      field
+      message
+    }
+  }
+}

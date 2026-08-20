@@ -8,97 +8,291 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "Functions & Events",
   "sections": {
-    "sf_events_hero": {
-      "type": "sf-events-hero",
+    "events_hero": {
+      "type": "sf2-page-hero",
       "settings": {
-        "desktop_image": "shopify://shop_images/Gravity-cellar-hero.jpg",
-        "mobile_image": "shopify://shop_images/Gravity-cellar-hero.jpg",
-        "button_primary_url": "#SfEventsEnquiry",
-        "button_secondary_url": "#SfEventsVenues"
+        "hero_height": "editorial",
+        "background_image": "shopify://shop_images/Weddings-And-Functions.jpg",
+        "mobile_image": "shopify://shop_images/Weddings-And-Functions.jpg",
+        "eyebrow": "Functions & Events",
+        "heading": "Memorable occasions deserve remarkable places.",
+        "body": "<p>Host a wedding, corporate function or private celebration amid 175 years of heritage in the heart of the Barossa Valley.</p>",
+        "button_label": "Enquire Now",
+        "button_url": "",
+        "button_link": "#enquiry",
+        "button_preset": "primary_blue",
+        "secondary_button_label": "Explore Venues",
+        "secondary_button_url": "",
+        "secondary_button_link": "#venues",
+        "secondary_button_preset": "outline_light",
+        "show_side_note": true,
+        "note_heading": "Just under an hour from Adelaide.",
+        "note_body": "A living village of cellars, gardens and heritage rooms, with a dedicated functions team.",
+        "color_scheme": "dark",
+        "spacing_preset": "compact"
       }
     },
-    "sf_events_benefits": {
-      "type": "sf-events-benefits",
+    "events_anchor": {
+      "type": "sf2-anchor-nav",
       "blocks": {
-        "benefit_1": { "type": "benefit", "settings": { "icon": "heritage", "heading": "HERITAGE VENUES", "copy": "Unique spaces across the estate steeped in history." } },
-        "benefit_2": { "type": "benefit", "settings": { "icon": "dining", "heading": "TAILORED EXPERIENCES", "copy": "Custom menus and wine pairings curated for your event." } },
-        "benefit_3": { "type": "benefit", "settings": { "icon": "wine", "heading": "AWARD-WINNING WINES", "copy": "Exceptional wines from our family estate." } },
-        "benefit_4": { "type": "benefit", "settings": { "icon": "people", "heading": "SEAMLESS SERVICE", "copy": "Our experienced team ensures every detail is perfect." } }
+        "a1": { "type": "anchor_link", "settings": { "label": "Celebrations", "url": "#celebrations" } },
+        "a2": { "type": "anchor_link", "settings": { "label": "Weddings", "url": "#weddings" } },
+        "a3": { "type": "anchor_link", "settings": { "label": "Private", "url": "#private" } },
+        "a4": { "type": "anchor_link", "settings": { "label": "Venues", "url": "#venues" } },
+        "a5": { "type": "anchor_link", "settings": { "label": "Enquire", "url": "#enquiry" } }
       },
-      "block_order": ["benefit_1", "benefit_2", "benefit_3", "benefit_4"],
-      "settings": {}
-    },
-    "sf_events_estate_intro": {
-      "type": "sf-events-estate-intro",
+      "block_order": ["a1", "a2", "a3", "a4", "a5"],
       "settings": {
-        "desktop_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
-        "mobile_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
-        "link_url": "/pages/discover"
+        "enable_sticky": true,
+        "color_scheme": "black"
       }
     },
-    "sf_events_types": {
-      "type": "sf-events-types",
-      "blocks": {
-        "event_1": { "type": "event_type", "settings": { "image": "shopify://shop_images/Weddings-And-Functions.jpg", "mobile_image": "shopify://shop_images/Weddings-And-Functions.jpg", "eyebrow": "WEDDINGS", "heading": "Weddings", "copy": "Say \"I do\" in a place rich with history and natural beauty.", "link_label": "LEARN MORE", "link_url": "/pages/functions-events" } },
-        "event_2": { "type": "event_type", "settings": { "image": "shopify://shop_images/Corporate-Functions.jpg", "mobile_image": "shopify://shop_images/Corporate-Functions.jpg", "eyebrow": "CORPORATE", "heading": "Corporate Functions", "copy": "Inspire, connect and celebrate with your team or clients.", "link_label": "LEARN MORE", "link_url": "/pages/functions-events" } },
-        "event_3": { "type": "event_type", "settings": { "image": "shopify://shop_images/Private-Functions.jpg", "mobile_image": "shopify://shop_images/Private-Functions.jpg", "eyebrow": "PRIVATE", "heading": "Private Functions", "copy": "Birthdays, anniversaries and milestone celebrations.", "link_label": "LEARN MORE", "link_url": "/pages/functions-events" } }
-      },
-      "block_order": ["event_1", "event_2", "event_3"],
-      "settings": {}
-    },
-    "sf_events_chef": {
-      "type": "sf-events-chef",
+    "events_intro": {
+      "type": "sf2-editorial-split",
       "settings": {
-        "desktop_image": "shopify://shop_images/owenandrewshero.jpg",
-        "mobile_image": "shopify://shop_images/owenandrewshero.jpg",
-        "link_url": "/pages/functions-events"
+        "section_anchor_id": "",
+        "eyebrow": "A setting like no other",
+        "heading": "Grand gatherings on a historic estate.",
+        "body": "<p>Seppeltsfield is a destination for unforgettable events: intimate private dinners, corporate functions and grand weddings. From historic cellars and timeless gardens to rooms full of character, the estate offers an extraordinary Barossa backdrop.</p><p>A dedicated functions team works with you on every detail, from ceremony locations to receptions matched with Seppeltsfield wines.</p>",
+        "link_label": "Discover the estate",
+        "link_url": "/pages/the-estate",
+        "main_image": "shopify://shop_images/Seppeltsfield-Estate-Aerial-Dragan-Fine-Art-Photography-scaled.jpg",
+        "secondary_image": "shopify://shop_images/THE-AVENUE-OF-PALMS.jpg",
+        "note_eyebrow": "Est. 1851",
+        "note_heading": "420 acres of vineyards, gardens and heritage rooms.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
       }
     },
-    "sf_events_venues": {
-      "type": "sf-events-venues",
+    "events_types": {
+      "type": "sf2-experience-grid",
       "blocks": {
-        "venue_1": { "type": "venue", "settings": { "image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "mobile_image": "shopify://shop_images/1878-Centennial-Cellar.jpg", "name": "1878 Centennial Cellar", "description": "Celebrate in Australia's longest continually operating wine cellar.", "capacity": "CAPACITY: 10-120 GUESTS", "link_label": "Learn more", "link_url": "/pages/functions-events" } },
-        "venue_2": { "type": "venue", "settings": { "image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "mobile_image": "shopify://shop_images/1888-Gravity-Cellar.jpg", "name": "1888 Gravity Cellar", "description": "A unique industrial space with heritage character and modern flexibility.", "capacity": "CAPACITY: 20-200 GUESTS", "link_label": "Learn more", "link_url": "/pages/functions-events" } },
-        "venue_3": { "type": "venue", "settings": { "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg", "mobile_image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg", "name": "The Vineyard", "description": "Breathtaking outdoor settings for unforgettable gatherings under the Barossa sky.", "capacity": "CAPACITY: 20-500 GUESTS", "link_label": "Learn more", "link_url": "/pages/functions-events" } }
+        "e1": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/Weddings-And-Functions.jpg",
+            "eyebrow": "Weddings",
+            "title": "Say I do at Seppeltsfield.",
+            "body": "Ceremonies in the gardens, receptions in rustic cellar rooms, and a day delivered by the functions team.",
+            "link_label": "Plan a wedding",
+            "url": "/pages/functions-events#weddings"
+          }
+        },
+        "e2": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/Corporate-Functions.jpg",
+            "eyebrow": "Corporate",
+            "title": "Inspire, connect and celebrate.",
+            "body": "Meetings, lunches and dinners for teams and clients, in rooms of character across the village.",
+            "link_label": "Start an enquiry",
+            "url": "/pages/functions-events#enquiry"
+          }
+        },
+        "e3": {
+          "type": "experience_card",
+          "settings": {
+            "image": "shopify://shop_images/Private-Functions.jpg",
+            "eyebrow": "Private",
+            "title": "Milestone celebrations.",
+            "body": "Birthdays, anniversaries and group dining for 70 to 400 guests, from the Dining Hall to the Vintage Cellar.",
+            "link_label": "Plan a private event",
+            "url": "/pages/functions-events#private"
+          }
+        }
       },
-      "block_order": ["venue_1", "venue_2", "venue_3"],
-      "settings": {}
+      "block_order": ["e1", "e2", "e3"],
+      "settings": {
+        "section_anchor_id": "celebrations",
+        "eyebrow": "Host at the estate",
+        "heading": "Weddings, corporate and private events.",
+        "body": "Whether you are after an intimate gathering or a grand celebration, we are committed to making the experience unique and memorable.",
+        "card_style": "overlay",
+        "grid_layout": "equal",
+        "color_scheme": "dark",
+        "spacing_preset": "spacious"
+      }
     },
-    "sf_events_gallery": {
-      "type": "sf-events-gallery",
+    "events_weddings": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "weddings",
+        "eyebrow": "Weddings",
+        "heading": "Ceremony in the gardens. Reception in the cellar.",
+        "body": "<p>Seppeltsfield is the perfect backdrop to say I do. Picturesque grounds offer intimate ceremony locations at Winemaker's Lawn, Elm Walk and the Dining Hall Lawns.</p><p>Guests move seamlessly from ceremony to reception. The historic Vintage Cellar is ideal for a meal by Executive Chef Owen Andrews, matched with Seppeltsfield wines: a balanced blend of first-class wine and food, highlighted by you.</p>",
+        "link_label": "Enquire about a wedding",
+        "link_url": "/pages/functions-events#enquiry",
+        "image": "shopify://shop_images/wedding-ceremony-subhero.jpg",
+        "badge_text": "Ceremonies and receptions",
+        "layout": "copy_left",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "events_private": {
+      "type": "sf2-feature-banner",
+      "settings": {
+        "section_anchor_id": "private",
+        "eyebrow": "Private events",
+        "heading": "Dining Hall, lawns and Vintage Cellar.",
+        "body": "<p>Private group dining can take over the grand Dining Hall from 1890, the lawns with palms in the distance, or a large dinner in the Vintage Cellar. Premium group menus are available for 70 to 400 guests, for meetings, lunches, dinners and special occasions.</p><p>Smaller groups can book casual food and drinks at Café Gardens, or group lunch menus and function packages at FINO. Picnic grounds are welcome, subject to availability and licensing. We do not accept hens, stag or 21st events, or licensed bus groups.</p>",
+        "link_label": "Enquire about a private event",
+        "link_url": "/pages/functions-events#enquiry",
+        "image": "shopify://shop_images/Private-Functions.jpg",
+        "badge_text": "Groups of 70 to 400",
+        "layout": "media_left",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
+    },
+    "events_venues": {
+      "type": "sf2-estate-navigator",
       "blocks": {
-        "gallery_1": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Corporate-Functions.jpg", "mobile_image": "shopify://shop_images/Corporate-Functions.jpg", "alt_text": "Corporate events setup" } },
-        "gallery_2": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Weddings-And-Functions.jpg", "mobile_image": "shopify://shop_images/Weddings-And-Functions.jpg", "alt_text": "Wedding ceremony avenue" } },
-        "gallery_3": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Private-Functions.jpg", "mobile_image": "shopify://shop_images/Private-Functions.jpg", "alt_text": "Private function dining" } },
-        "gallery_4": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/owenandrewshero.jpg", "mobile_image": "shopify://shop_images/owenandrewshero.jpg", "alt_text": "Chef plating" } },
-        "gallery_5": { "type": "gallery_image", "settings": { "image": "shopify://shop_images/Gravity-cellar-hero.jpg", "mobile_image": "shopify://shop_images/Gravity-cellar-hero.jpg", "alt_text": "Centennial cellar dinner setup" } }
+        "v1": {
+          "type": "nav_card",
+          "settings": {
+            "image": "shopify://shop_images/1878-Centennial-Cellar.jpg",
+            "eyebrow": "Capacity 10–120",
+            "icon": "",
+            "title": "1878 Centennial Cellar",
+            "body": "Celebrate in Australia's longest continually operating wine cellar.",
+            "url": "/pages/functions-events#enquiry"
+          }
+        },
+        "v2": {
+          "type": "nav_card",
+          "settings": {
+            "image": "shopify://shop_images/1888-Gravity-Cellar.jpg",
+            "eyebrow": "Capacity 20–200",
+            "icon": "",
+            "title": "1888 Gravity Cellar",
+            "body": "A unique industrial space with heritage character and modern flexibility.",
+            "url": "/pages/functions-events#enquiry"
+          }
+        },
+        "v3": {
+          "type": "nav_card",
+          "settings": {
+            "image": "shopify://shop_images/Seppeltsfield-aerial-1-scaled.jpg",
+            "eyebrow": "Capacity 20–500",
+            "icon": "",
+            "title": "The Vineyard",
+            "body": "Outdoor settings for gatherings under the Barossa sky, including lawns and gardens.",
+            "url": "/pages/functions-events#enquiry"
+          }
+        }
       },
-      "block_order": ["gallery_1", "gallery_2", "gallery_3", "gallery_4", "gallery_5"],
-      "settings": {}
+      "block_order": ["v1", "v2", "v3"],
+      "settings": {
+        "section_anchor_id": "venues",
+        "eyebrow": "Venues",
+        "heading": "Choose the room that fits the day.",
+        "body": "Historic cellars, gardens and estate grounds can be tailored to weddings, corporate functions and private celebrations.",
+        "link_label": "Start an enquiry",
+        "link_url": "/pages/functions-events#enquiry",
+        "color_scheme": "light",
+        "spacing_preset": "spacious"
+      }
     },
-    "sf_events_enquiry": {
+    "events_chef": {
+      "type": "sf2-editorial-split",
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "Artisan cuisine",
+        "heading": "Crafted by Executive Chef Owen Andrews.",
+        "body": "<p>Our multi-award-winning Events Executive Chef immerses guests in the Barossa's culinary heritage. Contemporary menus use fresh regional produce, paired with an extensive knowledge of flavour and Seppeltsfield wines.</p><p>Owen Andrews Artisan Catering is a by-appointment service for functions at the estate, distinct from FINO restaurant dining.</p>",
+        "link_label": "Enquire about catering",
+        "link_url": "/pages/functions-events#enquiry",
+        "main_image": "shopify://shop_images/owenandrewshero.jpg",
+        "secondary_image": "shopify://shop_images/finoHERO.jpg",
+        "note_eyebrow": "Estate catering",
+        "note_heading": "Seasonal menus matched with Seppeltsfield wines.",
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "events_benefits": {
+      "type": "sf2-benefit-grid",
+      "blocks": {
+        "b1": { "type": "benefit", "settings": { "icon": "building", "title": "Heritage venues", "body": "Unique spaces across the estate, from the Centennial Cellar to lawns and gardens." } },
+        "b2": { "type": "benefit", "settings": { "icon": "dining", "title": "Tailored experiences", "body": "Custom menus and wine pairings, curated with the functions team and executive chef." } },
+        "b3": { "type": "benefit", "settings": { "icon": "goblet", "title": "Award-winning wines", "body": "Estate wines at the table, including rare fortifieds from the Centennial Collection." } },
+        "b4": { "type": "benefit", "settings": { "icon": "person", "title": "Seamless service", "body": "A dedicated functions team to take the day from first enquiry to last glass." } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4"],
+      "settings": {
+        "section_anchor_id": "",
+        "eyebrow": "Why host here",
+        "eyebrow_brand": true,
+        "heading": "Heritage, hospitality and a team in place.",
+        "body": "Every celebration is shaped around the estate: the rooms, the gardens, the wines and the people who know them.",
+        "link_label": "Send an enquiry",
+        "link_url": "/pages/functions-events#enquiry",
+        "show_login_link": false,
+        "show_decorative_circle": false,
+        "color_scheme": "ivory",
+        "spacing_preset": "spacious"
+      }
+    },
+    "events_enquiry": {
       "type": "sf-events-enquiry",
-      "settings": {}
-    },
-    "sf_events_crown_society": {
-      "type": "sf-events-crown-society",
       "settings": {
-        "desktop_image": "shopify://shop_images/centennialcellarHERO2.jpg",
-        "mobile_image": "shopify://shop_images/centennialcellarHERO2.jpg",
-        "link_url": "/pages/wine-club"
+        "section_anchor_id": "enquiry",
+        "content_width": "standard",
+        "reverse_columns": false,
+        "eyebrow": "ENQUIRE NOW",
+        "heading": "Start planning your event",
+        "copy": "Our team will work with you to bring your vision to life and create an experience your guests will never forget.",
+        "phone": "(08) 8562 4377",
+        "email": "functions@seppeltsfield.com.au",
+        "address": "730 Seppeltsfield Road\nSeppeltsfield SA 5355",
+        "hours": "Open daily, 10:00am-5:00pm",
+        "event_type_options": "Wedding\nCorporate function\nPrivate function\nDinner\nSpecial celebration\nOther",
+        "guest_options": "Under 20\n20-50\n50-100\n100-200\n200+",
+        "venue_options": "1878 Centennial Cellar\n1888 Gravity Cellar\nThe Vineyard\nDining Hall\nUnsure",
+        "budget_options": "Under $5,000\n$5,000-$10,000\n$10,000-$20,000\n$20,000+",
+        "label_name": "YOUR NAME*",
+        "label_email": "EMAIL ADDRESS*",
+        "label_phone": "PHONE NUMBER*",
+        "label_event_type": "EVENT TYPE*",
+        "label_event_date": "EVENT DATE*",
+        "label_guest_count": "NUMBER OF GUESTS*",
+        "label_venue_pref": "VENUE PREFERENCE",
+        "label_budget": "BUDGET RANGE",
+        "label_message": "TELL US ABOUT YOUR EVENT",
+        "submit_label": "SEND ENQUIRY",
+        "success_message": "Thank you, we will be in touch shortly.",
+        "error_message": "Please complete the required fields and try again."
+      }
+    },
+    "events_cta": {
+      "type": "sf2-cta-banner",
+      "settings": {
+        "eyebrow": "The Crown Society",
+        "heading": "Members enjoy exclusive estate events.",
+        "body": "Priority access to limited releases, member gatherings and special invitations across the calendar.",
+        "button_label": "Join the Crown Society",
+        "button_url": "/pages/wine-club",
+        "button_preset": "primary_dark",
+        "section_anchor_id": "",
+        "color_scheme": "brand_blue",
+        "spacing_preset": "compact"
       }
     }
   },
   "order": [
-    "sf_events_hero",
-    "sf_events_benefits",
-    "sf_events_estate_intro",
-    "sf_events_types",
-    "sf_events_chef",
-    "sf_events_venues",
-    "sf_events_gallery",
-    "sf_events_enquiry",
-    "sf_events_crown_society"
+    "events_hero",
+    "events_anchor",
+    "events_intro",
+    "events_types",
+    "events_weddings",
+    "events_private",
+    "events_venues",
+    "events_chef",
+    "events_benefits",
+    "events_enquiry",
+    "events_cta"
   ]
 }

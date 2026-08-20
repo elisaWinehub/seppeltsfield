@@ -38,7 +38,7 @@
         "j2": { "type": "journey_card", "settings": { "image": "shopify://shop_images/SEPPELTSFIELD_Centennial_Cellar.jpg", "title": "Estate Tours", "url": "#rezdy-booking" } },
         "j3": { "type": "journey_card", "settings": { "image": "shopify://shop_images/finoHERO.jpg", "title": "Restaurant", "url": "/pages/fino-restaurant" } },
         "j4": { "type": "journey_card", "settings": { "image": "shopify://shop_images/BMAC7229.jpg", "title": "Accommodation", "url": "/pages/accommodation" } },
-        "j5": { "type": "journey_card", "settings": { "image": "shopify://shop_images/wedding-ceremony-subhero.jpg", "title": "Weddings & Private Events", "url": "/pages/weddings-private-events" } }
+        "j5": { "type": "journey_card", "settings": { "image": "shopify://shop_images/wedding-ceremony-subhero.jpg", "title": "Weddings & Private Events", "url": "/pages/functions-events" } }
       },
       "block_order": ["j1", "j2", "j3", "j4", "j5"],
       "settings": {
@@ -78,7 +78,7 @@
       "blocks": {
         "s1": { "type": "support_link", "settings": { "title": "Restaurant reservations", "body": "Book FINO or find restaurant details and opening hours.", "url": "/pages/fino-restaurant" } },
         "s2": { "type": "support_link", "settings": { "title": "Accommodation bookings", "body": "Explore The Lodge and available stay packages.", "url": "/pages/accommodation" } },
-        "s3": { "type": "support_link", "settings": { "title": "Weddings and private events", "body": "Start an enquiry for weddings, celebrations and corporate functions.", "url": "/pages/weddings-private-events" } },
+        "s3": { "type": "support_link", "settings": { "title": "Weddings and private events", "body": "Start an enquiry for weddings, celebrations and corporate functions.", "url": "/pages/functions-events" } },
         "s4": { "type": "support_link", "settings": { "title": "Booking support", "body": "Contact the team if you need help choosing or arranging an experience.", "url": "/pages/contact" } }
       },
       "block_order": ["s1", "s2", "s3", "s4"],
@@ -98,7 +98,7 @@
         "heading": "A remarkable setting for meaningful occasions.",
         "body": "<p>Private events require more than a simple booking widget. This section introduces the opportunity and leads into a dedicated enquiry template with venue options, catering, galleries and downloadable information.</p>",
         "link_label": "Explore private events",
-        "link_url": "/pages/weddings-private-events",
+        "link_url": "/pages/functions-events",
         "image": "shopify://shop_images/wedding-ceremony-subhero.jpg",
         "badge_text": "",
         "layout": "media_left",

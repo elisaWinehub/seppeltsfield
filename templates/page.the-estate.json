@@ -8,6 +8,7 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "The Estate",
   "sections": {
     "estate_hero": {
       "type": "sf2-page-hero",
